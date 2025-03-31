@@ -32,8 +32,8 @@ public class GameMenu extends JFrame {
         setResizable(true);
         setMinimumSize(new Dimension(440,415));
 
-        icon = new ImageIcon("C:/Users/Utente LENOVO/OneDrive/Desktop/OOP24-goosegame/info.jpg/");
-        background = new ImageIcon("C:/Users/Utente LENOVO/OneDrive/Desktop/OOP24-goosegame/ImmagineMenù.png").getImage();
+        icon = new ImageIcon(getClass().getResource("main/resources/info.jpg"));
+        background = new ImageIcon(getClass().getResource("main/java/resources/ImmagineMenù.png")).getImage();
 
         setContentPane(createMainPanel());
     }
