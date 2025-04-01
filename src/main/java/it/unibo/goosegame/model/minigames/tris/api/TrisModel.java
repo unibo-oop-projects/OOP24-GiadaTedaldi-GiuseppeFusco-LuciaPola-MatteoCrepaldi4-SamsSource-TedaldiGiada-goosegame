@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model.tris.api;
+package it.unibo.goosegame.model.minigames.tris.api;
 
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Position;

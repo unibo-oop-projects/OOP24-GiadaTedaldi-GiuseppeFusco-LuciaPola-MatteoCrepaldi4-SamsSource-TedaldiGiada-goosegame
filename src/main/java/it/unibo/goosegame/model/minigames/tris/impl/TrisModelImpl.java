@@ -1,10 +1,10 @@
-package it.unibo.goosegame.model.tris.impl;
+package it.unibo.goosegame.model.minigames.tris.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import it.unibo.goosegame.model.tris.api.TrisModel;
+import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
 import it.unibo.goosegame.utilities.Pair;
 import it.unibo.goosegame.utilities.Position;
 
