@@ -5,10 +5,6 @@ import it.unibo.goosegame.utilities.Position;
 
 public interface TrisModel extends MinigamesModel{
 
-    enum Player {
-        HUMAN, PC;
-    }
-
     boolean makeMove(Position position);
 
     boolean isFull();
