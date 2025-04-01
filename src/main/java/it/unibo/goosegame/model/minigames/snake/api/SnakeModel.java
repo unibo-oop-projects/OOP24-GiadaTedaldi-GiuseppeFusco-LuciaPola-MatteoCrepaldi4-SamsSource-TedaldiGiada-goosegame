@@ -1,5 +1,7 @@
 package it.unibo.goosegame.model.minigames.snake.api;
 
+import it.unibo.goosegame.utilities.Direction;
+
 public interface SnakeModel {
     /**
      * Moves the snake in the current direction
@@ -20,7 +22,7 @@ public interface SnakeModel {
      * Updates the direction of the snake
      * @param newDirection is the new direction of the snake
      */
-    void changeDirection(Character newDirection);
+    void changeDirection(Direction newDirection);
 
     /**
      * Detects if the snake ate the food
