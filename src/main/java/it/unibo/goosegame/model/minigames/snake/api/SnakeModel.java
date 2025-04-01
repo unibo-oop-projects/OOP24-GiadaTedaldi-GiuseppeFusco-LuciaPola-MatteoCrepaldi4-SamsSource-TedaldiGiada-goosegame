@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model.minigames.snake;
+package it.unibo.goosegame.model.minigames.snake.api;
 
 public interface SnakeModel {
     /**
