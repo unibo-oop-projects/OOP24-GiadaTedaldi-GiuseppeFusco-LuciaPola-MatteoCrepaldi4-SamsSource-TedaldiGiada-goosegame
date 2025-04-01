@@ -1,10 +1,19 @@
 package it.unibo.goosegame.model.minigames.snake.impl;
 
+import java.util.List;
+
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
+import it.unibo.goosegame.utilities.Direction;
 import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 public class SnakeModelImpl implements SnakeModel, MinigamesModel {
+
+    List<Position> snakeBody;
+    Position food;
+    Direction direction;
+    boolean isGameOver;
 
     @Override
     public void move() {
