@@ -16,5 +16,5 @@ public interface DogLogic{
 
     public void wakeUp();
 
-    public boolean canSee();
+    public boolean canSee(int ocaX, int ocaY, boolean[][] shadows);
 }
