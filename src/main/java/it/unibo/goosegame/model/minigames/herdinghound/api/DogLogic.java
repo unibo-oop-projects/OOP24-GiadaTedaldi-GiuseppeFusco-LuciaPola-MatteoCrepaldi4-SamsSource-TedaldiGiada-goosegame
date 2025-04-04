@@ -6,15 +6,15 @@ import java.util.Random;
 
 public interface DogLogic{
 
-    public int getX();
+    int getX();
 
-    public int getY();
+    int getY();
 
-    public boolean isAwake();
+    boolean isAwake();
 
-    public int getDirection();
+    int getDirection();
 
-    public void wakeUp();
+    void wakeUp();
 
-    public boolean canSee(int ocaX, int ocaY, boolean[][] shadows);
+    boolean canSee(int ocaX, int ocaY, boolean[][] shadows);
 }
