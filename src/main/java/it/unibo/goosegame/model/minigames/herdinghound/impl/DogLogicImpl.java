@@ -2,17 +2,16 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import java.util.Random;
 
-import it.unibo.goosegame.model.minigames.herdinghound.api.DogLogic;
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 
-public class DogLogicImpl implements DogLogic{
+public class DogLogicImpl implements Dog{
 
     private int x, y;
     private boolean awake = false;
     private int direction;
     private Random random = new Random();
 
-    public DogLogicImpl(int x, int y){
+    public DogLogicImpl(int x, int y, int direction){
         this.x = x;
         this.y = y;
         this.direction = random.nextInt(4);

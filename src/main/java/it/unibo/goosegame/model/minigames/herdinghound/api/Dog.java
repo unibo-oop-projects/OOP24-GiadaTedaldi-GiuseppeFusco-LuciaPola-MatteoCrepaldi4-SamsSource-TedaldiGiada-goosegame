@@ -4,7 +4,7 @@ import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Position;
 import java.util.Random;
 
-public interface DogLogic{
+public interface Dog{
 
     int getX();
 
