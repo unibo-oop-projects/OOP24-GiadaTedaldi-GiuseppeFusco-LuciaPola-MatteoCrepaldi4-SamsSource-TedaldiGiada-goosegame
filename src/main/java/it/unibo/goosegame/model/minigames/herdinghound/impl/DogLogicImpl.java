@@ -5,16 +5,32 @@ import java.util.Random;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 
 public class DogLogicImpl implements Dog{
-
+    
     private int x, y;
-    private boolean awake = false;
-    private int direction;
-    private Random random = new Random();
+    private Direction direction;
+    private int gridSize;
 
-    public DogLogicImpl(int x, int y, int direction){
-        this.x = x;
-        this.y = y;
-        this.direction = random.nextInt(4);
+    public DogLogicImpl(int gridSize){
+        this.x = gridSize/2;
+        this.y = gridSize/2;
+        this.direction = Direction.LEFT;
+    }
+
+    public void refreshDirection(GooseLogicImpl goose){
+        int gx = goose.getX();
+        int gy = goose.getY();
+        
+        if(gx==0 && y<gridSize-1){
+            direction = Direction.LEFT;
+        }else if(y == gridSize-1 && x < gridSize -1){
+            direction = Direction.DOWN;
+        }else if (x == gridSize -1 && y > 0){
+            direction = Direction.LEFT;
+        }
+    }
+
+    public Direction getDirection(){
+        return direction;
     }
 
     @Override
@@ -26,51 +42,5 @@ public class DogLogicImpl implements Dog{
     public int getY() {
         return y;
     }
-
-    @Override
-    public boolean isAwake() {
-        return awake;
-    }
-
-    @Override
-    public int getDirection() {
-        return direction;
-    }
-
-    @Override
-    public void wakeUp() {
-        if(!awake){
-            awake = true;
-            direction = random.nextInt(4);
-        }
-    }
-
-    @Override
-    public boolean canSee(int ocaX, int ocaY, boolean[][] shadows) {
-        if(!awake) return false;
-        switch(direction){
-            case 0:
-                for (int i =y; i >=0; i--){
-                    if(shadows[i][x]) break;
-                    if(ocaX == x && ocaY == i) return true;
-                } break;
-            case 1: 
-                for (int i = x; i<shadows[0].length; i++){
-                    if (shadows[y][i]) break;
-                    if (ocaX == i && ocaY == y) return true;
-                    } break;
-            case 2:
-                for(int i = y; i<shadows.length; i++){
-                    if (shadows[i][x]) break;
-                    if (ocaX == x && ocaY == i) return true;
-                } break;
-            case 3:
-                for(int i = x; i>=0; i--){
-                    if(shadows[y][i]) break;
-                    if(ocaX == i && ocaY == y) return true;
-                } break;
-            }
-            return false;
-    }
-    
 }
+
