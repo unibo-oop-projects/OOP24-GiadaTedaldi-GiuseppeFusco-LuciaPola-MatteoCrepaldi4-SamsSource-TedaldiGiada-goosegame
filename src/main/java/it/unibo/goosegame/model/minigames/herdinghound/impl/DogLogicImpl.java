@@ -1,7 +1,5 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
-import java.util.Random;
-
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 
 public class DogLogicImpl implements Dog{
@@ -16,19 +14,21 @@ public class DogLogicImpl implements Dog{
         this.direction = Direction.LEFT;
     }
 
+    
     public void refreshDirection(GooseLogicImpl goose){
         int gx = goose.getX();
         int gy = goose.getY();
         
         if(gx==0 && y<gridSize-1){
             direction = Direction.LEFT;
-        }else if(y == gridSize-1 && x < gridSize -1){
+        }else if(gy == gridSize-1 && x < gridSize -1){
             direction = Direction.DOWN;
-        }else if (x == gridSize -1 && y > 0){
+        }else if (gx == gridSize -1 && y > 0){
             direction = Direction.LEFT;
         }
     }
 
+    @Override
     public Direction getDirection(){
         return direction;
     }
@@ -42,5 +42,6 @@ public class DogLogicImpl implements Dog{
     public int getY() {
         return y;
     }
+
 }
 
