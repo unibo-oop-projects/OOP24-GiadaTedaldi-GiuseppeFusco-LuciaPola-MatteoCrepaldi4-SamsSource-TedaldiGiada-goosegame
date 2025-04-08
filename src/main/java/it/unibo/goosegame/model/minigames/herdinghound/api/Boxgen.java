@@ -1,11 +1,13 @@
 package it.unibo.goosegame.model.minigames.herdinghound.api;
 
+import java.util.*;
+
 import it.unibo.goosegame.utilities.Pair;
 
-public interface Goose {
-    
-    public Pair<Integer,Integer> getCoord();
+public interface Boxgen {
 
-    void move(int dx, int dy);
+    List<Pair> getBoxes();
+
+    void generateBoxes();
 
 }
