@@ -5,13 +5,21 @@ import it.unibo.goosegame.utilities.Position;
 
 public interface TrisModel extends MinigamesModel{
 
-    boolean makeMove(Position position);
+    enum Player {
+        HUMAN, PC;
+    }
+
+    void makePcMove();
+
+    boolean makeHumanMove(Position position);
 
     boolean isFull();
 
     boolean isHuman(Position position);
 
     boolean isPc(Position position);
+
+    String getStatus();
 
     boolean checkWin();
 
