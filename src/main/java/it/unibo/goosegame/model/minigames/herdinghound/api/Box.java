@@ -4,7 +4,7 @@ import java.util.*;
 
 import it.unibo.goosegame.utilities.Pair;
 
-public interface Boxgen {
+public interface Box {
 
     List<Pair<Integer,Integer>> getBoxes();
 
