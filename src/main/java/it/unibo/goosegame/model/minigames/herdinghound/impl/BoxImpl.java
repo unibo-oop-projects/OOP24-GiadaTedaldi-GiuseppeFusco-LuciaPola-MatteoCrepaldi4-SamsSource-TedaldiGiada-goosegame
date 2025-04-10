@@ -10,41 +10,34 @@ import java.util.List;
 
 public class BoxImpl implements Boxgen {
 
-    private List<Pair<Integer,Integer>> eastBox = new ArrayList<>();
-    private List<Pair<Integer,Integer>> southBox = new ArrayList<>();
-    private List<Pair<Integer,Integer>> westBox = new ArrayList<>();
+    private List<Pair<Integer,Integer>> allBoxes = new ArrayList<>();
     private List<Pair<Integer,Integer>> shadows = new ArrayList<>();
     private int gridSize;
     private int boxDistance;
     private Random random;
+    private DogLogicImpl dog;
 
-    public BoxImpl(int gridSize){
+    public BoxImpl(int gridSize, DogLogicImpl dog){
         this.gridSize=gridSize;
         this.boxDistance=2;
         this.random = new Random();
+        this.dog = dog;
     }
 
     @Override
-    public List<Pair> getBoxes() {
-        List<Pair> allBoxes = new ArrayList<>();
-        allBoxes.clear();
-        allBoxes.addAll(westBox);
-        allBoxes.addAll(southBox);
-        allBoxes.addAll(eastBox);
+    public List<Pair<Integer,Integer>> getBoxes() {
         return allBoxes;
     }
 
     @Override
 public void generateBoxes() {
-    westBox.clear();
-    southBox.clear();
-    eastBox.clear();
+    allBoxes.clear();
     shadows.clear();
 
     for (int x = boxDistance, y = boxDistance; y < gridSize - boxDistance; y++) {
         if (random.nextDouble() < 0.6) {
             Pair<Integer, Integer> box = new Pair<>(x, y);
-            westBox.add(box);
+            allBoxes.add(box);
             generateShadows(box);
         }
     }
@@ -52,7 +45,7 @@ public void generateBoxes() {
     for (int x = boxDistance + 1, y = gridSize - boxDistance; x < gridSize - boxDistance; x++) {
         if (random.nextDouble() < 0.6) {
             Pair<Integer, Integer> box = new Pair<>(x, y);
-            southBox.add(box);
+            allBoxes.add(box);
             generateShadows(box);
         }
     }
@@ -60,55 +53,21 @@ public void generateBoxes() {
     for (int x = gridSize - boxDistance, y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
         if (random.nextDouble() < 0.6) {
             Pair<Integer, Integer> box = new Pair<>(x, y);
-            eastBox.add(box);
+            allBoxes.add(box);
             generateShadows(box);
         }
     }
 }
 
 private void generateShadows(Pair<Integer, Integer> box) {
-    int x = box.getX();
-    int y = box.getY();
-    int center = gridSize / 2;
-
-    if (x == boxDistance) {
-        if (y >= center - 2 && y <= center + 2) {
-            addShadowLine(x - 1, y, -1, 0);
-        } else if (y < center - 2) {
-            addShadowLine(x - 1, y - 1, -1, -1);
-        } else {
-            addShadowLine(x - 1, y + 1, -1, 1);
-        }
+    if(this.dog.getCoord().getX() > box.getX()){
+        shadows.add(new Pair<Integer,Integer>(box.getX()-1, box.getY()));
+    }else if(this.dog.getCoord().getY() < box.getY()){
+        shadows.add(new Pair<Integer,Integer>(box.getX(), box.getY()+1));
+    }else if(this.dog.getCoord().getX() < box.getX()){
+        shadows.add(new Pair<Integer,Integer>(box.getX()+1, box.getY()));
     }
-    else if (y == gridSize - boxDistance) {
-        if (x >= center - 2 && x <= center + 2) {
-            addShadowLine(x, y + 1, 0, 1);
-        } else if (x < center - 2) {
-            addShadowLine(x - 1, y + 1, -1, 1);
-        } else {
-            addShadowLine(x + 1, y + 1, 1, 1);
-        }
     }
-    else if (x == gridSize - boxDistance) {
-        if (y >= center - 2 && y <= center + 2) {
-            addShadowLine(x + 1, y, 1, 0);
-        } else if (y < center - 2) {
-            addShadowLine(x + 1, y - 1, 1, -1);
-        } else {
-            addShadowLine(x + 1, y + 1, 1, 1);
-        }
-    }
-}
-
-private void addShadowLine(int startX, int startY, int dx, int dy) {
-    int currX = startX;
-    int currY = startY;
-    while (currX >= 0 && currX < gridSize && currY >= 0 && currY < gridSize) {
-        shadows.add(new Pair<>(currX, currY));
-        currX += dx;
-        currY += dy;
-    }
-}
 
     public List<Pair<Integer,Integer>> getShadows(){
         return new ArrayList<>(shadows);

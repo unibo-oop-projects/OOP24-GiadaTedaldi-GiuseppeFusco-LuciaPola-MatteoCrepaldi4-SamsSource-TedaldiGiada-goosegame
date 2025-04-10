@@ -6,7 +6,7 @@ import it.unibo.goosegame.utilities.Pair;
 
 public interface Boxgen {
 
-    List<Pair> getBoxes();
+    List<Pair<Integer,Integer>> getBoxes();
 
     void generateBoxes();
 
