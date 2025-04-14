@@ -1,15 +1,18 @@
 package it.unibo.goosegame.model.general;
 
-import it.unibo.goosegame.utilities.Pair;
-
 public interface MinigamesModel {
+
+    public enum GameState{
+        ONGOING,
+        WON,
+        LOST
+    }
 
     void resetGame();
 
-    Pair<String,Integer> getResult();
+    void nextGooseMove();
 
-    String getName();
+    GameState getGameState();
 
     boolean isOver();
-
-}
+    }

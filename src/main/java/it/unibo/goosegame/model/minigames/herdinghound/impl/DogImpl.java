@@ -6,7 +6,7 @@ import java.util.List;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 import it.unibo.goosegame.utilities.Pair;
 
-public class DogLogicImpl implements Dog{
+public class DogImpl implements Dog{
     
     private int x, y;
     private Direction direction;
@@ -14,7 +14,7 @@ public class DogLogicImpl implements Dog{
     private State state;
     private List<Pair<Integer, Integer>> visibleArea;
 
-    public DogLogicImpl(int gridSize){
+    public DogImpl(int gridSize){
         this.x = gridSize/2;
         this.y = gridSize/2;
         this.direction = Direction.LEFT;
@@ -23,7 +23,7 @@ public class DogLogicImpl implements Dog{
     }
 
     
-    public void refreshDirection(GooseLogicImpl goose){
+    public void refreshDirection(GooseImpl goose){
         int gx = goose.getCoord().getX();
         int gy = goose.getCoord().getY();
         
@@ -121,6 +121,14 @@ public class DogLogicImpl implements Dog{
 
     public List<Pair<Integer, Integer>> getVisibleArea() {
         return new ArrayList<>(visibleArea);
+    }
+
+    public void reset() {
+        this.x = gridSize / 2;
+        this.y = gridSize / 2;
+        this.direction = Direction.LEFT;
+        this.state = State.ASLEEP;
+        this.visibleArea.clear();
     }
 
 }
