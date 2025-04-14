@@ -95,4 +95,9 @@ public class HerdingHoundModel implements MinigamesModel {
             .filter(pos -> !box.getShadows().contains(pos))
             .collect(Collectors.toList());
     }
+
+    public void nextDogState() {
+        dog.refreshState();
+    }
+    
 }
