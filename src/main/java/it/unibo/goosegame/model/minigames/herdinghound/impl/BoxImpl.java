@@ -1,8 +1,7 @@
-
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
+
 import java.util.Random;
 import java.util.Set;
-
 import it.unibo.goosegame.model.minigames.herdinghound.api.Box;
 import it.unibo.goosegame.utilities.Pair;
 
@@ -13,108 +12,94 @@ import java.util.List;
 public class BoxImpl implements Box {
 
     private static final double BOX_PROBABILITY = 0.6;
+    private static final int BORDER_MARGIN_DIVISOR = 5;
+    private static final int SHADOW_WIDTH_MIN_DIVISOR = 10;
+    private static final int SHADOW_MAX_LENGTH = 1000;
 
-    private List<Pair<Integer,Integer>> allBoxes = new ArrayList<>();
-    private Set<Pair<Integer,Integer>> shadows = new HashSet<>();
-    private int gridSize;
-    private int boxDistance;
-    private Random random;
-    private Pair<Integer,Integer> pointLux;
+    private final List<Pair<Integer, Integer>> allBoxes = new ArrayList<>();
+    private final Set<Pair<Integer, Integer>> shadows = new HashSet<>();
+    private final int gridSize;
+    private final int boxDistance;
+    private final Random random;
+    private final Pair<Integer, Integer> pointLux;
 
-    public BoxImpl(int gridSize, DogImpl dog){
-        this.gridSize=gridSize;
-        this.boxDistance=gridSize/5;
+    public BoxImpl(int gridSize, DogImpl dog) {
+        this.gridSize = gridSize;
+        this.boxDistance = gridSize / BORDER_MARGIN_DIVISOR;
         this.random = new Random();
-        this.pointLux = new Pair<Integer,Integer>( dog.getCoord().getX(), dog.getCoord().getY());
+        this.pointLux = new Pair<>(dog.getCoord().getX(), dog.getCoord().getY());
     }
 
     @Override
-    public List<Pair<Integer,Integer>> getBoxes() {
+    public List<Pair<Integer, Integer>> getBoxes() {
         return allBoxes;
     }
 
     @Override
-public void generateBoxes() {
-    allBoxes.clear();
-    shadows.clear();
+    public void generateBoxes() {
+        allBoxes.clear();
+        shadows.clear();
 
-    for (int x = boxDistance, y = boxDistance; y < gridSize - boxDistance; y++) {
+        for (int y = boxDistance; y < gridSize - boxDistance; y++) {
+            tryAddBox(new Pair<>(boxDistance, y));
+        }
+
+        for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
+            tryAddBox(new Pair<>(x, gridSize - boxDistance));
+        }
+
+        for (int y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
+            tryAddBox(new Pair<>(gridSize - boxDistance, y));
+        }
+
+        for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
+            tryAddBox(new Pair<>(x, boxDistance));
+        }
+    }
+
+    private void tryAddBox(Pair<Integer, Integer> box) {
         if (random.nextDouble() < BOX_PROBABILITY) {
-            Pair<Integer, Integer> box = new Pair<>(x, y);
             allBoxes.add(box);
             generateShadows(box);
         }
     }
 
-    for (int x = boxDistance + 1, y = gridSize - boxDistance; x < gridSize - boxDistance; x++) {
-        if (random.nextDouble() < BOX_PROBABILITY) {
-            Pair<Integer, Integer> box = new Pair<>(x, y);
-            allBoxes.add(box);
-            generateShadows(box);
-        }
-    }
+    private void generateShadows(Pair<Integer, Integer> box) {
+        int lightX = pointLux.getX();
+        int lightY = pointLux.getY();
 
-    for (int x = gridSize - boxDistance, y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
-        if (random.nextDouble() < BOX_PROBABILITY) {
-            Pair<Integer, Integer> box = new Pair<>(x, y);
-            allBoxes.add(box);
-            generateShadows(box);
-        }
-    }
+        int dx = box.getX() - lightX;
+        int dy = box.getY() - lightY;
 
-    for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
-        int y = boxDistance;
-        if (random.nextDouble() < BOX_PROBABILITY) {
-            Pair<Integer, Integer> box = new Pair<>(x, y);
-            allBoxes.add(box);
-            generateShadows(box);
-        }
-    }
-}
+        int stepX = Integer.compare(dx, 0);
+        int stepY = Integer.compare(dy, 0);
 
-private void generateShadows(Pair<Integer, Integer> box) {
-    int lightX = pointLux.getX();
-    int lightY = pointLux.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        int shadowWidth = (int) Math.max(gridSize / SHADOW_WIDTH_MIN_DIVISOR, gridSize / distance);
+        int shadowLength = Math.min(gridSize, SHADOW_MAX_LENGTH);
 
-    int dx = box.getX() - lightX;
-    int dy = box.getY() - lightY;
+        int shadowX = box.getX() + stepX;
+        int shadowY = box.getY() + stepY;
 
-    int stepX = (dx == 0) ? 0 : dx / Math.abs(dx);
-    int stepY = (dy == 0) ? 0 : dy / Math.abs(dy);
+        while (isInBounds(shadowX, shadowY) && shadowLength-- > 0) {
+            for (int i = -shadowWidth; i <= shadowWidth; i++) {
+                int newShadowX = shadowX + i * stepY;
+                int newShadowY = shadowY + i * stepX;
 
-    double distance = Math.sqrt(dx * dx + dy * dy);
-    
-    int shadowWidth = (int) (Math.max(gridSize / 10, gridSize / distance));
-
-    int shadowLength = gridSize;
-
-    int shadowX = box.getX() + stepX;
-    int shadowY = box.getY() + stepY;
-
-    while (shadowX >= 0 && shadowX < gridSize && shadowY >= 0 && shadowY < gridSize && shadowLength > 0) {
-
-        for (int i = -shadowWidth; i <= shadowWidth; i++) {
-            int newShadowX = shadowX + i * stepX;
-            int newShadowY = shadowY + i * stepY;
-
-            if (newShadowX >= 0 && newShadowX < gridSize && newShadowY >= 0 && newShadowY < gridSize) {
-                Pair<Integer, Integer> shadowCell = new Pair<>(newShadowX, newShadowY);
-                
-                if (!shadows.contains(shadowCell)) {
-                    shadows.add(shadowCell);
+                if (isInBounds(newShadowX, newShadowY)) {
+                    shadows.add(new Pair<>(newShadowX, newShadowY));
                 }
             }
+            shadowX += stepX;
+            shadowY += stepY;
         }
-        
-        shadowX += stepX;
-        shadowY += stepY;
-        shadowLength--;
     }
-}
 
+    private boolean isInBounds(int x, int y) {
+        return x >= 0 && x < gridSize && y >= 0 && y < gridSize;
+    }
 
-
-    public List<Pair<Integer,Integer>> getShadows(){
+    public List<Pair<Integer, Integer>> getShadows() {
         return new ArrayList<>(shadows);
     }
 }

@@ -6,116 +6,113 @@ import java.util.List;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 import it.unibo.goosegame.utilities.Pair;
 
-public class DogImpl implements Dog{
-    
-    private int x, y;
-    private Direction direction;
-    private int gridSize;
-    private State state;
-    private List<Pair<Integer, Integer>> visibleArea;
+public class DogImpl implements Dog {
 
-    public DogImpl(int gridSize){
+    private static final int CENTER_DIVISOR = 2;
+    private static final int FIRST_STEP = 1;
+    private static final Direction INITIAL_DIRECTION = Direction.LEFT;
+    private static final State INITIAL_STATE = State.ASLEEP;
+
+    private final int gridSize;
+    private Direction direction;
+    private State state;
+    private Pair<Integer, Integer> position;
+    private final List<Pair<Integer, Integer>> visibleArea;
+
+    public DogImpl(int gridSize) {
         this.gridSize = gridSize;
-        this.x = gridSize/2;
-        this.y = gridSize/2;
-        this.direction = Direction.LEFT;
-        this.state = State.ASLEEP;
+        this.position = new Pair<>(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
+        this.direction = INITIAL_DIRECTION;
+        this.state = INITIAL_STATE;
         this.visibleArea = new ArrayList<>();
     }
 
-    
-    public void refreshDirection(GooseImpl goose){
+    public void refreshDirection(GooseImpl goose) {
         int gx = goose.getCoord().getX();
         int gy = goose.getCoord().getY();
-        
-        if(gx==0 && y<gridSize-1){
+        int px = position.getX();
+        int py = position.getY();
+
+        if (gx == 0 && py < gridSize - 1) {
             direction = Direction.LEFT;
-        }else if(gy == gridSize-1 && x < gridSize -1){
+        } else if (gy == gridSize - 1 && px < gridSize - 1) {
             direction = Direction.DOWN;
-        }else if (gx == gridSize -1 && y > 0){
+        } else if (gx == gridSize - 1 && py > 0) {
             direction = Direction.RIGHT;
-        }else{
+        } else {
             direction = Direction.UP;
         }
+
         updateVisibleArea();
     }
 
-    public void refreshState(){
-        if(state.equals(State.ASLEEP)){
-            this.state=State.ALERT;
-        }else if(state.equals(State.ALERT)){
-            this.state=State.AWAKE;
-        }else if(state.equals(State.AWAKE)){
-            this.state=State.ASLEEP;
+    public void refreshState() {
+        switch (state) {
+            case ASLEEP -> state = State.ALERT;
+            case ALERT -> state = State.AWAKE;
+            case AWAKE -> state = State.ASLEEP;
         }
     }
 
-    public State getState(){
+    public State getState() {
         return this.state;
     }
 
     @Override
-    public Direction getDirection(){
+    public Direction getDirection() {
         return direction;
     }
 
     @Override
-   public Pair<Integer,Integer> getCoord(){
-        return new Pair<>(this.x, this.y);
+    public Pair<Integer, Integer> getCoord() {
+        return new Pair<>(position.getX(), position.getY());
     }
 
     private void updateVisibleArea() {
-        this.visibleArea.clear();
+        visibleArea.clear();
+        if (state != State.AWAKE) {
+            return;
+        }
 
-        if(this.state.equals(State.AWAKE)){
-        switch (this.direction) {
-            case UP:
-                for (int dy = 1; y - dy >= 0; dy++) {
-                    int startX = x - dy;
-                    int endX = x + dy;
-                    for (int dx = startX; dx <= endX; dx++) {
+        int x = position.getX();
+        int y = position.getY();
+
+        switch (direction) {
+            case UP -> {
+                for (int dy = FIRST_STEP; y - dy >= 0; dy++) {
+                    for (int dx = x - dy; dx <= x + dy; dx++) {
                         if (dx >= 0 && dx < gridSize) {
                             visibleArea.add(new Pair<>(dx, y - dy));
                         }
                     }
                 }
-                break;
-
-            case DOWN:
-                for (int dy = 1; y + dy < gridSize; dy++) {
-                    int startX = x - dy;
-                    int endX = x + dy;
-                    for (int dx = startX; dx <= endX; dx++) {
+            }
+            case DOWN -> {
+                for (int dy = FIRST_STEP; y + dy < gridSize; dy++) {
+                    for (int dx = x - dy; dx <= x + dy; dx++) {
                         if (dx >= 0 && dx < gridSize) {
                             visibleArea.add(new Pair<>(dx, y + dy));
                         }
                     }
                 }
-                break;
-
-            case LEFT:
-                for (int dx = 1; x - dx >= 0; dx++) {
-                    int startY = y - dx;
-                    int endY = y + dx;
-                    for (int dy = startY; dy <= endY; dy++) {
+            }
+            case LEFT -> {
+                for (int dx = FIRST_STEP; x - dx >= 0; dx++) {
+                    for (int dy = y - dx; dy <= y + dx; dy++) {
                         if (dy >= 0 && dy < gridSize) {
                             visibleArea.add(new Pair<>(x - dx, dy));
                         }
                     }
                 }
-                break;
-
-            case RIGHT:
-                for (int dx = 1; x + dx < gridSize; dx++) {
-                    int startY = y - dx;
-                    int endY = y + dx;
-                    for (int dy = startY; dy <= endY; dy++) {
+            }
+            case RIGHT -> {
+                for (int dx = FIRST_STEP; x + dx < gridSize; dx++) {
+                    for (int dy = y - dx; dy <= y + dx; dy++) {
                         if (dy >= 0 && dy < gridSize) {
                             visibleArea.add(new Pair<>(x + dx, dy));
                         }
                     }
                 }
-                break;
             }
         }
     }
@@ -125,12 +122,11 @@ public class DogImpl implements Dog{
     }
 
     public void reset() {
-        this.x = gridSize / 2;
-        this.y = gridSize / 2;
-        this.direction = Direction.LEFT;
-        this.state = State.ASLEEP;
+        this.position = new Pair<>(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
+        this.direction = INITIAL_DIRECTION;
+        this.state = INITIAL_STATE;
         this.visibleArea.clear();
     }
-
 }
+
 

@@ -3,28 +3,32 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Goose;
 import it.unibo.goosegame.utilities.Pair;
 
-public class GooseImpl implements Goose{
+public class GooseImpl implements Goose {
     
-    private int x, y;
+    private Pair<Integer, Integer> position;
+    private int startX;
+    private int startY;
 
-    public GooseImpl(){
-        this.x=0;
-        this.y=0;
+    public GooseImpl(int startX, int startY) {
+        this.startX = startX;
+        this.startY = startY;
+        this.position = new Pair<>(startX, startY);
     }
 
-    public Pair<Integer,Integer> getCoord(){
-        return new Pair<>(this.x, this.y);
+    @Override
+    public Pair<Integer, Integer> getCoord() {
+        return position;
     }
 
     @Override
     public void move(int dx, int dy) {
-        x += dx;
-        y += dy;
+        int newX = position.getX() + dx;
+        int newY = position.getY() + dy;
+        this.position = new Pair<>(newX, newY);
     }
 
-    public void reset(){
-        this.x=0;
-        this.y=0;
+    public void reset() {
+        this.position = new Pair<>(startX, startY);
     }
-    
 }
+

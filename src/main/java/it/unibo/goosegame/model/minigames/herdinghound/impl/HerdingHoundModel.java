@@ -6,19 +6,22 @@ import java.util.stream.Collectors;
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Pair;
 
-public class HerdingHoundModel implements MinigamesModel{
+public class HerdingHoundModel implements MinigamesModel {
+
+    private static final int START_X = 0;
+    private static final int START_Y = 0;
 
     private final GooseImpl goose;
     private final DogImpl dog;
     private final BoxImpl box;
     private final int gridSize;
 
-    public HerdingHoundModel(int gridSize){
+    public HerdingHoundModel(int gridSize) {
         this.gridSize = gridSize;
-        this.goose = new GooseImpl();
-        this.dog = new DogImpl(this.gridSize);
+        this.goose = new GooseImpl(START_X, START_Y);
+        this.dog = new DogImpl(gridSize);
         this.box = new BoxImpl(gridSize, dog);
-        box.generateBoxes();
+        this.box.generateBoxes();
     }
 
     public void nextGooseMove() {
@@ -26,13 +29,13 @@ public class HerdingHoundModel implements MinigamesModel{
         int x = pos.getX();
         int y = pos.getY();
 
-        if (x == 0 && y < gridSize - 1) {
+        if (x == START_X && y < gridSize - 1) {
             goose.move(0, 1);
         } else if (y == gridSize - 1 && x < gridSize - 1) {
             goose.move(1, 0);
         } else if (x == gridSize - 1 && y > 0) {
             goose.move(0, -1);
-        }else if (y == 0 && x > 0) {
+        } else if (y == START_Y && x > START_X) {
             goose.move(-1, 0);
         }
 
@@ -53,14 +56,10 @@ public class HerdingHoundModel implements MinigamesModel{
 
     @Override
     public void resetGame() {
-
-    goose.reset();
-
-    dog.reset();
-
-    box.generateBoxes();
-
-    dog.refreshDirection(goose);
+        goose.reset();
+        dog.reset();
+        box.generateBoxes();
+        dog.refreshDirection(goose);
     }
 
     @Override
@@ -79,25 +78,21 @@ public class HerdingHoundModel implements MinigamesModel{
     }
 
     private boolean hasWon() {
-        return goose.getCoord().equals(new Pair<>(gridSize - 1, 0));
+        Pair<Integer, Integer> winPosition = new Pair<>(gridSize - 1, START_Y);
+        return goose.getCoord().equals(winPosition);
     }
 
     private boolean hasLost() {
         if (dog.getState() != DogImpl.State.AWAKE) {
             return false;
         }
-        Pair<Integer, Integer> goosePos = goose.getCoord();
-        List<Pair<Integer, Integer>> visible = getVisible();
-        return visible.contains(goosePos);
+
+        return getVisible().contains(goose.getCoord());
     }
 
     public List<Pair<Integer, Integer>> getVisible() {
-        List<Pair<Integer, Integer>> visible = dog.getVisibleArea();
-        List<Pair<Integer, Integer>> shadows = box.getShadows();
-
-        return visible.stream()
-            .filter(pos -> !shadows.contains(pos))
+        return dog.getVisibleArea().stream()
+            .filter(pos -> !box.getShadows().contains(pos))
             .collect(Collectors.toList());
     }
-    
 }
