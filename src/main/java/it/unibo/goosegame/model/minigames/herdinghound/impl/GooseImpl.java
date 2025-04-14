@@ -22,9 +22,9 @@ public class GooseImpl implements Goose{
         y += dy;
     }
 
-    public void reset() {
-        this.x = 0;
-        this.y = 0;
+    public void reset(){
+        this.x=0;
+        this.y=0;
     }
     
 }

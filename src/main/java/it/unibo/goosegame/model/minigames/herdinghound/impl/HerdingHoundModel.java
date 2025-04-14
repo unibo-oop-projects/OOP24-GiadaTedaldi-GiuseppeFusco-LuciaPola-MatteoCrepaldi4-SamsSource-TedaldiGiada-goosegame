@@ -32,6 +32,8 @@ public class HerdingHoundModel implements MinigamesModel{
             goose.move(1, 0);
         } else if (x == gridSize - 1 && y > 0) {
             goose.move(0, -1);
+        }else if (y == 0 && x > 0) {
+            goose.move(-1, 0);
         }
 
         dog.refreshDirection(goose);
@@ -51,7 +53,7 @@ public class HerdingHoundModel implements MinigamesModel{
 
     @Override
     public void resetGame() {
-        
+
     goose.reset();
 
     dog.reset();

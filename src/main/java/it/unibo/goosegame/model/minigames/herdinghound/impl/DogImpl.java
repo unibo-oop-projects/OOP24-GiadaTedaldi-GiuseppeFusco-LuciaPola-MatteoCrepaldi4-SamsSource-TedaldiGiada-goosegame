@@ -15,6 +15,7 @@ public class DogImpl implements Dog{
     private List<Pair<Integer, Integer>> visibleArea;
 
     public DogImpl(int gridSize){
+        this.gridSize = gridSize;
         this.x = gridSize/2;
         this.y = gridSize/2;
         this.direction = Direction.LEFT;

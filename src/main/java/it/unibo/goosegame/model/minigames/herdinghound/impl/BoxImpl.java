@@ -1,23 +1,27 @@
 
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 import java.util.Random;
+import java.util.Set;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.Box;
 import it.unibo.goosegame.utilities.Pair;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class BoxImpl implements Box {
 
+    private static final double BOX_PROBABILITY = 0.6;
+
     private List<Pair<Integer,Integer>> allBoxes = new ArrayList<>();
-    private List<Pair<Integer,Integer>> shadows = new ArrayList<>();
+    private Set<Pair<Integer,Integer>> shadows = new HashSet<>();
     private int gridSize;
     private int boxDistance;
     private Random random;
     private Pair<Integer,Integer> pointLux;
 
-    public BoxImpl(int gridSize, DogLogicImpl dog){
+    public BoxImpl(int gridSize, DogImpl dog){
         this.gridSize=gridSize;
         this.boxDistance=gridSize/5;
         this.random = new Random();
@@ -35,7 +39,7 @@ public void generateBoxes() {
     shadows.clear();
 
     for (int x = boxDistance, y = boxDistance; y < gridSize - boxDistance; y++) {
-        if (random.nextDouble() < 0.6) {
+        if (random.nextDouble() < BOX_PROBABILITY) {
             Pair<Integer, Integer> box = new Pair<>(x, y);
             allBoxes.add(box);
             generateShadows(box);
@@ -43,7 +47,7 @@ public void generateBoxes() {
     }
 
     for (int x = boxDistance + 1, y = gridSize - boxDistance; x < gridSize - boxDistance; x++) {
-        if (random.nextDouble() < 0.6) {
+        if (random.nextDouble() < BOX_PROBABILITY) {
             Pair<Integer, Integer> box = new Pair<>(x, y);
             allBoxes.add(box);
             generateShadows(box);
@@ -51,7 +55,16 @@ public void generateBoxes() {
     }
 
     for (int x = gridSize - boxDistance, y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
-        if (random.nextDouble() < 0.6) {
+        if (random.nextDouble() < BOX_PROBABILITY) {
+            Pair<Integer, Integer> box = new Pair<>(x, y);
+            allBoxes.add(box);
+            generateShadows(box);
+        }
+    }
+
+    for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
+        int y = boxDistance;
+        if (random.nextDouble() < BOX_PROBABILITY) {
             Pair<Integer, Integer> box = new Pair<>(x, y);
             allBoxes.add(box);
             generateShadows(box);
