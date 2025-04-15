@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
+import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Direction;
+import it.unibo.goosegame.utilities.Pair;
 import it.unibo.goosegame.utilities.Position;
 
-public class SnakeModelImpl implements SnakeModel {
+public class SnakeModelImpl implements MinigamesModel, SnakeModel {
     private static final int WIN_SCORE = 15;
     public static final int TABLE_WIDTH = 30; 
     public static final int TABLE_HEIGHT = 20;
@@ -23,15 +25,22 @@ public class SnakeModelImpl implements SnakeModel {
         resetGame();
     }
     
-    public void resetGame() {
-        this.snakeBody = new ArrayList<>();
-        this.snakeBody.add(new Position(TABLE_WIDTH / 2, TABLE_HEIGHT / 2));
-        this.direction = Direction.RIGHT;
-        this.isGameOver = false;
-        this.score = 0;
-        generateFood();
+    @Override
+    public String getName() {
+        return "Snake Game";
     }
-    
+
+    @Override
+    public boolean isOver() {
+        return this.isGameOver;
+    }
+
+    @Override
+    public Pair<String, Integer> getResult() {
+        return checkWin() ? new Pair<String,Integer>("You win!", 1) : new Pair<String,Integer>("You lose", -1);
+    }
+
+    @Override
     public int move() {
         if (isGameOver) {
             return 0;
@@ -56,7 +65,47 @@ public class SnakeModelImpl implements SnakeModel {
 
         return 1;
     }
-    
+
+    @Override
+    public void changeDirection(Direction newDirection) {
+        if ((direction == Direction.UP && newDirection != Direction.DOWN) ||
+        (direction == Direction.DOWN && newDirection != Direction.UP) ||
+        (direction == Direction.LEFT && newDirection != Direction.RIGHT) ||
+        (direction == Direction.RIGHT && newDirection != Direction.LEFT)) {
+        direction = newDirection;
+    }
+    }
+
+    @Override
+    public boolean checkWin() {
+        return this.score == WIN_SCORE;
+    }
+
+    @Override
+    public List<Position> getSnakeBody() {
+        return this.snakeBody;
+    }
+
+    @Override
+    public Position getFood() {
+        return this.food;
+    }
+
+    @Override
+    public int getScore() {
+        return this.score;
+    }
+
+    @Override
+    public void resetGame() {
+        this.snakeBody = new ArrayList<>();
+        this.snakeBody.add(new Position(TABLE_WIDTH / 2, TABLE_HEIGHT / 2));
+        this.direction = Direction.RIGHT;
+        this.isGameOver = false;
+        this.score = 0;
+        generateFood();
+    }
+
     private Position getNextPosition(Position head) {
         int x = head.x();
         int y = head.y();
@@ -70,7 +119,7 @@ public class SnakeModelImpl implements SnakeModel {
         
         return new Position(x, y);
     }
-    
+
     private boolean checkCollision(Position newHead) {
         if(newHead.x() < 0 || newHead.x() >= TABLE_WIDTH || newHead.y() < 0 || newHead.y() >= TABLE_HEIGHT) {
             return true;
@@ -91,33 +140,5 @@ public class SnakeModelImpl implements SnakeModel {
             y = rand.nextInt(TABLE_HEIGHT);
             food = new Position(x, y);
         } while (snakeBody.contains(food));
-    }
-    
-    public void changeDirection(Direction newDirection) {
-        if ((direction == Direction.UP && newDirection != Direction.DOWN) ||
-            (direction == Direction.DOWN && newDirection != Direction.UP) ||
-            (direction == Direction.LEFT && newDirection != Direction.RIGHT) ||
-            (direction == Direction.RIGHT && newDirection != Direction.LEFT)) {
-            direction = newDirection;
-        }
-    }
-    
-    public boolean checkWin() {
-        return this.score==WIN_SCORE;
-    }
-    public List<Position> getSnakeBody() {
-        return this.snakeBody;
-    }
-    
-    public Position getFood() {
-        return this.food;
-    }
-    
-    public boolean isGameOver() {
-        return this.isGameOver;
-    }
-
-    public int getScore() {
-        return this.score;
     }
 }

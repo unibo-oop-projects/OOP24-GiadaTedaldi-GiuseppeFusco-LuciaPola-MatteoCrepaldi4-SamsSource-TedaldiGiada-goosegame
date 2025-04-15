@@ -49,7 +49,7 @@ public class SnakeController extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 model.move();
                 view.repaint();
-                if (model.isGameOver() || model.checkWin()) {
+                if (model.isOver() || model.checkWin()) {
                     timer.stop();
                     JOptionPane.showMessageDialog(null, model.checkWin() ? "You win!" : "Game Over!");
                     dispose();

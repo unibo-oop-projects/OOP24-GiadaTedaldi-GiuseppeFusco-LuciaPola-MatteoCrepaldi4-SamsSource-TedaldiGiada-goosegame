@@ -11,6 +11,5 @@ public interface SnakeModel {
     boolean checkWin();
     List<Position> getSnakeBody();
     Position getFood();
-    boolean isGameOver();
     int getScore();
 }
