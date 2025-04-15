@@ -1,32 +1,16 @@
 package it.unibo.goosegame.model.minigames.snake.api;
+import java.util.List;
 
 import it.unibo.goosegame.utilities.Direction;
+import it.unibo.goosegame.utilities.Position;
 
 public interface SnakeModel {
-    /**
-     * Moves the snake in the current direction
-     */
-    void move();
-
-    /**
-     * Checks if the snake hits himself or the boundaries
-     */
-    void checkCollision();
-
-    /**
-     * Places food at a random location
-     */
-    void generateFood();
-
-    /**
-     * Updates the direction of the snake
-     * @param newDirection is the new direction of the snake
-     */
+    void resetGame();
+    int move();
     void changeDirection(Direction newDirection);
-
-    /**
-     * Detects if the snake ate the food
-     * @return whether the snake ates food or not
-     */
-    boolean checkFoodEaten();
+    boolean checkWin();
+    List<Position> getSnakeBody();
+    Position getFood();
+    boolean isGameOver();
+    int getScore();
 }
