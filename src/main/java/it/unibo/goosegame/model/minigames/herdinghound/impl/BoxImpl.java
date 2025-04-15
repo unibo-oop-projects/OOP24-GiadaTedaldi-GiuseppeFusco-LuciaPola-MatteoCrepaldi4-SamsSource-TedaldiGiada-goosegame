@@ -12,7 +12,7 @@ import java.util.List;
 public class BoxImpl implements Box {
 
     private static final double BOX_PROBABILITY = 0.6;
-    private static final int BORDER_MARGIN_DIVISOR = 5;
+    private static final int BORDER_MARGIN_DIVISOR = 3;
     private static final int SHADOW_WIDTH_MIN_DIVISOR = 10;
     private static final int SHADOW_MAX_LENGTH = 1000;
 
@@ -25,7 +25,7 @@ public class BoxImpl implements Box {
 
     public BoxImpl(int gridSize, DogImpl dog) {
         this.gridSize = gridSize;
-        this.boxDistance = gridSize / BORDER_MARGIN_DIVISOR;
+        this.boxDistance = BORDER_MARGIN_DIVISOR;
         this.random = new Random();
         this.pointLux = new Pair<>(dog.getCoord().getX(), dog.getCoord().getY());
     }
@@ -69,7 +69,7 @@ public class BoxImpl implements Box {
         int lightY = pointLux.getY();
 
         int dx = box.getX() - lightX;
-        int dy = box.getY() - lightY;
+        int dy = box.getY() - lightY;   
 
         int stepX = Integer.compare(dx, 0);
         int stepY = Integer.compare(dy, 0);
@@ -96,7 +96,8 @@ public class BoxImpl implements Box {
     }
 
     private boolean isInBounds(int x, int y) {
-        return x >= 0 && x < gridSize && y >= 0 && y < gridSize;
+        return !((x > boxDistance && x < gridSize - boxDistance) && (y > boxDistance && y < gridSize-boxDistance)) &&
+         (x >= 0 && x < gridSize && y >= 0 && y < gridSize);
     }
 
     public List<Pair<Integer, Integer>> getShadows() {
