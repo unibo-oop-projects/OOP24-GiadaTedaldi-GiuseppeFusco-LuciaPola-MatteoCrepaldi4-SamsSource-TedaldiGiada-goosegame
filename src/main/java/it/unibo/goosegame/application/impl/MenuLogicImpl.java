@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application;
+package it.unibo.goosegame.application.impl;
 
 import java.util.ArrayList;
 import java.util.List;
