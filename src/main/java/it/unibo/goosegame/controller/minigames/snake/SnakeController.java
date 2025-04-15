@@ -23,7 +23,7 @@ public class SnakeController extends JFrame {
 
         add(view);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Snake Game");
+        setTitle(model.getName());
         view.setPreferredSize(new Dimension(600, 400));
         pack();
         setLocationRelativeTo(null);
@@ -43,7 +43,7 @@ public class SnakeController extends JFrame {
             }
         });
 
-        // Game loop (runs every 150ms)
+        // Game loop (runs every 100ms)
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,7 +51,7 @@ public class SnakeController extends JFrame {
                 view.repaint();
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
-                    JOptionPane.showMessageDialog(null, model.checkWin() ? "You win!" : "Game Over!");
+                    JOptionPane.showMessageDialog(null, model.getResult().getX());
                     dispose();
                 }
             }
