@@ -150,4 +150,9 @@ public class TrisModelImpl implements TrisModel{
         }
     }
 
+    @Override
+    public Map<Position, Player> getGrid() {
+        return this.grid;
+    }
+
 }

@@ -1,5 +1,7 @@
 package it.unibo.goosegame.model.minigames.tris.api;
 
+import java.util.Map;
+
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Position;
 
@@ -20,6 +22,8 @@ public interface TrisModel extends MinigamesModel{
     boolean isPc(Position position);
 
     String getStatus();
+
+    Map<Position,Player> getGrid();
 
     boolean checkWin();
 
