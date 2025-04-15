@@ -8,15 +8,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for {@link TrisModelImpl}.
+ */
 public class TestTrisModelImpl {
 
     private TrisModel model;
 
+    /**
+     * Initializes a new TrisModel before each test.
+     */
     @BeforeEach
     void init() {
         model = new TrisModelImpl();
     }
 
+    /**
+     * Tests the initial state of the game after construction.
+     */
     @Test
     void testInit() {
         assertFalse(model.isOver());
@@ -24,6 +33,9 @@ public class TestTrisModelImpl {
         assertEquals("Your turn!", model.getStatus());
     }
 
+    /**
+     * Tests that a human move is correctly registered and disallows duplicate moves. 
+     */
     @Test
     void testMakeHumanMove() {
         Position pos = new Position(0, 0);
@@ -32,6 +44,9 @@ public class TestTrisModelImpl {
         assertFalse(model.makeHumanMove(pos));
     }
 
+    /**
+     * Tests that PC makes a valid move after the human's turn.
+     */
     @Test
     void testMakePCMove() {
         Position pos = new Position(0, 0);
@@ -52,6 +67,9 @@ public class TestTrisModelImpl {
         assertTrue(pcMoved, "The PC should have moved.");
     }
 
+    /**
+     * Tests a win condition for the human player.
+     */
     @Test
     void testWin() {
         TestUtils.forceMove(model, new Position(0, 0), true);
@@ -63,6 +81,9 @@ public class TestTrisModelImpl {
         assertEquals(-1, model.getResult());  
     }
 
+    /**
+     * Tests a draw condition: full grid with no winners.
+     */
     @Test
     void testDraw() {
         TestUtils.forceMove(model, new Position(0, 0), true);
@@ -81,6 +102,9 @@ public class TestTrisModelImpl {
         assertEquals(3, model.getResult());
     }
 
+    /**
+     * Tests that the game reset properly, clearing the grid and restoring the initial state.
+     */
     @Test
     void testResetGamed() {
         model.makeHumanMove(new Position(0, 0));
@@ -91,7 +115,18 @@ public class TestTrisModelImpl {
         assertEquals("Your turn!", model.getStatus());
     }
 
+    /**
+     * Utility class to assist with test setup by directly modifying the game state.
+     */
     private static class TestUtils {
+        /**
+        * Places a piece at the specified position directly into the model,
+        * bypassing turn logic. Intended for tests setup only.
+        *
+        * @param model  the TrisModel instance to modify 
+        * @param pos    the position on the board
+        * @param isHuman true if placing a human move, false for PC
+        */
         public static void forceMove(TrisModel model, Position pos, boolean isHuman) {
             model.getGrid().put(pos, isHuman? TrisModel.Player.HUMAN : TrisModel.Player.PC);
         }
