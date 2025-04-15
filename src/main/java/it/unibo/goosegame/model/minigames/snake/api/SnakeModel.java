@@ -1,10 +1,11 @@
 package it.unibo.goosegame.model.minigames.snake.api;
 import java.util.List;
 
+import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Direction;
 import it.unibo.goosegame.utilities.Position;
 
-public interface SnakeModel {
+public interface SnakeModel extends MinigamesModel{
     void resetGame();
     int move();
     void changeDirection(Direction newDirection);

@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
-import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Direction;
 import it.unibo.goosegame.utilities.Pair;
 import it.unibo.goosegame.utilities.Position;
 
-public class SnakeModelImpl implements MinigamesModel, SnakeModel {
+public class SnakeModelImpl implements SnakeModel {
     private static final int WIN_SCORE = 15;
     public static final int TABLE_WIDTH = 30; 
     public static final int TABLE_HEIGHT = 20;

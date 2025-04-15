@@ -1,16 +1,17 @@
 package it.unibo.goosegame.view.minigames.snake;
 import javax.swing.*;
 
+import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Position;
 
 import java.awt.*;
 
 public class SnakeView extends JPanel {
-    private SnakeModelImpl model;
+    private SnakeModel model;
     private JLabel score;
 
-    public SnakeView(SnakeModelImpl model) {
+    public SnakeView(SnakeModel model) {
         this.model = model;
         setBackground(Color.BLACK);
         score = new JLabel("Score: " + model.getScore());

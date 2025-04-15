@@ -2,6 +2,7 @@ package it.unibo.goosegame.controller.minigames.snake;
 
 import javax.swing.*;
 
+import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Direction;
 import it.unibo.goosegame.view.minigames.snake.SnakeView;
@@ -13,7 +14,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class SnakeController extends JFrame {
-    private SnakeModelImpl model;
+    private SnakeModel model;
     private SnakeView view;
     private Timer timer;
 
