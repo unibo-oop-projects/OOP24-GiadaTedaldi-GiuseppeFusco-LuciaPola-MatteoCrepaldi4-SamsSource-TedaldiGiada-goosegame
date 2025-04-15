@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application;
+package it.unibo.goosegame.application.api;
 
 public interface GameMenuView {
     void showInstructions();
