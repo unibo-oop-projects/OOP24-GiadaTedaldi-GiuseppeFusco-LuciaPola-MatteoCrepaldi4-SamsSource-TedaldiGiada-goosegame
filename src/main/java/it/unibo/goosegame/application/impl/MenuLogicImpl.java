@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import it.unibo.goosegame.application.GameMenu;
+import it.unibo.goosegame.application.api.MenuLogic;
+
 public class MenuLogicImpl implements MenuLogic {
 
     private final GameMenu view;
