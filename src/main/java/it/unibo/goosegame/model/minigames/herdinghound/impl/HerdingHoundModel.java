@@ -43,15 +43,23 @@ public class HerdingHoundModel implements MinigamesModel {
     }
 
     public GooseImpl getGoose() {
-        return goose;
+        return this.goose;
     }
 
     public DogImpl getDog() {
-        return dog;
+        return this.dog;
     }
 
     public BoxImpl getBox() {
-        return box;
+        return this.box;
+    }
+
+    public int getGrid(){
+        return this.gridSize;
+    }
+
+    public List<Pair<Integer, Integer>> getShadows(){
+        return this.box.getShadows();
     }
 
     @Override
@@ -100,4 +108,7 @@ public class HerdingHoundModel implements MinigamesModel {
         dog.refreshState();
     }
     
+    public List<Pair<Integer, Integer>> getBoxes() {
+        return box.getBoxes();
+    }
 }

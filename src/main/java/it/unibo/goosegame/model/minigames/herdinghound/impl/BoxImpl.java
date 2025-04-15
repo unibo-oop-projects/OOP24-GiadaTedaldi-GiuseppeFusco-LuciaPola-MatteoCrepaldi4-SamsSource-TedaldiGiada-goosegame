@@ -16,7 +16,7 @@ public class BoxImpl implements Box {
     private static final int SHADOW_WIDTH_MIN_DIVISOR = 10;
     private static final int SHADOW_MAX_LENGTH = 1000;
 
-    private final List<Pair<Integer, Integer>> allBoxes = new ArrayList<>();
+    private final Set<Pair<Integer, Integer>> allBoxes = new HashSet<>();
     private final Set<Pair<Integer, Integer>> shadows = new HashSet<>();
     private final int gridSize;
     private final int boxDistance;
@@ -32,7 +32,7 @@ public class BoxImpl implements Box {
 
     @Override
     public List<Pair<Integer, Integer>> getBoxes() {
-        return allBoxes;
+        return new ArrayList<>(allBoxes);
     }
 
     @Override
@@ -102,6 +102,7 @@ public class BoxImpl implements Box {
     public List<Pair<Integer, Integer>> getShadows() {
         return new ArrayList<>(shadows);
     }
+
 }
 
 
