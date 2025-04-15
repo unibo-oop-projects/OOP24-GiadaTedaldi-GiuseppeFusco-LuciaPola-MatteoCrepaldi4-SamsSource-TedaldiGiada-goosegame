@@ -30,7 +30,7 @@ public class TrisView extends JFrame{
             }
         }
 
-        statusLabel = new JLabel("Your turn!", SwingConstants.CENTER);
+        statusLabel = new JLabel("Your Turn!", SwingConstants.CENTER);
         this.add(statusLabel, BorderLayout.NORTH);
         this.add(gridPanel, BorderLayout.CENTER);
         this.setVisible(true);
