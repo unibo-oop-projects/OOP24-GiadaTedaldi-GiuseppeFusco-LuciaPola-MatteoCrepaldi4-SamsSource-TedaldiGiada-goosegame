@@ -23,6 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import it.unibo.goosegame.application.api.GameMenuView;
+import it.unibo.goosegame.application.impl.MenuLogicImpl;
+
 public class GameMenu extends JFrame implements GameMenuView{
     MenuLogicImpl logic;
     private final Image background = new ImageIcon(getClass().getResource("/ImmagineMenu.png")).getImage();
@@ -151,22 +154,27 @@ public class GameMenu extends JFrame implements GameMenuView{
         return button;
     }
 
+    @Override
     public void showInstructions() {
         cardLayout.show(mainPanel, "info");
     }
 
+    @Override
     public void showMenu() {
         cardLayout.show(mainPanel, "menu");
     }
 
+    @Override
     public String getPlayerName() {
         return playerNameField.getText();
     }
 
+    @Override
     public void updatePlayerField() {
         playerNameField.setText("");
     }
 
+    @Override
     public void updatePlayerLabel(String text) {
         playerNameLabel.setText(text);
     }
