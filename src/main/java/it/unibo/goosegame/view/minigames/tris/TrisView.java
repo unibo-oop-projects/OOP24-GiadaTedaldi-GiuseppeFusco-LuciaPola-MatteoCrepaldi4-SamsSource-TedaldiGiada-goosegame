@@ -7,6 +7,7 @@ import it.unibo.goosegame.controller.minigames.tris.TrisController;
 import it.unibo.goosegame.utilities.Position;
 
 public class TrisView extends JFrame{
+    private static int GRID_SIZE = 3;
     private JButton[][] buttons = new JButton[3][3];
     private JLabel statusLabel;
     private TrisController controller;
@@ -18,9 +19,9 @@ public class TrisView extends JFrame{
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        JPanel gridPanel = new JPanel(new GridLayout(3,3));
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
+        JPanel gridPanel = new JPanel(new GridLayout(GRID_SIZE,GRID_SIZE));
+        for(int i=0; i<GRID_SIZE; i++) {
+            for(int j=0; j<GRID_SIZE; j++) {
                 final int r = i;
                 final int c = j;
                 buttons[r][c] = new JButton();

@@ -55,12 +55,13 @@ public class TrisModelImpl implements TrisModel{
     @Override
     public int getResult() {
         if (this.checkWin()) {
-            if(this.currentPlayer == Player.HUMAN) {
-                return -1;
-            } else {
-                return 1;
-            }
-            
+           for(Set<Position> line : WINNING_LINES) {
+                if(line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
+                    return 1;
+                } else if(line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
+                    return -1;
+                }   
+            } 
         } else if (this.isFull()) {
             return GRID_SIZE;
         }
