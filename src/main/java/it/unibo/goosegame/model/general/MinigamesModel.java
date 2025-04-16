@@ -19,7 +19,6 @@ public interface MinigamesModel {
      */
     int getResult();
 
-
     /**
      * @return the name of the minigame as a String
      */
