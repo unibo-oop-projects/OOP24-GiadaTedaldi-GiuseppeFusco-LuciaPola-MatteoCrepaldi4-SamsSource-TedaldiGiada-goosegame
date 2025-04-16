@@ -73,12 +73,14 @@ public class TestTrisModelImpl {
     @Test
     void testWin() {
         TestUtils.forceMove(model, new Position(0, 0), true);
+        TestUtils.forceMove(model, new Position(1, 0),false);
         TestUtils.forceMove(model, new Position(0, 1), true);
+        TestUtils.forceMove(model, new Position(2, 0), false);
         TestUtils.forceMove(model, new Position(0, 2), true);
 
         assertTrue(model.checkWin());
         assertTrue(model.isOver());
-        assertEquals(-1, model.getResult());  
+        assertEquals(1, model.getResult());  
     }
 
     /**
@@ -100,6 +102,22 @@ public class TestTrisModelImpl {
         assertTrue(model.isOver());
         assertFalse(model.checkWin());
         assertEquals(3, model.getResult());
+    }
+
+    /**
+     * Tests a lost condition for the human player.
+     */
+    @Test
+    void testLost() {
+        TestUtils.forceMove(model, new Position(0, 0), false);
+        TestUtils.forceMove(model, new Position(1, 0), true);
+        TestUtils.forceMove(model, new Position(0, 1), false);
+        TestUtils.forceMove(model, new Position(2, 0), true);
+        TestUtils.forceMove(model, new Position(0, 2), false);
+        
+        assertTrue(model.isOver());
+        assertTrue(model.checkWin());
+        assertEquals(-1, model.getResult());
     }
 
     /**
