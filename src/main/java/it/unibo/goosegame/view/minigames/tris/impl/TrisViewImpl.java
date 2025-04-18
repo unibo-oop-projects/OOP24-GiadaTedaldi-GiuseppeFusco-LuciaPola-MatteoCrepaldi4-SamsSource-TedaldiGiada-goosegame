@@ -1,18 +1,27 @@
-package it.unibo.goosegame.view.minigames.tris;
+package it.unibo.goosegame.view.minigames.tris.impl;
 
 import java.awt.*;
 import javax.swing.*;
 
-import it.unibo.goosegame.controller.minigames.tris.TrisController;
+import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.utilities.Position;
+import it.unibo.goosegame.view.minigames.tris.api.TrisView;
 
-public class TrisView extends JFrame{
+/**
+ * Implementation of the {@link TrisView} interface using JavaSwing.
+ */
+public class TrisViewImpl extends JFrame implements TrisView{
     private static int GRID_SIZE = 3;
     private JButton[][] buttons = new JButton[3][3];
     private JLabel statusLabel;
     private TrisController controller;
 
-    public TrisView(TrisController controller) {
+    /**
+     * Constructs a new instance of {@link TrisViewImpl}.
+     * 
+     * @param controller the {@link TrisController} that manages user actions
+     */
+    public TrisViewImpl(TrisController controller) {
         this.controller = controller;
         this.setTitle("Tris - Tic Tac Toe");
         this.setSize(300,350);
@@ -37,6 +46,9 @@ public class TrisView extends JFrame{
         this.setVisible(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void updateButton(Position pos, String symbol) {
         JButton button = buttons[pos.x()][pos.y()];
         button.setText(symbol);
@@ -47,10 +59,18 @@ public class TrisView extends JFrame{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setStatus(String msg) {
         statusLabel.setText(msg);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void disableButtons() {
         for(JButton[] row: buttons) {
             for(JButton btn : row) {
@@ -59,8 +79,12 @@ public class TrisView extends JFrame{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void closeGame(String result) {
-        JOptionPane.showMessageDialog(this, result + "\nThe widnows will now close");
+        JOptionPane.showMessageDialog(this, result + "\nThe windows will now close");
         System.exit(0);
     }
 }
