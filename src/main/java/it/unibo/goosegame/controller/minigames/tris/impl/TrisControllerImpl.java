@@ -3,11 +3,12 @@ package it.unibo.goosegame.controller.minigames.tris.impl;
 import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
 import it.unibo.goosegame.utilities.Position;
-import it.unibo.goosegame.view.minigames.tris.TrisView;
+import it.unibo.goosegame.view.minigames.tris.api.TrisView;
+import it.unibo.goosegame.view.minigames.tris.impl.TrisViewImpl;
 
 /**
  * Implementation of the {@link TrisController} interface.
- * It manages the communication between the model and the view of the Tris(Tic-Tac-Toe) minigame.
+ * It manages the communication between the model and the view of a Tris(Tic-Tac-Toe) minigame.
  */
 public class TrisControllerImpl implements TrisController{
     private TrisModel model;
@@ -21,7 +22,7 @@ public class TrisControllerImpl implements TrisController{
      */
     public TrisControllerImpl(TrisModel model) {
         this.model = model;
-        this.view = new TrisView(this);
+        this.view = new TrisViewImpl(this);
     }
 
     /**
