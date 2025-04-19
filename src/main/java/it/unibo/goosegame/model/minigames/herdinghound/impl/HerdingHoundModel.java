@@ -1,7 +1,10 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+
+import javax.swing.Timer;
 
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Pair;
@@ -15,6 +18,8 @@ public class HerdingHoundModel implements MinigamesModel {
     private final DogImpl dog;
     private final BoxImpl box;
     private final int gridSize;
+    private final Random random;
+    private Timer dogStateTimer;
 
     public HerdingHoundModel(int gridSize) {
         this.gridSize = gridSize;
@@ -22,6 +27,14 @@ public class HerdingHoundModel implements MinigamesModel {
         this.dog = new DogImpl(gridSize);
         this.box = new BoxImpl(gridSize, dog);
         this.box.generateBoxes();
+        this.random = new Random();
+        startDogStateTimer();
+    }
+
+    private void startDogStateTimer() {
+        dogStateTimer = new Timer(1000, e -> nextDogState());
+        dogStateTimer.setInitialDelay(1000);
+        dogStateTimer.start();
     }
 
     public void nextGooseMove() {
@@ -68,6 +81,8 @@ public class HerdingHoundModel implements MinigamesModel {
         dog.reset();
         box.generateBoxes();
         dog.refreshDirection(goose);
+        dogStateTimer.stop();
+        startDogStateTimer();
     }
 
     @Override
@@ -106,6 +121,12 @@ public class HerdingHoundModel implements MinigamesModel {
 
     public void nextDogState() {
         dog.refreshState();
+        timeDogState();
+    }
+
+    private void timeDogState() {
+        int delay = (dog.getState() == DogImpl.State.ALERT) ? 1000 : (random.nextInt(3) + 2) * 1000;
+        dogStateTimer.setDelay(delay);
     }
     
     public List<Pair<Integer, Integer>> getBoxes() {
