@@ -1,109 +1,110 @@
-    package it.unibo.goosegame.view;
+package it.unibo.goosegame.view;
 
-    import javax.swing.*;
-    import java.awt.*;
-    import java.util.List;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
+import it.unibo.goosegame.utilities.Pair;
 
-    import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
-    import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
-    import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
-    import it.unibo.goosegame.utilities.Pair;
+import javax.swing.*;
+import java.awt.*;
 
-    public class HerdingHoundView extends JPanel {
+public class HerdingHoundView extends JPanel {
+    private static final int CELL_SIZE = 50;
+    private final HerdingHoundModel model;
 
-        private static final int CELL_SIZE = 40;
-        private final HerdingHoundModel model;
-        private final JFrame frame;
+    public HerdingHoundView(HerdingHoundModel model) {
+        this.model = model;
+        setPreferredSize(new Dimension(model.getGrid() * CELL_SIZE, model.getGrid() * CELL_SIZE));
+        // Sfondo grigio scuro
+        setBackground(new Color(50, 50, 50));
+    }
 
-        public HerdingHoundView(HerdingHoundModel model) {
-            this.model = model;
-            this.frame = new JFrame("Herding Hound");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setContentPane(this);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-            setPreferredSize(new Dimension(model.getGrid() * CELL_SIZE, model.getGrid() * CELL_SIZE));
-            setBackground(Color.WHITE);
-            setFocusable(true);
-            requestFocusInWindow();
-        }
+    int gridSize = model.getGrid();
 
-        public void initialize() {
-            requestFocus();
-        }
+    // Sfondo
+    g.setColor(Color.DARK_GRAY);
+    g.fillRect(0, 0, getWidth(), getHeight());
 
-        public void updateView() {
-            repaint();
-        }
+    // Griglia
+    g.setColor(Color.GRAY);
+    for (int i = 0; i <= gridSize; i++) {
+        g.drawLine(i * CELL_SIZE, 0, i * CELL_SIZE, gridSize * CELL_SIZE);
+        g.drawLine(0, i * CELL_SIZE, gridSize * CELL_SIZE, i * CELL_SIZE);
+    }
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            drawGrid(g);
-            drawBoxes(g);
-            drawShadows(g);
-            drawGoose(g);
-            drawDog(g);
-        }
+    // Celle potenzialmente visibili dal cane (sempre grigio chiaro)
+    g.setColor(Color.LIGHT_GRAY);
+    for (Pair<Integer, Integer> pos : model.getDog().getVisibleArea()) {
+        drawCell(g, pos, CELL_SIZE);
+    }
 
-        private void drawGrid(Graphics g) {
-            for (int i = 0; i < model.getGrid(); i++) {
-                for (int j = 0; j < model.getGrid(); j++) {
-                    g.setColor(Color.LIGHT_GRAY);
-                    g.drawRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                }
-            }
-        }
-
-        private void drawBoxes(Graphics g) {
-            g.setColor(new Color(139, 69, 19));
-            for (Pair<Integer, Integer> box : model.getBoxes()) {
-                g.fillRect(box.getY() * CELL_SIZE, box.getX() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-            }
-        }
-
-        private void drawShadows(Graphics g) {
-            g.setColor(new Color(0, 0, 0, 100));
-            for (Pair<Integer, Integer> shadow : model.getShadows()) {
-                g.fillRect(shadow.getY() * CELL_SIZE, shadow.getX() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-            }
-        }
-
-        private void drawGoose(Graphics g) {
-            Pair<Integer, Integer> pos = model.getGoose().getCoord();
-            g.setColor(Color.YELLOW);
-            g.fillOval(pos.getY() * CELL_SIZE + 5, pos.getX() * CELL_SIZE + 5, CELL_SIZE - 10, CELL_SIZE - 10);
-        }
-
-        private void drawDog(Graphics g) {
-            Pair<Integer, Integer> pos = model.getDog().getCoord();
-            Dog.State state = model.getDog().getState();
-            Color color;
-            switch (state) {
-                case ASLEEP -> color = Color.GRAY;
-                case ALERT -> color = Color.ORANGE;
-                case AWAKE -> color = Color.RED;
-                default -> color = Color.BLACK;
-            }
-            g.setColor(color);
-            g.fillOval(pos.getY() * CELL_SIZE + 5, pos.getX() * CELL_SIZE + 5, CELL_SIZE - 10, CELL_SIZE - 10);
-
-            if (state != Dog.State.ASLEEP) {
-                g.setColor(new Color(255, 0, 0, 100));
-                for (Pair<Integer, Integer> visible : model.getVisible()) {
-                    g.fillRect(visible.getY() * CELL_SIZE, visible.getX() * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                }
-            }
-        }
-
-        public void showGameOver(it.unibo.goosegame.model.general.MinigamesModel.GameState state) {
-            String message = switch (state) {
-                case WON -> "Hai vinto!";
-                case LOST -> "Sei stato visto! Hai perso.";
-                default -> "Gioco terminato.";
-            };
-            JOptionPane.showMessageDialog(this, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+    // Celle visibili dal cane (rosse trasparenti), solo se AWAKE
+    if (model.getDog().getState() == DogImpl.State.AWAKE) {
+        g.setColor(new Color(255, 0, 0, 100));
+        for (Pair<Integer, Integer> pos : model.getVisible()) {
+            drawCell(g, pos, CELL_SIZE);
         }
     }
+
+    // Ombre (grigio scuro semitrasparente)
+    g.setColor(new Color(50, 50, 50, 150));
+    for (Pair<Integer, Integer> shadow : model.getShadows()) {
+        drawCell(g, shadow, CELL_SIZE);
+    }
+
+    // Scatole (marrone)
+    g.setColor(new Color(139, 69, 19));
+    for (Pair<Integer, Integer> box : model.getBoxes()) {
+        drawCell(g, box, CELL_SIZE);
+    }
+
+    // Cane (bianco)
+    Pair<Integer, Integer> dogPos = model.getDog().getCoord();
+        g.setColor(model.getDog().getState() == DogImpl.State.AWAKE ? Color.RED :
+        model.getDog().getState() == DogImpl.State.ALERT ? Color.ORANGE : Color.WHITE);
+        drawCell(g, dogPos, CELL_SIZE);
+        drawDogDirectionArrow(g, dogPos, model.getDog().getDirection());
+
+    // Oca (bianca)
+    g.setColor(Color.WHITE);
+    drawCell(g, model.getGoose().getCoord(), CELL_SIZE);
+}
+
+    private void drawCell(Graphics g, Pair<Integer, Integer> coord, int size) {
+        int x = coord.getY() * size;
+        int y = coord.getX() * size;
+        g.fillRect(x, y, size, size);
+    }
+
+    private void drawDogDirectionArrow(Graphics g, Pair<Integer, Integer> dogPos, DogImpl.Direction dir) {
+        int centerX = dogPos.getY() * CELL_SIZE + CELL_SIZE / 2;
+        int centerY = dogPos.getX() * CELL_SIZE + CELL_SIZE / 2;
+        int arrowSize = 10;
+
+        g.setColor(Color.BLACK);
+        switch (dir) {
+            case UP -> g.drawLine(centerX, centerY, centerX, centerY - arrowSize);
+            case DOWN -> g.drawLine(centerX, centerY, centerX, centerY + arrowSize);
+            case LEFT -> g.drawLine(centerX, centerY, centerX - arrowSize, centerY);
+            case RIGHT -> g.drawLine(centerX, centerY, centerX + arrowSize, centerY);
+        }
+    }
+
+    public void updateView() {
+        repaint();
+    }
+
+    public void showGameOver() {
+        String message = switch (model.getGameState()) {
+            case WON -> "Hai vinto!";
+            case LOST -> "Hai perso!";
+            default -> "";
+        };
+        if (!message.isEmpty()) {
+            JOptionPane.showMessageDialog(this, message, "Fine gioco", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+}

@@ -12,7 +12,7 @@ import java.util.List;
 public class BoxImpl implements Box {
 
     private static final double BOX_PROBABILITY = 0.6;
-    private static final int BORDER_MARGIN_DIVISOR = 3;
+    private static final int BORDER_MARGIN_DIVISOR = 2;
     private static final int SHADOW_WIDTH_MIN_DIVISOR = 10;
     private static final int SHADOW_MAX_LENGTH = 1000;
 
@@ -45,11 +45,11 @@ public class BoxImpl implements Box {
         }
 
         for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
-            tryAddBox(new Pair<>(x, gridSize - boxDistance));
+            tryAddBox(new Pair<>(x, gridSize - boxDistance - 1));
         }
 
         for (int y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
-            tryAddBox(new Pair<>(gridSize - boxDistance, y));
+            tryAddBox(new Pair<>(gridSize - boxDistance - 1 , y));
         }
 
         for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
