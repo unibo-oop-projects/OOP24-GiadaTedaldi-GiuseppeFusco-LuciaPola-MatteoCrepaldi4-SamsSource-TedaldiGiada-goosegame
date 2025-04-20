@@ -16,6 +16,8 @@ public class HerdingHoundModel implements MinigamesModel {
     private final DogImpl dog;
     private final BoxImpl box;
     private final int gridSize;
+    private static final long TIME_LIMIT_MS = 60_000;
+    private long startTime;
 
     public HerdingHoundModel(int gridSize) {
         this.gridSize = gridSize;
@@ -23,6 +25,9 @@ public class HerdingHoundModel implements MinigamesModel {
         this.dog = new DogImpl(gridSize);
         this.box = new BoxImpl(gridSize, dog);
         this.box.generateBoxes();
+        this.dog.refreshDirection(goose);
+        this.startTime = System.currentTimeMillis();
+        dog.refreshDirection(goose);
     }
 
     public void nextGooseMove() {
@@ -30,19 +35,14 @@ public class HerdingHoundModel implements MinigamesModel {
         int x = pos.getX(), y = pos.getY();
     
         if (y == START_Y && x < gridSize - 1) {
-            // sulla colonna 0, vai giù
             goose.move(1, 0);
         }
         else if (x == gridSize - 1 && y < gridSize - 1) {
-            // in fondo, vai a destra
             goose.move(0, 1);
         }
         else if (y == gridSize - 1 && x > START_X) {
-            // sull'ultima colonna, risali
             goose.move(-1, 0);
         }
-    
-        // aggiorna la direzione del cane a ogni mossa
         dog.refreshDirection(goose);
     }
 
@@ -72,10 +72,19 @@ public class HerdingHoundModel implements MinigamesModel {
         dog.reset();
         box.generateBoxes();
         dog.refreshDirection(goose);
+        this.startTime = System.currentTimeMillis(); 
+    }
+
+    public long getRemainingTime() {
+        long elapsed = System.currentTimeMillis() - startTime;
+        return Math.max(0, TIME_LIMIT_MS - elapsed);
     }
 
     @Override
     public GameState getGameState() {
+        if (getRemainingTime() == 0) {
+            return GameState.LOST;
+        }
         if (hasWon()) {
             return GameState.WON;
         } else if (hasLost()) {

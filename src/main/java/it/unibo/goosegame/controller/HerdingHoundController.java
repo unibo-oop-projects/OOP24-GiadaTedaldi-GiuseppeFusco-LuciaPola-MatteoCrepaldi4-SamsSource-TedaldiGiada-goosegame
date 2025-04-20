@@ -2,6 +2,7 @@ package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
 import it.unibo.goosegame.view.HerdingHoundView;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class HerdingHoundController {
     private final HerdingHoundView view;
     private Timer dogStateTimer;
     private final Random rnd = new Random();
+    private Timer gameTimer;
 
     public HerdingHoundController(HerdingHoundModel model, HerdingHoundView view) {
         this.model = model;
@@ -35,6 +37,17 @@ public class HerdingHoundController {
         view.requestFocusInWindow();
 
         scheduleNextDogState(model.getDog().getState());
+
+         gameTimer = new Timer(1000, e -> {
+            view.updateView();
+            if (model.getGameState() == GameState.LOST) {
+                gameTimer.stop();
+                dogStateTimer.stop();
+                view.showGameOver();
+            }
+        });
+        gameTimer.setInitialDelay(0);
+        gameTimer.start();
     }
 
     private void scheduleNextDogState(DogImpl.State currentState) {

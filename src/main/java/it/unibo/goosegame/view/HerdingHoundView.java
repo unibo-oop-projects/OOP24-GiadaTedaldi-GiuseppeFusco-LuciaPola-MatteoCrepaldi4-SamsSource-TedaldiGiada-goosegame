@@ -71,6 +71,20 @@ public class HerdingHoundView extends JPanel {
     // Oca (bianca)
     g.setColor(Color.WHITE);
     drawCell(g, model.getGoose().getCoord(), CELL_SIZE);
+
+    long remMs = model.getRemainingTime();
+    long sec = remMs / 1000;
+    String text = String.format("%02d:%02d", sec / 60, sec % 60);
+    
+    g.setColor(Color.WHITE);
+    Font font = new Font("Arial", Font.BOLD, 16);
+    g.setFont(font);
+    
+    FontMetrics fm = g.getFontMetrics();
+    int textWidth = fm.stringWidth(text);
+    int x = getWidth() - textWidth - 10;
+    int y = fm.getAscent() + 10;
+    g.drawString(text, x, y);
 }
 
     private void drawCell(Graphics g, Pair<Integer, Integer> coord, int size) {
