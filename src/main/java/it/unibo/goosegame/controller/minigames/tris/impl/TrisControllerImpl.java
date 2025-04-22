@@ -1,5 +1,7 @@
 package it.unibo.goosegame.controller.minigames.tris.impl;
 
+import javax.swing.Timer;
+
 import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
 import it.unibo.goosegame.utilities.Position;
@@ -14,15 +16,21 @@ public class TrisControllerImpl implements TrisController{
     private TrisModel model;
     private TrisView view;
     private boolean gameOver = false;
+    private int humanWins;
+    private int pcWins;
+    private int rounds;
 
     /**
-     * Constructs a new instance of {@link TrisControllerImpl}
+     * Constructs a new instance of {@link TrisControllerImpl}.
      * 
      * @param model the {@link TrisModel} representing the game logic  
      */
     public TrisControllerImpl(TrisModel model) {
         this.model = model;
         this.view = new TrisViewImpl(this);
+        this.humanWins = 0;
+        this.pcWins = 0;
+        this.humanWins = 0;
     }
 
     /**
@@ -70,14 +78,45 @@ public class TrisControllerImpl implements TrisController{
     @Override
     public void endGame() {
         gameOver=true;
-        this.view.setStatus("The game is over!");
-        this.view.disableButtons();
         int result = this.model.getResult();
         switch (result) {
-            case 1: this.view.closeGame("You win!"); break;
-            case -1: this.view.closeGame("PC wins!"); break;
-            case 3: this.view.closeGame("Draw!"); break;
-            case 0: this.view.closeGame("Still playing..."); break;
+            case 1:
+                this.humanWins++;
+                this.view.setStatus("You win this round!"); 
+                break;
+            case -1:
+                this.pcWins++;
+                this.view.setStatus("PC wins this round!"); 
+                break;
+            case 3: 
+                this.view.setStatus("Draw!"); 
+                break;
+            case 0: 
+                this.view.setStatus("Still playing..."); 
+                return;
+        }
+        rounds++;
+        if(this.humanWins == 2 || this.pcWins == 2 || rounds == 3) {
+            String finalMsg = "FINAL SCORE - You: " + this.humanWins + " PC: " + this.pcWins + "\n";
+            if(this.humanWins > this.pcWins) {
+                finalMsg += "YOU WIN!";
+            } else if(this.pcWins > this.humanWins) {
+                finalMsg += "PC WINS!";
+            } else {
+                finalMsg += "IT'S A DRAW!";
+            }
+            this.view.disableButtons();
+            this.view.closeGame(finalMsg);
+        } else {
+            this.view.disableButtons();
+            Timer timer = new Timer(1000, e -> {
+                this.model.resetGame();
+                this.view.setStatus("Round: " + (rounds+1) + " Your turn!");
+                this.view.resetGrid();
+                gameOver = false;
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
