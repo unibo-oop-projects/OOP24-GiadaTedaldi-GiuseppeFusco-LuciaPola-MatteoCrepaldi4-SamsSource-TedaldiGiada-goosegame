@@ -12,7 +12,7 @@ import it.unibo.goosegame.view.minigames.tris.api.TrisView;
  */
 public class TrisViewImpl extends JFrame implements TrisView{
     private static int GRID_SIZE = 3;
-    private JButton[][] buttons = new JButton[3][3];
+    private JButton[][] buttons = new JButton[GRID_SIZE][GRID_SIZE];
     private JLabel statusLabel;
     private TrisController controller;
 
@@ -73,8 +73,8 @@ public class TrisViewImpl extends JFrame implements TrisView{
     @Override
     public void disableButtons() {
         for(JButton[] row: buttons) {
-            for(JButton btn : row) {
-                btn.setEnabled(false);
+            for(JButton button : row) {
+                button.setEnabled(false);
             }
         }
     }
@@ -86,5 +86,18 @@ public class TrisViewImpl extends JFrame implements TrisView{
     public void closeGame(String result) {
         JOptionPane.showMessageDialog(this, result + "\nThe windows will now close");
         System.exit(0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetGrid() {
+        for(int i=0; i<GRID_SIZE; i++) {
+            for(int j=0; j<GRID_SIZE; j++) {
+                buttons[i][j].setText("");
+                buttons[i][j].setEnabled(true);
+            }
+        }
     }
 }

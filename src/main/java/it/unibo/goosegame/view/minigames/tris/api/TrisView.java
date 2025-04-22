@@ -35,4 +35,9 @@ public interface TrisView {
      */
     void closeGame(String result);
 
+    /**
+     * Resets the board each round.
+     */
+    void resetGrid();
+
 }
