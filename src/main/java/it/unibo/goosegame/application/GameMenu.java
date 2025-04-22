@@ -85,7 +85,6 @@ public class GameMenu extends JFrame implements GameMenuView{
         gbc.insets = new Insets(10, 10, 10, 10);
 
         start = createButtonIcon(startImage, 150, 110);
-        start.setIcon(startImage);
         JButton addPlayer = new JButton("Add Player");   
         playerNameField = new JTextField(15);
         JPanel panelPlayer = new JPanel(new FlowLayout());
