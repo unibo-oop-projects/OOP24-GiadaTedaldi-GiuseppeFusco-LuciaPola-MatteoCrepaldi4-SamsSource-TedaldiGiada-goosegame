@@ -12,6 +12,11 @@ import java.util.Set;
 import it.unibo.goosegame.model.minigames.memory.api.MemoryModel;
 import it.unibo.goosegame.utilities.Position;
 
+/**
+ * Implementation of the {@link MemoryModel} interface.
+ * This class represents the logic of the "Memory" mini-game,
+ * managing cell values, selections, matches, and game status.
+ */
 public class MemoryModelImpl implements MemoryModel {
     private static final int SIZE = 4;
     private final Map<Position,Integer> values = new HashMap<>();
@@ -22,6 +27,9 @@ public class MemoryModelImpl implements MemoryModel {
         resetGame();
     }
 
+    /**
+    * {@inheritDoc}
+    */
     @Override
     public void hit(Position p) {
         if(this.selected.contains(p)) {
@@ -39,22 +47,34 @@ public class MemoryModelImpl implements MemoryModel {
         }
     }
 
+    /**
+    * {@inheritDoc}
+    */
     @Override
     public Optional<Integer> found(Position p) {
         return Optional.of(p).filter(pp -> this.shown.contains(pp)).map(this.values::get);
     }
 
+    /**
+    * {@inheritDoc}
+    */
     @Override
     public Optional<Integer> temporary(Position p) {
         return Optional.of(p).filter(pp -> this.selected.contains(pp)).map(this.values::get);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isOver() {
         List<Integer> remaining = values.keySet().stream().filter(p -> !this.shown.contains(p)).map(values::get).toList();
         return remaining.stream().distinct().count() == remaining.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resetGame() {
         List<Integer> numeri = new ArrayList<>();
@@ -72,11 +92,17 @@ public class MemoryModelImpl implements MemoryModel {
         }
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
+    @Override 
     public int getResult() {
         return shown.size() == values.size() ? 1 : 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return "Memory Game";
