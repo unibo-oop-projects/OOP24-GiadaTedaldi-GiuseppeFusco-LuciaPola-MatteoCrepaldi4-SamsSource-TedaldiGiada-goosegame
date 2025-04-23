@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
-import it.unibo.goosegame.utilities.Pair;
 import it.unibo.goosegame.utilities.Position;
 
 public class TrisModelImpl implements TrisModel{
@@ -39,13 +38,19 @@ public class TrisModelImpl implements TrisModel{
     }
 
     @Override
-    public Pair<String, Integer> getResult() {
+    public int getResult() {
         if (this.checkWin()) {
-            return new Pair<String,Integer>(this.currentPlayer == Player.HUMAN? "You win!" : "Pc wins!", 1);
+           for(Set<Position> line : WINNING_LINES) {
+                if(line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
+                    return 1;
+                } else if(line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
+                    return -1;
+                }   
+            } 
         } else if (this.isFull()) {
-            return new Pair<String,Integer>("Draw", 0);
+            return GRID_SIZE;
         }
-        return new Pair<String,Integer>("Still playing!", -1);
+        return 0;
     }
 
     @Override
