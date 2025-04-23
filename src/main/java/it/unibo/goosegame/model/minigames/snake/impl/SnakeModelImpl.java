@@ -6,7 +6,6 @@ import java.util.Random;
 
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.utilities.Direction;
-import it.unibo.goosegame.utilities.Pair;
 import it.unibo.goosegame.utilities.Position;
 
 public class SnakeModelImpl implements SnakeModel {
@@ -35,8 +34,8 @@ public class SnakeModelImpl implements SnakeModel {
     }
 
     @Override
-    public Pair<String, Integer> getResult() {
-        return checkWin() ? new Pair<String,Integer>("You win!", 1) : new Pair<String,Integer>("You lose", -1);
+    public int getResult() {
+        return checkWin() ? 1 : -1;
     }
 
     @Override

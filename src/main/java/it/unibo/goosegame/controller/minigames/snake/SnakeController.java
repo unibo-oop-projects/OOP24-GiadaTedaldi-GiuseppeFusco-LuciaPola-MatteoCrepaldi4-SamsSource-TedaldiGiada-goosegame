@@ -52,7 +52,7 @@ public class SnakeController extends JFrame {
                 view.repaint();
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
-                    JOptionPane.showMessageDialog(null, model.getResult().getX());
+                    JOptionPane.showMessageDialog(null, model.getResult() == 1 ? "You win!" : "You lose...");
                     dispose();
                 }
             }
