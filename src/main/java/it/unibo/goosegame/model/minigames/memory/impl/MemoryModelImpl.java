@@ -23,6 +23,9 @@ public class MemoryModelImpl implements MemoryModel {
     private final Set<Position> shown = new HashSet<>();
     private List<Position> selected = new ArrayList<>();
 
+    /**
+     * Constructs a new MemoryModelImpl instance and initializes the game board.
+     */
     public MemoryModelImpl() {
         resetGame();
     }
