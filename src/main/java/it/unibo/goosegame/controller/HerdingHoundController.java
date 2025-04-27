@@ -14,8 +14,8 @@ public class HerdingHoundController {
     private final HerdingHoundModel model;
     private final HerdingHoundView view;
     private Timer dogStateTimer;
-    private final Random rnd = new Random();
     private Timer gameTimer;
+    private final Random rnd = new Random();
 
     public HerdingHoundController(HerdingHoundModel model, HerdingHoundView view) {
         this.model = model;
@@ -28,7 +28,7 @@ public class HerdingHoundController {
                     model.nextGooseMove();
                     view.updateView();
                     if (model.isOver()) {
-                        view.showGameOver();
+                        endGame();
                     }
                 }
             }
@@ -38,12 +38,10 @@ public class HerdingHoundController {
 
         scheduleNextDogState(model.getDog().getState());
 
-         gameTimer = new Timer(1000, e -> {
+        gameTimer = new Timer(1000, e -> {
             view.updateView();
-            if (model.getGameState() == GameState.LOST) {
-                gameTimer.stop();
-                dogStateTimer.stop();
-                view.showGameOver();
+            if (model.getGameState() != GameState.ONGOING) {
+                endGame();
             }
         });
         gameTimer.setInitialDelay(0);
@@ -51,24 +49,32 @@ public class HerdingHoundController {
     }
 
     private void scheduleNextDogState(DogImpl.State currentState) {
-        int delay;
-        if (currentState == DogImpl.State.ALERT) {
-            delay = 1000;
-        } else {
-            delay = 2000 + rnd.nextInt(3) * 1000;
-        }
+
+        if (model.isOver()) return;
+
+        int delay = (currentState == DogImpl.State.ALERT)
+                    ? 1_000
+                    : 2_000 + rnd.nextInt(3) * 1_000;
 
         if (dogStateTimer != null) dogStateTimer.stop();
         dogStateTimer = new Timer(delay, e -> {
             model.nextDogState();
             view.updateView();
             if (model.isOver()) {
-                view.showGameOver();
+                endGame();
             } else {
                 scheduleNextDogState(model.getDog().getState());
             }
         });
         dogStateTimer.setRepeats(false);
         dogStateTimer.start();
+    }
+
+    private void endGame() {
+        if (gameTimer  != null) gameTimer.stop();
+        if (dogStateTimer != null) dogStateTimer.stop();
+        view.showGameOver();
+
+        view.setFocusable(false);
     }
 }
