@@ -70,7 +70,7 @@ public class PuzzleModelImpl implements PuzzleModel{
     public boolean isOver() {
         int expected = 1;
         for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; i++) {
+            for(int j=0; j<GRID_SIZE; j++) {
                 if(this.grid.get(new Position(i, j)) != expected++) {
                     return false;
                 }
