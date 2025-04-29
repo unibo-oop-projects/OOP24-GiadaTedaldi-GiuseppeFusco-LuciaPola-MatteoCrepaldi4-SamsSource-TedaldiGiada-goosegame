@@ -46,9 +46,9 @@ public class MemoryController extends JFrame {
     private void redraw() {
         for (var entry: view.returnCells().entrySet()){
             entry.getKey().setText(
-                this.model.temporary(entry.getValue()).map(n -> view.returnSymbols()[n]).orElse(" "));
+                this.model.temporary(entry.getValue()).map(n -> view.returnSymbols().get(n)).orElse(" "));
             this.model.found(entry.getValue()).ifPresent(n -> {
-                entry.getKey().setText(view.returnSymbols()[n]);
+                entry.getKey().setText(view.returnSymbols().get(n));
                 entry.getKey().setEnabled(false);
             });
         }

@@ -6,12 +6,13 @@ import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.memory.api.MemoryView;
 
 import java.util.*;
+import java.util.List;
 import java.awt.*;
 
 public class MemoryViewImpl extends JPanel implements MemoryView {
     
     private static int size = 4;
-    private final String[] symbols = {"★", "♣", "☀", "⚽", "♫", "❤", "☂", "✈"};
+    private final List<String> symbols = new LinkedList<>(Arrays.asList("★", "♣", "☀", "⚽", "♫", "❤", "☂", "✈"));
     private final Map<JButton, Position> cells = new HashMap<>();
     
     public MemoryViewImpl() {
@@ -28,8 +29,8 @@ public class MemoryViewImpl extends JPanel implements MemoryView {
         }
     }
 
-    public String[] returnSymbols() {
-        return Arrays.copyOf(this.symbols, this.symbols.length);
+    public List<String> returnSymbols() {
+        return List.copyOf(symbols);
     }
 
     @Override
