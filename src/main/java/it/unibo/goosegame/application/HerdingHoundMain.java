@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 public class HerdingHoundMain {
         public static void main(String[] args) {
-            int gridSize = 21;
+            int gridSize = 31;
             HerdingHoundModel model = new HerdingHoundModel(gridSize);
             HerdingHoundView view = new HerdingHoundView(model);
             new HerdingHoundController(model, view);

@@ -121,7 +121,7 @@ public class HerdingHoundView extends JPanel {
             case RIGHT -> g.drawLine(centerX, centerY, centerX + arrowSize, centerY);
         }
     }
-
+    
     public void updateView() {
         repaint();
     }
