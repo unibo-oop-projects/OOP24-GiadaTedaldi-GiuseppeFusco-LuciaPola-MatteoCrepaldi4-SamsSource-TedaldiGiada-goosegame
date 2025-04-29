@@ -11,10 +11,18 @@ public class HerdingHoundView extends JPanel {
     private final HerdingHoundModel model;
     private static final int DEFAULT_SIZE = 600;
 
+    private final Image awakeImage;
+    private final Image alertImage;
+    private final Image asleepImage;
+
     public HerdingHoundView(HerdingHoundModel model) {
         this.model = model;
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(new Color(50, 50, 50));
+
+        this.awakeImage = new ImageIcon(getClass().getResource("/img/HerdingHoundImg/dog_awake.png")).getImage();
+        this.alertImage = new ImageIcon(getClass().getResource("/img/HerdingHoundImg/dog_alert.png")).getImage();
+        this.asleepImage = new ImageIcon(getClass().getResource("/img/HerdingHoundImg/dog_asleep.png")).getImage();
     }
 
     @Override
@@ -96,6 +104,17 @@ public class HerdingHoundView extends JPanel {
         int tx = w - textWidth - 10;
         int ty = fm.getAscent() + 10;
         g.drawString(text, tx, ty);
+
+        Image stateImage = switch (model.getDog().getState()) {
+            case AWAKE -> awakeImage;
+            case ALERT -> alertImage;
+            default -> asleepImage;
+        };
+
+        int imageSize = 50;
+        int imgX = w - imageSize - 10;
+        int imgY = h - imageSize - 10;
+        g.drawImage(stateImage, imgX, imgY, imageSize, imageSize, this);
     }
 
     private void drawCell(Graphics g, Pair<Integer, Integer> coord,
