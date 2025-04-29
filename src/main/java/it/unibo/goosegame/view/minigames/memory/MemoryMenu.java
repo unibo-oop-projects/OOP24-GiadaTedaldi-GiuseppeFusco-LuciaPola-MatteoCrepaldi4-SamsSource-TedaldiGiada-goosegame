@@ -2,11 +2,12 @@ package it.unibo.goosegame.view.minigames.memory;
 
 import java.awt.event.ActionListener;
 
-public class MemoryMenu /*extends AbstractMinigameMenu*/{
+import it.unibo.goosegame.view.general.MinigameMenuAbstract;
+
+public class MemoryMenu extends MinigameMenuAbstract {
 
     public MemoryMenu(String imgPath, String title, String infoMsg, ActionListener al) {
-        //super(imgPath, title, infoMsg, al);
-
+        super(imgPath, title, infoMsg, al);
         /*
          --Hypothetical Memory menu:
         ActionListener al = e -> {

@@ -2,12 +2,15 @@ package it.unibo.goosegame.view.minigames.snake;
 
 import java.awt.event.ActionListener;
 
+import it.unibo.goosegame.view.general.MinigameMenuAbstract;
+
 //import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 //import it.unibo.goosegame.view.MinigamesMenu.AbstractMinigameMenu;
 
-public class SnakeMenu /*extends AbstractMinigameMenu*/{
+public class SnakeMenu extends MinigameMenuAbstract {
 
     public SnakeMenu(String imgPath, String title, String infoMsg, ActionListener al) {
+        super(imgPath, title, infoMsg, al);
         /*
         SnakeModelImpl sm = new SnakeModelImpl();
         super(imgPath, sm.getName(), infoMsg, al);
