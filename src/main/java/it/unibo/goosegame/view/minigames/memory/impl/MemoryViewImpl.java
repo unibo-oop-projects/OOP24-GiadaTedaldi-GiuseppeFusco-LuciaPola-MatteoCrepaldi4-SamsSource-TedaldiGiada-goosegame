@@ -22,11 +22,14 @@ public class MemoryViewImpl implements MemoryView {
         this.model = model;
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setTitle(model.getName());
-        this.frame.setPreferredSize(new Dimension(600, 400));
         this.frame.setLayout(new GridLayout(size,size));  
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        this.frame.setSize(sw / 2, sh / 2);
+        this.frame.setMinimumSize(new Dimension(sw / 3, sh / 3));
         this.frame.setResizable(true); 
+        this.frame.setLocationRelativeTo(null);
         ActionListener al = e -> {
             var jb = (JButton)e.getSource();
             this.model.hit(this.cells.get(jb));
