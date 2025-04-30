@@ -7,52 +7,38 @@ import java.awt.event.ActionListener;
 
 public abstract class MinigameMenuAbstract extends JFrame {
 
-    public MinigameMenuAbstract(String imgPath, String title, String infoMsg, ActionListener al) {
-        // Create the background panel
-        BackgroundPanel background = new BackgroundPanel(imgPath);
-        background.setLayout(new BorderLayout());
-        setTitle(title);
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setMinimumSize(new Dimension(400, 300));
+    private final int size = 4;
 
-        // Title label
+    public MinigameMenuAbstract(String imgPath, String title, String infoMsg, ActionListener al) {
+        BackgroundPanel background = new BackgroundPanel(imgPath);
+        background.setLayout(new GridLayout(size,size));
+        this.setTitle(title);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 50));
         titleLabel.setForeground(Color.RED);
-        background.add(titleLabel, BorderLayout.NORTH);
-
-        // Create a transparent panel for buttons
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
-        buttonPanel.setOpaque(false); 
-
-        // Create the buttons
+        background.add(titleLabel);
         JButton startButton = new JButton("Start Game");
         changeBtnStyle(startButton);
-        JButton instrButton = new JButton("Instructions");
-        changeBtnStyle(instrButton);
-
-        // Add action listeners to buttons
         startButton.addActionListener(al);
         startButton.addActionListener(e -> {
             this.dispose();
         });
+        JButton instrButton = new JButton("Instructions");
+        changeBtnStyle(instrButton);
         instrButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, infoMsg);
         });
-
-        // Add buttons to the transparent button panel
-        buttonPanel.add(startButton);
-        buttonPanel.add(instrButton);
-
-        // Add the transparent button panel to the center of the background panel
-        background.add(buttonPanel, BorderLayout.CENTER);
-
-        // Set the content pane to be the background panel
-        setContentPane(background);
-        setVisible(true);
+        background.add(startButton);
+        background.add(instrButton);
+        this.add(background);
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        this.setSize(sw / 2, sh / 2);
+        this.setMinimumSize(new Dimension(sw / 3, sh / 3));
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
     private void changeBtnStyle(JButton button) {
@@ -70,7 +56,7 @@ public abstract class MinigameMenuAbstract extends JFrame {
             try {
                 backgroundImage = new ImageIcon(path).getImage();
             } catch (Exception e) {
-                System.out.println("Image not found: " + path);
+                JOptionPane.showMessageDialog(this, "Image not found: " + path);
             }
         }
 
