@@ -10,9 +10,5 @@ public interface MinigamesModel {
 
     void resetGame();
 
-    void nextGooseMove();
-
-    GameState getGameState();
-
     boolean isOver();
     }

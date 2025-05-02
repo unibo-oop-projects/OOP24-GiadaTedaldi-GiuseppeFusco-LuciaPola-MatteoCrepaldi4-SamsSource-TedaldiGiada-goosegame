@@ -80,7 +80,6 @@ public class HerdingHoundModel implements MinigamesModel {
         return Math.max(0, TIME_LIMIT_MS - elapsed);
     }
 
-    @Override
     public GameState getGameState() {
         if (getRemainingTime() == 0) {
             return GameState.LOST;

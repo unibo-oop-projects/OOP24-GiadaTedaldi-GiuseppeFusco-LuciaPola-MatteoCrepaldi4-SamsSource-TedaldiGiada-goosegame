@@ -17,13 +17,9 @@ public class HonkMandModel implements MinigamesModel {
     private Random random = new Random();
 
     public HonkMandModel() {
-        startNewGame();
-    }    
-
-    public void startNewGame() {
         resetGame();
         addNewColor();
-    }
+    }    
 
     public void resetGame() {
         sequence.clear();
