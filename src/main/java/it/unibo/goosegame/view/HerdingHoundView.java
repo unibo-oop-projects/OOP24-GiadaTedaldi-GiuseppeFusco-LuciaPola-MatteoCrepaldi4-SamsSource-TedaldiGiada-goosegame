@@ -20,9 +20,9 @@ public class HerdingHoundView extends JPanel {
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(new Color(50, 50, 50));
 
-        this.awakeImage = new ImageIcon(getClass().getResource("/img/HerdingHoundImg/dog_awake.png")).getImage();
-        this.alertImage = new ImageIcon(getClass().getResource("/img/HerdingHoundImg/dog_alert.png")).getImage();
-        this.asleepImage = new ImageIcon(getClass().getResource("/img/HerdingHoundImg/dog_asleep.png")).getImage();
+        this.awakeImage = new ImageIcon("C:\\Users\\HEW\\OneDrive\\Desktop\\ProgrammazioneOgetti\\ProgOOP\\OOP24-goosegame\\src\\main\\resources\\img\\dog_awake.png").getImage();
+        this.alertImage = new ImageIcon("C:\\\\Users\\\\HEW\\\\OneDrive\\\\Desktop\\\\ProgrammazioneOgetti\\\\ProgOOP\\\\OOP24-goosegame\\\\src\\\\main\\\\resources\\\\img\\\\dog_alert.png").getImage();
+        this.asleepImage = new ImageIcon("C:\\Users\\HEW\\OneDrive\\Desktop\\ProgrammazioneOgetti\\ProgOOP\\OOP24-goosegame\\src\\main\\resources\\img\\dog_asleep.png").getImage();
     }
 
     @Override
@@ -33,7 +33,6 @@ public class HerdingHoundView extends JPanel {
         int h = getHeight();
 
         int cellSize = Math.min(w, h) / gridSize;
-
         int gridWidth  = cellSize * gridSize;
         int gridHeight = cellSize * gridSize;
 
@@ -45,16 +44,8 @@ public class HerdingHoundView extends JPanel {
 
         g.setColor(Color.GRAY);
         for (int i = 0; i <= gridSize; i++) {
-
-            g.drawLine(xOffset,
-                       yOffset + i * cellSize,
-                       xOffset + gridWidth,
-                       yOffset + i * cellSize);
-
-            g.drawLine(xOffset + i * cellSize,
-                       yOffset,
-                       xOffset + i * cellSize,
-                       yOffset + gridHeight);
+            g.drawLine(xOffset, yOffset + i * cellSize, xOffset + gridWidth, yOffset + i * cellSize);
+            g.drawLine(xOffset + i * cellSize, yOffset, xOffset + i * cellSize, yOffset + gridHeight);
         }
 
         g.setColor(Color.LIGHT_GRAY);
@@ -86,8 +77,21 @@ public class HerdingHoundView extends JPanel {
             default     -> Color.WHITE;
         });
         drawCell(g, dogPos, cellSize, xOffset, yOffset);
-        drawDogDirectionArrow(g, dogPos, model.getDog().getDirection(),
-                              cellSize, xOffset, yOffset);
+
+        // DISEGNA PUNTO INTERROGATIVO/ESCLAMATIVO SOPRA IL CANE
+        if (model.getDog().getState() != DogImpl.State.ASLEEP) {
+            String symbol = model.getDog().getState() == DogImpl.State.AWAKE ? "!" : "?";
+            g.setColor(Color.BLACK);
+            Font font = new Font("Arial", Font.BOLD, cellSize / 2);
+            g.setFont(font);
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(symbol);
+            int textHeight = fm.getHeight();
+
+            int centerX = xOffset + dogPos.getY() * cellSize + (cellSize - textWidth) / 2;
+            int centerY = yOffset + dogPos.getX() * cellSize - textHeight / 4;
+            g.drawString(symbol, centerX, centerY);
+        }
 
         g.setColor(Color.WHITE);
         drawCell(g, model.getGoose().getCoord(), cellSize, xOffset, yOffset);
@@ -111,7 +115,7 @@ public class HerdingHoundView extends JPanel {
             default -> asleepImage;
         };
 
-        int imageSize = 50;
+        int imageSize = 200;
         int imgX = w - imageSize - 10;
         int imgY = h - imageSize - 10;
         g.drawImage(stateImage, imgX, imgY, imageSize, imageSize, this);
@@ -124,23 +128,6 @@ public class HerdingHoundView extends JPanel {
         g.fillRect(x, y, size, size);
     }
 
-    private void drawDogDirectionArrow(Graphics g,
-                                       Pair<Integer, Integer> dogPos,
-                                       DogImpl.Direction dir,
-                                       int size, int xOffset, int yOffset) {
-        int centerX = xOffset + dogPos.getY() * size + size / 2;
-        int centerY = yOffset + dogPos.getX() * size + size / 2;
-        int arrowSize = size / 5;
-
-        g.setColor(Color.BLACK);
-        switch (dir) {
-            case UP    -> g.drawLine(centerX, centerY, centerX, centerY - arrowSize);
-            case DOWN  -> g.drawLine(centerX, centerY, centerX, centerY + arrowSize);
-            case LEFT  -> g.drawLine(centerX, centerY, centerX - arrowSize, centerY);
-            case RIGHT -> g.drawLine(centerX, centerY, centerX + arrowSize, centerY);
-        }
-    }
-    
     public void updateView() {
         repaint();
     }
@@ -157,3 +144,4 @@ public class HerdingHoundView extends JPanel {
         }
     }
 }
+

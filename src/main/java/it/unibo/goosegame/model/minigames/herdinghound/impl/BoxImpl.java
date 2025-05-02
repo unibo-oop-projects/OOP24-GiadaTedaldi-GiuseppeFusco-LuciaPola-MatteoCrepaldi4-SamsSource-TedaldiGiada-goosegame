@@ -96,8 +96,9 @@ public class BoxImpl implements Box {
     }
 
     private boolean isInBounds(int x, int y) {
-        return !((x > boxDistance && x < gridSize - boxDistance) && (y > boxDistance && y < gridSize-boxDistance)) &&
-         (x >= 0 && x < gridSize && y >= 0 && y < gridSize);
+    boolean isOnBorder = (x <= boxDistance || x >= gridSize - boxDistance - 1) || 
+    (y <= boxDistance || y >= gridSize - boxDistance - 1);
+    return isOnBorder && x >= 0 && x < gridSize && y >= 0 && y < gridSize;
     }
 
     public List<Pair<Integer, Integer>> getShadows() {
