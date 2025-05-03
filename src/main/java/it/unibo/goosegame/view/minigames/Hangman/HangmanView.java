@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model.minigames.Hangman;
+package it.unibo.goosegame.view.minigames.Hangman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
