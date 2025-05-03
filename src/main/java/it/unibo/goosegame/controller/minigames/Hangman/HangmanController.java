@@ -1,4 +1,4 @@
-package  it.unibo.goosegame.model.minigames.Hangman;
+package  it.unibo.goosegame.controller.minigames.Hangman;
 
 import javax.swing.JOptionPane;
 
