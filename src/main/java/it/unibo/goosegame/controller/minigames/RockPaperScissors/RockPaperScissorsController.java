@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model.minigames.RockPaperScissors.impl;
+package it.unibo.goosegame.controller.minigames.RockPaperScissors;
 
 import java.awt.Window;
 
