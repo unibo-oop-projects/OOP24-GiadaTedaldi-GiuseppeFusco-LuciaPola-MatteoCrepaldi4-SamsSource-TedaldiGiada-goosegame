@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model.minigames.RockPaperScissors.impl;
+package it.unibo.goosegame.view.minigames.RockPaperScissors;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
