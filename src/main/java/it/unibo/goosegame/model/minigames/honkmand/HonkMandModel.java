@@ -22,69 +22,70 @@ public class HonkMandModel implements MinigamesModel {
     }    
 
     public void resetGame() {
-        sequence.clear();
-        currentStep = 0;
-        userTurn = false;
-        gameOver = false;
-        gameWon = false;
-        successfulRounds = 0;
+        this.sequence.clear();
+        this.currentStep = 0;
+        this.userTurn = false;
+        this.gameOver = false;
+        this.gameWon = false;
+        this.successfulRounds = 0;
     }
 
     public boolean isOver() {
-        return gameOver || gameWon;
+        return this.gameOver || this.gameWon; //il gioco finisce se il gioco è perso o vinto
     }
 
-    public boolean isGameWon() {
-        return gameWon;
+    public boolean isGameWon() { //capisco se il gioco è vinto
+        return this.gameWon;
     }
 
-    public boolean isGameLost() {
-        return gameOver;
+    public boolean isGameLost() { //capisco se il gioco è perso
+        return this.gameOver;
     }
 
-    public void addNewColor() {
+    public void addNewColor() { //aggiungo uno dei 4 clori a caso alla sequenza
         sequence.add(random.nextInt(4));
-        currentStep = 0;
-        userTurn = false;
     }
 
-    public List<Integer> getSequence() {
-        return sequence;
+    public List<Integer> getSequence() {//prendo la sequenza aumentata
+        return this.sequence;
     }
 
     public int getCurrentStep() {
-        return currentStep;
+        return this.currentStep;
     }
 
-    public boolean isUserTurn() {
-        return userTurn;
+    public void switchTurn(){
+        this.userTurn = !this.userTurn;
+        if (this.userTurn) {
+            this.currentStep = 0;
+        }
+    }
+    
+
+    public boolean getUserTurn(){
+        return this.userTurn;
     }
 
-    public void setUserTurn(boolean userTurn) {
-        this.userTurn = userTurn;
-    }
 
-    public boolean checkInput(int color) {
-        if (gameOver || gameWon) return false;
+    public boolean checkInput(List<Integer> userSeq) {
+        if (this.gameOver || this.gameWon) return false;
 
-        if (sequence.get(currentStep) == color) {
-            currentStep++;
-            if (currentStep == sequence.size()) {
-                successfulRounds++;
-                if (successfulRounds >= MAX_ROUNDS) {
-                    gameWon = true;
-                }
-                return true;
-            }
-            return false;
-        } else {
+        if(this.sequence.get(currentStep).equals(userSeq.get(currentStep))){
+            this.currentStep ++;
+            if(isSequenceComplete()){
+                this.successfulRounds++;
+                if(successfulRounds >= MAX_ROUNDS){
+                    this.gameWon = true;
+                }return true;
+            }return false;
+        }else{
             gameOver = true;
             return false;
         }
     }
 
     public boolean isSequenceComplete() {
-        return currentStep == sequence.size();
+        return this.currentStep == this.sequence.size();
     }
 
     public int getSuccessfulRounds() {
