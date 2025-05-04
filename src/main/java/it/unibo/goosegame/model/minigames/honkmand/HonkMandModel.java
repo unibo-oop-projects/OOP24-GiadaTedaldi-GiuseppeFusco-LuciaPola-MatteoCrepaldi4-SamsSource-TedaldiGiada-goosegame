@@ -31,14 +31,14 @@ public class HonkMandModel implements MinigamesModel {
     }
 
     public boolean isOver() {
-        return this.gameOver || this.gameWon; //il gioco finisce se il gioco è perso o vinto
+        return this.gameOver || this.gameWon;//il gioco finisce se il gioco è perso o vinto
     }
 
-    public boolean isGameWon() { //capisco se il gioco è vinto
+    public boolean isGameWon() {//capisco se il gioco è vinto
         return this.gameWon;
     }
 
-    public boolean isGameLost() { //capisco se il gioco è perso
+    public boolean isGameLost() {//capisco se il gioco è perso
         return this.gameOver;
     }
 
@@ -66,23 +66,26 @@ public class HonkMandModel implements MinigamesModel {
         return this.userTurn;
     }
 
-
-    public boolean checkInput(List<Integer> userSeq) {
+    public boolean checkInput(int input) {
         if (this.gameOver || this.gameWon) return false;
 
-        if(this.sequence.get(currentStep).equals(userSeq.get(currentStep))){
-            this.currentStep ++;
-            if(isSequenceComplete()){
-                this.successfulRounds++;
-                if(successfulRounds >= MAX_ROUNDS){
-                    this.gameWon = true;
-                }return true;
-            }return false;
-        }else{
-            gameOver = true;
+        // Controlla se l'input corrisponde al passo corrente
+        if (this.sequence.get(currentStep) == input) {
+            currentStep++; // Avanza al prossimo passo
+            if (isSequenceComplete()) {
+                successfulRounds++; // Sequenza completata
+                if (successfulRounds >= MAX_ROUNDS) {
+                    gameWon = true; // Ha vinto
+                }
+                return true;
+            }
+            return false; // Input corretto ma sequenza non finita
+        } else {
+            gameOver = true; // Ha sbagliato, game over
             return false;
         }
     }
+    
 
     public boolean isSequenceComplete() {
         return this.currentStep == this.sequence.size();
@@ -91,6 +94,11 @@ public class HonkMandModel implements MinigamesModel {
     public int getSuccessfulRounds() {
         return successfulRounds;
     }
+
+    public void incrementSuccessfulRounds(){//per verificare quanti round ha superato l'utente
+        this.successfulRounds++;
+    }
+    
 }
 
 
