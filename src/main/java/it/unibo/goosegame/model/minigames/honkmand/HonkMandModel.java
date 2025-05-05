@@ -4,101 +4,149 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.goosegame.model.general.MinigamesModel;
-
-public class HonkMandModel implements MinigamesModel {
-    private List<Integer> sequence = new ArrayList<>();
-    private int currentStep = 0;
-    private boolean userTurn = false;
-    private boolean gameOver = false;
-    private boolean gameWon = false;
-    private int successfulRounds = 0;
-    private final int MAX_ROUNDS = 10;
-    private Random random = new Random();
-
+/**
+ * Modello del Simon Game che gestisce la logica di gioco
+ */
+public class HonkMandModel {
+    // Costanti per i colori
+    public static final String GREEN = "green";
+    public static final String RED = "red";
+    public static final String YELLOW = "yellow";
+    public static final String BLUE = "blue";
+    
+    private List<String> sequence;
+    private List<String> playerSequence;
+    private int level;
+    private int score;
+    private int highScore;
+    private boolean isPlaying;
+    private boolean strictMode;
+    private Random random;
+    private String[] colors;
+    
+    // Risultati possibili dopo un input del giocatore
+    public enum InputResult {
+        CORRECT,
+        NEXT_ROUND,
+        RETRY,
+        GAME_OVER
+    }
+    
     public HonkMandModel() {
-        resetGame();
-        addNewColor();
-    }    
-
-    public void resetGame() {
-        this.sequence.clear();
-        this.currentStep = 0;
-        this.userTurn = false;
-        this.gameOver = false;
-        this.gameWon = false;
-        this.successfulRounds = 0;
-    }
-
-    public boolean isOver() {
-        return this.gameOver || this.gameWon;//il gioco finisce se il gioco è perso o vinto
-    }
-
-    public boolean isGameWon() {//capisco se il gioco è vinto
-        return this.gameWon;
-    }
-
-    public boolean isGameLost() {//capisco se il gioco è perso
-        return this.gameOver;
-    }
-
-    public void addNewColor() { //aggiungo uno dei 4 clori a caso alla sequenza
-        sequence.add(random.nextInt(4));
-    }
-
-    public List<Integer> getSequence() {//prendo la sequenza aumentata
-        return this.sequence;
-    }
-
-    public int getCurrentStep() {
-        return this.currentStep;
-    }
-
-    public void switchTurn(){
-        this.userTurn = !this.userTurn;
-        if (this.userTurn) {
-            this.currentStep = 0;
-        }
+        sequence = new ArrayList<>();
+        playerSequence = new ArrayList<>();
+        level = 0;
+        score = 0;
+        highScore = loadHighScore();
+        isPlaying = false;
+        strictMode = false;
+        random = new Random();
+        colors = new String[] {GREEN, RED, YELLOW, BLUE};
     }
     
-
-    public boolean getUserTurn(){
-        return this.userTurn;
+    /**
+     * Carica il punteggio più alto da un file o database
+     */
+    private int loadHighScore() {
+        // In una implementazione reale, questo caricherebbe da un file o database
+        return 0;
     }
-
-    public boolean checkInput(int input) {
-        if (this.gameOver || this.gameWon) return false;
-
-        // Controlla se l'input corrisponde al passo corrente
-        if (this.sequence.get(currentStep) == input) {
-            currentStep++; // Avanza al prossimo passo
-            if (isSequenceComplete()) {
-                successfulRounds++; // Sequenza completata
-                if (successfulRounds >= MAX_ROUNDS) {
-                    gameWon = true; // Ha vinto
+    
+    /**
+     * Salva il punteggio più alto
+     */
+    private void saveHighScore() {
+        // In una implementazione reale, questo salverebbe su un file o database
+    }
+    
+    /**
+     * Inizia una nuova partita
+     */
+    public void startGame() {
+        sequence.clear();
+        playerSequence.clear();
+        level = 0;
+        score = 0;
+        isPlaying = true;
+        nextRound();
+    }
+    
+    /**
+     * Passa al round successivo
+     */
+    public void nextRound() {
+        level++;
+        playerSequence.clear();
+        addRandomColor();
+    }
+    
+    /**
+     * Aggiunge un colore casuale alla sequenza
+     */
+    private void addRandomColor() {
+        int randomIndex = random.nextInt(4);
+        String randomColor = colors[randomIndex];
+        sequence.add(randomColor);
+    }
+    
+    /**
+     * Verifica l'input del giocatore
+     */
+    public InputResult checkPlayerInput(String colorId) {
+        playerSequence.add(colorId);
+        int currentIndex = playerSequence.size() - 1;
+        
+        if (playerSequence.get(currentIndex).equals(sequence.get(currentIndex))) {
+            // Input corretto
+            if (playerSequence.size() == sequence.size()) {
+                // Sequenza completata
+                score += level;
+                if (score > highScore) {
+                    highScore = score;
+                    saveHighScore();
                 }
-                return true;
+                return InputResult.NEXT_ROUND;
             }
-            return false; // Input corretto ma sequenza non finita
+            return InputResult.CORRECT;
         } else {
-            gameOver = true; // Ha sbagliato, game over
-            return false;
+            // Input errato
+            if (strictMode) {
+                return InputResult.GAME_OVER;
+            }
+            return InputResult.RETRY;
         }
     }
     
-
-    public boolean isSequenceComplete() {
-        return this.currentStep == this.sequence.size();
-    }
-
-    public int getSuccessfulRounds() {
-        return successfulRounds;
-    }
-
-    public void incrementSuccessfulRounds(){//per verificare quanti round ha superato l'utente
-        this.successfulRounds++;
+    // Getters e Setters
+    public List<String> getSequence() {
+        return sequence;
     }
     
+    public int getLevel() {
+        return level;
+    }
+    
+    public int getScore() {
+        return score;
+    }
+    
+    public int getHighScore() {
+        return highScore;
+    }
+    
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+    
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
+    
+    public boolean isStrictMode() {
+        return strictMode;
+    }
+    
+    public void setStrictMode(boolean strictMode) {
+        this.strictMode = strictMode;
+    }
 }
-
-
