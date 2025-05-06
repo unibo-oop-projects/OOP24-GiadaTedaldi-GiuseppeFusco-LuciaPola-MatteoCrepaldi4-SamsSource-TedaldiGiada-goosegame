@@ -133,7 +133,35 @@ public class SnakeModelImpl implements SnakeModel {
         this.score = 0;
         generateFood();
     }
+
+
     
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFood(Position p) {
+        this.food = p;
+    }
+
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSnakeBody(List<Position> body) {
+        this.snakeBody = body;
+    }
+
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setScore(int score) {
+        this.score = score;
+    }
+        
     /**
      * Calculates the next position of the snake's head based on the current direction.
      *

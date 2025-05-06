@@ -58,4 +58,25 @@ public interface SnakeModel extends MinigamesModel {
      * @return the current score.
      */
     int getScore();
+
+    /**
+     * Sets the position of the food item in the game.
+     * 
+     * @param p the position of the food.
+     */
+    void setFood(Position p);
+
+    /**
+     * Sets the positions of the snake's body segments.
+     * 
+     * @param body a list of positions representing the snake's body.
+     */
+    void setSnakeBody(List<Position> body);
+    
+    /**
+     * Sets the current score of the game.
+     * 
+     * @param score the new score to set.
+     */
+    void setScore(int score);
 }
