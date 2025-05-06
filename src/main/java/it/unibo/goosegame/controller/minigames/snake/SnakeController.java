@@ -31,7 +31,6 @@ public class SnakeController extends JFrame {
         setVisible(true);
         setResizable(false); 
 
-        // Keyboard controls
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -44,7 +43,6 @@ public class SnakeController extends JFrame {
             }
         });
 
-        // Game loop (runs every 100ms)
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
