@@ -63,6 +63,9 @@ public class MemoryViewImpl implements MemoryView {
         }
     } 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void show() {
         this.frame.setVisible(true);

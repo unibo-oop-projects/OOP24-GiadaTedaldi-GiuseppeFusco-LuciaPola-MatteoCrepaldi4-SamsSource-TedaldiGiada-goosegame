@@ -31,8 +31,8 @@ public class MemoryModelImpl implements MemoryModel {
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public void hit(Position p) {
         if(this.selected.contains(p)) {
@@ -51,16 +51,16 @@ public class MemoryModelImpl implements MemoryModel {
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Integer> found(Position p) {
         return Optional.of(p).filter(pp -> this.shown.contains(pp)).map(this.values::get);
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Integer> temporary(Position p) {
         return Optional.of(p).filter(pp -> this.selected.contains(pp)).map(this.values::get);
