@@ -7,7 +7,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MemoryModelImplTest {
 
@@ -15,7 +23,8 @@ class MemoryModelImplTest {
 
     @BeforeEach
     void setUp() {
-        model = new MemoryModelImpl();
+        this.model = new MemoryModelImpl();
+        this.model.resetGame();
     }
 
     /**
@@ -23,7 +32,7 @@ class MemoryModelImplTest {
      */
     @Test
     void testIgnoreDuplicateClick() {
-        Position p = new Position(0, 0);
+        final Position p = new Position(0, 0);
         model.hit(p);
         model.hit(p); 
 
@@ -36,22 +45,22 @@ class MemoryModelImplTest {
      */
     @Test
     void testMatchingPairRevealed() {
-        var grid = new java.util.HashMap<Integer, java.util.List<Position>>();
+        final Map<Integer, List<Position>> grid = new HashMap<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                Position pos = new Position(i, j);
-                int value = model.temporary(pos).orElseGet(() -> {
+                final Position pos = new Position(i, j);
+                final int value = model.temporary(pos).orElseGet(() -> {
                     model.hit(pos);
                     model.hit(new Position(0, 0));
                     return model.temporary(pos).orElse(-1);
                 });
-                grid.computeIfAbsent(value, k -> new java.util.ArrayList<>()).add(pos);
+                grid.computeIfAbsent(value, k -> new ArrayList<>()).add(pos);
             }
         }
 
-        var pair = grid.values().stream().filter(l -> l.size() >= 2).findFirst().get();
-        Position p1 = pair.get(0);
-        Position p2 = pair.get(1);
+        final List<Position> pair = grid.values().stream().filter(l -> l.size() >= 2).findFirst().get();
+        final Position p1 = pair.get(0);
+        final Position p2 = pair.get(1);
 
         model.hit(p1);
         model.hit(p2);
@@ -65,8 +74,8 @@ class MemoryModelImplTest {
      */
     @Test
     void testTemporaryReveal() {
-        Position p1 = new Position(0, 0);
-        Position p2 = new Position(0, 1);
+        final Position p1 = new Position(0, 0);
+        final Position p2 = new Position(0, 1);
 
         model.hit(p1);
         model.hit(p2);
@@ -89,20 +98,20 @@ class MemoryModelImplTest {
      */
     @Test
     void testGameOverAfterAllPairsFound() {
-        var unmatched = new java.util.HashMap<Integer, java.util.List<Position>>();
+        final Map<Integer, List<Position>> unmatched = new HashMap<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                Position p = new Position(i, j);
-                int val = model.temporary(p).orElseGet(() -> {
+                final Position p = new Position(i, j);
+                final int val = model.temporary(p).orElseGet(() -> {
                     model.hit(p);
                     model.hit(new Position(0, 0));
                     return model.temporary(p).orElse(-1);
                 });
-                unmatched.computeIfAbsent(val, k -> new java.util.ArrayList<>()).add(p);
+                unmatched.computeIfAbsent(val, k -> new ArrayList<>()).add(p);
             }
         }
 
-        for (var pair : unmatched.values()) {
+        for (final List<Position> pair : unmatched.values()) {
             if (pair.size() >= 2) {
                 model.hit(pair.get(0));
                 model.hit(pair.get(1));

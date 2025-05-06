@@ -5,7 +5,7 @@ public class Pair<X,Y> {
     private final X x;
     private final Y y;
 
-    public Pair(X x, Y y) {
+    public Pair(final X x, final Y y) {
         super();
         this.x = x;
         this.y = y;
@@ -21,7 +21,7 @@ public class Pair<X,Y> {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -31,7 +31,7 @@ public class Pair<X,Y> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Pair other = (Pair) obj;
+        final Pair other = (Pair) obj;
         if (this.x == null) {
             if (other.x != null) {
                 return false;

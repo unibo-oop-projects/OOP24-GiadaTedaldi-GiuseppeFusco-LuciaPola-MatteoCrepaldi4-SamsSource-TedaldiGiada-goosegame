@@ -15,10 +15,10 @@ public class MemoryViewImpl implements MemoryView {
     private static int size = 4;
     private final List<String> symbols = new LinkedList<>(Arrays.asList("★", "♣", "☀", "⚽", "♫", "❤", "☂", "✈"));
     private final Map<JButton, Position> cells = new HashMap<>();
-    private MemoryModel model;
+    private final MemoryModel model;
     private final JFrame frame = new JFrame();
     
-    public MemoryViewImpl(MemoryModel model) {
+    public MemoryViewImpl(final MemoryModel model) {
         this.model = model;
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setTitle(model.getName());
@@ -30,8 +30,8 @@ public class MemoryViewImpl implements MemoryView {
         this.frame.setMinimumSize(new Dimension(sw / 3, sh / 3));
         this.frame.setResizable(true); 
         this.frame.setLocationRelativeTo(null);
-        ActionListener al = e -> {
-            var jb = (JButton)e.getSource();
+        final ActionListener al = e -> {
+            final var jb = (JButton)e.getSource();
             this.model.hit(this.cells.get(jb));
             this.redraw();
             if (this.model.isOver()){
@@ -53,7 +53,7 @@ public class MemoryViewImpl implements MemoryView {
     }
 
     private void redraw() {
-        for (var entry: this.cells.entrySet()){
+        for (final var entry: this.cells.entrySet()){
             entry.getKey().setText(
                 this.model.temporary(entry.getValue()).map(n -> this.symbols.get(n)).orElse(" "));
             this.model.found(entry.getValue()).ifPresent(n -> {

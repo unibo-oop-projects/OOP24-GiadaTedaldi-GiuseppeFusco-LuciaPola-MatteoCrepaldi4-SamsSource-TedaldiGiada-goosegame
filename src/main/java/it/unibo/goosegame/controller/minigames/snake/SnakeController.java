@@ -1,6 +1,8 @@
 package it.unibo.goosegame.controller.minigames.snake;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
@@ -14,16 +16,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class SnakeController extends JFrame {
-    private SnakeModel model;
-    private SnakeView view;
-    private Timer timer;
+    private final SnakeModel model;
+    private final SnakeView view;
+    private final Timer timer;
 
     public SnakeController() {
         model = new SnakeModelImpl();
-        view = new SnakeView(model);
+        view = new SnakeView();
 
         add(view);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle(model.getName());
         view.setPreferredSize(new Dimension(600, 400));
         pack();
@@ -33,12 +35,13 @@ public class SnakeController extends JFrame {
 
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyPressed(final KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP -> model.changeDirection(Direction.UP);
                     case KeyEvent.VK_DOWN -> model.changeDirection(Direction.DOWN);
                     case KeyEvent.VK_LEFT -> model.changeDirection(Direction.LEFT);
                     case KeyEvent.VK_RIGHT -> model.changeDirection(Direction.RIGHT);
+                    default -> {}
                 }
             }
         });

@@ -24,17 +24,10 @@ public class MemoryModelImpl implements MemoryModel {
     private List<Position> selected = new ArrayList<>();
 
     /**
-     * Constructs a new MemoryModelImpl instance and initializes the game board.
-     */
-    public MemoryModelImpl() {
-        resetGame();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
-    public void hit(Position p) {
+    public void hit(final Position p) {
         if(this.selected.contains(p)) {
             return;
         }
@@ -54,7 +47,7 @@ public class MemoryModelImpl implements MemoryModel {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Integer> found(Position p) {
+    public Optional<Integer> found(final Position p) {
         return Optional.of(p).filter(pp -> this.shown.contains(pp)).map(this.values::get);
     }
 
@@ -62,7 +55,7 @@ public class MemoryModelImpl implements MemoryModel {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Integer> temporary(Position p) {
+    public Optional<Integer> temporary(final Position p) {
         return Optional.of(p).filter(pp -> this.selected.contains(pp)).map(this.values::get);
     }
 
@@ -71,7 +64,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public boolean isOver() {
-        List<Integer> remaining = values.keySet().stream().filter(p -> !this.shown.contains(p)).map(values::get).toList();
+        final List<Integer> remaining = values.keySet().stream().filter(p -> !this.shown.contains(p)).map(values::get).toList();
         return remaining.stream().distinct().count() == remaining.size();
     }
 
@@ -80,16 +73,16 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public void resetGame() {
-        List<Integer> numeri = new ArrayList<>();
+        final List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            numeri.add(i);
-            numeri.add(i);
+            numbers.add(i);
+            numbers.add(i);
         }
-        Collections.shuffle(numeri);
+        Collections.shuffle(numbers);
         int index=0;
         for (int i=0; i<SIZE; i++){
             for (int j=0; j<SIZE; j++){
-                values.put(new Position(i, j), numeri.get(index));
+                values.put(new Position(i, j), numbers.get(index));
                 index++;
             }
         }

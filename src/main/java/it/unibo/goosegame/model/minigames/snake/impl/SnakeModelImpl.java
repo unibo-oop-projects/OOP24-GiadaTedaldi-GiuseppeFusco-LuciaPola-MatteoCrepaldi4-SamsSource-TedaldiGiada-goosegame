@@ -18,10 +18,6 @@ public class SnakeModelImpl implements SnakeModel {
     private Direction direction;
     private boolean isGameOver;
     private int score;
-    
-    public SnakeModelImpl() {
-        resetGame();
-    }
 
     /**
      * {@inheritDoc}
@@ -56,8 +52,8 @@ public class SnakeModelImpl implements SnakeModel {
             return 0;
         }
         
-        Position head = snakeBody.get(0);
-        Position newHead = getNextPosition(head);
+        final Position head = snakeBody.get(0);
+        final Position newHead = getNextPosition(head);
         
         if (checkCollision(newHead)) {
             isGameOver = true;
@@ -80,7 +76,7 @@ public class SnakeModelImpl implements SnakeModel {
      * {@inheritDoc}
      */
     @Override
-    public void changeDirection(Direction newDirection) {
+    public void changeDirection(final Direction newDirection) {
         if ((direction == Direction.UP && newDirection != Direction.DOWN) ||
         (direction == Direction.DOWN && newDirection != Direction.UP) ||
         (direction == Direction.LEFT && newDirection != Direction.RIGHT) ||
@@ -140,7 +136,7 @@ public class SnakeModelImpl implements SnakeModel {
      * {@inheritDoc}
      */
     @Override
-    public void setFood(Position p) {
+    public void setFood(final Position p) {
         this.food = p;
     }
 
@@ -149,7 +145,7 @@ public class SnakeModelImpl implements SnakeModel {
      * {@inheritDoc}
      */
     @Override
-    public void setSnakeBody(List<Position> body) {
+    public void setSnakeBody(final List<Position> body) {
         this.snakeBody = body;
     }
 
@@ -158,7 +154,7 @@ public class SnakeModelImpl implements SnakeModel {
      * {@inheritDoc}
      */
     @Override
-    public void setScore(int score) {
+    public void setScore(final int score) {
         this.score = score;
     }
         
@@ -168,7 +164,7 @@ public class SnakeModelImpl implements SnakeModel {
      * @param head The current position of the snake's head.
      * @return The new position of the snake's head.
      */
-    private Position getNextPosition(Position head) {
+    private Position getNextPosition(final Position head) {
         int x = head.x();
         int y = head.y();
         
@@ -188,11 +184,11 @@ public class SnakeModelImpl implements SnakeModel {
      * @param newHead The new position of the snake's head.
      * @return {@code true} if there is a collision, {@code false} otherwise.
      */
-    private boolean checkCollision(Position newHead) {
+    private boolean checkCollision(final Position newHead) {
         if(newHead.x() < 0 || newHead.x() >= TABLE_WIDTH || newHead.y() < 0 || newHead.y() >= TABLE_HEIGHT) {
             return true;
         }
-        for (Position segment : snakeBody) {
+        for (final Position segment : snakeBody) {
             if (segment.equals(newHead)) {
                 return true;
             }
@@ -204,7 +200,7 @@ public class SnakeModelImpl implements SnakeModel {
      * Generates a new food position on the board that does not overlap with the snake's body.
      */
     private void generateFood() {
-        Random rand = new Random();
+        final Random rand = new Random();
         int x, y;
         do {
             x = rand.nextInt(TABLE_WIDTH);

@@ -9,7 +9,7 @@ import it.unibo.goosegame.view.general.MinigameMenuAbstract;
 
 public class SnakeMenu extends MinigameMenuAbstract {
 
-    public SnakeMenu(String imgPath, String title, String infoMsg, ActionListener al) {
+    public SnakeMenu(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
         super(imgPath, title, infoMsg, al);
         /*
         SnakeModelImpl sm = new SnakeModelImpl();

@@ -6,7 +6,7 @@ import it.unibo.goosegame.view.general.MinigameMenuAbstract;
 
 public class MemoryMenu extends MinigameMenuAbstract {
 
-    public MemoryMenu(String imgPath, String title, String infoMsg, ActionListener al) {
+    public MemoryMenu(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
         super(imgPath, title, infoMsg, al);
         /*
          --Hypothetical Memory menu:
