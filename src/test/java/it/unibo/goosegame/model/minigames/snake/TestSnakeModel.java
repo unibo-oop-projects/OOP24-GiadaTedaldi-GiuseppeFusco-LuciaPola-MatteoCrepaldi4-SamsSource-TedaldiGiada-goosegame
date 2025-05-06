@@ -39,23 +39,22 @@ class SnakeModelImplTest {
     @Test
     void testSnakeCollisionWithItself() {
         model.resetGame();
-        // Manually create a U-shape snake body
         List<Position> body = List.of(
-            new Position(5, 5),  // Head
+            new Position(5, 5), 
             new Position(5, 6),
             new Position(6, 6),
             new Position(6, 5),
             new Position(6, 4),
-            new Position(5, 4)   // Tail
+            new Position(5, 4)
         );
     
         model.setSnakeBody(body);
-        model.changeDirection(Direction.LEFT); // Head at (5,5) moves to (4,5), no collision yet
-        model.move(); // new head at (4,5), body updated
+        model.changeDirection(Direction.LEFT);
+        model.move(); 
         model.changeDirection(Direction.DOWN); 
-        model.move(); // new head at (4,6)
+        model.move();
         model.changeDirection(Direction.RIGHT); 
-        model.move(); // new head at (5,6) — this collides with body
+        model.move();
     
         assertTrue(model.isOver(), "Expected collision with self to end game");
     }
@@ -92,7 +91,7 @@ class SnakeModelImplTest {
         model.changeDirection(Direction.RIGHT);
         model.setFood(food);
     
-        model.move(); // Should eat food, reach score 15
+        model.move();
     
         assertEquals(15, model.getScore());
         assertTrue(model.checkWin());
@@ -105,14 +104,11 @@ class SnakeModelImplTest {
      */
     @Test
     void testGameReset() {
-        // Move the snake a few steps
         model.move();
         model.move();
 
-        // Reset the game
         model.resetGame();
 
-        // After resetting, the score should be 0, and the snake's body should be in the initial state
         assertEquals(0, model.getScore());
         assertEquals(1, model.getSnakeBody().size());
         assertFalse(model.isOver());
