@@ -19,6 +19,7 @@ import java.util.List;
  */
 class SnakeModelImplTest {
 
+    private static final int EXP_SCORE = 15;
     private SnakeModel model;
 
     @BeforeEach
@@ -42,15 +43,17 @@ class SnakeModelImplTest {
     @Test
     void testSnakeCollisionWithItself() {
         model.resetGame();
-        List<Position> body = List.of(
-            new Position(5, 5), 
-            new Position(5, 6),
-            new Position(6, 6),
-            new Position(6, 5),
-            new Position(6, 4),
-            new Position(5, 4)
+        final int temp1 = 5;
+        final int temp2 = 6;
+        final int temp3 = 4;
+        final List<Position> body = List.of(
+            new Position(temp1, temp1), 
+            new Position(temp1, temp2),
+            new Position(temp2, temp2),
+            new Position(temp2, temp1),
+            new Position(temp2, temp3),
+            new Position(temp1, temp3)
         );
-    
         model.setSnakeBody(body);
         model.changeDirection(Direction.LEFT);
         model.move(); 
@@ -58,7 +61,6 @@ class SnakeModelImplTest {
         model.move();
         model.changeDirection(Direction.RIGHT); 
         model.move();
-    
         assertTrue(model.isOver(), "Expected collision with self to end game");
     }
 
@@ -68,16 +70,12 @@ class SnakeModelImplTest {
     @Test
     void testSnakeEatsFood() {
         model.resetGame();
-    
-        Position head = model.getSnakeBody().get(0);
-        Position food = new Position(head.x() + 1, head.y());
-    
+        final Position head = model.getSnakeBody().get(0);
+        final Position food = new Position(head.x() + 1, head.y());
         model.changeDirection(Direction.RIGHT);
         model.setFood(food);
-    
-        int oldScore = model.getScore();
+        final int oldScore = model.getScore();
         model.move();
-    
         assertEquals(oldScore + 1, model.getScore());
         assertEquals(2, model.getSnakeBody().size());
     }
@@ -88,19 +86,17 @@ class SnakeModelImplTest {
     @Test
     void testSnakeWinsGame() {
         model.resetGame();
-        model.setScore(14);
-        Position head = model.getSnakeBody().get(0);
-        Position food = new Position(head.x() + 1, head.y());
+        final int score = 14;
+        model.setScore(score);
+        final Position head = model.getSnakeBody().get(0);
+        final Position food = new Position(head.x() + 1, head.y());
         model.changeDirection(Direction.RIGHT);
         model.setFood(food);
-    
         model.move();
-    
-        assertEquals(15, model.getScore());
+        assertEquals(EXP_SCORE, model.getScore());
         assertTrue(model.checkWin());
         assertEquals(1, model.getResult());
     }
-
 
     /**
      * Test to verify that the game is reset properly.
@@ -109,9 +105,7 @@ class SnakeModelImplTest {
     void testGameReset() {
         model.move();
         model.move();
-
         model.resetGame();
-
         assertEquals(0, model.getScore());
         assertEquals(1, model.getSnakeBody().size());
         assertFalse(model.isOver());

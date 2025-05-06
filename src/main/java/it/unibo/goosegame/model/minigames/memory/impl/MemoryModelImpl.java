@@ -80,8 +80,8 @@ public class MemoryModelImpl implements MemoryModel {
         }
         Collections.shuffle(numbers);
         int index=0;
-        for (int i=0; i<SIZE; i++){
-            for (int j=0; j<SIZE; j++){
+        for (int i=0; i < SIZE; i++) {
+            for (int j=0; j < SIZE; j++) {
                 values.put(new Position(i, j), numbers.get(index));
                 index++;
             }

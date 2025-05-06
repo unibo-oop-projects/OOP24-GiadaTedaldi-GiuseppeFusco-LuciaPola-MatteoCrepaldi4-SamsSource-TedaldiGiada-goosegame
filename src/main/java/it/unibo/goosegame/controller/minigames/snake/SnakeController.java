@@ -15,11 +15,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * Controller for the Snake game.
+ * It handles user input and updates the game state.
+ */
 public class SnakeController extends JFrame {
+    private static final int INIT_HEIGHT = 400;
+    private static final int INIT_WIDTH = 600;
     private final SnakeModel model;
     private final SnakeView view;
     private final Timer timer;
 
+    /**
+     * Constructor for SnakeController.
+     * Initializes the model and view for the Snake game.
+     */
     public SnakeController() {
         model = new SnakeModelImpl();
         view = new SnakeView();
@@ -27,7 +37,7 @@ public class SnakeController extends JFrame {
         add(view);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle(model.getName());
-        view.setPreferredSize(new Dimension(600, 400));
+        view.setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -41,14 +51,16 @@ public class SnakeController extends JFrame {
                     case KeyEvent.VK_DOWN -> model.changeDirection(Direction.DOWN);
                     case KeyEvent.VK_LEFT -> model.changeDirection(Direction.LEFT);
                     case KeyEvent.VK_RIGHT -> model.changeDirection(Direction.RIGHT);
-                    default -> {}
+                    default -> { 
+
+                    }
                 }
             }
         });
 
         timer = new Timer(100, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 model.move();
                 view.repaint();
                 if (model.isOver() || model.checkWin()) {
@@ -61,6 +73,10 @@ public class SnakeController extends JFrame {
         timer.start();
     }
 
+    /**
+     * Starts the Snake game.
+     * @return a new instance of SnakeController
+     */
     public static SnakeController startGame() {
         return new SnakeController();
     }

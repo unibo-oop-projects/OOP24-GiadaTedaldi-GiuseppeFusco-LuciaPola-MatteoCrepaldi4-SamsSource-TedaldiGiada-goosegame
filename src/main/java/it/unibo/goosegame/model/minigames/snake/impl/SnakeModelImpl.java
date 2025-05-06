@@ -8,11 +8,15 @@ import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.utilities.Direction;
 import it.unibo.goosegame.utilities.Position;
 
+/**
+ * Implementation of the {@link SnakeModel} interface.
+ * This class represents the logic of the "Snake" mini-game,
+ * managing the snake's body, food, direction, and game status.
+ */
 public class SnakeModelImpl implements SnakeModel {
-    private static final int WIN_SCORE = 15;
-    public static final int TABLE_WIDTH = 30; 
+    public static final int TABLE_WIDTH = 30;
     public static final int TABLE_HEIGHT = 20;
-    
+    private static final int WIN_SCORE = 15;
     private List<Position> snakeBody;
     private Position food;
     private Direction direction;
@@ -51,24 +55,19 @@ public class SnakeModelImpl implements SnakeModel {
         if (isGameOver) {
             return 0;
         }
-        
         final Position head = snakeBody.get(0);
         final Position newHead = getNextPosition(head);
-        
         if (checkCollision(newHead)) {
             isGameOver = true;
             return 1;
         }
-        
         snakeBody.add(0, newHead);
-        
         if (newHead.equals(food)) {
             score++;
             generateFood();
         } else {
             snakeBody.remove(snakeBody.size() - 1);
         }
-
         return 1;
     }
 
@@ -77,12 +76,12 @@ public class SnakeModelImpl implements SnakeModel {
      */
     @Override
     public void changeDirection(final Direction newDirection) {
-        if ((direction == Direction.UP && newDirection != Direction.DOWN) ||
-        (direction == Direction.DOWN && newDirection != Direction.UP) ||
-        (direction == Direction.LEFT && newDirection != Direction.RIGHT) ||
-        (direction == Direction.RIGHT && newDirection != Direction.LEFT)) {
-        direction = newDirection;
-    }
+        if ((direction == Direction.UP && newDirection != Direction.DOWN)
+        || (direction == Direction.DOWN && newDirection != Direction.UP)
+        || (direction == Direction.LEFT && newDirection != Direction.RIGHT)
+        || (direction == Direction.RIGHT && newDirection != Direction.LEFT)) {
+            direction = newDirection;
+        }
     }
 
     /**
@@ -130,8 +129,6 @@ public class SnakeModelImpl implements SnakeModel {
         generateFood();
     }
 
-
-    
     /**
      * {@inheritDoc}
      */
@@ -140,7 +137,6 @@ public class SnakeModelImpl implements SnakeModel {
         this.food = p;
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -149,7 +145,6 @@ public class SnakeModelImpl implements SnakeModel {
         this.snakeBody = body;
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -157,7 +152,7 @@ public class SnakeModelImpl implements SnakeModel {
     public void setScore(final int score) {
         this.score = score;
     }
-        
+
     /**
      * Calculates the next position of the snake's head based on the current direction.
      *
@@ -167,14 +162,12 @@ public class SnakeModelImpl implements SnakeModel {
     private Position getNextPosition(final Position head) {
         int x = head.x();
         int y = head.y();
-        
         switch (direction) {
             case UP: y--; break;
             case DOWN: y++; break;
             case LEFT: x--; break;
             case RIGHT: x++; break;
-        }
-        
+        }        
         return new Position(x, y);
     }
 
@@ -185,7 +178,7 @@ public class SnakeModelImpl implements SnakeModel {
      * @return {@code true} if there is a collision, {@code false} otherwise.
      */
     private boolean checkCollision(final Position newHead) {
-        if(newHead.x() < 0 || newHead.x() >= TABLE_WIDTH || newHead.y() < 0 || newHead.y() >= TABLE_HEIGHT) {
+        if (newHead.x() < 0 || newHead.x() >= TABLE_WIDTH || newHead.y() < 0 || newHead.y() >= TABLE_HEIGHT) {
             return true;
         }
         for (final Position segment : snakeBody) {

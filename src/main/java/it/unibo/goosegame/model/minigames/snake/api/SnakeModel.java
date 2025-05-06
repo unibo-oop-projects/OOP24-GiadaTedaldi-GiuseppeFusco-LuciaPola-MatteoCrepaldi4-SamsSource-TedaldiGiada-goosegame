@@ -72,7 +72,7 @@ public interface SnakeModel extends MinigamesModel {
      * @param body a list of positions representing the snake's body.
      */
     void setSnakeBody(List<Position> body);
-    
+
     /**
      * Sets the current score of the game.
      * 
