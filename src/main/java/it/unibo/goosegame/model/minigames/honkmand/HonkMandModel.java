@@ -14,13 +14,14 @@ public class HonkMandModel {
     public static final String YELLOW = "yellow";
     public static final String BLUE = "blue";
     
+    // Livello massimo per vincere il gioco
+    public static final int MAX_LEVEL = 10;
+    
     private List<String> sequence;
     private List<String> playerSequence;
     private int level;
     private int score;
-    private int highScore;
     private boolean isPlaying;
-    private boolean strictMode;
     private Random random;
     private String[] colors;
     
@@ -28,8 +29,8 @@ public class HonkMandModel {
     public enum InputResult {
         CORRECT,
         NEXT_ROUND,
-        RETRY,
-        GAME_OVER
+        GAME_OVER,
+        GAME_WIN
     }
     
     public HonkMandModel() {
@@ -37,31 +38,12 @@ public class HonkMandModel {
         playerSequence = new ArrayList<>();
         level = 0;
         score = 0;
-        highScore = loadHighScore();
         isPlaying = false;
-        strictMode = false;
         random = new Random();
         colors = new String[] {GREEN, RED, YELLOW, BLUE};
     }
     
-    /**
-     * Carica il punteggio più alto da un file o database
-     */
-    private int loadHighScore() {
-        // In una implementazione reale, questo caricherebbe da un file o database
-        return 0;
-    }
     
-    /**
-     * Salva il punteggio più alto
-     */
-    private void saveHighScore() {
-        // In una implementazione reale, questo salverebbe su un file o database
-    }
-    
-    /**
-     * Inizia una nuova partita
-     */
     public void startGame() {
         sequence.clear();
         playerSequence.clear();
@@ -77,16 +59,26 @@ public class HonkMandModel {
     public void nextRound() {
         level++;
         playerSequence.clear();
-        addRandomColor();
+        
+        // Verifica se il giocatore ha raggiunto il livello massimo
+        if (level > MAX_LEVEL) {
+            return; // Il gioco è già stato vinto
+        }
+        
+        // Genera una nuova sequenza completa per questo livello
+        generateNewSequence();
     }
     
     /**
-     * Aggiunge un colore casuale alla sequenza
+     * Genera una nuova sequenza completa per il livello corrente
      */
-    private void addRandomColor() {
-        int randomIndex = random.nextInt(4);
-        String randomColor = colors[randomIndex];
-        sequence.add(randomColor);
+    private void generateNewSequence() {
+        sequence.clear();
+        for (int i = 0; i < level; i++) {
+            int randomIndex = random.nextInt(4);
+            String randomColor = colors[randomIndex];
+            sequence.add(randomColor);
+        }
     }
     
     /**
@@ -101,19 +93,18 @@ public class HonkMandModel {
             if (playerSequence.size() == sequence.size()) {
                 // Sequenza completata
                 score += level;
-                if (score > highScore) {
-                    highScore = score;
-                    saveHighScore();
+                
+                // Verifica se il giocatore ha vinto
+                if (level == MAX_LEVEL) {
+                    return InputResult.GAME_WIN;
                 }
+                
                 return InputResult.NEXT_ROUND;
             }
             return InputResult.CORRECT;
         } else {
             // Input errato
-            if (strictMode) {
                 return InputResult.GAME_OVER;
-            }
-            return InputResult.RETRY;
         }
     }
     
@@ -130,10 +121,6 @@ public class HonkMandModel {
         return score;
     }
     
-    public int getHighScore() {
-        return highScore;
-    }
-    
     public boolean isPlaying() {
         return isPlaying;
     }
@@ -141,12 +128,5 @@ public class HonkMandModel {
     public void setPlaying(boolean playing) {
         isPlaying = playing;
     }
-    
-    public boolean isStrictMode() {
-        return strictMode;
-    }
-    
-    public void setStrictMode(boolean strictMode) {
-        this.strictMode = strictMode;
-    }
+
 }
