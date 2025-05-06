@@ -1,0 +1,309 @@
+package it.unibo.goosegame.view;
+
+import javax.swing.*;
+
+import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
+import it.unibo.goosegame.utilities.Colors;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Vista del Simon Game che gestisce l'interfaccia utente
+ */
+public class HonkMandView extends JFrame {
+    private Map<Colors, JButton> buttons;
+    private JButton startButton;
+    private JLabel levelLabel;
+    private JLabel scoreLabel;
+    private JLabel messageLabel;
+    private JPanel gamePanel;
+    private JDialog victoryDialog;
+    private JDialog gameOverDialog;
+    
+    public HonkMandView() {
+        // Configurazione della finestra
+        setTitle("HonkMand");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 500);
+        setLocationRelativeTo(null);
+        
+        // Inizializzazione dei componenti
+        initComponents();
+        
+        // Layout
+        layoutComponents();
+        
+        // Inizializza i dialoghi
+        initDialogs();
+        
+        setVisible(true);
+    }
+    
+    private void initComponents() {
+        buttons = new HashMap<>();
+        
+        // Creazione dei pulsanti colorati
+        JButton greenButton = new JButton();
+        greenButton.setBackground(Color.GREEN);
+        buttons.put(Colors.GREEN, greenButton);
+        
+        JButton redButton = new JButton();
+        redButton.setBackground(Color.RED);
+        buttons.put(Colors.RED, redButton);
+        
+        JButton yellowButton = new JButton();
+        yellowButton.setBackground(Color.YELLOW);
+        buttons.put(Colors.YELLOW, yellowButton);
+        
+        JButton blueButton = new JButton();
+        blueButton.setBackground(Color.BLUE);
+        buttons.put(Colors.BLUE, blueButton);
+        
+        // Altri componenti
+        startButton = new JButton("Inizia Gioco");
+        levelLabel = new JLabel("Livello: 0");
+        scoreLabel = new JLabel("Punteggio: 0");
+        messageLabel = new JLabel("");
+        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gamePanel = new JPanel();
+    }
+    
+    private void initDialogs() {
+        // Dialogo di vittoria
+        victoryDialog = new JDialog(this, "Vittoria!", true);
+        victoryDialog.setSize(300, 200);
+        victoryDialog.setLocationRelativeTo(this);
+        
+        JPanel victoryPanel = new JPanel();
+        victoryPanel.setLayout(new BorderLayout());
+        
+        JLabel victoryLabel = new JLabel("Congratulazioni! Hai vinto!", SwingConstants.CENTER);
+        victoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        victoryPanel.add(victoryLabel, BorderLayout.CENTER);
+        
+        JButton closeVictoryButton = new JButton("Chiudi Gioco");
+        closeVictoryButton.addActionListener(e -> System.exit(0));
+        
+        JPanel victoryButtonPanel = new JPanel();
+        victoryButtonPanel.add(closeVictoryButton);
+        victoryPanel.add(victoryButtonPanel, BorderLayout.SOUTH);
+        
+        victoryDialog.add(victoryPanel);
+        
+        // Dialogo di game over
+        gameOverDialog = new JDialog(this, "Game Over", true);
+        gameOverDialog.setSize(300, 200);
+        gameOverDialog.setLocationRelativeTo(this);
+        
+        JPanel gameOverPanel = new JPanel();
+        gameOverPanel.setLayout(new BorderLayout());
+        
+        JLabel gameOverLabel = new JLabel("Game Over!", SwingConstants.CENTER);
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        gameOverPanel.add(gameOverLabel, BorderLayout.CENTER);
+        
+        JButton closeGameOverButton = new JButton("Chiudi Gioco");
+        closeGameOverButton.addActionListener(e -> System.exit(0));
+        
+        JPanel gameOverButtonPanel = new JPanel();
+        gameOverButtonPanel.add(closeGameOverButton);
+        gameOverPanel.add(gameOverButtonPanel, BorderLayout.SOUTH);
+        
+        gameOverDialog.add(gameOverPanel);
+    }
+    
+    private void layoutComponents() {
+        // Layout principale
+        setLayout(new BorderLayout());
+        
+        // Pannello superiore per titolo e livello
+        JPanel topPanel = new JPanel(new FlowLayout());
+        topPanel.add(new JLabel("Honkmand"));
+        topPanel.add(levelLabel);
+        add(topPanel, BorderLayout.NORTH);
+        
+        // Pannello centrale per i pulsanti colorati
+        gamePanel.setLayout(new GridLayout(2, 2, 10, 10));
+        gamePanel.add(buttons.get(Colors.GREEN));
+        gamePanel.add(buttons.get(Colors.RED));
+        gamePanel.add(buttons.get(Colors.YELLOW));
+        gamePanel.add(buttons.get(Colors.BLUE));
+        gamePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        add(gamePanel, BorderLayout.CENTER);
+        
+        // Pannello inferiore per controlli e punteggio
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        
+        JPanel controlPanel = new JPanel(new FlowLayout());
+        controlPanel.add(startButton);
+        
+        JPanel scorePanel = new JPanel(new FlowLayout());
+        scorePanel.add(scoreLabel);
+        scorePanel.add(new JLabel("Livello massimo: " + HonkMandModel.MAX_LEVEL));
+        
+        bottomPanel.add(controlPanel);
+        bottomPanel.add(scorePanel);
+        bottomPanel.add(messageLabel);
+        
+        add(bottomPanel, BorderLayout.SOUTH);
+    }
+    
+    /**
+     * Aggiorna il livello visualizzato
+     */
+    public void updateLevel(int level) {
+        levelLabel.setText("Livello: " + level);
+    }
+    
+    /**
+     * Aggiorna il punteggio visualizzato
+     */
+    public void updateScore(int score) {
+        scoreLabel.setText("Punteggio: " + score);
+    }
+    
+    /**
+     * Mostra un messaggio all'utente
+     */
+    public void showMessage(String message, boolean isError) {
+        messageLabel.setText(message);
+        
+        if (isError) {
+            messageLabel.setForeground(Color.RED);
+        } else {
+            messageLabel.setForeground(new Color(0, 128, 0)); // Verde
+        }
+        
+        // Timer per cancellare il messaggio dopo 2 secondi
+        new Timer(2000, e -> {
+            messageLabel.setText("");
+        }).start();
+    }
+    
+    /**
+     * Illumina un pulsante per la durata specificata
+     */
+    public void lightUpButton(Colors colorId, int duration) {
+        JButton button = buttons.get(colorId);
+        Color originalColor = button.getBackground();
+        
+        // Illumina il pulsante
+        button.setBackground(brightenColor(originalColor));
+        
+        // Timer per ripristinare il colore originale
+        new Timer(duration, e -> {
+            button.setBackground(originalColor);
+        }).start();
+    }
+    
+    /**
+     * Rende un colore più luminoso
+     */
+    private Color brightenColor(Color color) {
+        int r = Math.min(255, color.getRed() + 100);
+        int g = Math.min(255, color.getGreen() + 100);
+        int b = Math.min(255, color.getBlue() + 100);
+        return new Color(r, g, b);
+    }
+    
+    /**
+     * Abilita o disabilita i pulsanti colorati
+     */
+    public void setButtonsEnabled(boolean enabled) {
+        for (JButton button : buttons.values()) {
+            button.setEnabled(enabled);
+        }
+    }
+    
+    /**
+     * Aggiorna lo stato del pulsante di avvio
+     */
+    public void setGameActive(boolean active) {
+        if (active) {
+            startButton.setText("Riavvia");
+        } else {
+            startButton.setText("Inizia Gioco");
+        }
+    }
+    
+    /**
+     * Esegue un'animazione di game over
+     */
+    public void gameOverAnimation() {
+        // Variabili per il numero di lampeggi e la durata del lampeggio
+        final int flashCount = 3;
+        final int flashDelay = 200; // Durata in millisecondi per ogni lampeggio
+        
+        // Azioni da eseguire al lampeggio (accendi/spegni i pulsanti)
+        ActionListener flashAction = new ActionListener() {
+            private int currentFlash = 0; // Conta i lampeggi
+    
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentFlash < flashCount) {
+                    // Alterna lo stato di accensione/spegnimento dei pulsanti
+                    boolean isLightOn = currentFlash % 2 == 0;
+                    
+                    for (Map.Entry<Colors, JButton> entry : buttons.entrySet()) {
+                        if (isLightOn) {
+                            entry.getValue().setBackground(brightenColor(entry.getValue().getBackground()));
+                        } else {
+                            // Ripristina il colore originale
+                            switch (entry.getKey()) {
+                                case GREEN:
+                                    entry.getValue().setBackground(Color.GREEN);
+                                    break;
+                                case RED:
+                                    entry.getValue().setBackground(Color.RED);
+                                    break;
+                                case YELLOW:
+                                    entry.getValue().setBackground(Color.YELLOW);
+                                    break;
+                                case BLUE:
+                                    entry.getValue().setBackground(Color.BLUE);
+                                    break;
+                            }
+                        }
+                    }
+                    
+                    currentFlash++; // Incrementa il contatore dei lampeggi
+                } else {
+                    ((Timer) e.getSource()).stop(); // Fermiamo il timer quando abbiamo completato i lampeggi
+                }
+            }
+        };
+    
+        // Crea un timer per eseguire l'azione di lampeggio ogni 200 ms
+        Timer timer = new Timer(flashDelay, flashAction);
+        timer.start();
+    }
+    
+    
+    /**
+     * Mostra il dialogo di vittoria
+     */
+    public void showVictoryDialog() {
+        victoryDialog.setVisible(true);
+    }
+    
+    /**
+     * Mostra il dialogo di game over
+     */
+    public void showGameOverDialog() {
+        gameOverDialog.setVisible(true);
+    }
+    
+    // Metodi per aggiungere listener agli eventi
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
+    }
+    
+    public void addColorButtonListener(Colors colorId, ActionListener listener) {
+        buttons.get(colorId).addActionListener(listener);
+    }
+}
