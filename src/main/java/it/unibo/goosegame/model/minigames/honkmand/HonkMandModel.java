@@ -4,26 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import it.unibo.goosegame.utilities.Colors;
+
+
 /**
  * Modello del Simon Game che gestisce la logica di gioco
  */
 public class HonkMandModel {
-    // Costanti per i colori
-    public static final String GREEN = "green";
-    public static final String RED = "red";
-    public static final String YELLOW = "yellow";
-    public static final String BLUE = "blue";
     
     // Livello massimo per vincere il gioco
     public static final int MAX_LEVEL = 10;
     
-    private List<String> sequence;
-    private List<String> playerSequence;
+    private List<Colors> sequence;
+    private List<Colors> playerSequence;
     private int level;
     private int score;
     private boolean isPlaying;
     private Random random;
-    private String[] colors;
     
     // Risultati possibili dopo un input del giocatore
     public enum InputResult {
@@ -40,7 +37,6 @@ public class HonkMandModel {
         score = 0;
         isPlaying = false;
         random = new Random();
-        colors = new String[] {GREEN, RED, YELLOW, BLUE};
     }
     
     
@@ -75,16 +71,15 @@ public class HonkMandModel {
     private void generateNewSequence() {
         sequence.clear();
         for (int i = 0; i < level; i++) {
-            int randomIndex = random.nextInt(4);
-            String randomColor = colors[randomIndex];
-            sequence.add(randomColor);
+            int index = random.nextInt(Colors.values().length);
+            sequence.add(Colors.values()[index]);
         }
     }
     
     /**
      * Verifica l'input del giocatore
      */
-    public InputResult checkPlayerInput(String colorId) {
+    public InputResult checkPlayerInput(Colors colorId) {
         playerSequence.add(colorId);
         int currentIndex = playerSequence.size() - 1;
         
@@ -109,7 +104,7 @@ public class HonkMandModel {
     }
     
     // Getters e Setters
-    public List<String> getSequence() {
+    public List<Colors> getSequence() {
         return sequence;
     }
     
@@ -128,5 +123,5 @@ public class HonkMandModel {
     public void setPlaying(boolean playing) {
         isPlaying = playing;
     }
-
+    
 }

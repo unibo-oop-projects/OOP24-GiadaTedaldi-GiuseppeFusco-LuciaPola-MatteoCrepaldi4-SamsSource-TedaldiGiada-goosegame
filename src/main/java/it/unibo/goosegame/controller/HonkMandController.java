@@ -1,33 +1,31 @@
 package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
+import it.unibo.goosegame.utilities.Colors;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Controller del Simon Game che gestisce l'interazione tra modello e vista
  */
 public class HonkMandController {
     private HonkMandModel model;
-    private HonlMandView view;
-    private ExecutorService executor;
+    //private HonkMandView view;
     
-    public HonkMandController(HonkMandModel model, HonkMandView view) {
+public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
         this.model = model;
-        this.view = view;
-        this.executor = Executors.newSingleThreadExecutor();
+        //this.view = view;
         
-        initController();
+        //initController();
     }
     
-    private void initController() {
+    /*private void initController() {
         // Inizializza la vista
-        view.updateScore(model.getScore(), model.getHighScore());
+        view.updateScore(model.getScore());
         
         // Aggiungi listener al pulsante di avvio
         view.addStartButtonListener(new ActionListener() {
@@ -38,78 +36,78 @@ public class HonkMandController {
         });
         
         // Aggiungi listener ai pulsanti colorati
-        view.addColorButtonListener(SimonModel.GREEN, e -> handleButtonClick(SimonModel.GREEN));
-        view.addColorButtonListener(SimonModel.RED, e -> handleButtonClick(SimonModel.RED));
-        view.addColorButtonListener(SimonModel.YELLOW, e -> handleButtonClick(SimonModel.YELLOW));
-        view.addColorButtonListener(SimonModel.BLUE, e -> handleButtonClick(SimonModel.BLUE));
-        
-        // Aggiungi listener alla checkbox della modalità strict
-        view.addStrictModeListener(e -> model.setStrictMode(view.isStrictModeSelected()));
-    }
+        view.addColorButtonListener(Colors.GREEN, e -> handleButtonClick(Colors.GREEN));
+        view.addColorButtonListener(Colors.RED, e -> handleButtonClick(Colors.RED));
+        view.addColorButtonListener(Colors.YELLOW, e -> handleButtonClick(Colors.YELLOW));
+        view.addColorButtonListener(Colors.BLUE, e -> handleButtonClick(Colors.BLUE));
+    }*/
     
     /**
      * Avvia una nuova partita
      */
     private void startGame() {
         model.startGame();
-        view.setGameActive(true);
-        view.updateLevel(model.getLevel());
-        view.showMessage("Osserva la sequenza!", false);
+        //view.setGameActive(true);
+        //view.updateLevel(model.getLevel());
+        //view.showMessage("Osserva la sequenza!", false);
         
-        // Usa un thread separato per non bloccare l'interfaccia
-        SwingUtilities.invokeLater(() -> {
-            Timer timer = new Timer(1000, e -> playSequence());
-            timer.setRepeats(false);
-            timer.start();
-        });
+        // Usa un Timer per riprodurre la sequenza dopo un breve ritardo
+        Timer timer = new Timer(1000, e -> playSequence());
+        timer.setRepeats(false);
+        timer.start();
     }
     
     /**
      * Riproduce la sequenza di colori
      */
     private void playSequence() {
-        executor.execute(() -> {
-            view.setButtonsEnabled(false);
-            List<String> sequence = model.getSequence();
-            
-            for (String color : sequence) {
-                try {
-                    SwingUtilities.invokeAndWait(() -> view.lightUpButton(color, 500));
-                    Thread.sleep(700);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        //view.setButtonsEnabled(false);
+        List<Colors> sequence = model.getSequence();
+        
+        // Usa un Timer per simulare il delay tra le luci dei pulsanti
+        Timer sequenceTimer = new Timer(700, new ActionListener() {
+            private int index = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (index < sequence.size()) {
+                    Colors color = sequence.get(index);
+                    //view.lightUpButton(color, 500);
+                    index++;
+                } else {
+                    // Dopo aver mostrato tutta la sequenza, abilita i pulsanti per l'interazione
+                    //view.setButtonsEnabled(true);
+                    //view.showMessage("Il tuo turno!", false);
                 }
             }
-            
-            SwingUtilities.invokeLater(() -> {
-                view.setButtonsEnabled(true);
-                view.showMessage("Il tuo turno!", false);
-            });
         });
+        sequenceTimer.setRepeats(true);
+        sequenceTimer.start();
     }
     
     /**
      * Gestisce il click su un pulsante colorato
      */
-    private void handleButtonClick(String colorId) {
+    private void handleButtonClick(Colors colorId) {
         if (!model.isPlaying()) return;
         
-        view.lightUpButton(colorId, 300);
+        //view.lightUpButton(colorId, 300);
         
-        SimonModel.InputResult result = model.checkPlayerInput(colorId);
+        HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
         
         switch (result) {
             case CORRECT:
                 // Continua il gioco
                 break;
             case NEXT_ROUND:
-                view.showMessage("Ottimo!", false);
-                view.updateScore(model.getScore(), model.getHighScore());
+                //view.showMessage("Ottimo!", false);
+                //view.updateScore(model.getScore());
                 
+                // Timer per la prossima ronda
                 Timer nextRoundTimer = new Timer(1000, e -> {
                     model.nextRound();
-                    view.updateLevel(model.getLevel());
-                    view.showMessage("Livello " + model.getLevel(), false);
+                    //view.updateLevel(model.getLevel());
+                    //view.showMessage("Livello " + model.getLevel(), false);
                     
                     Timer playSequenceTimer = new Timer(1000, e2 -> playSequence());
                     playSequenceTimer.setRepeats(false);
@@ -118,40 +116,34 @@ public class HonkMandController {
                 nextRoundTimer.setRepeats(false);
                 nextRoundTimer.start();
                 break;
-            case RETRY:
-                view.showMessage("Errore! Riprova", true);
-                
-                Timer retryTimer = new Timer(1000, e -> playSequence());
-                retryTimer.setRepeats(false);
-                retryTimer.start();
-                break;
             case GAME_OVER:
-                view.showMessage("Game Over!", true);
+                //view.showMessage("Game Over!", true);
                 
+                // Timer per la fine del gioco
                 Timer gameOverTimer = new Timer(500, e -> {
-                    view.gameOverAnimation();
+                    //view.gameOverAnimation();
                     endGame();
                     
                     // Mostra il dialogo di game over
                     SwingUtilities.invokeLater(() -> {
-                        view.showGameOverDialog();
+                        //view.showGameOverDialog();
                     });
                 });
                 gameOverTimer.setRepeats(false);
                 gameOverTimer.start();
                 break;
             case GAME_WIN:
-                view.showMessage("Hai vinto!", false);
-                view.updateScore(model.getScore(), model.getHighScore());
+                //view.showMessage("Hai vinto!", false);
+                //view.updateScore(model.getScore());
                 
+                // Timer per animazione di vittoria
                 Timer winTimer = new Timer(1000, e -> {
-                    // Animazione di vittoria
                     celebrateVictory();
                     endGame();
                     
                     // Mostra il dialogo di vittoria
                     SwingUtilities.invokeLater(() -> {
-                        view.showVictoryDialog();
+                        //view.showVictoryDialog();
                     });
                 });
                 winTimer.setRepeats(false);
@@ -164,26 +156,22 @@ public class HonkMandController {
      * Esegue un'animazione di celebrazione per la vittoria
      */
     private void celebrateVictory() {
-        executor.execute(() -> {
-            try {
-                // Lampeggia tutti i pulsanti in sequenza
-                for (int i = 0; i < 3; i++) {
-                    SwingUtilities.invokeAndWait(() -> view.lightUpButton(SimonModel.GREEN, 200));
-                    Thread.sleep(200);
-                    
-                    SwingUtilities.invokeAndWait(() -> view.lightUpButton(SimonModel.RED, 200));
-                    Thread.sleep(200);
-                    
-                    SwingUtilities.invokeAndWait(() -> view.lightUpButton(SimonModel.YELLOW, 200));
-                    Thread.sleep(200);
-                    
-                    SwingUtilities.invokeAndWait(() -> view.lightUpButton(SimonModel.BLUE, 200));
-                    Thread.sleep(200);
+        Timer celebrationTimer = new Timer(200, new ActionListener() {
+            private int count = 0;
+            private final Colors[] colors = Colors.values();    
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (count < 3) {
+                    //view.lightUpButton(colors[count % 4], 200);
+                    count++;
+                } else {
+                    ((Timer) e.getSource()).stop();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
+        celebrationTimer.setRepeats(true);
+        celebrationTimer.start();
     }
     
     /**
@@ -191,14 +179,7 @@ public class HonkMandController {
      */
     private void endGame() {
         model.setPlaying(false);
-        view.setGameActive(false);
-        view.updateScore(model.getScore(), model.getHighScore());
-    }
-    
-    /**
-     * Chiude le risorse
-     */
-    public void shutdown() {
-        executor.shutdown();
+        //view.setGameActive(false);
+        //view.updateScore(model.getScore());
     }
 }
