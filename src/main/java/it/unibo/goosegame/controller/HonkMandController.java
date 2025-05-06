@@ -2,6 +2,7 @@ package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
 import it.unibo.goosegame.utilities.Colors;
+import it.unibo.goosegame.view.HonkMandView;
 
 import javax.swing.*;
 
@@ -14,16 +15,16 @@ import java.util.List;
  */
 public class HonkMandController {
     private HonkMandModel model;
-    //private HonkMandView view;
+    private HonkMandView view;
     
-public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
+public HonkMandController(HonkMandModel model, HonkMandView view) {
         this.model = model;
-        //this.view = view;
+        this.view = view;
         
-        //initController();
+        initController();
     }
     
-    /*private void initController() {
+    private void initController() {
         // Inizializza la vista
         view.updateScore(model.getScore());
         
@@ -40,16 +41,16 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
         view.addColorButtonListener(Colors.RED, e -> handleButtonClick(Colors.RED));
         view.addColorButtonListener(Colors.YELLOW, e -> handleButtonClick(Colors.YELLOW));
         view.addColorButtonListener(Colors.BLUE, e -> handleButtonClick(Colors.BLUE));
-    }*/
+    }
     
     /**
      * Avvia una nuova partita
      */
     private void startGame() {
         model.startGame();
-        //view.setGameActive(true);
-        //view.updateLevel(model.getLevel());
-        //view.showMessage("Osserva la sequenza!", false);
+        view.setGameActive(true);
+        view.updateLevel(model.getLevel());
+        view.showMessage("Osserva la sequenza!", false);
         
         // Usa un Timer per riprodurre la sequenza dopo un breve ritardo
         Timer timer = new Timer(1000, e -> playSequence());
@@ -61,7 +62,7 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
      * Riproduce la sequenza di colori
      */
     private void playSequence() {
-        //view.setButtonsEnabled(false);
+        view.setButtonsEnabled(false);
         List<Colors> sequence = model.getSequence();
         
         // Usa un Timer per simulare il delay tra le luci dei pulsanti
@@ -72,12 +73,12 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
             public void actionPerformed(ActionEvent e) {
                 if (index < sequence.size()) {
                     Colors color = sequence.get(index);
-                    //view.lightUpButton(color, 500);
+                    view.lightUpButton(color, 500);
                     index++;
                 } else {
                     // Dopo aver mostrato tutta la sequenza, abilita i pulsanti per l'interazione
-                    //view.setButtonsEnabled(true);
-                    //view.showMessage("Il tuo turno!", false);
+                    view.setButtonsEnabled(true);
+                    view.showMessage("Il tuo turno!", false);
                 }
             }
         });
@@ -91,7 +92,7 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
     private void handleButtonClick(Colors colorId) {
         if (!model.isPlaying()) return;
         
-        //view.lightUpButton(colorId, 300);
+        view.lightUpButton(colorId, 300);
         
         HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
         
@@ -100,14 +101,14 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
                 // Continua il gioco
                 break;
             case NEXT_ROUND:
-                //view.showMessage("Ottimo!", false);
-                //view.updateScore(model.getScore());
+                view.showMessage("Ottimo!", false);
+                view.updateScore(model.getScore());
                 
                 // Timer per la prossima ronda
                 Timer nextRoundTimer = new Timer(1000, e -> {
                     model.nextRound();
-                    //view.updateLevel(model.getLevel());
-                    //view.showMessage("Livello " + model.getLevel(), false);
+                    view.updateLevel(model.getLevel());
+                    view.showMessage("Livello " + model.getLevel(), false);
                     
                     Timer playSequenceTimer = new Timer(1000, e2 -> playSequence());
                     playSequenceTimer.setRepeats(false);
@@ -117,24 +118,24 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
                 nextRoundTimer.start();
                 break;
             case GAME_OVER:
-                //view.showMessage("Game Over!", true);
+                view.showMessage("Game Over!", true);
                 
                 // Timer per la fine del gioco
                 Timer gameOverTimer = new Timer(500, e -> {
-                    //view.gameOverAnimation();
+                    view.gameOverAnimation();
                     endGame();
                     
                     // Mostra il dialogo di game over
                     SwingUtilities.invokeLater(() -> {
-                        //view.showGameOverDialog();
+                        view.showGameOverDialog();
                     });
                 });
                 gameOverTimer.setRepeats(false);
                 gameOverTimer.start();
                 break;
             case GAME_WIN:
-                //view.showMessage("Hai vinto!", false);
-                //view.updateScore(model.getScore());
+                view.showMessage("Hai vinto!", false);
+                view.updateScore(model.getScore());
                 
                 // Timer per animazione di vittoria
                 Timer winTimer = new Timer(1000, e -> {
@@ -143,7 +144,7 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
                     
                     // Mostra il dialogo di vittoria
                     SwingUtilities.invokeLater(() -> {
-                        //view.showVictoryDialog();
+                        view.showVictoryDialog();
                     });
                 });
                 winTimer.setRepeats(false);
@@ -163,7 +164,7 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (count < 3) {
-                    //view.lightUpButton(colors[count % 4], 200);
+                    view.lightUpButton(colors[count % 4], 200);
                     count++;
                 } else {
                     ((Timer) e.getSource()).stop();
@@ -179,7 +180,7 @@ public HonkMandController(HonkMandModel model /*, HonkMandView view*/) {
      */
     private void endGame() {
         model.setPlaying(false);
-        //view.setGameActive(false);
-        //view.updateScore(model.getScore());
+        view.setGameActive(false);
+        view.updateScore(model.getScore());
     }
 }
