@@ -22,7 +22,6 @@ public class MemoryController {
      */
     public MemoryController() {
         this.model = new MemoryModelImpl();
-        this.model.resetGame();
         this.view = new MemoryViewImpl(model);
         this.view.show();
     }
