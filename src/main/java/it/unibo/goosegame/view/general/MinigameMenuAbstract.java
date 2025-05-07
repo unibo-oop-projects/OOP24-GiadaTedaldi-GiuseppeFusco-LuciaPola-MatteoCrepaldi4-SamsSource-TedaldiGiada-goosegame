@@ -23,65 +23,62 @@ import java.awt.event.ActionListener;
  */
 public abstract class MinigameMenuAbstract extends JFrame {
 
-    /**
-     * The size of the font of the buttons.
-     */
+    private static final long serialVersionUID = 1L;
+
     private static final int BUTTON_FONT_SIZE = 25;
-    /**
-     * The height of the buttons.
-     */
     private static final int BUTTON_HEIGHT = 50;
-    /**
-     * The width of the buttons.
-     */
     private static final int BUTTON_WIDTH = 200;
-    /**
-     * The size of the title label.
-     */
     private static final int TITLE_LABEL_SIZE = 50;
-    /**
-     * The size of the grid. (4x4).
-     * This is the default size for the minigame menu.
-     */
     private static final int SIZE = 4;
 
     /**
-     * Constructor.
-     * @param imgPath the path of the image background
-     * @param title the title of the frame
-     * @param infoMsg the message to show in the instructions
-     * @param al the action listener for the start button
+     * Constructor for MinigameMenuAbstract.
+     * Initializes the menu with a background image, title, instructions message, and action listener.
+     *
+     * @param imgPath  the path to the background image
+     * @param title    the title of the menu
+     * @param infoMsg  the instructions message
+     * @param al       the action listener for button clicks
      */
     public MinigameMenuAbstract(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
+        super();
+        init(imgPath, title, infoMsg, al);
+    }
+
+    private void init(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
         final BackgroundPanel background = new BackgroundPanel(imgPath);
         background.setLayout(new GridLayout(SIZE, SIZE));
-        this.setTitle(title);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setTitle(title);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         final JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_LABEL_SIZE));
         titleLabel.setForeground(Color.RED);
         background.add(titleLabel);
+
         final JButton startButton = new JButton("Start Game");
         changeBtnStyle(startButton);
         startButton.addActionListener(al);
-        startButton.addActionListener(e -> {
-            this.dispose();
-        });
+        startButton.addActionListener(e -> dispose());
+
         final JButton instrButton = new JButton("Instructions");
         changeBtnStyle(instrButton);
-        instrButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, infoMsg);
-        });
+        instrButton.addActionListener(e -> JOptionPane.showMessageDialog(this, infoMsg));
+
         background.add(startButton);
         background.add(instrButton);
-        this.add(background);
+
+        add(background);
+
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
-        this.setSize(sw / 2, sh / 2);
-        this.setMinimumSize(new Dimension(sw / 3, sh / 3));
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
+
+        setSize(sw / 2, sh / 2);
+        setMinimumSize(new Dimension(sw / 3, sh / 3));
+        setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private void changeBtnStyle(final JButton button) {
@@ -93,13 +90,18 @@ public abstract class MinigameMenuAbstract extends JFrame {
     }
 
     class BackgroundPanel extends JPanel {
+        private static final long serialVersionUID = 1L;
         private Image backgroundImage;
 
         BackgroundPanel(final String path) {
-            try {
-                backgroundImage = new ImageIcon(path).getImage();
-            } catch (final Exception e) {
-                JOptionPane.showMessageDialog(this, "Image not found: " + path);
+            if (path != null && !path.isBlank()) {
+                final ImageIcon icon = new ImageIcon(path);
+                backgroundImage = icon.getImage();
+                if (backgroundImage == null) {
+                    JOptionPane.showMessageDialog(this, "Image not found or invalid: " + path);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid image path: " + path);
             }
         }
 

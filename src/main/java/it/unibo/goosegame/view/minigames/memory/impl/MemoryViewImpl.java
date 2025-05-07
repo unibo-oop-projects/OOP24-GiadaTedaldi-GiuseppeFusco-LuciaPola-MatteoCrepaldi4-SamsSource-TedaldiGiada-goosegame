@@ -91,7 +91,7 @@ public class MemoryViewImpl implements MemoryView {
     private void redraw() {
         for (final var entry: this.cells.entrySet()) {
             entry.getKey().setText(
-                this.model.temporary(entry.getValue()).map(n -> this.symbols.get(n)).orElse(" "));
+                this.model.temporary(entry.getValue()).map(this.symbols::get).orElse(" "));
             this.model.found(entry.getValue()).ifPresent(n -> {
                 entry.getKey().setText(this.symbols.get(n));
                 entry.getKey().setEnabled(false);

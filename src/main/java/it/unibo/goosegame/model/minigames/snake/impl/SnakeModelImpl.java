@@ -23,10 +23,9 @@ public class SnakeModelImpl implements SnakeModel {
      */
     public static final int TABLE_HEIGHT = 20;
     /**
-     * Winning score for the game.
+     * The score needed to win the game.
      */
     private static final int WIN_SCORE = 15;
-
     private List<Position> snakeBody;
     private Position food;
     private Direction direction;

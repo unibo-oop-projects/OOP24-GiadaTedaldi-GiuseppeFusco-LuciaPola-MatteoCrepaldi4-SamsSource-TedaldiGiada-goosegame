@@ -13,11 +13,6 @@ import it.unibo.goosegame.utilities.Position;
 public interface SnakeModel extends MinigamesModel {
 
     /**
-     * Resets the game to its initial state.
-     */
-    void resetGame();
-
-    /**
      * Moves the snake in the current direction and updates the game state.
      * 
      * @return the result of the move, typically indicating the game's status.

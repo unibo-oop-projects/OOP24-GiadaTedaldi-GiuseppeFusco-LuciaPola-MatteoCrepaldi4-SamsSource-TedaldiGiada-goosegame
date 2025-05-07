@@ -14,6 +14,7 @@ import java.awt.Graphics;
  * It extends JPanel and is responsible for rendering the game state.
  */
 public class SnakeView extends JPanel {
+    private static final long serialVersionUID = 1L;
     private final SnakeModel model;
     private final JLabel score;
 

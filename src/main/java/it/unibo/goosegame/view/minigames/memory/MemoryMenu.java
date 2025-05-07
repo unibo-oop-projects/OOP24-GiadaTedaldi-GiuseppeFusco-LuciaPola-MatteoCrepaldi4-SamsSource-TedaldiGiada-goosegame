@@ -10,6 +10,8 @@ import it.unibo.goosegame.view.general.MinigameMenuAbstract;
  */
 public class MemoryMenu extends MinigameMenuAbstract {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructor.
      * @param imgPath the path of the image background

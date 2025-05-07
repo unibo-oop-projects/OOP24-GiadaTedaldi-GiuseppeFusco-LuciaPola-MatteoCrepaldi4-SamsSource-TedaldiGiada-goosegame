@@ -21,7 +21,7 @@ public class MemoryModelImpl implements MemoryModel {
     private static final int SIZE = 4;
     private final Map<Position, Integer> values = new HashMap<>();
     private final Set<Position> shown = new HashSet<>();
-    private List<Position> selected = new ArrayList<>();
+    private final List<Position> selected = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -35,11 +35,10 @@ public class MemoryModelImpl implements MemoryModel {
             this.selected.clear();
         }
         this.selected.add(p);
-        if (this.selected.size() == 2) {
-            if (this.values.get(selected.get(0)).equals(this.values.get(this.selected.get(1)))) {
+        if (this.selected.size() == 2
+                && this.values.get(this.selected.get(0)).equals(this.values.get(this.selected.get(1)))) {
                 this.shown.add(this.selected.get(0));
                 this.shown.add(this.selected.get(1));
-            }
         }
     }
 
@@ -48,7 +47,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public Optional<Integer> found(final Position p) {
-        return Optional.of(p).filter(pp -> this.shown.contains(pp)).map(this.values::get);
+        return Optional.of(p).filter(this.shown::contains).map(this.values::get);
     }
 
     /**
@@ -56,7 +55,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public Optional<Integer> temporary(final Position p) {
-        return Optional.of(p).filter(pp -> this.selected.contains(pp)).map(this.values::get);
+        return Optional.of(p).filter(this.selected::contains).map(this.values::get);
     }
 
     /**

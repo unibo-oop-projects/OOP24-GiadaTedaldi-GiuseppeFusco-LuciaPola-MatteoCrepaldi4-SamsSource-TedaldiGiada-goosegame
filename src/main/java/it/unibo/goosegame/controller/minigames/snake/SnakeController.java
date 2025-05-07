@@ -19,10 +19,11 @@ import java.awt.event.KeyEvent;
  * Controller for the Snake game.
  * It handles user input and updates the game state.
  */
-public class SnakeController extends JFrame {
+public class SnakeController {
     private static final int INIT_HEIGHT = 400;
     private static final int INIT_WIDTH = 600;
     private final SnakeModel model;
+    private final JFrame frame;
     private final SnakeView view;
     private final Timer timer;
 
@@ -33,17 +34,18 @@ public class SnakeController extends JFrame {
     public SnakeController() {
         model = new SnakeModelImpl();
         view = new SnakeView();
+        frame = new JFrame();
 
-        add(view);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle(model.getName());
+        frame.add(view);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle(model.getName());
         view.setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setResizable(false); 
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setResizable(false); 
 
-        addKeyListener(new KeyAdapter() {
+        frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -66,7 +68,7 @@ public class SnakeController extends JFrame {
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
                     JOptionPane.showMessageDialog(null, model.getResult() == 1 ? "You win!" : "You lose...");
-                    dispose();
+                    frame.dispose();
                 }
             }
         });
