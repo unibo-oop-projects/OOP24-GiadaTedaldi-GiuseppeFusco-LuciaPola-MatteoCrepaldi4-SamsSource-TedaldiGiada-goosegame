@@ -19,7 +19,7 @@ import it.unibo.goosegame.utilities.Position;
  */
 public class MemoryModelImpl implements MemoryModel {
     private static final int SIZE = 4;
-    private final Map<Position,Integer> values = new HashMap<>();
+    private final Map<Position, Integer> values = new HashMap<>();
     private final Set<Position> shown = new HashSet<>();
     private List<Position> selected = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public void hit(final Position p) {
-        if(this.selected.contains(p)) {
+        if (this.selected.contains(p)) {
             return;
         }
         if (this.selected.size() == 2) {
@@ -36,7 +36,7 @@ public class MemoryModelImpl implements MemoryModel {
         }
         this.selected.add(p);
         if (this.selected.size() == 2) {
-            if (this.values.get(selected.get(0)).equals(this.values.get(this.selected.get(1)))){
+            if (this.values.get(selected.get(0)).equals(this.values.get(this.selected.get(1)))) {
                 this.shown.add(this.selected.get(0));
                 this.shown.add(this.selected.get(1));
             }
@@ -79,9 +79,9 @@ public class MemoryModelImpl implements MemoryModel {
             numbers.add(i);
         }
         Collections.shuffle(numbers);
-        int index=0;
-        for (int i=0; i < SIZE; i++) {
-            for (int j=0; j < SIZE; j++) {
+        int index = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 values.put(new Position(i, j), numbers.get(index));
                 index++;
             }

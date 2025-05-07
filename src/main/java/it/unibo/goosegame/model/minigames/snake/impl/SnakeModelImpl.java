@@ -14,9 +14,19 @@ import it.unibo.goosegame.utilities.Position;
  * managing the snake's body, food, direction, and game status.
  */
 public class SnakeModelImpl implements SnakeModel {
+    /**
+     * Width of the game table.
+     */
     public static final int TABLE_WIDTH = 30;
+    /**
+     * Height of the game table.
+     */
     public static final int TABLE_HEIGHT = 20;
+    /**
+     * Winning score for the game.
+     */
     private static final int WIN_SCORE = 15;
+
     private List<Position> snakeBody;
     private Position food;
     private Direction direction;
@@ -167,7 +177,7 @@ public class SnakeModelImpl implements SnakeModel {
             case DOWN: y++; break;
             case LEFT: x--; break;
             case RIGHT: x++; break;
-        }        
+        }
         return new Position(x, y);
     }
 
@@ -188,7 +198,7 @@ public class SnakeModelImpl implements SnakeModel {
         }
         return false;
     }
-    
+
     /**
      * Generates a new food position on the board that does not overlap with the snake's body.
      */
