@@ -13,7 +13,7 @@ import it.unibo.goosegame.utilities.Colors;
 public class HonkMandModel {
     
     // Livello massimo per vincere il gioco
-    public static final int MAX_LEVEL = 10;
+    public static final int MAX_LEVEL = 5;
     
     private List<Colors> sequence;
     private List<Colors> playerSequence;
@@ -81,13 +81,13 @@ public class HonkMandModel {
      */
     public InputResult checkPlayerInput(Colors colorId) {
         playerSequence.add(colorId);
-        int currentIndex = playerSequence.size() - 1;
+        int currentIndex = playerSequence.size()-1;
         
         if (playerSequence.get(currentIndex).equals(sequence.get(currentIndex))) {
             // Input corretto
             if (playerSequence.size() == sequence.size()) {
                 // Sequenza completata
-                score += level;
+                score ++;
                 
                 // Verifica se il giocatore ha vinto
                 if (level == MAX_LEVEL) {

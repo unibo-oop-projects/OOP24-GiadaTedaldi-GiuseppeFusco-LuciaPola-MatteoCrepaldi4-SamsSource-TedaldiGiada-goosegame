@@ -46,6 +46,7 @@ public class HonkMandView extends JFrame {
     private void initComponents() {
         buttons = new HashMap<>();
         
+
         // Creazione dei pulsanti colorati
         JButton greenButton = new JButton();
         greenButton.setBackground(Color.GREEN);
@@ -69,6 +70,8 @@ public class HonkMandView extends JFrame {
         scoreLabel = new JLabel("Punteggio: 0");
         messageLabel = new JLabel("");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        messageLabel.setPreferredSize(new Dimension(300, 24));
+        messageLabel.setMinimumSize(new Dimension(300, 24)); 
         gamePanel = new JPanel();
     }
     
@@ -145,10 +148,14 @@ public class HonkMandView extends JFrame {
         JPanel scorePanel = new JPanel(new FlowLayout());
         scorePanel.add(scoreLabel);
         scorePanel.add(new JLabel("Livello massimo: " + HonkMandModel.MAX_LEVEL));
+
+        JPanel messagePanel = new JPanel(new BorderLayout());
+        messagePanel.add(messageLabel, BorderLayout.CENTER);
+        messagePanel.setPreferredSize(new Dimension(400,30));
         
         bottomPanel.add(controlPanel);
         bottomPanel.add(scorePanel);
-        bottomPanel.add(messageLabel);
+        bottomPanel.add(messagePanel);
         
         add(bottomPanel, BorderLayout.SOUTH);
     }
@@ -170,7 +177,18 @@ public class HonkMandView extends JFrame {
     /**
      * Mostra un messaggio all'utente
      */
+    private String currentMessage = "";
+    private Timer messageTimer;
+    
     public void showMessage(String message, boolean isError) {
+        if (message.equals(currentMessage)) {
+            return;
+        }
+        
+        if (messageTimer != null && messageTimer.isRunning()) {
+            messageTimer.stop();
+        }
+
         messageLabel.setText(message);
         
         if (isError) {
@@ -179,10 +197,14 @@ public class HonkMandView extends JFrame {
             messageLabel.setForeground(new Color(0, 128, 0)); // Verde
         }
         
-        // Timer per cancellare il messaggio dopo 2 secondi
-        new Timer(2000, e -> {
+        // Crea un nuovo timer
+        messageTimer = new Timer(2000, e -> {
             messageLabel.setText("");
-        }).start();
+            currentMessage = "";
+            ((Timer)e.getSource()).stop(); // Ferma esplicitamente il timer
+        });
+        messageTimer.setRepeats(false); // Assicurati che il timer non si ripeta
+        messageTimer.start();
     }
     
     /**
@@ -196,9 +218,18 @@ public class HonkMandView extends JFrame {
         button.setBackground(brightenColor(originalColor));
         
         // Timer per ripristinare il colore originale
-        new Timer(duration, e -> {
+        Timer lightTimer = new Timer(duration, e -> {
             button.setBackground(originalColor);
-        }).start();
+            ((Timer)e.getSource()).stop(); // Ferma esplicitamente il timer
+        });
+        lightTimer.setRepeats(false); // Assicurati che il timer non si ripeta
+
+        // Illumina il pulsante
+        button.setBackground(brightenColor(originalColor));
+        // Avvia il timer
+        lightTimer.start();
+        
+
     }
     
     /**
@@ -224,9 +255,7 @@ public class HonkMandView extends JFrame {
      * Aggiorna lo stato del pulsante di avvio
      */
     public void setGameActive(boolean active) {
-        if (active) {
-            startButton.setText("Riavvia");
-        } else {
+        if (!active) {
             startButton.setText("Inizia Gioco");
         }
     }

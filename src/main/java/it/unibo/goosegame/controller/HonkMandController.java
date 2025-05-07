@@ -50,10 +50,14 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
         model.startGame();
         view.setGameActive(true);
         view.updateLevel(model.getLevel());
+        view.setButtonsEnabled(false);
         view.showMessage("Osserva la sequenza!", false);
         
         // Usa un Timer per riprodurre la sequenza dopo un breve ritardo
-        Timer timer = new Timer(1000, e -> playSequence());
+        Timer timer = new Timer(1000, e -> {
+            ((Timer)e.getSource()).stop(); // Ferma il timer
+            playSequence();
+        });
         timer.setRepeats(false);
         timer.start();
     }
@@ -61,27 +65,44 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
     /**
      * Riproduce la sequenza di colori
      */
+    private Timer sequenceTimer;
+
     private void playSequence() {
         view.setButtonsEnabled(false);
         List<Colors> sequence = model.getSequence();
         
         // Usa un Timer per simulare il delay tra le luci dei pulsanti
-        Timer sequenceTimer = new Timer(700, new ActionListener() {
-            private int index = 0;
+        if (sequenceTimer != null && sequenceTimer.isRunning()){
+            sequenceTimer.stop();
+        }
 
+        final int[] index = {0};
+
+        sequenceTimer = new Timer(700,null);
+        ActionListener sequenceAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (index < sequence.size()) {
-                    Colors color = sequence.get(index);
+                if (index[0] < sequence.size()) {
+                    Colors color = sequence.get(index[0]);
                     view.lightUpButton(color, 500);
-                    index++;
+                    index[0]++;
                 } else {
-                    // Dopo aver mostrato tutta la sequenza, abilita i pulsanti per l'interazione
+                    // Ferma il timer quando la sequenza è completa
+                sequenceTimer.stop();
+                
+                // Aggiungi un breve ritardo prima di abilitare i pulsanti
+                Timer enableButtonsTimer = new Timer(500, event -> {
                     view.setButtonsEnabled(true);
                     view.showMessage("Il tuo turno!", false);
-                }
+                    ((Timer)event.getSource()).stop();
+                });
+                enableButtonsTimer.setRepeats(false);
+                enableButtonsTimer.start();
             }
-        });
+        }
+    };
+
+        sequenceTimer.addActionListener(sequenceAction);
         sequenceTimer.setRepeats(true);
         sequenceTimer.start();
     }
