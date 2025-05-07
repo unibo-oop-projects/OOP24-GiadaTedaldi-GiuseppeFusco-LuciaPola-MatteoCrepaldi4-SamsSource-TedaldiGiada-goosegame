@@ -30,10 +30,10 @@ public class SnakeView extends JPanel {
         this.snakeBody = List.copyOf(model.getSnakeBody());
         this.food = model.getFood();
         this.scorePoint = model.getScore();
-        setBackground(Color.BLACK);
+        super.setBackground(Color.BLACK);
         score = new JLabel("Score: " + model.getScore());
         score.setForeground(Color.WHITE);
-        add(score);
+        super.add(score);
     }
 
     /**

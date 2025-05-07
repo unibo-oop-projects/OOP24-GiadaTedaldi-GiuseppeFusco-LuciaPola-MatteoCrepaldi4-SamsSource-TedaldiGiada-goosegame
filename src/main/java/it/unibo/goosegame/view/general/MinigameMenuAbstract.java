@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -40,17 +43,17 @@ public abstract class MinigameMenuAbstract extends JFrame {
      * @param infoMsg  the instructions message
      * @param al       the action listener for button clicks
      */
+    @SuppressFBWarnings(
+        value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR", 
+        justification = "The dispose() call is wrapped in a lambda and is safe."
+    )
     public MinigameMenuAbstract(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
         super();
-        init(imgPath, title, infoMsg, al);
-    }
-
-    private void init(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
         final BackgroundPanel background = new BackgroundPanel(imgPath);
         background.setLayout(new GridLayout(SIZE, SIZE));
 
-        setTitle(title);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.setTitle(title);
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_LABEL_SIZE));
@@ -69,16 +72,16 @@ public abstract class MinigameMenuAbstract extends JFrame {
         background.add(startButton);
         background.add(instrButton);
 
-        add(background);
+        super.add(background);
 
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
 
-        setSize(sw / 2, sh / 2);
-        setMinimumSize(new Dimension(sw / 3, sh / 3));
-        setVisible(true);
-        setLocationRelativeTo(null);
+        super.setSize(sw / 2, sh / 2);
+        super.setMinimumSize(new Dimension(sw / 3, sh / 3));
+        super.setVisible(true);
+        super.setLocationRelativeTo(null);
     }
 
     private void changeBtnStyle(final JButton button) {
@@ -91,7 +94,7 @@ public abstract class MinigameMenuAbstract extends JFrame {
 
     private static class BackgroundPanel extends JPanel {
         private static final long serialVersionUID = 1L;
-        private Image backgroundImage;
+        private transient Image backgroundImage;
 
         BackgroundPanel(final String path) {
             if (path != null && !path.isBlank()) {

@@ -1,5 +1,6 @@
 package it.unibo.goosegame.utilities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -8,8 +9,8 @@ import java.util.Objects;
  * and provides methods to access the coordinates, check equality,
  * generate a hash code, and convert the position to a string.
  */
-public class Position {
-
+public class Position implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final int x;
     private final int y;
 
