@@ -24,7 +24,6 @@ class MemoryModelImplTest {
     @BeforeEach
     void setUp() {
         this.model = new MemoryModelImpl();
-        this.model.resetGame();
     }
 
     /**

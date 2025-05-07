@@ -24,6 +24,25 @@ public class MemoryModelImpl implements MemoryModel {
     private final List<Position> selected = new ArrayList<>();
 
     /**
+     * Constructor.
+     * Initializes the game board with random values.
+     */
+    public MemoryModelImpl() {
+        final List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            numbers.add(i);
+            numbers.add(i);
+        }
+        Collections.shuffle(numbers);
+        int index = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                values.put(new Position(i, j), numbers.get(index));
+                index++;
+            }
+        }
+    }
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -72,19 +91,6 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public void resetGame() {
-        final List<Integer> numbers = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            numbers.add(i);
-            numbers.add(i);
-        }
-        Collections.shuffle(numbers);
-        int index = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                values.put(new Position(i, j), numbers.get(index));
-                index++;
-            }
-        }
     }
 
     /**
