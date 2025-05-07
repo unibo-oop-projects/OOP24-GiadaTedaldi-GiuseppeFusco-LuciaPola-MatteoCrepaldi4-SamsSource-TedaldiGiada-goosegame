@@ -89,7 +89,7 @@ public abstract class MinigameMenuAbstract extends JFrame {
         button.setFont(new Font("Arial", Font.BOLD, BUTTON_FONT_SIZE));
     }
 
-    class BackgroundPanel extends JPanel {
+    private static class BackgroundPanel extends JPanel {
         private static final long serialVersionUID = 1L;
         private Image backgroundImage;
 

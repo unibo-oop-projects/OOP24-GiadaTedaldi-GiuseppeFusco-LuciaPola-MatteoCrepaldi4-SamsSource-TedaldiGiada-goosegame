@@ -25,7 +25,6 @@ class SnakeModelImplTest {
     @BeforeEach
     void setUp() {
         model = new SnakeModelImpl();
-        model.resetGame();
     }
 
     /**

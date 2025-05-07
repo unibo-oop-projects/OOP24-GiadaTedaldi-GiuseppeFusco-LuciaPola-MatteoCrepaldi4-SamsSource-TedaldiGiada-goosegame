@@ -33,7 +33,7 @@ public class SnakeController {
      */
     public SnakeController() {
         model = new SnakeModelImpl();
-        view = new SnakeView();
+        view = new SnakeView(model);
         frame = new JFrame();
 
         frame.add(view);
@@ -73,14 +73,6 @@ public class SnakeController {
             }
         });
         timer.start();
-    }
-
-    /**
-     * Starts the Snake game.
-     * @return a new instance of SnakeController
-     */
-    public static SnakeController startGame() {
-        return new SnakeController();
     }
 }
 

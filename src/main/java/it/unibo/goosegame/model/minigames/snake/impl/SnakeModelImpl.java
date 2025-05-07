@@ -31,7 +31,21 @@ public class SnakeModelImpl implements SnakeModel {
     private Direction direction;
     private boolean isGameOver;
     private int score;
+    private final Random rand = new Random();
 
+    /**
+     * Constructor for the SnakeModelImpl class.
+     * Initializes the snake's body, direction, game status, and score.
+     * Generates the initial food position.
+     */
+    public SnakeModelImpl() {
+        this.snakeBody = new ArrayList<>();
+        this.snakeBody.add(new Position(TABLE_WIDTH / 2, TABLE_HEIGHT / 2));
+        this.direction = Direction.RIGHT;
+        this.isGameOver = false;
+        this.score = 0;
+        generateFood();
+    }
     /**
      * {@inheritDoc}
      */
@@ -106,7 +120,7 @@ public class SnakeModelImpl implements SnakeModel {
      */
     @Override
     public List<Position> getSnakeBody() {
-        return this.snakeBody;
+        return List.copyOf(this.snakeBody);
     }
 
     /**
@@ -129,19 +143,6 @@ public class SnakeModelImpl implements SnakeModel {
      * {@inheritDoc}
      */
     @Override
-    public void resetGame() {
-        this.snakeBody = new ArrayList<>();
-        this.snakeBody.add(new Position(TABLE_WIDTH / 2, TABLE_HEIGHT / 2));
-        this.direction = Direction.RIGHT;
-        this.isGameOver = false;
-        this.score = 0;
-        generateFood();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setFood(final Position p) {
         this.food = p;
     }
@@ -151,7 +152,7 @@ public class SnakeModelImpl implements SnakeModel {
      */
     @Override
     public void setSnakeBody(final List<Position> body) {
-        this.snakeBody = body;
+        this.snakeBody = new ArrayList<>(body);
     }
 
     /**
@@ -202,12 +203,18 @@ public class SnakeModelImpl implements SnakeModel {
      * Generates a new food position on the board that does not overlap with the snake's body.
      */
     private void generateFood() {
-        final Random rand = new Random();
         int x, y;
         do {
             x = rand.nextInt(TABLE_WIDTH);
             y = rand.nextInt(TABLE_HEIGHT);
             food = new Position(x, y);
         } while (snakeBody.contains(food));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetGame() {
     }
 }
