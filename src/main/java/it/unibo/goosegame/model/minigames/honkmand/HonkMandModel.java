@@ -8,7 +8,8 @@ import it.unibo.goosegame.utilities.Colors;
 
 
 /**
- * Modello del Simon Game che gestisce la logica di gioco
+ * Modello logico del minigioco HonkMand (Simon Game).
+ * Gestisce la sequenza, il punteggio, il livello e la verifica degli input.
  */
 public class HonkMandModel {
     
@@ -22,14 +23,19 @@ public class HonkMandModel {
     private boolean isPlaying;
     private Random random;
     
-    // Risultati possibili dopo un input del giocatore
+    /**
+     * Risultati possibili dopo un input del giocatore.
+     */
     public enum InputResult {
-        CORRECT,
-        NEXT_ROUND,
-        GAME_OVER,
-        GAME_WIN
+        CORRECT,      // Input corretto, attendi il prossimo
+        NEXT_ROUND,   // Sequenza completata, passa al prossimo round
+        GAME_OVER,    // Input errato, partita persa
+        GAME_WIN      // Partita vinta
     }
     
+    /**
+     * Costruttore. Inizializza lo stato del gioco.
+     */
     public HonkMandModel() {
         sequence = new ArrayList<>();
         playerSequence = new ArrayList<>();
@@ -40,6 +46,9 @@ public class HonkMandModel {
     }
     
     
+    /**
+     * Avvia una nuova partita, azzerando punteggio e sequenze.
+     */
     public void startGame() {
         sequence.clear();
         playerSequence.clear();
@@ -50,7 +59,7 @@ public class HonkMandModel {
     }
     
     /**
-     * Passa al round successivo
+     * Passa al round successivo, incrementando il livello e generando una nuova sequenza.
      */
     public void nextRound() {
         level++;
@@ -66,7 +75,7 @@ public class HonkMandModel {
     }
     
     /**
-     * Genera una nuova sequenza completa per il livello corrente
+     * Genera una nuova sequenza casuale per il livello corrente.
      */
     private void generateNewSequence() {
         sequence.clear();
@@ -77,7 +86,9 @@ public class HonkMandModel {
     }
     
     /**
-     * Verifica l'input del giocatore
+     * Verifica l'input del giocatore confrontandolo con la sequenza.
+     * @param colorId colore scelto dal giocatore
+     * @return risultato dell'input
      */
     public InputResult checkPlayerInput(Colors colorId) {
         if (!isPlaying) return InputResult.GAME_OVER;
@@ -100,25 +111,15 @@ public class HonkMandModel {
         }
     }
     
-    // Getters e Setters
-    public List<Colors> getSequence() {
-        return sequence;
-    }
-    
-    public int getLevel() {
-        return level;
-    }
-    
-    public int getScore() {
-        return score;
-    }
-    
-    public boolean isPlaying() {
-        return isPlaying;
-    }
-    
-    public void setPlaying(boolean playing) {
-        isPlaying = playing;
-    }
+    /** @return la sequenza da riprodurre */
+    public List<Colors> getSequence() { return sequence; }
+    /** @return il livello corrente */
+    public int getLevel() { return level; }
+    /** @return il punteggio corrente */
+    public int getScore() { return score; }
+    /** @return true se la partita è in corso */
+    public boolean isPlaying() { return isPlaying; }
+    /** Imposta lo stato di gioco (usato dal controller) */
+    public void setPlaying(boolean playing) { isPlaying = playing; }
     
 }

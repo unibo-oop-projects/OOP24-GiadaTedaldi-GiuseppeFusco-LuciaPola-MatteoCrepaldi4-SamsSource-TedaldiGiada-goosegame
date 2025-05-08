@@ -11,24 +11,29 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Controller del Simon Game che gestisce l'interazione tra modello e vista
+ * Controller del minigioco HonkMand (Simon Game).
+ * Gestisce l'interazione tra modello e vista.
  */
 public class HonkMandController {
     private HonkMandModel model;
     private HonkMandView view;
     
-public HonkMandController(HonkMandModel model, HonkMandView view) {
+    /**
+     * Costruttore. Collega modello e vista e inizializza i listener.
+     * @param model modello logico del gioco
+     * @param view vista grafica del gioco
+     */
+    public HonkMandController(HonkMandModel model, HonkMandView view) {
         this.model = model;
         this.view = view;
-        
         initController();
     }
     
+    /**
+     * Inizializza la vista e i listener dei pulsanti.
+     */
     private void initController() {
-        // Inizializza la vista
         view.updateScore(model.getScore());
-        
-        // Aggiungi listener al pulsante di avvio
         view.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,7 +49,7 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
     }
     
     /**
-     * Avvia una nuova partita
+     * Avvia una nuova partita e mostra la sequenza.
      */
     private void startGame() {
         model.startGame();
@@ -63,7 +68,7 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
     }
     
     /**
-     * Riproduce la sequenza di colori
+     * Riproduce la sequenza di colori tramite animazione.
      */
     private Timer sequenceTimer;
 
@@ -108,7 +113,8 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
     }
     
     /**
-     * Gestisce il click su un pulsante colorato
+     * Gestisce il click su un pulsante colorato.
+     * @param colorId colore selezionato
      */
     private void handleButtonClick(Colors colorId) {
         if (!model.isPlaying()) return;
@@ -160,7 +166,7 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
     }
     
     /**
-     * Esegue un'animazione di celebrazione per la vittoria
+     * Esegue un'animazione di celebrazione per la vittoria.
      */
     private void celebrateVictory() {
         final Colors[] colors = Colors.values();

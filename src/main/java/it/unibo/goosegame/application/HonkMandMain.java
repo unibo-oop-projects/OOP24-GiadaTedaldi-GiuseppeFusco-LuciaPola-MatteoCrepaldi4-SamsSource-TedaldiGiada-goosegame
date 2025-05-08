@@ -7,19 +7,18 @@ import it.unibo.goosegame.view.HonkMandView;
 import javax.swing.*;
 
 /**
- * Classe principale che avvia l'applicazione Simon Game
+ * Entry point dell'applicazione HonkMand (Simon Game).
+ * Inizializza MVC e avvia l'interfaccia utente nel thread di Swing.
  */
 public class HonkMandMain {
+    /**
+     * Metodo principale che avvia l'applicazione.
+     * @param args argomenti da linea di comando (non usati)
+     */
     public static void main(String[] args) {
-        // Assicura che l'interfaccia utente venga creata nel thread di Swing
         SwingUtilities.invokeLater(() -> {
-            // Crea il modello
             HonkMandModel model = new HonkMandModel();
-            
-            // Crea la vista
             HonkMandView view = new HonkMandView();
-            
-            // Crea il controller e collega modello e vista
             new HonkMandController(model, view);
         });
     }

@@ -12,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Vista del Simon Game che gestisce l'interfaccia utente
+ * Vista grafica del minigioco HonkMand (Simon Game).
+ * Gestisce la UI e le animazioni dei pulsanti.
  */
 public class HonkMandView extends JFrame {
     private Map<Colors, JButton> buttons;
@@ -24,6 +25,9 @@ public class HonkMandView extends JFrame {
     private JDialog victoryDialog;
     private JDialog gameOverDialog;
     
+    /**
+     * Costruttore. Inizializza la finestra e i componenti grafici.
+     */
     public HonkMandView() {
         // Configurazione della finestra
         setTitle("HonkMand");
@@ -43,6 +47,9 @@ public class HonkMandView extends JFrame {
         setVisible(true);
     }
     
+    /**
+     * Inizializza i componenti grafici della vista.
+     */
     private void initComponents() {
         buttons = new HashMap<>();
         
@@ -74,6 +81,9 @@ public class HonkMandView extends JFrame {
         gamePanel = new JPanel();
     }
     
+    /**
+     * Inizializza i dialoghi di vittoria e game over.
+     */
     private void initDialogs() {
         // Dialogo di vittoria
         victoryDialog = new JDialog(this, "Vittoria!", true);
@@ -118,6 +128,9 @@ public class HonkMandView extends JFrame {
         gameOverDialog.add(gameOverPanel);
     }
     
+    /**
+     * Dispone i componenti nel layout della finestra.
+     */
     private void layoutComponents() {
         // Layout principale
         setLayout(new BorderLayout());
@@ -162,6 +175,10 @@ public class HonkMandView extends JFrame {
     /**
      * Aggiorna il livello visualizzato
      */
+    /**
+     * Aggiorna il livello visualizzato.
+     * @param level livello corrente
+     */
     public void updateLevel(int level) {
         levelLabel.setText("Livello: " + level);
     }
@@ -169,29 +186,52 @@ public class HonkMandView extends JFrame {
     /**
      * Aggiorna il punteggio visualizzato
      */
+    /**
+     * Aggiorna il punteggio visualizzato.
+     * @param score punteggio corrente
+     */
     public void updateScore(int score) {
         scoreLabel.setText("Punteggio: " + score);
     }
     
+    /**
+     * Mostra un messaggio all'utente.
+     * @param message testo del messaggio
+     * @param isError true se il messaggio è di errore
+     */
     public void showMessage(String message, boolean isError) {
         messageLabel.setText(message);
         messageLabel.setForeground(isError ? Color.RED : Color.BLACK);
     }
 
+    /**
+     * Pulisce il messaggio visualizzato.
+     */
     public void clearMessage() {
         messageLabel.setText("");
     }
 
+    /**
+     * Mostra il dialogo di vittoria.
+     */
     public void showVictoryDialog() {
         victoryDialog.setVisible(true);
     }
 
+    /**
+     * Mostra il dialogo di game over.
+     */
     public void showGameOverDialog() {
         gameOverDialog.setVisible(true);
     }
     
     /**
      * Illumina un pulsante per la durata specificata
+     */
+    /**
+     * Illumina un pulsante per la durata specificata.
+     * @param colorId colore del pulsante
+     * @param duration durata in millisecondi
      */
     public void lightUpButton(Colors colorId, int duration) {
         JButton button = buttons.get(colorId);
@@ -218,6 +258,11 @@ public class HonkMandView extends JFrame {
     /**
      * Rende un colore più luminoso
      */
+    /**
+     * Rende un colore più luminoso.
+     * @param color colore originale
+     * @return colore schiarito
+     */
     private Color brightenColor(Color color) {
         int r = Math.min(255, color.getRed() + 100);
         int g = Math.min(255, color.getGreen() + 100);
@@ -228,6 +273,10 @@ public class HonkMandView extends JFrame {
     /**
      * Abilita o disabilita i pulsanti colorati
      */
+    /**
+     * Abilita o disabilita i pulsanti colorati.
+     * @param enabled true per abilitare, false per disabilitare
+     */
     public void setButtonsEnabled(boolean enabled) {
         for (JButton button : buttons.values()) {
             button.setEnabled(enabled);
@@ -237,14 +286,34 @@ public class HonkMandView extends JFrame {
     /**
      * Aggiorna lo stato del pulsante di avvio
      */
+    /**
+     * Aggiorna lo stato del pulsante di avvio.
+     * @param active true se il gioco è attivo
+     */
     public void setGameActive(boolean active) {
-        if (!active) {
+        if (active) {
+            startButton.setText("Restart");
+        } else {
             startButton.setText("Inizia Gioco");
         }
+    }
+
+    /**
+     * Imposta il testo del pulsante di avvio
+     */
+    /**
+     * Imposta il testo del pulsante di avvio.
+     * @param text testo da visualizzare
+     */
+    public void setStartButtonText(String text) {
+        startButton.setText(text);
     }
     
     /**
      * Esegue un'animazione di game over
+     */
+    /**
+     * Esegue un'animazione di game over lampeggiando i pulsanti.
      */
     public void gameOverAnimation() {
         // Variabili per il numero di lampeggi e la durata del lampeggio
@@ -283,10 +352,19 @@ public class HonkMandView extends JFrame {
     }
        
     // Metodi per aggiungere listener agli eventi
+    /**
+     * Aggiunge un listener al pulsante di avvio.
+     * @param listener listener da aggiungere
+     */
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
     }
     
+    /**
+     * Aggiunge un listener a un pulsante colorato.
+     * @param colorId colore del pulsante
+     * @param listener listener da aggiungere
+     */
     public void addColorButtonListener(Colors colorId, ActionListener listener) {
         buttons.get(colorId).addActionListener(listener);
     }
