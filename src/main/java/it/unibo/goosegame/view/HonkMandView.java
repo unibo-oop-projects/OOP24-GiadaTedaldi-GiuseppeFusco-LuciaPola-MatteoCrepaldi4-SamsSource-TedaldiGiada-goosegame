@@ -1,371 +1,231 @@
 package it.unibo.goosegame.view;
 
-import javax.swing.*;
-
-import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
 import it.unibo.goosegame.utilities.Colors;
-
+import it.unibo.goosegame.utilities.HonkMandMessages;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Vista grafica del minigioco HonkMand (Simon Game).
- * Gestisce la UI e le animazioni dei pulsanti.
+ * Vista moderna e ridimensionabile per il minigioco HonkMand (Simon Game).
+ * Pulsanti rotondi con glow, layout flessibile e UI accattivante.
  */
 public class HonkMandView extends JFrame {
-    private Map<Colors, JButton> buttons;
-    private JButton startButton;
-    private JLabel levelLabel;
-    private JLabel scoreLabel;
-    private JLabel messageLabel;
-    private JPanel gamePanel;
+    private final Map<Colors, RoundButton> buttons;
+    private final JButton startButton;
+    private final JLabel levelLabel;
+    private final JLabel scoreLabel;
+    private final JLabel messageLabel;
     private JDialog victoryDialog;
     private JDialog gameOverDialog;
-    
-    /**
-     * Costruttore. Inizializza la finestra e i componenti grafici.
-     */
+
     public HonkMandView() {
-        // Configurazione della finestra
-        setTitle(it.unibo.goosegame.utilities.HonkMandMessages.TITLE);
+        setTitle(HonkMandMessages.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 500);
+        setMinimumSize(new Dimension(400, 500));
+        setPreferredSize(new Dimension(600, 700));
         setLocationRelativeTo(null);
-        
-        // Inizializzazione dei componenti
-        initComponents();
-        
-        // Layout
-        layoutComponents();
-        
-        // Inizializza i dialoghi
+        setResizable(true);
+
+        // Font moderno
+        Font mainFont = new Font("Segoe UI", Font.BOLD, 22);
+        Font labelFont = new Font("Segoe UI", Font.PLAIN, 18);
+
+        // Messaggio centrale
+        messageLabel = new JLabel("", SwingConstants.CENTER);
+        messageLabel.setFont(mainFont);
+        messageLabel.setPreferredSize(new Dimension(400, 40));
+
+        // Pannello info
+        JPanel infoPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        infoPanel.setOpaque(false);
+        levelLabel = new JLabel(HonkMandMessages.LEVEL_LABEL + "0");
+        levelLabel.setFont(labelFont);
+        scoreLabel = new JLabel(HonkMandMessages.SCORE_LABEL + "0");
+        scoreLabel.setFont(labelFont);
+        infoPanel.add(levelLabel);
+        infoPanel.add(scoreLabel);
+
+        // Pulsante start/restart
+        startButton = new JButton(HonkMandMessages.START_BUTTON);
+        startButton.setFont(labelFont);
+        startButton.setFocusPainted(false);
+        startButton.setPreferredSize(new Dimension(180, 40));
+
+        // Pannello pulsanti colorati (GridBagLayout per adattabilità)
+        JPanel colorPanel = new JPanel(new GridBagLayout());
+        colorPanel.setOpaque(false);
+        buttons = new HashMap<>();
+        buttons.put(Colors.GREEN, new RoundButton(Color.GREEN));
+        buttons.put(Colors.RED, new RoundButton(Color.RED));
+        buttons.put(Colors.YELLOW, new RoundButton(Color.YELLOW));
+        buttons.put(Colors.BLUE, new RoundButton(Colors.BLUE.getAwtColor()));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 20, 20, 20); // spazio tra i bottoni
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.gridx = 0; gbc.gridy = 0;
+        colorPanel.add(buttons.get(Colors.GREEN), gbc);
+        gbc.gridx = 1; gbc.gridy = 0;
+        colorPanel.add(buttons.get(Colors.RED), gbc);
+        gbc.gridx = 0; gbc.gridy = 1;
+        colorPanel.add(buttons.get(Colors.YELLOW), gbc);
+        gbc.gridx = 1; gbc.gridy = 1;
+        colorPanel.add(buttons.get(Colors.BLUE), gbc);
+
+        // Layout principale (GridBagLayout per adattabilità)
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(new Color(245, 245, 245));
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0; c.gridy = 0; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(20, 20, 10, 20);
+        mainPanel.add(messageLabel, c);
+        c.gridy++;
+        c.insets = new Insets(10, 20, 10, 20);
+        c.fill = GridBagConstraints.BOTH; c.weighty = 1.0;
+        mainPanel.add(colorPanel, c);
+        c.gridy++; c.weighty = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(infoPanel, c);
+        c.gridy++;
+        c.insets = new Insets(10, 20, 20, 20);
+        mainPanel.add(startButton, c);
+        setContentPane(mainPanel);
+
+        // Dialoghi
         initDialogs();
-        
         setVisible(true);
     }
-    
-    /**
-     * Inizializza i componenti grafici della vista.
-     */
-    private void initComponents() {
-        buttons = new HashMap<>();
-        
-        // Creazione dei pulsanti colorati
-        JButton greenButton = new JButton();
-        greenButton.setBackground(Color.GREEN);
-        buttons.put(Colors.GREEN, greenButton);
-        
-        JButton redButton = new JButton();
-        redButton.setBackground(Color.RED);
-        buttons.put(Colors.RED, redButton);
-        
-        JButton yellowButton = new JButton();
-        yellowButton.setBackground(Color.YELLOW);
-        buttons.put(Colors.YELLOW, yellowButton);
-        
-        JButton blueButton = new JButton();
-        blueButton.setBackground(Colors.BLUE.getAwtColor());
-        buttons.put(Colors.BLUE, blueButton);
-        
-        // Altri componenti
-        startButton = new JButton(it.unibo.goosegame.utilities.HonkMandMessages.START_BUTTON);
-        levelLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.LEVEL_LABEL + "0");
-        scoreLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.SCORE_LABEL + "0");
-        messageLabel = new JLabel("");
-        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        messageLabel.setPreferredSize(new Dimension(300, 24));
-        messageLabel.setMinimumSize(new Dimension(300, 24)); 
-        gamePanel = new JPanel();
+
+    /** Pulsante rotondo custom con effetto glow, ridimensionabile e senza tagli. */
+    private static class RoundButton extends JButton {
+        private final Color baseColor;
+        private boolean glowing = false;
+        public RoundButton(Color color) {
+            this.baseColor = color;
+            setOpaque(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+            setContentAreaFilled(false);
+        }
+        public void setGlowing(boolean glowing) {
+            this.glowing = glowing;
+            repaint();
+        }
+        @Override
+        public Insets getInsets() {
+            // Margine interno per evitare tagli del glow
+            return new Insets(18, 18, 18, 18);
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            int margin = 16;
+            int size = Math.min(getWidth(), getHeight()) - 2 * margin;
+            int x = (getWidth() - size) / 2;
+            int y = (getHeight() - size) / 2;
+            if (glowing) {
+                g2.setColor(baseColor.brighter().brighter());
+                g2.setStroke(new BasicStroke(18f));
+                g2.drawOval(x - 9, y - 9, size + 18, size + 18);
+            }
+            g2.setColor(baseColor);
+            g2.fillOval(x, y, size, size);
+            g2.dispose();
+        }
+        @Override
+        public Dimension getPreferredSize() {
+            // Preferenza: quadrato grande, ma si adatta
+            return new Dimension(120, 120);
+        }
+        @Override
+        public Dimension getMinimumSize() {
+            return new Dimension(60, 60);
+        }
     }
-    
-    /**
-     * Inizializza i dialoghi di vittoria e game over.
-     */
+
     private void initDialogs() {
         // Dialogo di vittoria
-        victoryDialog = new JDialog(this, it.unibo.goosegame.utilities.HonkMandMessages.VICTORY_TITLE, true);
+        victoryDialog = new JDialog(this, HonkMandMessages.VICTORY_TITLE, true);
         victoryDialog.setSize(300, 200);
         victoryDialog.setLocationRelativeTo(this);
-        
         JPanel victoryPanel = new JPanel();
         victoryPanel.setLayout(new BorderLayout());
-        
-        JLabel victoryLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.VICTORY_MESSAGE, SwingConstants.CENTER);
+        JLabel victoryLabel = new JLabel(HonkMandMessages.VICTORY_MESSAGE, SwingConstants.CENTER);
         victoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
         victoryPanel.add(victoryLabel, BorderLayout.CENTER);
-        
-        JButton closeVictoryButton = new JButton(it.unibo.goosegame.utilities.HonkMandMessages.CLOSE_GAME);
+        JButton closeVictoryButton = new JButton(HonkMandMessages.CLOSE_GAME);
         closeVictoryButton.addActionListener(e -> System.exit(0));
-        
         JPanel victoryButtonPanel = new JPanel();
         victoryButtonPanel.add(closeVictoryButton);
         victoryPanel.add(victoryButtonPanel, BorderLayout.SOUTH);
-        
         victoryDialog.add(victoryPanel);
-        
         // Dialogo di game over
-        gameOverDialog = new JDialog(this, it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, true);
+        gameOverDialog = new JDialog(this, HonkMandMessages.GAME_OVER, true);
         gameOverDialog.setSize(300, 200);
         gameOverDialog.setLocationRelativeTo(this);
-        
         JPanel gameOverPanel = new JPanel();
         gameOverPanel.setLayout(new BorderLayout());
-        
-        JLabel gameOverLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, SwingConstants.CENTER);
+        JLabel gameOverLabel = new JLabel(HonkMandMessages.GAME_OVER, SwingConstants.CENTER);
         gameOverLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gameOverPanel.add(gameOverLabel, BorderLayout.CENTER);
-        
-        JButton closeGameOverButton = new JButton(it.unibo.goosegame.utilities.HonkMandMessages.CLOSE_GAME);
+        JButton closeGameOverButton = new JButton(HonkMandMessages.CLOSE_GAME);
         closeGameOverButton.addActionListener(e -> System.exit(0));
-        
         JPanel gameOverButtonPanel = new JPanel();
         gameOverButtonPanel.add(closeGameOverButton);
         gameOverPanel.add(gameOverButtonPanel, BorderLayout.SOUTH);
-        
         gameOverDialog.add(gameOverPanel);
     }
-    
-    /**
-     * Dispone i componenti nel layout della finestra.
-     */
-    private void layoutComponents() {
-        // Layout principale
-        setLayout(new BorderLayout());
-        
-        // Pannello superiore per titolo e livello
-        JPanel topPanel = new JPanel(new FlowLayout());
-        topPanel.add(new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.TITLE));
-        topPanel.add(levelLabel);
-        add(topPanel, BorderLayout.NORTH);
-        
-        // Pannello centrale per i pulsanti colorati
-        gamePanel.setLayout(new GridLayout(2, 2, 10, 10));
-        gamePanel.add(buttons.get(Colors.GREEN));
-        gamePanel.add(buttons.get(Colors.RED));
-        gamePanel.add(buttons.get(Colors.YELLOW));
-        gamePanel.add(buttons.get(Colors.BLUE));
-        gamePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        add(gamePanel, BorderLayout.CENTER);
-        
-        // Pannello inferiore per controlli e punteggio
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        
-        JPanel controlPanel = new JPanel(new FlowLayout());
-        controlPanel.add(startButton);
-        
-        JPanel scorePanel = new JPanel(new FlowLayout());
-        scorePanel.add(scoreLabel);
-        scorePanel.add(new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.MAX_LEVEL_LABEL + HonkMandModel.MAX_LEVEL));
 
-        JPanel messagePanel = new JPanel(new BorderLayout());
-        messagePanel.add(messageLabel, BorderLayout.CENTER);
-        messagePanel.setPreferredSize(new Dimension(400,30));
-        
-        bottomPanel.add(controlPanel);
-        bottomPanel.add(scorePanel);
-        bottomPanel.add(messagePanel);
-        
-        add(bottomPanel, BorderLayout.SOUTH);
-    }
-    
-    /**
-     * Aggiorna il livello visualizzato
-     */
-    /**
-     * Aggiorna il livello visualizzato.
-     * @param level livello corrente
-     */
+    // --- Metodi pubblici per Controller ---
+
     public void updateLevel(int level) {
-        levelLabel.setText(it.unibo.goosegame.utilities.HonkMandMessages.LEVEL_LABEL + level);
+        levelLabel.setText(HonkMandMessages.LEVEL_LABEL + level);
     }
-    
-    /**
-     * Aggiorna il punteggio visualizzato
-     */
-    /**
-     * Aggiorna il punteggio visualizzato.
-     * @param score punteggio corrente
-     */
     public void updateScore(int score) {
-        scoreLabel.setText(it.unibo.goosegame.utilities.HonkMandMessages.SCORE_LABEL + score);
+        scoreLabel.setText(HonkMandMessages.SCORE_LABEL + score);
     }
-    
-    /**
-     * Mostra un messaggio all'utente.
-     * @param message testo del messaggio
-     * @param isError true se il messaggio è di errore
-     */
     public void showMessage(String message, boolean isError) {
         messageLabel.setText(message);
-        messageLabel.setForeground(isError ? Color.RED : Color.BLACK);
+        messageLabel.setForeground(isError ? Color.RED : Color.DARK_GRAY);
     }
-
-    /**
-     * Pulisce il messaggio visualizzato.
-     */
     public void clearMessage() {
         messageLabel.setText("");
     }
-
-    /**
-     * Mostra il dialogo di vittoria.
-     */
     public void showVictoryDialog() {
         victoryDialog.setVisible(true);
     }
-
-    /**
-     * Mostra il dialogo di game over.
-     */
     public void showGameOverDialog() {
         gameOverDialog.setVisible(true);
     }
-    
-    /**
-     * Illumina un pulsante per la durata specificata
-     */
-    /**
-     * Illumina un pulsante per la durata specificata.
-     * @param colorId colore del pulsante
-     * @param duration durata in millisecondi
-     */
-    public void lightUpButton(Colors colorId, int duration) {
-        JButton button = buttons.get(colorId);
-        Color originalColor = button.getBackground();
-        
-        // Illumina il pulsante
-        button.setBackground(brightenColor(originalColor));
-        
-        // Timer per ripristinare il colore originale
-        Timer lightTimer = new Timer(duration, e -> {
-            button.setBackground(originalColor);
-            ((Timer)e.getSource()).stop(); // Ferma esplicitamente il timer
-        });
-        lightTimer.setRepeats(false); // Assicurati che il timer non si ripeta
-
-        // Illumina il pulsante
-        button.setBackground(brightenColor(originalColor));
-        // Avvia il timer
-        lightTimer.start();
-        
-
-    }
-    
-    /**
-     * Rende un colore più luminoso
-     */
-    /**
-     * Rende un colore più luminoso.
-     * @param color colore originale
-     * @return colore schiarito
-     */
-    private Color brightenColor(Color color) {
-        int r = Math.min(255, color.getRed() + 100);
-        int g = Math.min(255, color.getGreen() + 100);
-        int b = Math.min(255, color.getBlue() + 100);
-        return new Color(r, g, b);
-    }
-    
-    /**
-     * Abilita o disabilita i pulsanti colorati
-     */
-    /**
-     * Abilita o disabilita i pulsanti colorati.
-     * @param enabled true per abilitare, false per disabilitare
-     */
     public void setButtonsEnabled(boolean enabled) {
-        for (JButton button : buttons.values()) {
-            button.setEnabled(enabled);
+        for (RoundButton btn : buttons.values()) {
+            btn.setEnabled(enabled);
         }
     }
-    
-    /**
-     * Aggiorna lo stato del pulsante di avvio
-     */
-    /**
-     * Aggiorna lo stato del pulsante di avvio.
-     * @param active true se il gioco è attivo
-     */
     public void setGameActive(boolean active) {
-        if (active) {
-            startButton.setText(it.unibo.goosegame.utilities.HonkMandMessages.RESTART_BUTTON);
-        } else {
-            startButton.setText(it.unibo.goosegame.utilities.HonkMandMessages.START_BUTTON);
-        }
+        startButton.setText(active ? HonkMandMessages.RESTART_BUTTON : HonkMandMessages.START_BUTTON);
+        startButton.setEnabled(!active);
     }
-
-    /**
-     * Imposta il testo del pulsante di avvio
-     */
-    /**
-     * Imposta il testo del pulsante di avvio.
-     * @param text testo da visualizzare
-     */
-    public void setStartButtonText(String text) {
-        startButton.setText(text);
-    }
-    
-    /**
-     * Esegue un'animazione di game over
-     */
-    /**
-     * Esegue un'animazione di game over lampeggiando i pulsanti.
-     */
-    public void gameOverAnimation() {
-        // Variabili per il numero di lampeggi e la durata del lampeggio
-        final int flashCount = it.unibo.goosegame.utilities.HonkMandConstants.GAME_OVER_FLASH_COUNT;
-        final int flashDelay = it.unibo.goosegame.utilities.HonkMandConstants.GAME_OVER_FLASH_DELAY; // Durata in millisecondi per ogni lampeggio
-        
-        // Azioni da eseguire al lampeggio (accendi/spegni i pulsanti)
-        ActionListener flashAction = new ActionListener() {
-            private int currentFlash = 0; // Conta i lampeggi
-    
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (currentFlash < flashCount) {
-                    // Alterna lo stato di accensione/spegnimento dei pulsanti
-                    boolean isLightOn = currentFlash % 2 == 0;
-                    
-                    for (Map.Entry<Colors, JButton> entry : buttons.entrySet()) {
-                        if (isLightOn) {
-                            entry.getValue().setBackground(brightenColor(entry.getValue().getBackground()));
-                        } else {
-                            // Ripristina il colore originale
-                            entry.getValue().setBackground(entry.getKey().getAwtColor());
-                        }
-                    }
-                    
-                    currentFlash++; // Incrementa il contatore dei lampeggi
-                } else {
-                    ((Timer) e.getSource()).stop(); // Fermiamo il timer quando abbiamo completato i lampeggi
-                }
-            }
-        };
-    
-        // Crea un timer per eseguire l'azione di lampeggio ogni 200 ms
-        Timer timer = new Timer(flashDelay, flashAction);
-        timer.start();
-    }
-       
-    // Metodi per aggiungere listener agli eventi
-    /**
-     * Aggiunge un listener al pulsante di avvio.
-     * @param listener listener da aggiungere
-     */
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);
     }
-    
-    /**
-     * Aggiunge un listener a un pulsante colorato.
-     * @param colorId colore del pulsante
-     * @param listener listener da aggiungere
-     */
     public void addColorButtonListener(Colors colorId, ActionListener listener) {
         buttons.get(colorId).addActionListener(listener);
+    }
+    /**
+     * Illumina un pulsante per la durata specificata (effetto glow).
+     */
+    public void lightUpButton(Colors colorId, int duration) {
+        RoundButton btn = buttons.get(colorId);
+        btn.setGlowing(true);
+        Timer t = new Timer(duration, e -> btn.setGlowing(false));
+        t.setRepeats(false);
+        t.start();
     }
 }
