@@ -107,18 +107,18 @@ public class HonkMandView extends JFrame {
         victoryDialog.add(victoryPanel);
         
         // Dialogo di game over
-        gameOverDialog = new JDialog(this, "Game Over", true);
+        gameOverDialog = new JDialog(this, it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, true);
         gameOverDialog.setSize(300, 200);
         gameOverDialog.setLocationRelativeTo(this);
         
         JPanel gameOverPanel = new JPanel();
         gameOverPanel.setLayout(new BorderLayout());
         
-        JLabel gameOverLabel = new JLabel("Game Over!", SwingConstants.CENTER);
+        JLabel gameOverLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, SwingConstants.CENTER);
         gameOverLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gameOverPanel.add(gameOverLabel, BorderLayout.CENTER);
         
-        JButton closeGameOverButton = new JButton("Chiudi Gioco");
+        JButton closeGameOverButton = new JButton(it.unibo.goosegame.utilities.HonkMandMessages.CLOSE_GAME);
         closeGameOverButton.addActionListener(e -> System.exit(0));
         
         JPanel gameOverButtonPanel = new JPanel();
@@ -137,7 +137,7 @@ public class HonkMandView extends JFrame {
         
         // Pannello superiore per titolo e livello
         JPanel topPanel = new JPanel(new FlowLayout());
-        topPanel.add(new JLabel("Honkmand"));
+        topPanel.add(new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.TITLE));
         topPanel.add(levelLabel);
         add(topPanel, BorderLayout.NORTH);
         
@@ -159,7 +159,7 @@ public class HonkMandView extends JFrame {
         
         JPanel scorePanel = new JPanel(new FlowLayout());
         scorePanel.add(scoreLabel);
-        scorePanel.add(new JLabel("Livello massimo: " + HonkMandModel.MAX_LEVEL));
+        scorePanel.add(new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.MAX_LEVEL_LABEL + HonkMandModel.MAX_LEVEL));
 
         JPanel messagePanel = new JPanel(new BorderLayout());
         messagePanel.add(messageLabel, BorderLayout.CENTER);
@@ -180,7 +180,7 @@ public class HonkMandView extends JFrame {
      * @param level livello corrente
      */
     public void updateLevel(int level) {
-        levelLabel.setText("Livello: " + level);
+        levelLabel.setText(it.unibo.goosegame.utilities.HonkMandMessages.LEVEL_LABEL + level);
     }
     
     /**
@@ -191,7 +191,7 @@ public class HonkMandView extends JFrame {
      * @param score punteggio corrente
      */
     public void updateScore(int score) {
-        scoreLabel.setText("Punteggio: " + score);
+        scoreLabel.setText(it.unibo.goosegame.utilities.HonkMandMessages.SCORE_LABEL + score);
     }
     
     /**
@@ -292,9 +292,9 @@ public class HonkMandView extends JFrame {
      */
     public void setGameActive(boolean active) {
         if (active) {
-            startButton.setText("Restart");
+            startButton.setText(it.unibo.goosegame.utilities.HonkMandMessages.RESTART_BUTTON);
         } else {
-            startButton.setText("Inizia Gioco");
+            startButton.setText(it.unibo.goosegame.utilities.HonkMandMessages.START_BUTTON);
         }
     }
 
@@ -317,8 +317,8 @@ public class HonkMandView extends JFrame {
      */
     public void gameOverAnimation() {
         // Variabili per il numero di lampeggi e la durata del lampeggio
-        final int flashCount = 3;
-        final int flashDelay = 200; // Durata in millisecondi per ogni lampeggio
+        final int flashCount = it.unibo.goosegame.utilities.HonkMandConstants.GAME_OVER_FLASH_COUNT;
+        final int flashDelay = it.unibo.goosegame.utilities.HonkMandConstants.GAME_OVER_FLASH_DELAY; // Durata in millisecondi per ogni lampeggio
         
         // Azioni da eseguire al lampeggio (accendi/spegni i pulsanti)
         ActionListener flashAction = new ActionListener() {
