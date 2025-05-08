@@ -163,18 +163,33 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
      * Esegue un'animazione di celebrazione per la vittoria
      */
     private void celebrateVictory() {
-        Timer celebrationTimer = new Timer(200, new ActionListener() {
-            private int count = 0;
-            private final Colors[] colors = Colors.values();    
-            
+        final Colors[] colors = Colors.values();
+        final int total = colors.length;
+        final int[] index = {0};
+
+        Timer celebrationTimer = new Timer(400, null);
+        celebrationTimer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (count < 3) {
-                    view.lightUpButton(colors[count % 4], 200);
-                    count++;
-                } else {
-                    ((Timer) e.getSource()).stop();
+                // Spegni il pulsante precedente (se non è il primo giro)
+                if (index[0] > 0) {
+                    Colors prevColor = colors[index[0] - 1];
+                    // Ripristina il colore originale
+                    switch (prevColor) {
+                        case GREEN: view.lightUpButton(Colors.GREEN, 0); break;
+                        case RED: view.lightUpButton(Colors.RED, 0); break;
+                        case YELLOW: view.lightUpButton(Colors.YELLOW, 0); break;
+                        case BLUE: view.lightUpButton(Colors.BLUE, 0); break;
+                    }
                 }
+                // Se abbiamo finito la sequenza, ferma il timer
+                if (index[0] >= total) {
+                    ((Timer) e.getSource()).stop();
+                    return;
+                }
+                // Illumina il pulsante corrente
+                view.lightUpButton(colors[index[0]], 300);
+                index[0]++;
             }
         });
         celebrationTimer.setRepeats(true);
