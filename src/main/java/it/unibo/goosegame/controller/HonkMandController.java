@@ -175,12 +175,7 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
                 if (index[0] > 0) {
                     Colors prevColor = colors[index[0] - 1];
                     // Ripristina il colore originale
-                    switch (prevColor) {
-                        case GREEN: view.lightUpButton(Colors.GREEN, 0); break;
-                        case RED: view.lightUpButton(Colors.RED, 0); break;
-                        case YELLOW: view.lightUpButton(Colors.YELLOW, 0); break;
-                        case BLUE: view.lightUpButton(Colors.BLUE, 0); break;
-                    }
+                    view.lightUpButton(prevColor, 0);
                 }
                 // Se abbiamo finito la sequenza, ferma il timer
                 if (index[0] >= total) {

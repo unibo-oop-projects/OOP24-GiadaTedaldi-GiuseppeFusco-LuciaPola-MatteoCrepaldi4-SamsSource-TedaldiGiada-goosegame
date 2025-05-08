@@ -60,7 +60,7 @@ public class HonkMandView extends JFrame {
         buttons.put(Colors.YELLOW, yellowButton);
         
         JButton blueButton = new JButton();
-        blueButton.setBackground(Color.BLUE);
+        blueButton.setBackground(Colors.BLUE.getAwtColor());
         buttons.put(Colors.BLUE, blueButton);
         
         // Altri componenti
@@ -266,20 +266,7 @@ public class HonkMandView extends JFrame {
                             entry.getValue().setBackground(brightenColor(entry.getValue().getBackground()));
                         } else {
                             // Ripristina il colore originale
-                            switch (entry.getKey()) {
-                                case GREEN:
-                                    entry.getValue().setBackground(Color.GREEN);
-                                    break;
-                                case RED:
-                                    entry.getValue().setBackground(Color.RED);
-                                    break;
-                                case YELLOW:
-                                    entry.getValue().setBackground(Color.YELLOW);
-                                    break;
-                                case BLUE:
-                                    entry.getValue().setBackground(Color.BLUE);
-                                    break;
-                            }
+                            entry.getValue().setBackground(entry.getKey().getAwtColor());
                         }
                     }
                     
