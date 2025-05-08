@@ -80,26 +80,23 @@ public class HonkMandModel {
      * Verifica l'input del giocatore
      */
     public InputResult checkPlayerInput(Colors colorId) {
+        if (!isPlaying) return InputResult.GAME_OVER;
         playerSequence.add(colorId);
-        int currentIndex = playerSequence.size()-1;
-        
+        int currentIndex = playerSequence.size() - 1;
+
         if (playerSequence.get(currentIndex).equals(sequence.get(currentIndex))) {
-            // Input corretto
             if (playerSequence.size() == sequence.size()) {
-                // Sequenza completata
-                score ++;
-                
-                // Verifica se il giocatore ha vinto
+                score++;
                 if (level == MAX_LEVEL) {
+                    isPlaying = false;
                     return InputResult.GAME_WIN;
                 }
-                
                 return InputResult.NEXT_ROUND;
             }
             return InputResult.CORRECT;
         } else {
-            // Input errato
-                return InputResult.GAME_OVER;
+            isPlaying = false;
+            return InputResult.GAME_OVER;
         }
     }
     

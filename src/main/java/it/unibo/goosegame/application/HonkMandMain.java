@@ -20,7 +20,7 @@ public class HonkMandMain {
             HonkMandView view = new HonkMandView();
             
             // Crea il controller e collega modello e vista
-            HonkMandController controller = new HonkMandController(model, view);
+            new HonkMandController(model, view);
         });
     }
 }

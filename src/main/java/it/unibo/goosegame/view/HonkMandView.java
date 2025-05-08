@@ -46,7 +46,6 @@ public class HonkMandView extends JFrame {
     private void initComponents() {
         buttons = new HashMap<>();
         
-
         // Creazione dei pulsanti colorati
         JButton greenButton = new JButton();
         greenButton.setBackground(Color.GREEN);
@@ -174,37 +173,21 @@ public class HonkMandView extends JFrame {
         scoreLabel.setText("Punteggio: " + score);
     }
     
-    /**
-     * Mostra un messaggio all'utente
-     */
-    private String currentMessage = "";
-    private Timer messageTimer;
-    
     public void showMessage(String message, boolean isError) {
-        if (message.equals(currentMessage)) {
-            return;
-        }
-        
-        if (messageTimer != null && messageTimer.isRunning()) {
-            messageTimer.stop();
-        }
-
         messageLabel.setText(message);
-        
-        if (isError) {
-            messageLabel.setForeground(Color.RED);
-        } else {
-            messageLabel.setForeground(new Color(0, 128, 0)); // Verde
-        }
-        
-        // Crea un nuovo timer
-        messageTimer = new Timer(2000, e -> {
-            messageLabel.setText("");
-            currentMessage = "";
-            ((Timer)e.getSource()).stop(); // Ferma esplicitamente il timer
-        });
-        messageTimer.setRepeats(false); // Assicurati che il timer non si ripeta
-        messageTimer.start();
+        messageLabel.setForeground(isError ? Color.RED : Color.BLACK);
+    }
+
+    public void clearMessage() {
+        messageLabel.setText("");
+    }
+
+    public void showVictoryDialog() {
+        victoryDialog.setVisible(true);
+    }
+
+    public void showGameOverDialog() {
+        gameOverDialog.setVisible(true);
     }
     
     /**
@@ -311,22 +294,7 @@ public class HonkMandView extends JFrame {
         Timer timer = new Timer(flashDelay, flashAction);
         timer.start();
     }
-    
-    
-    /**
-     * Mostra il dialogo di vittoria
-     */
-    public void showVictoryDialog() {
-        victoryDialog.setVisible(true);
-    }
-    
-    /**
-     * Mostra il dialogo di game over
-     */
-    public void showGameOverDialog() {
-        gameOverDialog.setVisible(true);
-    }
-    
+       
     // Metodi per aggiungere listener agli eventi
     public void addStartButtonListener(ActionListener listener) {
         startButton.addActionListener(listener);

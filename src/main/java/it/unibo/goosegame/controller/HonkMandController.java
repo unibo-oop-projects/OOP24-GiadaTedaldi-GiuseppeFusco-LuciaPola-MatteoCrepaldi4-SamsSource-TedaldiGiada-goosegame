@@ -112,64 +112,49 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
      */
     private void handleButtonClick(Colors colorId) {
         if (!model.isPlaying()) return;
-        
+
         view.lightUpButton(colorId, 300);
-        
         HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
-        
+
         switch (result) {
             case CORRECT:
-                // Continua il gioco
+                // Nessuna azione, attendi altro input
                 break;
             case NEXT_ROUND:
                 view.showMessage("Ottimo!", false);
                 view.updateScore(model.getScore());
-                
-                // Timer per la prossima ronda
                 Timer nextRoundTimer = new Timer(1000, e -> {
                     model.nextRound();
                     view.updateLevel(model.getLevel());
                     view.showMessage("Livello " + model.getLevel(), false);
-                    
                     Timer playSequenceTimer = new Timer(1000, e2 -> playSequence());
                     playSequenceTimer.setRepeats(false);
                     playSequenceTimer.start();
+                    ((Timer)e.getSource()).stop();
                 });
                 nextRoundTimer.setRepeats(false);
                 nextRoundTimer.start();
                 break;
-            case GAME_OVER:
-                view.showMessage("Game Over!", true);
-                
-                // Timer per la fine del gioco
-                Timer gameOverTimer = new Timer(500, e -> {
-                    view.gameOverAnimation();
-                    endGame();
-                    
-                    // Mostra il dialogo di game over
-                    SwingUtilities.invokeLater(() -> {
-                        view.showGameOverDialog();
-                    });
-                });
-                gameOverTimer.setRepeats(false);
-                gameOverTimer.start();
-                break;
             case GAME_WIN:
                 view.showMessage("Hai vinto!", false);
-                view.updateScore(model.getScore());
-                
-                // Timer per animazione di vittoria
+                view.setButtonsEnabled(false);
+                celebrateVictory();
                 Timer winTimer = new Timer(1000, e -> {
-                    celebrateVictory();
-                    endGame();
-                    
-                    // Mostra il dialogo di vittoria
-                    SwingUtilities.invokeLater(() -> {
-                        view.showVictoryDialog();
-                    });
+                    view.showVictoryDialog();
+                    ((Timer)e.getSource()).stop();
                 });
                 winTimer.setRepeats(false);
                 winTimer.start();
+                break;
+            case GAME_OVER:
+                view.showMessage("Game Over!", true);
+                view.setButtonsEnabled(false);
+                Timer overTimer = new Timer(1000, e -> {
+                    view.showGameOverDialog();
+                    ((Timer)e.getSource()).stop();
+                });
+                overTimer.setRepeats(false);
+                overTimer.start();
                 break;
         }
     }
@@ -196,12 +181,4 @@ public HonkMandController(HonkMandModel model, HonkMandView view) {
         celebrationTimer.start();
     }
     
-    /**
-     * Termina il gioco
-     */
-    private void endGame() {
-        model.setPlaying(false);
-        view.setGameActive(false);
-        view.updateScore(model.getScore());
-    }
 }
