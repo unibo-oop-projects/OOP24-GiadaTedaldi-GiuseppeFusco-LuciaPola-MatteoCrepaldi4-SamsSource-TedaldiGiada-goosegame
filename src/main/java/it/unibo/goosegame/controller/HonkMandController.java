@@ -56,10 +56,10 @@ public class HonkMandController {
         view.setGameActive(true);
         view.updateLevel(model.getLevel());
         view.setButtonsEnabled(false);
-        view.showMessage("Osserva la sequenza!", false);
+        view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.WATCH_SEQUENCE, false);
         
         // Usa un Timer per riprodurre la sequenza dopo un breve ritardo
-        Timer timer = new Timer(1000, e -> {
+        Timer timer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.SEQUENCE_START_DELAY, e -> {
             ((Timer)e.getSource()).stop(); // Ferma il timer
             playSequence();
         });
@@ -83,20 +83,20 @@ public class HonkMandController {
 
         final int[] index = {0};
 
-        sequenceTimer = new Timer(700,null);
+        sequenceTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.SEQUENCE_STEP_DELAY,null);
         ActionListener sequenceAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (index[0] < sequence.size()) {
                     Colors color = sequence.get(index[0]);
-                    view.lightUpButton(color, 500);
+                    view.lightUpButton(color, it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_LIGHT_DURATION);
                     index[0]++;
                 } else {
                     // Ferma il timer quando la sequenza è completa
                 sequenceTimer.stop();
                 
                 // Aggiungi un breve ritardo prima di abilitare i pulsanti
-                Timer enableButtonsTimer = new Timer(500, event -> {
+                Timer enableButtonsTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_ENABLE_DELAY, event -> {
                     view.setButtonsEnabled(true);
                     view.showMessage("Il tuo turno!", false);
                     ((Timer)event.getSource()).stop();
@@ -119,7 +119,7 @@ public class HonkMandController {
     private void handleButtonClick(Colors colorId) {
         if (!model.isPlaying()) return;
 
-        view.lightUpButton(colorId, 300);
+        view.lightUpButton(colorId, it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_CLICK_LIGHT_DURATION);
         HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
 
         switch (result) {
@@ -127,13 +127,13 @@ public class HonkMandController {
                 // Nessuna azione, attendi altro input
                 break;
             case NEXT_ROUND:
-                view.showMessage("Ottimo!", false);
+                view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.CORRECT, false);
                 view.updateScore(model.getScore());
-                Timer nextRoundTimer = new Timer(1000, e -> {
+                Timer nextRoundTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.NEXT_ROUND_DELAY, e -> {
                     model.nextRound();
                     view.updateLevel(model.getLevel());
-                    view.showMessage("Livello " + model.getLevel(), false);
-                    Timer playSequenceTimer = new Timer(1000, e2 -> playSequence());
+                    view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.LEVEL_LABEL + model.getLevel(), false);
+                    Timer playSequenceTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.SEQUENCE_START_DELAY, e2 -> playSequence());
                     playSequenceTimer.setRepeats(false);
                     playSequenceTimer.start();
                     ((Timer)e.getSource()).stop();
@@ -142,10 +142,10 @@ public class HonkMandController {
                 nextRoundTimer.start();
                 break;
             case GAME_WIN:
-                view.showMessage("Hai vinto!", false);
+                view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.WIN, false);
                 view.setButtonsEnabled(false);
                 celebrateVictory();
-                Timer winTimer = new Timer(1000, e -> {
+                Timer winTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.WIN_DIALOG_DELAY, e -> {
                     view.showVictoryDialog();
                     ((Timer)e.getSource()).stop();
                 });
@@ -153,9 +153,9 @@ public class HonkMandController {
                 winTimer.start();
                 break;
             case GAME_OVER:
-                view.showMessage("Game Over!", true);
+                view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, true);
                 view.setButtonsEnabled(false);
-                Timer overTimer = new Timer(1000, e -> {
+                Timer overTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.NEXT_ROUND_DELAY, e -> {
                     view.showGameOverDialog();
                     ((Timer)e.getSource()).stop();
                 });
@@ -173,7 +173,7 @@ public class HonkMandController {
         final int total = colors.length;
         final int[] index = {0};
 
-        Timer celebrationTimer = new Timer(400, null);
+        Timer celebrationTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.CELEBRATION_STEP_DELAY, null);
         celebrationTimer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -189,7 +189,7 @@ public class HonkMandController {
                     return;
                 }
                 // Illumina il pulsante corrente
-                view.lightUpButton(colors[index[0]], 300);
+                view.lightUpButton(colors[index[0]], it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_CLICK_LIGHT_DURATION);
                 index[0]++;
             }
         });

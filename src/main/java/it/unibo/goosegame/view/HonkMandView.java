@@ -30,7 +30,7 @@ public class HonkMandView extends JFrame {
      */
     public HonkMandView() {
         // Configurazione della finestra
-        setTitle("HonkMand");
+        setTitle(it.unibo.goosegame.utilities.HonkMandMessages.TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 500);
         setLocationRelativeTo(null);
@@ -71,9 +71,9 @@ public class HonkMandView extends JFrame {
         buttons.put(Colors.BLUE, blueButton);
         
         // Altri componenti
-        startButton = new JButton("Inizia Gioco");
-        levelLabel = new JLabel("Livello: 0");
-        scoreLabel = new JLabel("Punteggio: 0");
+        startButton = new JButton(it.unibo.goosegame.utilities.HonkMandMessages.START_BUTTON);
+        levelLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.LEVEL_LABEL + "0");
+        scoreLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.SCORE_LABEL + "0");
         messageLabel = new JLabel("");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         messageLabel.setPreferredSize(new Dimension(300, 24));
@@ -86,18 +86,18 @@ public class HonkMandView extends JFrame {
      */
     private void initDialogs() {
         // Dialogo di vittoria
-        victoryDialog = new JDialog(this, "Vittoria!", true);
+        victoryDialog = new JDialog(this, it.unibo.goosegame.utilities.HonkMandMessages.VICTORY_TITLE, true);
         victoryDialog.setSize(300, 200);
         victoryDialog.setLocationRelativeTo(this);
         
         JPanel victoryPanel = new JPanel();
         victoryPanel.setLayout(new BorderLayout());
         
-        JLabel victoryLabel = new JLabel("Congratulazioni! Hai vinto!", SwingConstants.CENTER);
+        JLabel victoryLabel = new JLabel(it.unibo.goosegame.utilities.HonkMandMessages.VICTORY_MESSAGE, SwingConstants.CENTER);
         victoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
         victoryPanel.add(victoryLabel, BorderLayout.CENTER);
         
-        JButton closeVictoryButton = new JButton("Chiudi Gioco");
+        JButton closeVictoryButton = new JButton(it.unibo.goosegame.utilities.HonkMandMessages.CLOSE_GAME);
         closeVictoryButton.addActionListener(e -> System.exit(0));
         
         JPanel victoryButtonPanel = new JPanel();

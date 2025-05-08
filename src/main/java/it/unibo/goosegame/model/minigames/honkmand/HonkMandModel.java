@@ -13,8 +13,9 @@ import it.unibo.goosegame.utilities.Colors;
  */
 public class HonkMandModel {
     
-    // Livello massimo per vincere il gioco
-    public static final int MAX_LEVEL = 5;
+    // Livello massimo per vincere il gioco (ora in HonkMandConstants)
+    // Livello massimo per vincere il gioco (ora in HonkMandConstants)
+    public static final int MAX_LEVEL = it.unibo.goosegame.utilities.HonkMandConstants.MAX_LEVEL; // per retrocompatibilità, usa direttamente HonkMandConstants dove possibile
     
     private List<Colors> sequence;
     private List<Colors> playerSequence;
