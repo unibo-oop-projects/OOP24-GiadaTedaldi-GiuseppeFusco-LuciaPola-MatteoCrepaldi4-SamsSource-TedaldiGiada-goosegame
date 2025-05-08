@@ -1,11 +1,11 @@
 package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
+import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.view.HonkMandView;
 
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -93,19 +93,18 @@ public class HonkMandController {
                     index[0]++;
                 } else {
                     // Ferma il timer quando la sequenza è completa
-                sequenceTimer.stop();
-                
-                // Aggiungi un breve ritardo prima di abilitare i pulsanti
-                Timer enableButtonsTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_ENABLE_DELAY, event -> {
-                    view.setButtonsEnabled(true);
-                    view.showMessage("Il tuo turno!", false);
-                    ((Timer)event.getSource()).stop();
-                });
-                enableButtonsTimer.setRepeats(false);
-                enableButtonsTimer.start();
+                    sequenceTimer.stop();
+                    // Aggiungi un breve ritardo prima di abilitare i pulsanti
+                    Timer enableButtonsTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_ENABLE_DELAY, event -> {
+                        view.setButtonsEnabled(true);
+                        view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.YOUR_TURN, false);
+                        ((Timer)event.getSource()).stop();
+                    });
+                    enableButtonsTimer.setRepeats(false);
+                    enableButtonsTimer.start();
+                }
             }
-        }
-    };
+        };
 
         sequenceTimer.addActionListener(sequenceAction);
         sequenceTimer.setRepeats(true);
@@ -117,7 +116,8 @@ public class HonkMandController {
      * @param colorId colore selezionato
      */
     private void handleButtonClick(Colors colorId) {
-        if (!model.isPlaying()) return;
+        // Usa la nuova gestione degli stati
+        if (model.getGameState() != GameState.PLAYING) return;
 
         view.lightUpButton(colorId, it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_CLICK_LIGHT_DURATION);
         HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
