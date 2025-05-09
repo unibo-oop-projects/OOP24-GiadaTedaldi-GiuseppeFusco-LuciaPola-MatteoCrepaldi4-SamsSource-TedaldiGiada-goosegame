@@ -10,12 +10,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+/**
+ * Controller per il minigioco Herding Hound.
+ * Gestisce l'interazione tra utente, modello e vista.
+ */
 public class HerdingHoundController {
     private final HerdingHoundModel model;
     private final HerdingHoundView view;
     private Timer dogStateTimer;
     private Timer gameTimer;
     private final Random rnd = new Random();
+    private boolean spacePressed = false;
 
     public HerdingHoundController(HerdingHoundModel model, HerdingHoundView view) {
         this.model = model;
@@ -24,12 +29,19 @@ public class HerdingHoundController {
         view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE && !model.isOver()) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE && !spacePressed && !model.isOver()) {
+                    spacePressed = true;
                     model.nextGooseMove();
                     view.updateView();
                     if (model.isOver()) {
                         endGame();
                     }
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    spacePressed = false;
                 }
             }
         });
@@ -49,13 +61,10 @@ public class HerdingHoundController {
     }
 
     private void scheduleNextDogState(DogImpl.State currentState) {
-
         if (model.isOver()) return;
-
         int delay = (currentState == DogImpl.State.ALERT)
                     ? 1_000
                     : 2_000 + rnd.nextInt(3) * 1_000;
-
         if (dogStateTimer != null) dogStateTimer.stop();
         dogStateTimer = new Timer(delay, e -> {
             model.nextDogState();
@@ -74,7 +83,6 @@ public class HerdingHoundController {
         if (gameTimer  != null) gameTimer.stop();
         if (dogStateTimer != null) dogStateTimer.stop();
         view.showGameOver();
-
         view.setFocusable(false);
     }
 }

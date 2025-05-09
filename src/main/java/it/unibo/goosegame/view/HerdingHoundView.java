@@ -19,15 +19,15 @@ public class HerdingHoundView extends JPanel {
     private static final int DEFAULT_SIZE = 600;
     private static final int IMAGE_SIZE = 200;
     private static final int TIMER_FONT_SIZE = 16;
-    private static final Color BACKGROUND_COLOR = new Color(50, 50, 50);
+    private static final Color BACKGROUND_COLOR = new Color(34, 139, 34); // Verde prato
     private static final Color GRID_COLOR = Color.GRAY;
-    private static final Color VISIBLE_AREA_COLOR = Color.LIGHT_GRAY;
+    private static final Color VISIBLE_AREA_COLOR = new Color(180, 238, 180); // Verde chiaro per visibilità potenziale
     private static final Color DOG_SHADOW_COLOR = new Color(50, 50, 50, 150);
     private static final Color BOX_COLOR = new Color(139, 69, 19);
     private static final Color DOG_AWAKE_COLOR = Color.RED;
     private static final Color DOG_ALERT_COLOR = Color.ORANGE;
     private static final Color DOG_DEFAULT_COLOR = Color.WHITE;
-    private static final Color DOG_VISIBLE_COLOR = new Color(255, 0, 0, 100);
+    private static final Color DOG_VISIBLE_COLOR = new Color(255, 0, 0, 100); // Rosso trasparente
 
     private final HerdingHoundModel model;
     private final Image awakeImage;
@@ -69,20 +69,24 @@ public class HerdingHoundView extends JPanel {
         final int xOffset = (w - gridWidth) / 2;
         final int yOffset = (h - gridHeight) / 2;
 
+        // Sfondo verde prato
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, w, h);
 
+        // Griglia
         g.setColor(GRID_COLOR);
         for (int i = 0; i <= gridSize; i++) {
             g.drawLine(xOffset, yOffset + i * cellSize, xOffset + gridWidth, yOffset + i * cellSize);
             g.drawLine(xOffset + i * cellSize, yOffset, xOffset + i * cellSize, yOffset + gridHeight);
         }
 
+        // Zone potenzialmente visibili dal cane (verde chiaro)
         g.setColor(VISIBLE_AREA_COLOR);
         for (Pair<Integer, Integer> pos : model.getDog().getVisibleArea()) {
             drawCell(g, pos, cellSize, xOffset, yOffset);
         }
 
+        // Zone effettivamente visibili dal cane quando è sveglio (rosso trasparente)
         if (model.getDog().getState() == DogImpl.State.AWAKE) {
             g.setColor(DOG_VISIBLE_COLOR);
             for (Pair<Integer, Integer> pos : model.getVisible()) {
@@ -90,16 +94,19 @@ public class HerdingHoundView extends JPanel {
             }
         }
 
+        // Ombre
         g.setColor(DOG_SHADOW_COLOR);
         for (Pair<Integer, Integer> shadow : model.getShadows()) {
             drawCell(g, shadow, cellSize, xOffset, yOffset);
         }
 
+        // Scatole
         g.setColor(BOX_COLOR);
         for (Pair<Integer, Integer> box : model.getBoxes()) {
             drawCell(g, box, cellSize, xOffset, yOffset);
         }
 
+        // Cane
         final Pair<Integer, Integer> dogPos = model.getDog().getCoord();
         g.setColor(switch (model.getDog().getState()) {
             case AWAKE -> DOG_AWAKE_COLOR;
@@ -108,6 +115,7 @@ public class HerdingHoundView extends JPanel {
         });
         drawCell(g, dogPos, cellSize, xOffset, yOffset);
 
+        // Simbolo sopra il cane
         if (model.getDog().getState() != DogImpl.State.ASLEEP) {
             final String symbol = model.getDog().getState() == DogImpl.State.AWAKE ? "!" : "?";
             g.setColor(Color.BLACK);
@@ -121,9 +129,11 @@ public class HerdingHoundView extends JPanel {
             g.drawString(symbol, centerX, centerY);
         }
 
+        // Oca
         g.setColor(Color.WHITE);
         drawCell(g, model.getGoose().getCoord(), cellSize, xOffset, yOffset);
 
+        // Timer
         final long remMs = model.getRemainingTime();
         final long sec = remMs / 1000;
         final String text = String.format("Tempo %02d:%02d", sec / 60, sec % 60);
@@ -137,6 +147,7 @@ public class HerdingHoundView extends JPanel {
         final int ty = fm.getAscent() + 10;
         g.drawString(text, tx, ty);
 
+        // Immagine stato cane
         final Image stateImage = switch (model.getDog().getState()) {
             case AWAKE -> awakeImage;
             case ALERT -> alertImage;
