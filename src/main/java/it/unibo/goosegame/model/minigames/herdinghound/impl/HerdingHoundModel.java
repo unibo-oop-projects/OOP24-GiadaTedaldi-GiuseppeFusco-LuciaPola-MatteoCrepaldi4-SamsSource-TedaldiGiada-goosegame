@@ -2,21 +2,22 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Pair;
 
+/**
+ * Modello del minigioco Herding Hound.
+ * Gestisce la logica di gioco e lo stato.
+ */
 public class HerdingHoundModel implements MinigamesModel {
-
     private static final int START_X = 0;
     private static final int START_Y = 0;
+    private static final long TIME_LIMIT_MS = 60_000;
 
     private final GooseImpl goose;
     private final DogImpl dog;
     private final BoxImpl box;
     private final int gridSize;
-    private static final long TIME_LIMIT_MS = 60_000;
     private long startTime;
 
     public HerdingHoundModel(int gridSize) {
@@ -27,20 +28,19 @@ public class HerdingHoundModel implements MinigamesModel {
         this.box.generateBoxes();
         this.dog.refreshDirection(goose);
         this.startTime = System.currentTimeMillis();
-        dog.refreshDirection(goose);
     }
 
+    /**
+     * Esegue la prossima mossa automatica della goose (per demo/test).
+     */
     public void nextGooseMove() {
         Pair<Integer,Integer> pos = goose.getCoord();
         int x = pos.getX(), y = pos.getY();
-    
         if (y == START_Y && x < gridSize - 1) {
             goose.move(1, 0);
-        }
-        else if (x == gridSize - 1 && y < gridSize - 1) {
+        } else if (x == gridSize - 1 && y < gridSize - 1) {
             goose.move(0, 1);
-        }
-        else if (y == gridSize - 1 && x > START_X) {
+        } else if (y == gridSize - 1 && x > START_X) {
             goose.move(-1, 0);
         }
         dog.refreshDirection(goose);
@@ -58,11 +58,11 @@ public class HerdingHoundModel implements MinigamesModel {
         return this.box;
     }
 
-    public int getGrid(){
+    public int getGrid() {
         return this.gridSize;
     }
 
-    public List<Pair<Integer, Integer>> getShadows(){
+    public List<Pair<Integer, Integer>> getShadows() {
         return this.box.getShadows();
     }
 
@@ -72,7 +72,7 @@ public class HerdingHoundModel implements MinigamesModel {
         dog.reset();
         box.generateBoxes();
         dog.refreshDirection(goose);
-        this.startTime = System.currentTimeMillis(); 
+        this.startTime = System.currentTimeMillis();
     }
 
     public long getRemainingTime() {
@@ -94,7 +94,7 @@ public class HerdingHoundModel implements MinigamesModel {
     }
 
     public boolean isOver() {
-        return hasWon() || hasLost();
+        return hasWon() || hasLost() || getRemainingTime() == 0;
     }
 
     private boolean hasWon() {
@@ -106,10 +106,12 @@ public class HerdingHoundModel implements MinigamesModel {
         if (dog.getState() != DogImpl.State.AWAKE) {
             return false;
         }
-
         return getVisible().contains(goose.getCoord());
     }
 
+    /**
+     * Restituisce le celle visibili dal cane, escluse ombre e scatole.
+     */
     public List<Pair<Integer, Integer>> getVisible() {
         return dog.getVisibleArea().stream()
             .filter(pos -> !box.getShadows().contains(pos))
@@ -117,11 +119,14 @@ public class HerdingHoundModel implements MinigamesModel {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Passa lo stato del cane al prossimo (ASLEEP->ALERT->AWAKE->ASLEEP).
+     */
     public void nextDogState() {
         dog.refreshState();
         dog.refreshDirection(goose);
     }
-    
+
     public List<Pair<Integer, Integer>> getBoxes() {
         return box.getBoxes();
     }
