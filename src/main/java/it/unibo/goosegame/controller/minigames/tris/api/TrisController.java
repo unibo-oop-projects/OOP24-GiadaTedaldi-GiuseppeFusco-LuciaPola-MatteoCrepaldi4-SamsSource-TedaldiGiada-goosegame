@@ -2,7 +2,7 @@ package it.unibo.goosegame.controller.minigames.tris.api;
 
 import it.unibo.goosegame.utilities.Position;
 
-/*
+/**
  * Interface representing the controller of a Tris(Tic-Tac-Toe) minigame.
  */
 public interface TrisController {
@@ -24,5 +24,12 @@ public interface TrisController {
      * If the match is over(best of 3), the final result is displayed.
      */
     void endGame();
+
+    /**
+     * Starts a new game session. Initializes the game state and view for a new match.
+     * 
+     * @return the TrisController instance
+     */
+    TrisController startGame();
 
 }

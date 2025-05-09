@@ -12,10 +12,11 @@ import it.unibo.goosegame.view.minigames.tris.impl.TrisViewImpl;
  * Implementation of the {@link TrisController} interface.
  * It manages the communication between the model and the view of a Tris(Tic-Tac-Toe) minigame.
  */
-public class TrisControllerImpl implements TrisController{
-    private TrisModel model;
-    private TrisView view;
-    private boolean gameOver = false;
+public class TrisControllerImpl implements TrisController {
+    private static final int MAX_CHAR = 50;
+    private final TrisModel model;
+    private final TrisView view;
+    private boolean gameOver;
     private int humanWins;
     private int pcWins;
     private int rounds;
@@ -23,28 +24,27 @@ public class TrisControllerImpl implements TrisController{
     /**
      * Constructs a new instance of {@link TrisControllerImpl}.
      * 
-     * @param model the {@link TrisModel} representing the game logic  
+     * @param model the {@link TrisModel} representing the game logic
      */
-    public TrisControllerImpl(TrisModel model) {
+    public TrisControllerImpl(final TrisModel model) {
         this.model = model;
         this.view = new TrisViewImpl(this);
         this.humanWins = 0;
         this.pcWins = 0;
-        this.humanWins = 0;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void movesMaker(Position position) {
-        if(gameOver) {
+    public void movesMaker(final Position position) {
+        if (this.gameOver) {
             return;
         }
 
-        if(this.model.makeHumanMove(position)) {
+        if (this.model.makeHumanMove(position)) {
             this.view.updateButton(position, "X");
-            if(this.model.isOver()) {
+            if (this.model.isOver()) {
                 endGame();
                 return;
             }
@@ -59,15 +59,15 @@ public class TrisControllerImpl implements TrisController{
      */
     @Override
     public void updateView() {
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
-                Position pos = new Position(i, j);
-                if(this.model.isPc(pos)) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                final Position pos = new Position(i, j);
+                if (this.model.isPc(pos)) {
                     this.view.updateButton(pos, "O");
                 }
             }
         }
-        if(this.model.isOver()) {
+        if (this.model.isOver()) {
             endGame();
         }
     }
@@ -77,8 +77,8 @@ public class TrisControllerImpl implements TrisController{
      */
     @Override
     public void endGame() {
-        gameOver=true;
-        int result = this.model.getResult();
+        this.gameOver = true;
+        final int result = this.model.getResult();
         switch (result) {
             case 1:
                 this.humanWins++;
@@ -94,30 +94,45 @@ public class TrisControllerImpl implements TrisController{
             case 0: 
                 this.view.setStatus("Still playing..."); 
                 return;
+            default: 
+                break;
         }
-        rounds++;
-        if(this.humanWins == 2 || this.pcWins == 2 || rounds == 3) {
-            String finalMsg = "FINAL SCORE - You: " + this.humanWins + " PC: " + this.pcWins + "\n";
-            if(this.humanWins > this.pcWins) {
-                finalMsg += "YOU WIN!";
-            } else if(this.pcWins > this.humanWins) {
-                finalMsg += "PC WINS!";
+        this.rounds++;
+        if (this.humanWins == 2 || this.pcWins == 2 || this.rounds == 3) {
+            final StringBuilder finalMsg = new StringBuilder(MAX_CHAR);
+            finalMsg.append("FINAL SCORE - You: ")
+                .append(this.humanWins)
+                .append(" PC: ")
+                .append(this.pcWins)
+                .append('\n');
+            if (this.humanWins > this.pcWins) {
+                finalMsg.append("YOU WIN!");
+            } else if (this.pcWins > this.humanWins) {
+                finalMsg.append("PC WINS!");
             } else {
-                finalMsg += "IT'S A DRAW!";
+                finalMsg.append("IT'S A DRAW!");
             }
             this.view.disableButtons();
-            this.view.closeGame(finalMsg);
+            this.view.closeGame(finalMsg.toString());
         } else {
             this.view.disableButtons();
-            Timer timer = new Timer(1000, e -> {
+            final Timer timer = new Timer(1000, e -> {
                 this.model.resetGame();
-                this.view.setStatus("Round: " + (rounds+1) + " Your turn!");
+                this.view.setStatus("Round: " + (this.rounds + 1) + " Your turn!");
                 this.view.resetGrid();
-                gameOver = false;
+                this.gameOver = false;
             });
             timer.setRepeats(false);
             timer.start();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrisController startGame() {
+        return new TrisControllerImpl(model);
     }
 
 }
