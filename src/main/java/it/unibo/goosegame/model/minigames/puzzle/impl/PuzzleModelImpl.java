@@ -15,11 +15,11 @@ import it.unibo.goosegame.utilities.Position;
  * Implementation of the {@link PuzzleModel} interface.
  * This class handles the game logic for a Puzzle minigame.
  */
-public class PuzzleModelImpl implements PuzzleModel{
+public class PuzzleModelImpl implements PuzzleModel {
 
-    private final static int GRID_SIZE = 5;
-    private boolean timeOver = false;
-    private Map<Position,Integer> grid;
+    private static final int GRID_SIZE = 5;
+    private boolean timeOver;
+    private Map<Position, Integer> grid;
     private Optional<Position> first;
 
     /**
@@ -29,16 +29,32 @@ public class PuzzleModelImpl implements PuzzleModel{
         this.resetGame();
     }
 
+    /** 
+     * Copy of the contstructor.
+     * 
+     * @param other the PuzzleModelImpl instance to copy
+    */
+    public PuzzleModelImpl(final PuzzleModelImpl other) {
+        this.timeOver = other.timeOver;
+        this.first = other.first.isPresent() 
+                ? Optional.of(new Position(other.first.get().x(), other.first.get().y())) 
+                : Optional.empty();
+        this.grid = new HashMap<>();
+        for (final Map.Entry<Position, Integer> entry : other.grid.entrySet()) {
+            this.grid.put(new Position(entry.getKey().x(), entry.getKey().y()), entry.getValue());
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void resetGame() {
+    public final void resetGame() {
         this.first = Optional.empty();
         this.grid = new HashMap<>();
         int val = 1;
-        for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; j++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
                 this.grid.put(new Position(i, j), val++);
             }
         }
@@ -49,7 +65,7 @@ public class PuzzleModelImpl implements PuzzleModel{
      */
     @Override
     public int getResult() {
-        if(!this.isOver() || this.timeOver) {
+        if (!this.isOver() || this.timeOver) {
             return 0;
         }
         return 1;
@@ -69,11 +85,12 @@ public class PuzzleModelImpl implements PuzzleModel{
     @Override
     public boolean isOver() {
         int expected = 1;
-        for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; j++) {
-                if(this.grid.get(new Position(i, j)) != expected++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
+                if (this.grid.get(new Position(i, j)) != expected) {
                     return false;
                 }
+                expected++;
             }
         }
         return true;
@@ -83,8 +100,8 @@ public class PuzzleModelImpl implements PuzzleModel{
      * {@inheritDoc}
      */
     @Override
-    public boolean hit(Position pos) {
-        if(this.first.isEmpty()) {
+    public boolean hit(final Position pos) {
+        if (this.first.isEmpty()) {
             this.first = Optional.of(pos);
             return false;
         } else {
@@ -100,9 +117,9 @@ public class PuzzleModelImpl implements PuzzleModel{
      * @param first the position of the first cell to swap
      * @param second the position of the second cell to swap
      */
-    private void swapCell(Position first, Position second) {
-        int val1 = this.grid.get(first);
-        int val2 = this.grid.get(second);
+    private void swapCell(final Position first, final Position second) {
+        final int val1 = this.grid.get(first);
+        final int val2 = this.grid.get(second);
         this.grid.put(first, val2);
         this.grid.put(second, val1);
     }
@@ -112,11 +129,11 @@ public class PuzzleModelImpl implements PuzzleModel{
      */
     @Override
     public void shuffle() {
-        List<Integer> values = new ArrayList<>(this.grid.values());
+        final List<Integer> values = new ArrayList<>(this.grid.values());
         Collections.shuffle(values);
-        Iterator<Integer> it = values.iterator();
-        for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; j++) {
+        final Iterator<Integer> it = values.iterator();
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
                 this.grid.put(new Position(i, j), it.next());
             }
         }
@@ -127,14 +144,14 @@ public class PuzzleModelImpl implements PuzzleModel{
      */
     @Override
     public Map<Position, Integer> getGrid() {
-        return this.grid;
+        return Collections.unmodifiableMap(new HashMap<>(this.grid));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setTimeOver(boolean timeOver) {
+    public void setTimeOver(final boolean timeOver) {
         this.timeOver = timeOver;
     }
 

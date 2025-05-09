@@ -1,6 +1,8 @@
 package it.unibo.goosegame.model.minigames.puzzle;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,9 +13,9 @@ import it.unibo.goosegame.utilities.Position;
 /**
  * JUnit tests for {@link PuzzleModelImpl}.
  */
-public class TestPuzzleModelImpl {
+class TestPuzzleModelImpl {
 
-    private final static int GRID_SIZE = 5;
+    private static final int GRID_SIZE = 5;
     private PuzzleModel model;
 
     /**
@@ -21,17 +23,16 @@ public class TestPuzzleModelImpl {
      */
     @BeforeEach
     void init() {
-        this.model = new PuzzleModelImpl(); 
+        this.model = new PuzzleModelImpl();
     }
-    
     /**
      * Tests that the initial grid is ordered correctly.
      */
     @Test
     void testGridIsOrdered() {
         int expected = 1;
-        for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; j++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
                 assertEquals(expected++, this.model.getGrid().get(new Position(i, j)));
             }
         }
@@ -52,10 +53,10 @@ public class TestPuzzleModelImpl {
      */
     @Test
     void testHitandSwap() {
-        Position pos1 = new Position(0, 0);
-        Position pos2 = new Position(0, 1);
-        int val1 = this.model.getGrid().get(pos1);
-        int val2 = this.model.getGrid().get(pos2);
+        final Position pos1 = new Position(0, 0);
+        final Position pos2 = new Position(0, 1);
+        final int val1 = this.model.getGrid().get(pos1);
+        final int val2 = this.model.getGrid().get(pos2);
         this.model.hit(pos1);
         this.model.hit(pos2);
         assertEquals(val2, this.model.getGrid().get(pos1));
@@ -87,8 +88,8 @@ public class TestPuzzleModelImpl {
         this.model.shuffle();
         this.model.resetGame();
         int expected = 1;
-        for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; j++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
                 assertEquals(expected++, this.model.getGrid().get(new Position(i, j)));
             }
         }

@@ -9,13 +9,16 @@ import it.unibo.goosegame.utilities.Position;
  * Interface representing the logic of a Tris(Tic-Tac-Toe) minigame.
  * Extends the generic {@link MinigamesModel} interface.
  */
-public interface TrisModel extends MinigamesModel{
+public interface TrisModel extends MinigamesModel {
 
     /**
      * Enum representing the two possible players in the game: Human or PC.
      */
     enum Player {
-        HUMAN, PC;
+        /** The human player. */
+        HUMAN,
+        /** The computer-controlled player. */
+        PC;
     }
 
     /**
@@ -67,7 +70,15 @@ public interface TrisModel extends MinigamesModel{
      * 
      * @return a map of positions to players 
      */
-    Map<Position,Player> getGrid();
+    Map<Position, Player> getGrid();
+
+    /**
+     * Updates the game grid with a new grid.
+     * It is used for the test.
+     * 
+     * @param newGrid
+     */
+    void updateGrid(Map<Position, Player> newGrid);
 
     /**
      * Checks whether the current player has won the game.

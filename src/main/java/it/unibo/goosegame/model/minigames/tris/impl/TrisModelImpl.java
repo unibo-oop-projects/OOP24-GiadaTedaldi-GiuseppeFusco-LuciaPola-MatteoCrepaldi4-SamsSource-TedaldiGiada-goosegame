@@ -2,6 +2,7 @@ package it.unibo.goosegame.model.minigames.tris.impl;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -14,12 +15,12 @@ import it.unibo.goosegame.utilities.Position;
  * Implementation of the {@link TrisModel} interface.
  * This class handles the game logic for a Tris(Tic-Tac-Toe) minigame.
  */
-public class TrisModelImpl implements TrisModel{
+public class TrisModelImpl implements TrisModel {
 
     /**
      * A set of all possible winning lines (rows, columns, diagonals).
      */
-    private final static Set<Set<Position>> WINNING_LINES = Set.of(
+    private static final Set<Set<Position>> WINNING_LINES = Set.of(
         Set.of(new Position(0, 0), new Position(0, 1), new Position(0, 2)),
         Set.of(new Position(1, 0), new Position(1, 1), new Position(1, 2)),
         Set.of(new Position(2, 0), new Position(2, 1), new Position(2, 2)),
@@ -29,8 +30,9 @@ public class TrisModelImpl implements TrisModel{
         Set.of(new Position(0, 0), new Position(1, 1), new Position(2, 2)),
         Set.of(new Position(0, 2), new Position(1, 1), new Position(2, 0))
         );
-    private final static int GRID_SIZE = 3;
-    private Map<Position, Player> grid = new HashMap<>();
+    private static final int GRID_SIZE = 3;
+    private final Random random = new Random();
+    private final Map<Position, Player> grid = new HashMap<>();
     private Player currentPlayer;
 
     /**
@@ -44,7 +46,7 @@ public class TrisModelImpl implements TrisModel{
      * {@inheritDoc}
      */
     @Override
-    public void resetGame() {
+    public final void resetGame() {
         this.grid.clear();
         this.currentPlayer = Player.HUMAN;
     }
@@ -55,12 +57,12 @@ public class TrisModelImpl implements TrisModel{
     @Override
     public int getResult() {
         if (this.checkWin()) {
-           for(Set<Position> line : WINNING_LINES) {
-                if(line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
+           for (final Set<Position> line : WINNING_LINES) {
+                if (line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
                     return 1;
-                } else if(line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
+                } else if (line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
                     return -1;
-                }   
+                }
             } 
         } else if (this.isFull()) {
             return GRID_SIZE;
@@ -88,7 +90,7 @@ public class TrisModelImpl implements TrisModel{
      * {@inheritDoc}
      */
     @Override
-    public boolean makeHumanMove(Position position) {
+    public boolean makeHumanMove(final Position position) {
         if (!this.grid.containsKey(position) && this.currentPlayer == Player.HUMAN) {
             this.grid.put(position, Player.HUMAN);
             this.currentPlayer = Player.PC;
@@ -102,14 +104,14 @@ public class TrisModelImpl implements TrisModel{
      */
     @Override
     public void makePcMove() {
-        if(this.currentPlayer != Player.PC) {
+        if (this.currentPlayer != Player.PC) {
             return;
         }
 
         // Try to win
-        for(Position pos: availablePos()) {
+        for (final Position pos: availablePos()) {
             this.grid.put(pos, Player.PC);
-            if(checkWin()) {
+            if (checkWin()) {
                 this.currentPlayer = Player.HUMAN;
                 return;
             }
@@ -117,9 +119,9 @@ public class TrisModelImpl implements TrisModel{
         }
 
         // Try to block the human 
-        for(Position pos: availablePos()) {
+        for (final Position pos: availablePos()) {
             this.grid.put(pos, Player.HUMAN);
-            if(checkWin()) {
+            if (checkWin()) {
                 this.grid.remove(pos);
                 this.grid.put(pos, Player.PC);
                 this.currentPlayer = Player.HUMAN;
@@ -129,24 +131,23 @@ public class TrisModelImpl implements TrisModel{
         }
 
         // Make a random move 
-        List<Position> avPos = availablePos();
-        if(!avPos.isEmpty()) {
-            Position random = avPos.get(new Random().nextInt(avPos.size()));
+        final List<Position> avPos = availablePos();
+        if (!avPos.isEmpty()) {
+            final Position random = avPos.get(this.random.nextInt(avPos.size()));
             this.grid.put(random, Player.PC);
             this.currentPlayer = Player.HUMAN;
         }
-        
     }
 
     /**
      * @return a list of all available positions on the board
      */
     private List<Position> availablePos() {
-        List<Position> avPos = new ArrayList<>();
-        for(int i=0; i<GRID_SIZE; i++) {
-            for(int j=0; j<GRID_SIZE; j++) {
-                Position checkPos = new Position(i, j);
-                if(!this.grid.containsKey(checkPos)) {
+        final List<Position> avPos = new ArrayList<>();
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
+                final Position checkPos = new Position(i, j);
+                if (!this.grid.containsKey(checkPos)) {
                     avPos.add(checkPos);
                 }
             }
@@ -159,14 +160,14 @@ public class TrisModelImpl implements TrisModel{
      */
     @Override
     public boolean isFull() {
-        return this.grid.size() == GRID_SIZE*GRID_SIZE;
+        return this.grid.size() == GRID_SIZE * GRID_SIZE;
     }
 
-    /**
+    /** 
      * {@inheritDoc}
      */
     @Override
-    public boolean isHuman(Position position) {
+    public boolean isHuman(final Position position) {
         return this.grid.containsKey(position) && this.grid.get(position).equals(Player.HUMAN);
     }
 
@@ -174,7 +175,7 @@ public class TrisModelImpl implements TrisModel{
      * {@inheritDoc}
      */
     @Override
-    public boolean isPc(Position position) {
+    public boolean isPc(final Position position) {
         return this.grid.containsKey(position) && this.grid.get(position).equals(Player.PC);
     }
 
@@ -193,7 +194,7 @@ public class TrisModelImpl implements TrisModel{
      */
     @Override
     public String getStatus() {
-        if(checkWin()) {
+        if (checkWin()) {
             return "Game Over!";
         } else {
             return "Your turn!";
@@ -205,6 +206,18 @@ public class TrisModelImpl implements TrisModel{
      */
     @Override
     public Map<Position, Player> getGrid() {
-        return this.grid;
+        return Collections.unmodifiableMap(this.grid);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateGrid(final Map<Position, Player> newGrid) {
+        if (newGrid == null) {
+            throw new IllegalArgumentException("Empty grid");
+        }
+        this.grid.clear();
+        this.grid.putAll(newGrid);
     }
 }

@@ -9,7 +9,7 @@ import it.unibo.goosegame.utilities.Position;
  * interface representing the logic of a puzzle minigame.
  * Extends the generic {@link MinigamesModel} interface.
  */
-public interface PuzzleModel extends MinigamesModel{
+public interface PuzzleModel extends MinigamesModel {
 
     /**
      * Handles a hit at the given position.
@@ -38,6 +38,6 @@ public interface PuzzleModel extends MinigamesModel{
      * 
      * @return a map representing the puzzle grid
      */
-    Map<Position,Integer> getGrid();
+    Map<Position, Integer> getGrid();
 
 }

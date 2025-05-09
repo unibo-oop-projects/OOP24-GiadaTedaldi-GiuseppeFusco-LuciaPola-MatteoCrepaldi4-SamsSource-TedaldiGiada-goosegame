@@ -6,7 +6,6 @@ import it.unibo.goosegame.utilities.Position;
  * Interface representing the view of a Tris(Tic-Tac-Toe) minigame.
  */
 public interface TrisView {
-    
     /**
      * Updates the button at the specified position with the given symbol.
      * 
