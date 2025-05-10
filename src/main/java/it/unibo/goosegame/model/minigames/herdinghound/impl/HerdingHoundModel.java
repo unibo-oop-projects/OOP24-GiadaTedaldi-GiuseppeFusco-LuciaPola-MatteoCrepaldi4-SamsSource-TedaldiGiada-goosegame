@@ -3,7 +3,7 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 import it.unibo.goosegame.model.general.MinigamesModel;
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 /**
  * Modello del minigioco Herding Hound.
@@ -34,8 +34,8 @@ public class HerdingHoundModel implements MinigamesModel {
      * Esegue la prossima mossa automatica della goose (per demo/test).
      */
     public void nextGooseMove() {
-        Pair<Integer,Integer> pos = goose.getCoord();
-        int x = pos.getX(), y = pos.getY();
+        Position pos = goose.getCoord();
+        int x = pos.x(), y = pos.y();
         if (y == START_Y && x < gridSize - 1) {
             goose.move(1, 0);
         } else if (x == gridSize - 1 && y < gridSize - 1) {
@@ -62,7 +62,7 @@ public class HerdingHoundModel implements MinigamesModel {
         return this.gridSize;
     }
 
-    public List<Pair<Integer, Integer>> getShadows() {
+    public List<Position> getShadows() {
         return this.box.getShadows();
     }
 
@@ -98,7 +98,7 @@ public class HerdingHoundModel implements MinigamesModel {
     }
 
     private boolean hasWon() {
-        Pair<Integer,Integer> winPos = new Pair<>(START_X, gridSize - 1);
+        Position winPos = new Position(START_X, gridSize - 1);
         return goose.getCoord().equals(winPos);
     }
 
@@ -112,7 +112,7 @@ public class HerdingHoundModel implements MinigamesModel {
     /**
      * Restituisce le celle visibili dal cane, escluse ombre e scatole.
      */
-    public List<Pair<Integer, Integer>> getVisible() {
+    public List<Position> getVisible() {
         return dog.getVisibleArea().stream()
             .filter(pos -> !box.getShadows().contains(pos))
             .filter(pos -> !box.getBoxes().contains(pos))
@@ -127,7 +127,7 @@ public class HerdingHoundModel implements MinigamesModel {
         dog.refreshDirection(goose);
     }
 
-    public List<Pair<Integer, Integer>> getBoxes() {
+    public List<Position> getBoxes() {
         return box.getBoxes();
     }
 }

@@ -3,11 +3,10 @@ package it.unibo.goosegame.view;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
 import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -126,32 +125,32 @@ public class HerdingHoundView extends JPanel {
 
         // Zone potenzialmente visibili dal cane (verde chiaro)
         g.setColor(VISIBLE_AREA_COLOR);
-        for (Pair<Integer, Integer> pos : model.getDog().getVisibleArea()) {
+        for (Position pos : model.getDog().getVisibleArea()) {
             drawCell(g, pos, cellSize, xOffset, yOffset);
         }
 
         // Zone effettivamente visibili dal cane quando è sveglio (rosso trasparente)
         if (model.getDog().getState() == DogImpl.State.AWAKE && (!blinking || blinkOn)) {
             g.setColor(DOG_VISIBLE_COLOR);
-            for (Pair<Integer, Integer> pos : model.getVisible()) {
+            for (Position pos : model.getVisible()) {
                 drawCell(g, pos, cellSize, xOffset, yOffset);
             }
         }
 
         // Ombre
         g.setColor(DOG_SHADOW_COLOR);
-        for (Pair<Integer, Integer> shadow : model.getShadows()) {
+        for (Position shadow : model.getShadows()) {
             drawCell(g, shadow, cellSize, xOffset, yOffset);
         }
 
         // Scatole
         g.setColor(BOX_COLOR);
-        for (Pair<Integer, Integer> box : model.getBoxes()) {
+        for (Position box : model.getBoxes()) {
             drawCell(g, box, cellSize, xOffset, yOffset);
         }
 
         // Cane
-        final Pair<Integer, Integer> dogPos = model.getDog().getCoord();
+        final Position dogPos = model.getDog().getCoord();
         g.setColor(switch (model.getDog().getState()) {
             case AWAKE -> DOG_AWAKE_COLOR;
             case ALERT -> DOG_ALERT_COLOR;
@@ -168,8 +167,8 @@ public class HerdingHoundView extends JPanel {
             final FontMetrics fm = g.getFontMetrics();
             final int textWidth = fm.stringWidth(symbol);
             final int textHeight = fm.getHeight();
-            final int centerX = xOffset + dogPos.getY() * cellSize + (cellSize - textWidth) / 2;
-            final int centerY = yOffset + dogPos.getX() * cellSize - textHeight / 4;
+            final int centerX = xOffset + dogPos.y() * cellSize + (cellSize - textWidth) / 2;
+            final int centerY = yOffset + dogPos.x() * cellSize - textHeight / 4;
             g.drawString(symbol, centerX, centerY);
         }
 
@@ -192,10 +191,10 @@ public class HerdingHoundView extends JPanel {
         }
     }
 
-    private void drawCell(final Graphics g, final Pair<Integer, Integer> coord,
+    private void drawCell(final Graphics g, final Position coord,
                           final int size, final int xOffset, final int yOffset) {
-        final int x = xOffset + coord.getY() * size;
-        final int y = yOffset + coord.getX() * size;
+        final int x = xOffset + coord.y() * size;
+        final int y = yOffset + coord.x() * size;
         g.fillRect(x, y, size, size);
     }
 

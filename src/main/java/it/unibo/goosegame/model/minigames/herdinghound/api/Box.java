@@ -2,11 +2,13 @@ package it.unibo.goosegame.model.minigames.herdinghound.api;
 
 import java.util.*;
 
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 public interface Box {
 
-    List<Pair<Integer,Integer>> getBoxes();
+    List<Position> getBoxes();
+
+
 
     void generateBoxes();
 

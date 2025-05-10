@@ -1,6 +1,6 @@
 package it.unibo.goosegame.model.minigames.herdinghound.api;
 
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 public interface Dog{
 
@@ -11,7 +11,7 @@ public interface Dog{
         ASLEEP, ALERT, AWAKE
     }
     
-    Pair<Integer,Integer> getCoord();
+    Position getCoord();
 
     Direction getDirection();
 }

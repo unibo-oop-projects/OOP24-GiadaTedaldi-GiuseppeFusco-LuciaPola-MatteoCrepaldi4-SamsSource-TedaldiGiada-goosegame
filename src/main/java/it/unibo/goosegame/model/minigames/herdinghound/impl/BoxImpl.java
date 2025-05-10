@@ -3,7 +3,7 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 import java.util.Random;
 import java.util.Set;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Box;
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,22 +16,22 @@ public class BoxImpl implements Box {
     private static final int SHADOW_WIDTH_MIN_DIVISOR = 10;
     private static final int SHADOW_MAX_LENGTH = 1000;
 
-    private final Set<Pair<Integer, Integer>> allBoxes = new HashSet<>();
-    private final Set<Pair<Integer, Integer>> shadows = new HashSet<>();
+    private final Set<Position> allBoxes = new HashSet<>();
+    private final Set<Position> shadows = new HashSet<>();
     private final int gridSize;
     private final int boxDistance;
     private final Random random;
-    private final Pair<Integer, Integer> pointLux;
+    private final Position pointLux;
 
     public BoxImpl(int gridSize, DogImpl dog) {
         this.gridSize = gridSize;
         this.boxDistance = BORDER_MARGIN_DIVISOR;
         this.random = new Random();
-        this.pointLux = new Pair<>(dog.getCoord().getX(), dog.getCoord().getY());
+        this.pointLux = new Position(dog.getCoord().x(), dog.getCoord().y());
     }
 
     @Override
-    public List<Pair<Integer, Integer>> getBoxes() {
+    public List<Position> getBoxes() {
         return new ArrayList<>(allBoxes);
     }
 
@@ -41,35 +41,35 @@ public class BoxImpl implements Box {
         shadows.clear();
 
         for (int y = boxDistance; y < gridSize - boxDistance; y++) {
-            tryAddBox(new Pair<>(boxDistance, y));
+            tryAddBox(new Position(boxDistance, y));
         }
 
         for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
-            tryAddBox(new Pair<>(x, gridSize - boxDistance - 1));
+            tryAddBox(new Position(x, gridSize - boxDistance - 1));
         }
 
         for (int y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
-            tryAddBox(new Pair<>(gridSize - boxDistance - 1 , y));
+            tryAddBox(new Position(gridSize - boxDistance - 1 , y));
         }
 
         for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
-            tryAddBox(new Pair<>(x, boxDistance));
+            tryAddBox(new Position(x, boxDistance));
         }
     }
 
-    private void tryAddBox(Pair<Integer, Integer> box) {
+    private void tryAddBox(Position box) {
         if (random.nextDouble() < BOX_PROBABILITY) {
             allBoxes.add(box);
             generateShadows(box);
         }
     }
 
-    private void generateShadows(Pair<Integer, Integer> box) {
-        int lightX = pointLux.getX();
-        int lightY = pointLux.getY();
+    private void generateShadows(Position box) {
+        int lightX = pointLux.x();
+        int lightY = pointLux.y();
 
-        int dx = box.getX() - lightX;
-        int dy = box.getY() - lightY;   
+        int dx = box.x() - lightX;
+        int dy = box.y() - lightY;   
 
         int stepX = Integer.compare(dx, 0);
         int stepY = Integer.compare(dy, 0);
@@ -78,8 +78,8 @@ public class BoxImpl implements Box {
         int shadowWidth = (int) Math.max(gridSize / SHADOW_WIDTH_MIN_DIVISOR, gridSize / distance);
         int shadowLength = Math.min(gridSize, SHADOW_MAX_LENGTH);
 
-        int shadowX = box.getX() + stepX;
-        int shadowY = box.getY() + stepY;
+        int shadowX = box.x() + stepX;
+        int shadowY = box.y() + stepY;
 
         while (isInBounds(shadowX, shadowY) && shadowLength-- > 0) {
             for (int i = -shadowWidth; i <= shadowWidth; i++) {
@@ -87,7 +87,7 @@ public class BoxImpl implements Box {
                 int newShadowY = shadowY + i * stepX;
 
                 if (isInBounds(newShadowX, newShadowY)) {
-                    shadows.add(new Pair<>(newShadowX, newShadowY));
+                    shadows.add(new Position(newShadowX, newShadowY));
                 }
             }
             shadowX += stepX;
@@ -101,7 +101,7 @@ public class BoxImpl implements Box {
     return isOnBorder && x >= 0 && x < gridSize && y >= 0 && y < gridSize;
     }
 
-    public List<Pair<Integer, Integer>> getShadows() {
+    public List<Position> getShadows() {
         return new ArrayList<>(shadows);
     }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 public class DogImpl implements Dog {
 
@@ -16,22 +16,22 @@ public class DogImpl implements Dog {
     private final int gridSize;
     private Direction direction;
     private State state;
-    private Pair<Integer, Integer> position;
-    private final List<Pair<Integer, Integer>> visibleArea;
+    private Position position;
+    private final List<Position> visibleArea;
 
     public DogImpl(int gridSize) {
         this.gridSize = gridSize;
-        this.position = new Pair<>(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
+        this.position = new Position(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
         this.direction = INITIAL_DIRECTION;
         this.state = INITIAL_STATE;
         this.visibleArea = new ArrayList<>();
     }
 
     public void refreshDirection(GooseImpl goose) {
-        int gx = goose.getCoord().getX();
-        int gy = goose.getCoord().getY();
-        int px = position.getX();
-        int py = position.getY();
+        int gx = goose.getCoord().x();
+        int gy = goose.getCoord().y();
+        int px = position.x();
+        int py = position.y();
 
         if (gx == 0 && py < gridSize - 1) {
             direction = Direction.LEFT;
@@ -64,8 +64,8 @@ public class DogImpl implements Dog {
     }
 
     @Override
-    public Pair<Integer, Integer> getCoord() {
-        return new Pair<>(position.getX(), position.getY());
+    public Position getCoord() {
+        return new Position(position.x(), position.y());
     }
 
     private void updateVisibleArea() {
@@ -74,15 +74,15 @@ public class DogImpl implements Dog {
             return;
         }
 
-        int x = position.getX();
-        int y = position.getY();
+        int x = position.x();
+        int y = position.y();
 
         switch (direction) {
             case UP -> {
                 for (int dy = FIRST_STEP; y - dy >= 0; dy++) {
                     for (int dx = x - dy; dx <= x + dy; dx++) {
                         if (dx >= 0 && dx < gridSize) {
-                            visibleArea.add(new Pair<>(dx, y - dy));
+                            visibleArea.add(new Position(dx, y - dy));
                         }
                     }
                 }
@@ -91,7 +91,7 @@ public class DogImpl implements Dog {
                 for (int dy = FIRST_STEP; y + dy < gridSize; dy++) {
                     for (int dx = x - dy; dx <= x + dy; dx++) {
                         if (dx >= 0 && dx < gridSize) {
-                            visibleArea.add(new Pair<>(dx, y + dy));
+                            visibleArea.add(new Position(dx, y + dy));
                         }
                     }
                 }
@@ -100,7 +100,7 @@ public class DogImpl implements Dog {
                 for (int dx = FIRST_STEP; x - dx >= 0; dx++) {
                     for (int dy = y - dx; dy <= y + dx; dy++) {
                         if (dy >= 0 && dy < gridSize) {
-                            visibleArea.add(new Pair<>(x - dx, dy));
+                            visibleArea.add(new Position(x - dx, dy));
                         }
                     }
                 }
@@ -109,7 +109,7 @@ public class DogImpl implements Dog {
                 for (int dx = FIRST_STEP; x + dx < gridSize; dx++) {
                     for (int dy = y - dx; dy <= y + dx; dy++) {
                         if (dy >= 0 && dy < gridSize) {
-                            visibleArea.add(new Pair<>(x + dx, dy));
+                            visibleArea.add(new Position(x + dx, dy));
                         }
                     }
                 }
@@ -117,12 +117,12 @@ public class DogImpl implements Dog {
         }
     }
 
-    public List<Pair<Integer, Integer>> getVisibleArea() {
+    public List<Position> getVisibleArea() {
         return new ArrayList<>(visibleArea);
     }
 
     public void reset() {
-        this.position = new Pair<>(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
+        this.position = new Position(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
         this.direction = INITIAL_DIRECTION;
         this.state = INITIAL_STATE;
         this.visibleArea.clear();

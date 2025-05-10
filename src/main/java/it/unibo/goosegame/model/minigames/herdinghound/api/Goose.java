@@ -1,6 +1,6 @@
 package it.unibo.goosegame.model.minigames.herdinghound.api;
 
-import it.unibo.goosegame.utilities.Pair;
+import it.unibo.goosegame.utilities.Position;
 
 public interface Goose {
 
@@ -8,7 +8,7 @@ public interface Goose {
         UP, DOWN,LEFT, RIGHT
      }
      
-    public Pair<Integer,Integer> getCoord();
+    public Position getCoord();
 
     void move(int dx, int dy);
 
