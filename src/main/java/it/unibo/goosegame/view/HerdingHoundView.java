@@ -17,8 +17,6 @@ import java.util.Objects;
 public class HerdingHoundView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int DEFAULT_SIZE = 600;
-    private static final int IMAGE_SIZE = 200;
-    private static final int TIMER_FONT_SIZE = 16;
     private static final Color BACKGROUND_COLOR = new Color(34, 139, 34); // Verde prato
     private static final Color GRID_COLOR = Color.GRAY;
     private static final Color VISIBLE_AREA_COLOR = new Color(180, 238, 180); // Verde chiaro per visibilità potenziale
@@ -30,31 +28,77 @@ public class HerdingHoundView extends JPanel {
     private static final Color DOG_VISIBLE_COLOR = new Color(255, 0, 0, 100); // Rosso trasparente
 
     private final HerdingHoundModel model;
-    private final Image awakeImage;
-    private final Image alertImage;
-    private final Image asleepImage;
+
+    // Lampeggiamento zone rosse
+    private boolean blinking = false;
+    private boolean blinkOn = true;
+    private int blinkCount = 0;
+    private Timer blinkTimer = null;
+    private static final int BLINK_TOTAL = 6; // 3 lampeggi (on+off)
+    private static final int BLINK_DELAY = 180; // ms
+
+    // Countdown iniziale
+    private int countdownValue = 3;
+    private boolean showGoText = false;
+    private boolean countdownActive = false;
+    private Timer countdownTimer = null;
+    private Runnable countdownFinishCallback = null;
 
     public HerdingHoundView(final HerdingHoundModel model) {
         this.model = Objects.requireNonNull(model, "Model non può essere null");
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(BACKGROUND_COLOR);
-        this.awakeImage = loadImage("/img/dog_awake.png");
-        this.alertImage = loadImage("/img/dog_alert.png");
-        this.asleepImage = loadImage("/img/dog_asleep.png");
     }
 
-    private Image loadImage(final String path) {
-        final URL resource = getClass().getResource(path);
-        if (resource != null) {
-            return new ImageIcon(resource).getImage();
-        } else {
-            final BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
-            final Graphics2D g2 = img.createGraphics();
-            g2.setColor(Color.RED);
-            g2.fillRect(0, 0, 32, 32);
-            g2.dispose();
-            return img;
-        }
+    /** Avvia il countdown iniziale, poi chiama onFinish.run() */
+    public void startCountdown(Runnable onFinish) {
+        countdownValue = 3;
+        showGoText = false;
+        countdownActive = true;
+        countdownFinishCallback = onFinish;
+        repaint(); // Mostra subito il 3
+        countdownTimer = new Timer(1000, e -> {
+            if (countdownValue > 1) {
+                countdownValue--;
+            } else if (!showGoText) {
+                showGoText = true;
+                countdownValue = 0;
+            } else {
+                countdownTimer.stop();
+                countdownActive = false;
+                showGoText = false;
+                repaint();
+                if (countdownFinishCallback != null) {
+                    countdownFinishCallback.run();
+                }
+                return;
+            }
+            repaint();
+        });
+        countdownTimer.setInitialDelay(1000); // Aspetta 1 secondo prima del primo tick
+        countdownTimer.start();
+    }
+
+    public boolean isCountdownActive() {
+        return countdownActive;
+    }
+
+    public void startBlinking(JFrame frame, boolean hasWon) {
+        blinking = true;
+        blinkOn = true;
+        blinkCount = 0;
+        blinkTimer = new Timer(BLINK_DELAY, e -> {
+            blinkOn = !blinkOn;
+            blinkCount++;
+            repaint();
+            if (blinkCount >= BLINK_TOTAL) {
+                blinkTimer.stop();
+                blinking = false;
+                showGameOverPanel(frame, hasWon);
+            }
+        });
+        blinkTimer.setInitialDelay(0);
+        blinkTimer.start();
     }
 
     @Override
@@ -87,7 +131,7 @@ public class HerdingHoundView extends JPanel {
         }
 
         // Zone effettivamente visibili dal cane quando è sveglio (rosso trasparente)
-        if (model.getDog().getState() == DogImpl.State.AWAKE) {
+        if (model.getDog().getState() == DogImpl.State.AWAKE && (!blinking || blinkOn)) {
             g.setColor(DOG_VISIBLE_COLOR);
             for (Pair<Integer, Integer> pos : model.getVisible()) {
                 drawCell(g, pos, cellSize, xOffset, yOffset);
@@ -133,29 +177,19 @@ public class HerdingHoundView extends JPanel {
         g.setColor(Color.WHITE);
         drawCell(g, model.getGoose().getCoord(), cellSize, xOffset, yOffset);
 
-        // Timer
-        final long remMs = model.getRemainingTime();
-        final long sec = remMs / 1000;
-        final String text = String.format("Tempo %02d:%02d", sec / 60, sec % 60);
-
-        g.setColor(Color.WHITE);
-        final Font font = new Font("Arial", Font.BOLD, TIMER_FONT_SIZE);
-        g.setFont(font);
-        final FontMetrics fm = g.getFontMetrics();
-        final int textWidth = fm.stringWidth(text);
-        final int tx = w - textWidth - 10;
-        final int ty = fm.getAscent() + 10;
-        g.drawString(text, tx, ty);
-
-        // Immagine stato cane
-        final Image stateImage = switch (model.getDog().getState()) {
-            case AWAKE -> awakeImage;
-            case ALERT -> alertImage;
-            default -> asleepImage;
-        };
-        final int imgX = w - IMAGE_SIZE - 10;
-        final int imgY = h - IMAGE_SIZE - 10;
-        g.drawImage(stateImage, imgX, imgY, IMAGE_SIZE, IMAGE_SIZE, this);
+        // Countdown centrale
+        if (countdownActive) {
+            g.setColor(Color.BLACK);
+            String text = showGoText ? "CORRI CORRI!" : (countdownValue > 0 ? String.valueOf(countdownValue) : "");
+            Font font = new Font("Arial", Font.BOLD, showGoText ? 60 : 80);
+            g.setFont(font);
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+            int textHeight = fm.getHeight();
+            int cx = w / 2 - textWidth / 2;
+            int cy = h / 2 + textHeight / 4;
+            g.drawString(text, cx, cy);
+        }
     }
 
     private void drawCell(final Graphics g, final Pair<Integer, Integer> coord,
@@ -170,16 +204,25 @@ public class HerdingHoundView extends JPanel {
         repaint();
     }
 
-    /** Mostra un messaggio di fine gioco. */
-    public void showGameOver() {
-        final String message = switch (model.getGameState()) {
-            case WON -> "Hai vinto!";
-            case LOST -> "Hai perso!";
-            default -> "";
-        };
-        if (!message.isEmpty()) {
-            JOptionPane.showMessageDialog(this, message, "Fine gioco",
-                    JOptionPane.INFORMATION_MESSAGE);
-        }
+    /** Mostra un pannello di fine gioco con messaggio e pulsante Chiudi. */
+    public void showGameOverPanel(JFrame frame, boolean hasWon) {
+        JPanel endPanel = new JPanel(new GridBagLayout());
+        String message = hasWon ? "Hai Vinto!" : "Hai Perso!";
+        JLabel label = new JLabel(message);
+        label.setFont(new Font("Arial", Font.BOLD, 32));
+        JButton closeButton = new JButton("Chiudi");
+        closeButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        closeButton.addActionListener(e -> frame.dispose());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0; gbc.insets = new Insets(10,10,10,10);
+        endPanel.add(label, gbc);
+        gbc.gridy = 1;
+        endPanel.add(closeButton, gbc);
+
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(endPanel, BorderLayout.CENTER);
+        frame.revalidate();
+        frame.repaint();
     }
 }

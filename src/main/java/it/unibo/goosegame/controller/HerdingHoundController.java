@@ -2,6 +2,7 @@ package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
 import it.unibo.goosegame.view.HerdingHoundView;
+import it.unibo.goosegame.view.RightPanel;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 
@@ -17,22 +18,29 @@ import java.util.Random;
 public class HerdingHoundController {
     private final HerdingHoundModel model;
     private final HerdingHoundView view;
+    private final JFrame frame;
+    private final RightPanel rightPanel;
     private Timer dogStateTimer;
     private Timer gameTimer;
     private final Random rnd = new Random();
     private boolean spacePressed = false;
+    private boolean gameActive = false;
 
-    public HerdingHoundController(HerdingHoundModel model, HerdingHoundView view) {
+    public HerdingHoundController(HerdingHoundModel model, HerdingHoundView view, JFrame frame, RightPanel rightPanel) {
         this.model = model;
         this.view = view;
+        this.frame = frame;
+        this.rightPanel = rightPanel;
 
         view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if (!gameActive || view.isCountdownActive()) return;
                 if (e.getKeyCode() == KeyEvent.VK_SPACE && !spacePressed && !model.isOver()) {
                     spacePressed = true;
                     model.nextGooseMove();
                     view.updateView();
+                    rightPanel.updatePanel();
                     if (model.isOver()) {
                         endGame();
                     }
@@ -47,11 +55,14 @@ public class HerdingHoundController {
         });
         view.setFocusable(true);
         view.requestFocusInWindow();
+    }
 
+    public void startGame() {
+        gameActive = true;
         scheduleNextDogState(model.getDog().getState());
-
         gameTimer = new Timer(1000, e -> {
             view.updateView();
+            rightPanel.updatePanel();
             if (model.getGameState() != GameState.ONGOING) {
                 endGame();
             }
@@ -69,6 +80,7 @@ public class HerdingHoundController {
         dogStateTimer = new Timer(delay, e -> {
             model.nextDogState();
             view.updateView();
+            rightPanel.updatePanel();
             if (model.isOver()) {
                 endGame();
             } else {
@@ -82,7 +94,8 @@ public class HerdingHoundController {
     private void endGame() {
         if (gameTimer  != null) gameTimer.stop();
         if (dogStateTimer != null) dogStateTimer.stop();
-        view.showGameOver();
+        boolean hasWon = model.getGameState() == GameState.WON;
+        view.startBlinking(frame, hasWon); // lampeggia prima di mostrare la schermata finale
         view.setFocusable(false);
     }
 }
