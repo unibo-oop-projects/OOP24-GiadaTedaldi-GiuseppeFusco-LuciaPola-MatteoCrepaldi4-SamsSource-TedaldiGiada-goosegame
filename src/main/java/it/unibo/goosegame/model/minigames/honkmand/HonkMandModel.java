@@ -9,7 +9,9 @@ import it.unibo.goosegame.utilities.Colors;
  * Modello logico del minigioco HonkMand (Simon Game).
  * Gestisce la sequenza, il punteggio, il livello e la verifica degli input.
  */
-public class HonkMandModel {
+import it.unibo.goosegame.model.general.MinigamesModel;
+
+public class HonkMandModel implements MinigamesModel {
 
     // Livello massimo per vincere il gioco (ora in HonkMandConstants)
     public static final int MAX_LEVEL = it.unibo.goosegame.utilities.HonkMandConstants.MAX_LEVEL; // per retrocompatibilità
@@ -125,4 +127,24 @@ public class HonkMandModel {
     public int getScore() { return score; }
     /** @return lo stato attuale del gioco */
     public GameState getGameState() { return gameState; }
+
+    // --- Implementazione MinigamesModel ---
+    @Override
+    public void resetGame() {
+        startGame();
+    }
+
+    @Override
+    public boolean isOver() {
+        return gameState == GameState.GAME_OVER || gameState == GameState.GAME_WIN;
+    }
+
+    /** Restituisce lo stato generale del minigioco secondo l'interfaccia MinigamesModel. */
+    public MinigamesModel.GameState getGameStateGeneral() {
+        return switch (gameState) {
+            case PLAYING, NOT_STARTED -> MinigamesModel.GameState.ONGOING;
+            case GAME_WIN -> MinigamesModel.GameState.WON;
+            case GAME_OVER -> MinigamesModel.GameState.LOST;
+        };
+    }
 }
