@@ -2,7 +2,6 @@ package it.unibo.goosegame.view;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
-import it.unibo.goosegame.utilities.Pair;
 import it.unibo.goosegame.utilities.Position;
 
 import javax.swing.*;
@@ -14,17 +13,19 @@ import java.util.Objects;
  * Si occupa solo della presentazione grafica.
  */
 public class HerdingHoundView extends JPanel {
-    private static final long serialVersionUID = 1L;
+    // ... altre costanti e variabili ...
+    private static final int BLINK_DELAY = 200;
+    private static final int BLINK_TOTAL = 6; // 3 lampeggi (on+off)
     private static final int DEFAULT_SIZE = 600;
-    private static final Color BACKGROUND_COLOR = new Color(34, 139, 34); // Verde prato
-    private static final Color GRID_COLOR = Color.GRAY;
-    private static final Color VISIBLE_AREA_COLOR = new Color(180, 238, 180); // Verde chiaro per visibilità potenziale
-    private static final Color DOG_SHADOW_COLOR = new Color(50, 50, 50, 150);
-    private static final Color BOX_COLOR = new Color(139, 69, 19);
+    private static final Color BACKGROUND_COLOR = new Color(0x7EC850);
+    private static final Color GRID_COLOR = new Color(0x3E3E3E);
+    private static final Color VISIBLE_AREA_COLOR = new Color(0xB6FFB6);
+    private static final Color DOG_VISIBLE_COLOR = new Color(255, 0, 0, 80);
+    private static final Color DOG_SHADOW_COLOR = new Color(0, 0, 0, 60);
+    private static final Color BOX_COLOR = new Color(0x8B5A2B);
     private static final Color DOG_AWAKE_COLOR = Color.RED;
-    private static final Color DOG_ALERT_COLOR = Color.ORANGE;
+    private static final Color DOG_ALERT_COLOR = Color.YELLOW;
     private static final Color DOG_DEFAULT_COLOR = Color.WHITE;
-    private static final Color DOG_VISIBLE_COLOR = new Color(255, 0, 0, 100); // Rosso trasparente
 
     private final HerdingHoundModel model;
 
@@ -32,16 +33,17 @@ public class HerdingHoundView extends JPanel {
     private boolean blinking = false;
     private boolean blinkOn = true;
     private int blinkCount = 0;
-    private Timer blinkTimer = null;
-    private static final int BLINK_TOTAL = 6; // 3 lampeggi (on+off)
-    private static final int BLINK_DELAY = 180; // ms
+    private Timer blinkTimer;
+    // Lampeggiamento oca
+    private boolean blinkGoose = false;
+    private boolean blinkGooseOn = true;
 
     // Countdown iniziale
+    private boolean countdownActive = false;
     private int countdownValue = 3;
     private boolean showGoText = false;
-    private boolean countdownActive = false;
-    private Timer countdownTimer = null;
-    private Runnable countdownFinishCallback = null;
+    private Timer countdownTimer;
+    private Runnable countdownFinishCallback;
 
     public HerdingHoundView(final HerdingHoundModel model) {
         this.model = Objects.requireNonNull(model, "Model non può essere null");
@@ -82,17 +84,26 @@ public class HerdingHoundView extends JPanel {
         return countdownActive;
     }
 
+    /**
+     * Avvia il lampeggio di fine partita. Se ha vinto, lampeggia l'oca.
+     */
     public void startBlinking(JFrame frame, boolean hasWon) {
         blinking = true;
         blinkOn = true;
         blinkCount = 0;
+        blinkGoose = hasWon;
+        blinkGooseOn = true;
         blinkTimer = new Timer(BLINK_DELAY, e -> {
             blinkOn = !blinkOn;
+            if (blinkGoose) {
+                blinkGooseOn = !blinkGooseOn;
+            }
             blinkCount++;
             repaint();
             if (blinkCount >= BLINK_TOTAL) {
                 blinkTimer.stop();
                 blinking = false;
+                blinkGoose = false;
                 showGameOverPanel(frame, hasWon);
             }
         });
@@ -172,9 +183,11 @@ public class HerdingHoundView extends JPanel {
             g.drawString(symbol, centerX, centerY);
         }
 
-        // Oca
-        g.setColor(Color.WHITE);
-        drawCell(g, model.getGoose().getCoord(), cellSize, xOffset, yOffset);
+        // Oca (lampeggia solo se blinkGoose attivo)
+        if (!blinkGoose || blinkGooseOn) {
+            g.setColor(Color.WHITE);
+            drawCell(g, model.getGoose().getCoord(), cellSize, xOffset, yOffset);
+        }
 
         // Countdown centrale
         if (countdownActive) {
