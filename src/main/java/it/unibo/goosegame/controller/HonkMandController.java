@@ -146,7 +146,7 @@ public class HonkMandController {
                 view.setButtonsEnabled(false);
                 celebrateVictory();
                 Timer winTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.WIN_DIALOG_DELAY, e -> {
-                    view.showVictoryDialog();
+                    view.showGameOverPanel(true);
                     ((Timer)e.getSource()).stop();
                 });
                 winTimer.setRepeats(false);
@@ -156,7 +156,7 @@ public class HonkMandController {
                 view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, true);
                 view.setButtonsEnabled(false);
                 Timer overTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.NEXT_ROUND_DELAY, e -> {
-                    view.showGameOverDialog();
+                    view.showGameOverPanel(false);
                     ((Timer)e.getSource()).stop();
                 });
                 overTimer.setRepeats(false);

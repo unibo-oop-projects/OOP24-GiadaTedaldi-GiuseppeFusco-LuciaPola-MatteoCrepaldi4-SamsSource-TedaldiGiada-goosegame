@@ -11,23 +11,29 @@ import java.util.Map;
 /**
  * Vista moderna e ridimensionabile per il minigioco HonkMand (Simon Game).
  * Pulsanti rotondi con glow, layout flessibile e UI accattivante.
+ * Ora estende JPanel e supporta bande laterali e schermata di fine partita.
  */
-public class HonkMandView extends JFrame {
+public class HonkMandView extends JPanel {
     private final Map<Colors, RoundButton> buttons;
     private final JButton startButton;
     private final JLabel levelLabel;
     private final JLabel scoreLabel;
     private final JLabel messageLabel;
-    private JDialog victoryDialog;
-    private JDialog gameOverDialog;
+    private JFrame frameRef; // riferimento al frame principale
 
     public HonkMandView() {
-        setTitle(HonkMandMessages.TITLE);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(400, 500));
-        setPreferredSize(new Dimension(600, 700));
-        setLocationRelativeTo(null);
-        setResizable(true);
+        setLayout(new BorderLayout());
+        setBackground(new Color(245, 245, 245));
+
+        // Bande laterali grigie
+        JPanel leftPanel = new JPanel();
+        leftPanel.setPreferredSize(new Dimension(60, 0));
+        leftPanel.setBackground(Color.LIGHT_GRAY);
+        JPanel rightPanel = new JPanel();
+        rightPanel.setPreferredSize(new Dimension(60, 0));
+        rightPanel.setBackground(Color.LIGHT_GRAY);
+        add(leftPanel, BorderLayout.WEST);
+        add(rightPanel, BorderLayout.EAST);
 
         // Font moderno
         Font mainFont = new Font("Segoe UI", Font.BOLD, 22);
@@ -77,9 +83,9 @@ public class HonkMandView extends JFrame {
         gbc.gridx = 1; gbc.gridy = 1;
         colorPanel.add(buttons.get(Colors.BLUE), gbc);
 
-        // Layout principale (GridBagLayout per adattabilità)
+        // Layout centrale (GridBagLayout per adattabilità)
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(245, 245, 245));
+        mainPanel.setOpaque(false);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0; c.gridy = 0; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(20, 20, 10, 20);
@@ -94,11 +100,60 @@ public class HonkMandView extends JFrame {
         c.gridy++;
         c.insets = new Insets(10, 20, 20, 20);
         mainPanel.add(startButton, c);
-        setContentPane(mainPanel);
+        add(mainPanel, BorderLayout.CENTER);
+    }
 
-        // Dialoghi
-        initDialogs();
-        setVisible(true);
+    // --- Metodi pubblici per Controller ---
+
+    public void setFrameRef(JFrame frame) {
+        this.frameRef = frame;
+    }
+
+    public void updateLevel(int level) {
+        levelLabel.setText(HonkMandMessages.LEVEL_LABEL + level);
+    }
+    public void updateScore(int score) {
+        scoreLabel.setText(HonkMandMessages.SCORE_LABEL + score);
+    }
+    public void showMessage(String message, boolean isError) {
+        messageLabel.setText(message);
+        messageLabel.setForeground(isError ? Color.RED : Color.DARK_GRAY);
+    }
+    public void clearMessage() {
+        messageLabel.setText("");
+    }
+    public void showGameOverPanel(boolean hasWon) {
+        if (frameRef == null) return;
+        String msg = hasWon ? "Hai Vinto!" : "Hai Perso!";
+        frameRef.getContentPane().removeAll();
+        frameRef.getContentPane().add(new GameEndPanel(msg, frameRef::dispose), BorderLayout.CENTER);
+        frameRef.revalidate();
+        frameRef.repaint();
+    }
+    public void setButtonsEnabled(boolean enabled) {
+        for (RoundButton btn : buttons.values()) {
+            btn.setEnabled(enabled);
+        }
+    }
+    public void setGameActive(boolean active) {
+        startButton.setText(active ? HonkMandMessages.RESTART_BUTTON : HonkMandMessages.START_BUTTON);
+        startButton.setEnabled(!active);
+    }
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
+    }
+    public void addColorButtonListener(Colors colorId, ActionListener listener) {
+        buttons.get(colorId).addActionListener(listener);
+    }
+    /**
+     * Illumina un pulsante per la durata specificata (effetto glow).
+     */
+    public void lightUpButton(Colors colorId, int duration) {
+        RoundButton btn = buttons.get(colorId);
+        btn.setGlowing(true);
+        Timer t = new Timer(duration, e -> btn.setGlowing(false));
+        t.setRepeats(false);
+        t.start();
     }
 
     /** Pulsante rotondo custom con effetto glow, ridimensionabile e senza tagli. */
@@ -147,85 +202,5 @@ public class HonkMandView extends JFrame {
         public Dimension getMinimumSize() {
             return new Dimension(60, 60);
         }
-    }
-
-    private void initDialogs() {
-        // Dialogo di vittoria
-        victoryDialog = new JDialog(this, HonkMandMessages.VICTORY_TITLE, true);
-        victoryDialog.setSize(300, 200);
-        victoryDialog.setLocationRelativeTo(this);
-        JPanel victoryPanel = new JPanel();
-        victoryPanel.setLayout(new BorderLayout());
-        JLabel victoryLabel = new JLabel(HonkMandMessages.VICTORY_MESSAGE, SwingConstants.CENTER);
-        victoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        victoryPanel.add(victoryLabel, BorderLayout.CENTER);
-        JButton closeVictoryButton = new JButton(HonkMandMessages.CLOSE_GAME);
-        closeVictoryButton.addActionListener(e -> System.exit(0));
-        JPanel victoryButtonPanel = new JPanel();
-        victoryButtonPanel.add(closeVictoryButton);
-        victoryPanel.add(victoryButtonPanel, BorderLayout.SOUTH);
-        victoryDialog.add(victoryPanel);
-        // Dialogo di game over
-        gameOverDialog = new JDialog(this, HonkMandMessages.GAME_OVER, true);
-        gameOverDialog.setSize(300, 200);
-        gameOverDialog.setLocationRelativeTo(this);
-        JPanel gameOverPanel = new JPanel();
-        gameOverPanel.setLayout(new BorderLayout());
-        JLabel gameOverLabel = new JLabel(HonkMandMessages.GAME_OVER, SwingConstants.CENTER);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        gameOverPanel.add(gameOverLabel, BorderLayout.CENTER);
-        JButton closeGameOverButton = new JButton(HonkMandMessages.CLOSE_GAME);
-        closeGameOverButton.addActionListener(e -> System.exit(0));
-        JPanel gameOverButtonPanel = new JPanel();
-        gameOverButtonPanel.add(closeGameOverButton);
-        gameOverPanel.add(gameOverButtonPanel, BorderLayout.SOUTH);
-        gameOverDialog.add(gameOverPanel);
-    }
-
-    // --- Metodi pubblici per Controller ---
-
-    public void updateLevel(int level) {
-        levelLabel.setText(HonkMandMessages.LEVEL_LABEL + level);
-    }
-    public void updateScore(int score) {
-        scoreLabel.setText(HonkMandMessages.SCORE_LABEL + score);
-    }
-    public void showMessage(String message, boolean isError) {
-        messageLabel.setText(message);
-        messageLabel.setForeground(isError ? Color.RED : Color.DARK_GRAY);
-    }
-    public void clearMessage() {
-        messageLabel.setText("");
-    }
-    public void showVictoryDialog() {
-        victoryDialog.setVisible(true);
-    }
-    public void showGameOverDialog() {
-        gameOverDialog.setVisible(true);
-    }
-    public void setButtonsEnabled(boolean enabled) {
-        for (RoundButton btn : buttons.values()) {
-            btn.setEnabled(enabled);
-        }
-    }
-    public void setGameActive(boolean active) {
-        startButton.setText(active ? HonkMandMessages.RESTART_BUTTON : HonkMandMessages.START_BUTTON);
-        startButton.setEnabled(!active);
-    }
-    public void addStartButtonListener(ActionListener listener) {
-        startButton.addActionListener(listener);
-    }
-    public void addColorButtonListener(Colors colorId, ActionListener listener) {
-        buttons.get(colorId).addActionListener(listener);
-    }
-    /**
-     * Illumina un pulsante per la durata specificata (effetto glow).
-     */
-    public void lightUpButton(Colors colorId, int duration) {
-        RoundButton btn = buttons.get(colorId);
-        btn.setGlowing(true);
-        Timer t = new Timer(duration, e -> btn.setGlowing(false));
-        t.setRepeats(false);
-        t.start();
     }
 }

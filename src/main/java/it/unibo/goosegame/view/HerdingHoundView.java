@@ -218,22 +218,9 @@ public class HerdingHoundView extends JPanel {
 
     /** Mostra un pannello di fine gioco con messaggio e pulsante Chiudi. */
     public void showGameOverPanel(JFrame frame, boolean hasWon) {
-        JPanel endPanel = new JPanel(new GridBagLayout());
         String message = hasWon ? "Hai Vinto!" : "Hai Perso!";
-        JLabel label = new JLabel(message);
-        label.setFont(new Font("Arial", Font.BOLD, 32));
-        JButton closeButton = new JButton("Chiudi");
-        closeButton.setFont(new Font("Arial", Font.PLAIN, 20));
-        closeButton.addActionListener(e -> frame.dispose());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 0; gbc.insets = new Insets(10,10,10,10);
-        endPanel.add(label, gbc);
-        gbc.gridy = 1;
-        endPanel.add(closeButton, gbc);
-
         frame.getContentPane().removeAll();
-        frame.getContentPane().add(endPanel, BorderLayout.CENTER);
+        frame.getContentPane().add(new GameEndPanel(message, frame::dispose), BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
     }

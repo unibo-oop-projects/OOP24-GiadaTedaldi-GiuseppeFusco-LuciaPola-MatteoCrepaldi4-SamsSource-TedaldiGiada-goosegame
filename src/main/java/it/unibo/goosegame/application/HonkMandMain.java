@@ -5,6 +5,7 @@ import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
 import it.unibo.goosegame.view.HonkMandView;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Entry point dell'applicazione HonkMand (Simon Game).
@@ -17,8 +18,20 @@ public class HonkMandMain {
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            HonkMandModel model = new HonkMandModel();
+            JFrame frame = new JFrame("HonkMand");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLayout(new BorderLayout());
+            frame.setSize(800, 600);
+            frame.setLocationRelativeTo(null);
+            frame.setResizable(true);
+
             HonkMandView view = new HonkMandView();
+            view.setFrameRef(frame);
+            frame.add(view, BorderLayout.CENTER);
+
+            frame.setVisible(true);
+
+            HonkMandModel model = new HonkMandModel();
             new HonkMandController(model, view);
         });
     }
