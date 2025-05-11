@@ -4,8 +4,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import it.unibo.goosegame.utilities.Colors;
 
+/**
+ * Unit tests for the HonkMandModel class.
+ */
 public class HonkMandModelTest {
 
+    /**
+     * Tests that starting the game initializes the state correctly.
+     */
     @Test
     void testStartGameInitializesState() {
         HonkMandModel model = new HonkMandModel();
@@ -16,6 +22,9 @@ public class HonkMandModelTest {
         assertFalse(model.getSequence().isEmpty());
     }
 
+    /**
+     * Tests that the correct input advances the round.
+     */
     @Test
     void testCorrectInputAdvancesRound() {
         HonkMandModel model = new HonkMandModel();
@@ -24,6 +33,9 @@ public class HonkMandModelTest {
         assertEquals(HonkMandModel.InputResult.NEXT_ROUND, model.checkPlayerInput(first));
     }
 
+    /**
+     * Tests that a wrong input ends the game.
+     */
     @Test
     void testWrongInputEndsGame() {
         HonkMandModel model = new HonkMandModel();

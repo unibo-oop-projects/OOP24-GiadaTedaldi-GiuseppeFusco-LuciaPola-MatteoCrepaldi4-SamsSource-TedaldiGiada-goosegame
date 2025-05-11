@@ -44,7 +44,7 @@ public class RightPanel extends JPanel {
         // Timer in alto a destra
         final long remMs = model.getRemainingTime();
         final long sec = remMs / 1000;
-        final String text = String.format("Tempo %02d:%02d", sec / 60, sec % 60);
+        final String text = String.format("Time %02d:%02d", sec / 60, sec % 60);
 
         g.setColor(Color.DARK_GRAY);
         final Font font = new Font("Arial", Font.BOLD, TIMER_FONT_SIZE);
