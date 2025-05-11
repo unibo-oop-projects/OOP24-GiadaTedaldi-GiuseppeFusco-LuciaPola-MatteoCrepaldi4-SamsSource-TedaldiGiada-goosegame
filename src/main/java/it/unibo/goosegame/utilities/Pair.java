@@ -1,5 +1,10 @@
 package it.unibo.goosegame.utilities;
 
+/**
+ * Coppia generica immutabile di due elementi.
+ * @param <X> tipo del primo elemento
+ * @param <Y> tipo del secondo elemento
+ */
 public class Pair<X,Y> {
 
     private final X x;
