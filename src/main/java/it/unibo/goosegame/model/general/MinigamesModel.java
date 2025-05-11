@@ -1,13 +1,13 @@
 package it.unibo.goosegame.model.general;
 
 /**
- * Interfaccia base per i modelli dei minigiochi.
- * Definisce i metodi comuni per la gestione dello stato di gioco.
+ * Base interface for minigame models.
+ * Defines common methods for managing the game state.
  */
 public interface MinigamesModel {
 
     /**
-     * Stati generali del minigioco.
+     * General states of the minigame.
      */
     public enum GameState {
         ONGOING,
@@ -16,13 +16,13 @@ public interface MinigamesModel {
     }
 
     /**
-     * Reimposta lo stato del gioco all'inizio.
+     * Resets the game state to the beginning.
      */
     void resetGame();
 
     /**
-     * Indica se il gioco è terminato.
-     * @return true se il gioco è finito, false altrimenti
+     * Indicates whether the game is over.
+     * @return true if the game is finished, false otherwise
      */
     boolean isOver();
 }

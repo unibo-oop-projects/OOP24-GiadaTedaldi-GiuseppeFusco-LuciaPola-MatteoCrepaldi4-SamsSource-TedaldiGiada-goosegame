@@ -5,15 +5,20 @@ import java.util.*;
 import it.unibo.goosegame.utilities.Position;
 
 /**
- * Rappresenta una scatola/ostacolo nel minigioco Herding Hound.
- * Gestisce la posizione e la generazione delle scatole.
+ * Represents a box/obstacle in the Herding Hound minigame.
+ * Manages the position and generation of boxes.
  */
 public interface Box {
 
+    /**
+     * Returns the list of box positions.
+     * @return list of positions
+     */
     List<Position> getBoxes();
 
-
-
+    /**
+     * Generates the boxes on the grid.
+     */
     void generateBoxes();
 
 }

@@ -3,33 +3,33 @@ package it.unibo.goosegame.model.minigames.herdinghound.api;
 import it.unibo.goosegame.utilities.Position;
 
 /**
- * Rappresenta il cane nel minigioco Herding Hound.
- * Gestisce la posizione, la direzione e lo stato.
+ * Represents the dog in the Herding Hound minigame.
+ * Manages position, direction, and state.
  */
 public interface Dog{
 
     /**
-     * Direzioni possibili del cane.
+     * Possible directions for the dog.
      */
     public enum Direction {
        UP, DOWN,LEFT, RIGHT
     }
     /**
-     * Stati possibili del cane.
+     * Possible states for the dog.
      */
     public enum State {
         ASLEEP, ALERT, AWAKE
     }
     
     /**
-     * Restituisce la posizione corrente del cane.
-     * @return la posizione attuale
+     * Returns the current position of the dog.
+     * @return the current position
      */
     Position getCoord();
 
     /**
-     * Restituisce la direzione attuale del cane.
-     * @return la direzione
+     * Returns the current direction of the dog.
+     * @return the direction
      */
     Direction getDirection();
 }

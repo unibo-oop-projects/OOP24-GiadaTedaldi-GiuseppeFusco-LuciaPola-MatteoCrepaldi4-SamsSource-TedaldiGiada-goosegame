@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Vista moderna e ridimensionabile per il minigioco HonkMand (Simon Game).
- * Pulsanti rotondi con glow, layout flessibile e UI accattivante.
- * Ora estende JPanel e supporta bande laterali e schermata di fine partita.
+ * Modern and resizable view for the HonkMand minigame (Simon Game).
+ * Round buttons with glow, flexible layout, and attractive UI.
+ * Now extends JPanel and supports side bands and end-of-game screen.
  */
 public class HonkMandView extends JPanel {
     private final Map<Colors, RoundButton> buttons;
@@ -124,7 +124,7 @@ public class HonkMandView extends JPanel {
     }
     public void showGameOverPanel(boolean hasWon) {
         if (frameRef == null) return;
-        String msg = hasWon ? "Hai Vinto!" : "Hai Perso!";
+        String msg = hasWon ? "You Win!" : "You Lose!";
         frameRef.getContentPane().removeAll();
         frameRef.getContentPane().add(new GameEndPanel(msg, frameRef::dispose), BorderLayout.CENTER);
         frameRef.revalidate();

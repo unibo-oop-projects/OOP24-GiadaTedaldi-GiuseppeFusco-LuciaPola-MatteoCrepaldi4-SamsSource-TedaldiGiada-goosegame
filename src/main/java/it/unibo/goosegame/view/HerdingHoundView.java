@@ -9,8 +9,8 @@ import java.awt.*;
 import java.util.Objects;
 
 /**
- * View per il minigioco Herding Hound.
- * Si occupa solo della presentazione grafica.
+ * View for the Herding Hound minigame.
+ * Handles only the graphical presentation.
  */
 public class HerdingHoundView extends JPanel {
     // ... altre costanti e variabili ...
@@ -29,16 +29,16 @@ public class HerdingHoundView extends JPanel {
 
     private final HerdingHoundModel model;
 
-    // Lampeggiamento zone rosse
+    // Blinking of red zones
     private boolean blinking = false;
     private boolean blinkOn = true;
     private int blinkCount = 0;
     private Timer blinkTimer;
-    // Lampeggiamento oca
+    // Goose blinking
     private boolean blinkGoose = false;
     private boolean blinkGooseOn = true;
 
-    // Countdown iniziale
+    // Initial countdown
     private boolean countdownActive = false;
     private int countdownValue = 3;
     private boolean showGoText = false;
@@ -46,12 +46,12 @@ public class HerdingHoundView extends JPanel {
     private Runnable countdownFinishCallback;
 
     public HerdingHoundView(final HerdingHoundModel model) {
-        this.model = Objects.requireNonNull(model, "Model non può essere null");
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(BACKGROUND_COLOR);
     }
 
-    /** Avvia il countdown iniziale, poi chiama onFinish.run() */
+    /** Starts the initial countdown, then calls onFinish.run() */
     public void startCountdown(Runnable onFinish) {
         countdownValue = 3;
         showGoText = false;
@@ -85,7 +85,7 @@ public class HerdingHoundView extends JPanel {
     }
 
     /**
-     * Avvia il lampeggio di fine partita. Se ha vinto, lampeggia l'oca.
+     * Starts the end-of-game blinking animation. If the player has won, the goose blinks.
      */
     public void startBlinking(JFrame frame, boolean hasWon) {
         blinking = true;
@@ -123,24 +123,24 @@ public class HerdingHoundView extends JPanel {
         final int xOffset = (w - gridWidth) / 2;
         final int yOffset = (h - gridHeight) / 2;
 
-        // Sfondo verde prato
+        // Green grass background
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, w, h);
 
-        // Griglia
+        // Grid
         g.setColor(GRID_COLOR);
         for (int i = 0; i <= gridSize; i++) {
             g.drawLine(xOffset, yOffset + i * cellSize, xOffset + gridWidth, yOffset + i * cellSize);
             g.drawLine(xOffset + i * cellSize, yOffset, xOffset + i * cellSize, yOffset + gridHeight);
         }
 
-        // Zone potenzialmente visibili dal cane (verde chiaro)
+        // Zones potentially visible by the dog (light green)
         g.setColor(VISIBLE_AREA_COLOR);
         for (Position pos : model.getDog().getVisibleArea()) {
             drawCell(g, pos, cellSize, xOffset, yOffset);
         }
 
-        // Zone effettivamente visibili dal cane quando è sveglio (rosso trasparente)
+        // Zones actually visible by the dog when awake (transparent red)
         if (model.getDog().getState() == DogImpl.State.AWAKE && (!blinking || blinkOn)) {
             g.setColor(DOG_VISIBLE_COLOR);
             for (Position pos : model.getVisible()) {
@@ -148,19 +148,19 @@ public class HerdingHoundView extends JPanel {
             }
         }
 
-        // Ombre
+        // Shadows
         g.setColor(DOG_SHADOW_COLOR);
         for (Position shadow : model.getShadows()) {
             drawCell(g, shadow, cellSize, xOffset, yOffset);
         }
 
-        // Scatole
+        // Boxes
         g.setColor(BOX_COLOR);
         for (Position box : model.getBoxes()) {
             drawCell(g, box, cellSize, xOffset, yOffset);
         }
 
-        // Cane
+        // Dog
         final Position dogPos = model.getDog().getCoord();
         g.setColor(switch (model.getDog().getState()) {
             case AWAKE -> DOG_AWAKE_COLOR;
@@ -169,7 +169,7 @@ public class HerdingHoundView extends JPanel {
         });
         drawCell(g, dogPos, cellSize, xOffset, yOffset);
 
-        // Simbolo sopra il cane
+        // Symbol above the dog
         if (model.getDog().getState() != DogImpl.State.ASLEEP) {
             final String symbol = model.getDog().getState() == DogImpl.State.AWAKE ? "!" : "?";
             g.setColor(Color.BLACK);
@@ -183,16 +183,16 @@ public class HerdingHoundView extends JPanel {
             g.drawString(symbol, centerX, centerY);
         }
 
-        // Oca (lampeggia solo se blinkGoose attivo)
+        // Goose (blinks only if blinkGoose is active)
         if (!blinkGoose || blinkGooseOn) {
             g.setColor(Color.WHITE);
             drawCell(g, model.getGoose().getCoord(), cellSize, xOffset, yOffset);
         }
 
-        // Countdown centrale
+        // Central countdown
         if (countdownActive) {
             g.setColor(Color.BLACK);
-            String text = showGoText ? "CORRI CORRI!" : (countdownValue > 0 ? String.valueOf(countdownValue) : "");
+            String text = showGoText ? "RUN RUN!" : (countdownValue > 0 ? String.valueOf(countdownValue) : "");
             Font font = new Font("Arial", Font.BOLD, showGoText ? 60 : 80);
             g.setFont(font);
             FontMetrics fm = g.getFontMetrics();
@@ -218,7 +218,7 @@ public class HerdingHoundView extends JPanel {
 
     /** Mostra un pannello di fine gioco con messaggio e pulsante Chiudi. */
     public void showGameOverPanel(JFrame frame, boolean hasWon) {
-        String message = hasWon ? "Hai Vinto!" : "Hai Perso!";
+        String message = hasWon ? "You Win!" : "You Lose!";
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new GameEndPanel(message, frame::dispose), BorderLayout.CENTER);
         frame.revalidate();

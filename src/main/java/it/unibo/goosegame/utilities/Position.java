@@ -1,10 +1,10 @@
 package it.unibo.goosegame.utilities;
 
 /**
- * Rappresenta una posizione bidimensionale (x, y) sulla griglia di gioco.
- * Immutabile.
- * @param x coordinata orizzontale
- * @param y coordinata verticale
+ * Represents a two-dimensional position (x, y) on the game grid.
+ * Immutable.
+ * @param x horizontal coordinate
+ * @param y vertical coordinate
  */
 public record Position(int x, int y) {
 

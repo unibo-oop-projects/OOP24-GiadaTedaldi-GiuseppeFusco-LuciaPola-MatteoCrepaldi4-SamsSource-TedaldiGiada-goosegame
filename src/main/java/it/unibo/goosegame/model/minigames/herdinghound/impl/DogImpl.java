@@ -6,6 +6,10 @@ import java.util.List;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 import it.unibo.goosegame.utilities.Position;
 
+/**
+ * Implementation of the Dog interface for the Herding Hound minigame.
+ * Manages the dog's position, direction, state, and visible area logic.
+ */
 public class DogImpl implements Dog {
 
     private static final int CENTER_DIVISOR = 2;

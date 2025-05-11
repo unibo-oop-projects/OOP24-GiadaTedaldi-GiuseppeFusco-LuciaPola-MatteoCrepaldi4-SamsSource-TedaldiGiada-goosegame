@@ -8,13 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Entry point dell'applicazione HonkMand (Simon Game).
- * Inizializza MVC e avvia l'interfaccia utente nel thread di Swing.
+ * Entry point for the HonkMand (Simon Game) application.
+ * Initializes MVC and starts the user interface on the Swing thread.
  */
 public class HonkMandMain {
     /**
-     * Metodo principale che avvia l'applicazione.
-     * @param args argomenti da linea di comando (non usati)
+     * Main method that starts the application.
+     * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -3,6 +3,10 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Goose;
 import it.unibo.goosegame.utilities.Position;
 
+/**
+ * Implementation of the Goose interface for the Herding Hound minigame.
+ * Manages the goose's position and movement logic.
+ */
 public class GooseImpl implements Goose {
     
     private Position position;

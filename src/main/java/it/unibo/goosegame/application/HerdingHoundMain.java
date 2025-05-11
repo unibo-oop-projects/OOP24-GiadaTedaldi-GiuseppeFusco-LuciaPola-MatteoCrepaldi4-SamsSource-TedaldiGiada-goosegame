@@ -8,6 +8,10 @@ import it.unibo.goosegame.view.RightPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Entry point for the Herding Hound minigame application.
+ * Initializes the MVC and starts the user interface on the Swing thread.
+ */
 public class HerdingHoundMain {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -16,11 +20,11 @@ public class HerdingHoundMain {
             frame.setLayout(new BorderLayout());
 
             JPanel startPanel = new JPanel(new GridBagLayout());
-            JButton startButton = new JButton("Avvia Gioco");
+            JButton startButton = new JButton("Start Game");
             startPanel.add(startButton);
 
             frame.add(startPanel, BorderLayout.CENTER);
-            frame.setSize(800, 600); // Più largo per le bande laterali
+            frame.setSize(800, 600);
             frame.setLocationRelativeTo(null);
             frame.setResizable(true);
             frame.setVisible(true);
@@ -45,7 +49,7 @@ public class HerdingHoundMain {
                 HerdingHoundController controller = new HerdingHoundController(model, view, frame, rightPanel);
                 view.requestFocusInWindow();
 
-                // Countdown iniziale, poi parte il gioco
+                // Initial countdown, then the game starts
                 view.startCountdown(() -> {
                     controller.startGame();
                     view.requestFocusInWindow();
