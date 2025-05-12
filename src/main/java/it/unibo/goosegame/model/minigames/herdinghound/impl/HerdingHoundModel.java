@@ -19,6 +19,7 @@ public class HerdingHoundModel implements MinigamesModel {
     private final BoxImpl box;
     private final int gridSize;
     private long startTime;
+    private boolean started = false;
 
     public HerdingHoundModel(int gridSize) {
         this.gridSize = gridSize;
@@ -72,10 +73,18 @@ public class HerdingHoundModel implements MinigamesModel {
         dog.reset();
         box.generateBoxes();
         dog.refreshDirection(goose);
+        this.started = false;
+    }
+
+    public void startGame() {
         this.startTime = System.currentTimeMillis();
+        this.started = true;
     }
 
     public long getRemainingTime() {
+        if (!started) {
+            return TIME_LIMIT_MS;
+        }
         long elapsed = System.currentTimeMillis() - startTime;
         return Math.max(0, TIME_LIMIT_MS - elapsed);
     }

@@ -42,6 +42,7 @@ public class HerdingHoundMain {
 
                 // Initial countdown, then the game starts
                 view.startCountdown(() -> {
+                    model.startGame();
                     controller.startGame();
                     view.requestFocusInWindow();
                 });

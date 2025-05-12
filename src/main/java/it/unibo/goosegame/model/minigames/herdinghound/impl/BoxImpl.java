@@ -40,6 +40,16 @@ public class BoxImpl implements Box {
         allBoxes.clear();
         shadows.clear();
 
+        // Blocca tutte le celle sopra la linea delle scatole superiori (x < boxDistance)
+        for (int x = 0; x < boxDistance; x++) {
+            for (int y = boxDistance; y < gridSize - boxDistance; y++) {
+                // Salta la partenza e l'arrivo
+                if (!((x == 0 && y == boxDistance) || (x == 0 && y == gridSize - boxDistance - 1))) {
+                    allBoxes.add(new Position(x, y));
+                }
+            }
+        }
+
         for (int y = boxDistance; y < gridSize - boxDistance; y++) {
             tryAddBox(new Position(boxDistance, y));
         }
