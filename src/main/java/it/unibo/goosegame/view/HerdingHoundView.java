@@ -220,7 +220,7 @@ public class HerdingHoundView extends JPanel {
     public void showGameOverPanel(JFrame frame, boolean hasWon) {
         String message = hasWon ? "You Win!" : "You Lose!";
         frame.getContentPane().removeAll();
-        frame.getContentPane().add(new GameEndPanel(message, frame::dispose), BorderLayout.CENTER);
+        frame.getContentPane().add(new GameEndPanel(message, frame::dispose, "HerdingHound", hasWon), BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
     }

@@ -2,6 +2,7 @@ package it.unibo.goosegame.application;
 
 import it.unibo.goosegame.controller.HerdingHoundController;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
+import it.unibo.goosegame.view.GameMenuPanel;
 import it.unibo.goosegame.view.HerdingHoundView;
 import it.unibo.goosegame.view.RightPanel;
 
@@ -19,17 +20,7 @@ public class HerdingHoundMain {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new BorderLayout());
 
-            JPanel startPanel = new JPanel(new GridBagLayout());
-            JButton startButton = new JButton("Start Game");
-            startPanel.add(startButton);
-
-            frame.add(startPanel, BorderLayout.CENTER);
-            frame.setSize(800, 600);
-            frame.setLocationRelativeTo(null);
-            frame.setResizable(true);
-            frame.setVisible(true);
-
-            startButton.addActionListener(e -> {
+            GameMenuPanel menuPanel = new GameMenuPanel("HerdingHound", "Start Game", () -> {
                 int gridSize = 31;
                 HerdingHoundModel model = new HerdingHoundModel(gridSize);
                 HerdingHoundView view = new HerdingHoundView(model);
@@ -39,7 +30,7 @@ public class HerdingHoundMain {
                 leftPanel.setPreferredSize(new Dimension(60, 0));
                 leftPanel.setBackground(Color.LIGHT_GRAY);
 
-                frame.remove(startPanel);
+                frame.getContentPane().removeAll();
                 frame.add(leftPanel, BorderLayout.WEST);
                 frame.add(view, BorderLayout.CENTER);
                 frame.add(rightPanel, BorderLayout.EAST);
@@ -55,6 +46,11 @@ public class HerdingHoundMain {
                     view.requestFocusInWindow();
                 });
             });
+            frame.add(menuPanel, BorderLayout.CENTER);
+            frame.setSize(800, 600);
+            frame.setLocationRelativeTo(null);
+            frame.setResizable(true);
+            frame.setVisible(true);
         });
     }
 }
