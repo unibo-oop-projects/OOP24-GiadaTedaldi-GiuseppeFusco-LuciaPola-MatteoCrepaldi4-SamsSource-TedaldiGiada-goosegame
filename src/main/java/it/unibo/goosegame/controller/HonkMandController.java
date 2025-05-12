@@ -11,17 +11,17 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Controller del minigioco HonkMand (Simon Game).
- * Gestisce l'interazione tra modello e vista.
+ * Controller for the HonkMand (Simon Game) minigame.
+ * Manages the interaction between model and view.
  */
 public class HonkMandController {
     private HonkMandModel model;
     private HonkMandView view;
     
     /**
-     * Costruttore. Collega modello e vista e inizializza i listener.
-     * @param model modello logico del gioco
-     * @param view vista grafica del gioco
+     * Constructor. Connects model and view and initializes listeners.
+     * @param model the game logic model
+     * @param view the game view
      */
     public HonkMandController(HonkMandModel model, HonkMandView view) {
         this.model = model;
@@ -30,7 +30,7 @@ public class HonkMandController {
     }
     
     /**
-     * Inizializza la vista e i listener dei pulsanti.
+     * Initializes the view and button listeners.
      */
     private void initController() {
         view.updateScore(model.getScore());
@@ -49,7 +49,7 @@ public class HonkMandController {
     }
     
     /**
-     * Avvia una nuova partita e mostra la sequenza.
+     * Starts a new game and shows the sequence.
      */
     private void startGame() {
         model.startGame();
@@ -68,7 +68,7 @@ public class HonkMandController {
     }
     
     /**
-     * Riproduce la sequenza di colori tramite animazione.
+     * Plays the color sequence with animation.
      */
     private Timer sequenceTimer;
 
@@ -112,8 +112,8 @@ public class HonkMandController {
     }
     
     /**
-     * Gestisce il click su un pulsante colorato.
-     * @param colorId colore selezionato
+     * Handles the click on a color button.
+     * @param colorId the selected color
      */
     private void handleButtonClick(Colors colorId) {
         // Usa la nuova gestione degli stati
@@ -160,7 +160,8 @@ public class HonkMandController {
     }
     
     /**
-     * Esegue un'animazione di celebrazione per la vittoria.
+     * Performs a victory celebration animation.
+     * @param onEnd callback to execute at the end of the animation
      */
     private void celebrateVictory(Runnable onEnd) {
         final Colors[] colors = Colors.values();

@@ -12,8 +12,8 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 /**
- * Controller per il minigioco Herding Hound.
- * Gestisce l'interazione tra utente, modello e vista.
+ * Controller for the Herding Hound minigame.
+ * Manages the interaction between user, model, and view.
  */
 public class HerdingHoundController {
     private final HerdingHoundModel model;
@@ -26,12 +26,20 @@ public class HerdingHoundController {
     private boolean spacePressed = false;
     private boolean gameActive = false;
 
+    /**
+     * Constructs the controller, sets up listeners and connects model, view, and right panel.
+     * @param model the game model
+     * @param view the game view
+     * @param frame the main JFrame
+     * @param rightPanel the right panel (timer, dog state)
+     */
     public HerdingHoundController(HerdingHoundModel model, HerdingHoundView view, JFrame frame, RightPanel rightPanel) {
         this.model = model;
         this.view = view;
         this.frame = frame;
         this.rightPanel = rightPanel;
 
+        // Add key listener for goose movement
         view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -57,6 +65,9 @@ public class HerdingHoundController {
         view.requestFocusInWindow();
     }
 
+    /**
+     * Starts the game logic: enables input, starts dog state and game timers.
+     */
     public void startGame() {
         gameActive = true;
         scheduleNextDogState(model.getDog().getState());
@@ -71,6 +82,10 @@ public class HerdingHoundController {
         gameTimer.start();
     }
 
+    /**
+     * Schedules the next dog state change with a random delay, unless the game is over.
+     * @param currentState the current state of the dog
+     */
     private void scheduleNextDogState(DogImpl.State currentState) {
         if (model.isOver()) return;
         int delay = (currentState == DogImpl.State.ALERT)
@@ -91,6 +106,9 @@ public class HerdingHoundController {
         dogStateTimer.start();
     }
 
+    /**
+     * Ends the game: stops timers, triggers end animation and disables input.
+     */
     private void endGame() {
         if (gameTimer  != null) gameTimer.stop();
         if (dogStateTimer != null) dogStateTimer.stop();
