@@ -144,13 +144,7 @@ public class HonkMandController {
             case GAME_WIN:
                 view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.WIN, false);
                 view.setButtonsEnabled(false);
-                celebrateVictory();
-                Timer winTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.WIN_DIALOG_DELAY, e -> {
-                    view.showGameOverPanel(true);
-                    ((Timer)e.getSource()).stop();
-                });
-                winTimer.setRepeats(false);
-                winTimer.start();
+                celebrateVictory(() -> view.showGameOverPanel(true));
                 break;
             case GAME_OVER:
                 view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.GAME_OVER, true);
@@ -168,7 +162,7 @@ public class HonkMandController {
     /**
      * Esegue un'animazione di celebrazione per la vittoria.
      */
-    private void celebrateVictory() {
+    private void celebrateVictory(Runnable onEnd) {
         final Colors[] colors = Colors.values();
         final int total = colors.length;
         final int[] index = {0};
@@ -186,6 +180,7 @@ public class HonkMandController {
                 // Se abbiamo finito la sequenza, ferma il timer
                 if (index[0] >= total) {
                     ((Timer) e.getSource()).stop();
+                    if (onEnd != null) onEnd.run();
                     return;
                 }
                 // Illumina il pulsante corrente
