@@ -1,7 +1,6 @@
 package it.unibo.goosegame.model.minigames.herdinghound.api;
 
-import java.util.*;
-
+import java.util.List;
 import it.unibo.goosegame.utilities.Position;
 
 /**

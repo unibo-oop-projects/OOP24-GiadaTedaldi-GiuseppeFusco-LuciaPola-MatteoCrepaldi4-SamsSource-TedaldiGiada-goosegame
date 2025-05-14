@@ -9,9 +9,18 @@ public interface MinigamesModel {
     /**
      * General states of the minigame.
      */
-    public enum GameState {
+    enum GameState {
+        /**
+         * The game is ongoing.
+         */
         ONGOING,
+        /**
+         * The game has been won.
+         */
         WON,
+        /**
+         * The game has been lost.
+         */
         LOST
     }
 

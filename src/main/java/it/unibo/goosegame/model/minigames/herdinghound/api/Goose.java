@@ -11,15 +11,22 @@ public interface Goose {
     /**
      * Possible movement directions for the goose.
      */
-    public enum Direction {
-        UP, DOWN,LEFT, RIGHT
-     }
-     
+    enum Direction {
+        /** The goose moves up. */
+        UP,
+        /** The goose moves down. */
+        DOWN,
+        /** The goose moves left. */
+        LEFT,
+        /** The goose moves right. */
+        RIGHT
+    }
+
     /**
      * Returns the current position of the goose.
      * @return the current position
      */
-    public Position getCoord();
+    Position getCoord();
 
     /**
      * Moves the goose by a certain amount in both directions.

@@ -1,33 +1,54 @@
 package it.unibo.goosegame.application;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import it.unibo.goosegame.controller.HerdingHoundController;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
 import it.unibo.goosegame.view.GameMenuPanel;
 import it.unibo.goosegame.view.HerdingHoundView;
 import it.unibo.goosegame.view.RightPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
 /**
  * Entry point for the Herding Hound minigame application.
  * Initializes the MVC and starts the user interface on the Swing thread.
  */
-public class HerdingHoundMain {
-    public static void main(String[] args) {
+public final class HerdingHoundMain {
+    private static final int GRID_SIZE = 31;
+    private static final int LEFT_PANEL_WIDTH = 60;
+    private static final int FRAME_WIDTH = 800;
+    private static final int FRAME_HEIGHT = 600;
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private HerdingHoundMain() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
+    /**
+     * Main method to launch the Herding Hound minigame.
+     * @param args command line arguments (not used)
+     */
+    public static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Herding Hound");
+            final JFrame frame = new JFrame("Herding Hound");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(new BorderLayout());
 
-            GameMenuPanel menuPanel = new GameMenuPanel("HerdingHound", "Start Game", () -> {
-                int gridSize = 31;
-                HerdingHoundModel model = new HerdingHoundModel(gridSize);
-                HerdingHoundView view = new HerdingHoundView(model);
-                RightPanel rightPanel = new RightPanel(model);
+            final GameMenuPanel menuPanel = new GameMenuPanel("HerdingHound", "Start Game", () -> {
+                final int gridSize = GRID_SIZE;
+                final HerdingHoundModel model = new HerdingHoundModel(gridSize);
+                final HerdingHoundView view = new HerdingHoundView(model);
+                final RightPanel rightPanel = new RightPanel(model);
 
-                JPanel leftPanel = new JPanel();
-                leftPanel.setPreferredSize(new Dimension(60, 0));
+                final JPanel leftPanel = new JPanel();
+                leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, 0));
                 leftPanel.setBackground(Color.LIGHT_GRAY);
 
                 frame.getContentPane().removeAll();
@@ -37,7 +58,7 @@ public class HerdingHoundMain {
                 frame.revalidate();
                 frame.repaint();
 
-                HerdingHoundController controller = new HerdingHoundController(model, view, frame, rightPanel);
+                final HerdingHoundController controller = new HerdingHoundController(model, view, frame, rightPanel);
                 view.requestFocusInWindow();
 
                 // Initial countdown, then the game starts
@@ -48,7 +69,7 @@ public class HerdingHoundMain {
                 });
             });
             frame.add(menuPanel, BorderLayout.CENTER);
-            frame.setSize(800, 600);
+            frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
             frame.setLocationRelativeTo(null);
             frame.setResizable(true);
             frame.setVisible(true);
