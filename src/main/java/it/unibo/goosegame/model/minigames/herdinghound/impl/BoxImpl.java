@@ -1,15 +1,19 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
-import java.util.Random;
-import java.util.Set;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Box;
 import it.unibo.goosegame.utilities.Position;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
-public class BoxImpl implements Box {
+/**
+ * Implementation of the Box interface for the Herding Hound minigame.
+ * Manages the position and generation of boxes and their shadows.
+ */
+public final class BoxImpl implements Box {
 
     private static final double BOX_PROBABILITY = 0.6;
     private static final int BORDER_MARGIN_DIVISOR = 2;
@@ -23,27 +27,38 @@ public class BoxImpl implements Box {
     private final Random random;
     private final Position pointLux;
 
-    public BoxImpl(int gridSize, DogImpl dog) {
+    /**
+     * Constructs a BoxImpl object.
+     * @param gridSize the size of the grid
+     * @param dog the dog instance
+     */
+    public BoxImpl(final int gridSize, final DogImpl dog) {
         this.gridSize = gridSize;
         this.boxDistance = BORDER_MARGIN_DIVISOR;
         this.random = new Random();
         this.pointLux = new Position(dog.getCoord().x(), dog.getCoord().y());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Position> getBoxes() {
         return new ArrayList<>(allBoxes);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void generateBoxes() {
         allBoxes.clear();
         shadows.clear();
 
-        // Blocca tutte le celle sopra la linea delle scatole superiori (x < boxDistance)
+        // Block all cells above the upper box line (x < boxDistance)
         for (int x = 0; x < boxDistance; x++) {
             for (int y = boxDistance; y < gridSize - boxDistance; y++) {
-                // Salta la partenza e l'arrivo
+                // Skip start and end positions
                 if (!((x == 0 && y == boxDistance) || (x == 0 && y == gridSize - boxDistance - 1))) {
                     allBoxes.add(new Position(x, y));
                 }
@@ -59,7 +74,7 @@ public class BoxImpl implements Box {
         }
 
         for (int y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
-            tryAddBox(new Position(gridSize - boxDistance - 1 , y));
+            tryAddBox(new Position(gridSize - boxDistance - 1, y));
         }
 
         for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
@@ -67,25 +82,25 @@ public class BoxImpl implements Box {
         }
     }
 
-    private void tryAddBox(Position box) {
+    private void tryAddBox(final Position box) {
         if (random.nextDouble() < BOX_PROBABILITY) {
             allBoxes.add(box);
             generateShadows(box);
         }
     }
 
-    private void generateShadows(Position box) {
-        int lightX = pointLux.x();
-        int lightY = pointLux.y();
+    private void generateShadows(final Position box) {
+        final int lightX = pointLux.x();
+        final int lightY = pointLux.y();
 
-        int dx = box.x() - lightX;
-        int dy = box.y() - lightY;   
+        final int dx = box.x() - lightX;
+        final int dy = box.y() - lightY;
 
-        int stepX = Integer.compare(dx, 0);
-        int stepY = Integer.compare(dy, 0);
+        final int stepX = Integer.compare(dx, 0);
+        final int stepY = Integer.compare(dy, 0);
 
-        double distance = Math.sqrt(dx * dx + dy * dy);
-        int shadowWidth = (int) Math.max(gridSize / SHADOW_WIDTH_MIN_DIVISOR, gridSize / distance);
+        final double distance = Math.sqrt(dx * dx + dy * dy);
+        final int shadowWidth = (int) Math.max(gridSize / SHADOW_WIDTH_MIN_DIVISOR, gridSize / distance);
         int shadowLength = Math.min(gridSize, SHADOW_MAX_LENGTH);
 
         int shadowX = box.x() + stepX;
@@ -93,8 +108,8 @@ public class BoxImpl implements Box {
 
         while (isInBounds(shadowX, shadowY) && shadowLength-- > 0) {
             for (int i = -shadowWidth; i <= shadowWidth; i++) {
-                int newShadowX = shadowX + i * stepY;
-                int newShadowY = shadowY + i * stepX;
+                final int newShadowX = shadowX + i * stepY;
+                final int newShadowY = shadowY + i * stepX;
 
                 if (isInBounds(newShadowX, newShadowY)) {
                     shadows.add(new Position(newShadowX, newShadowY));
@@ -105,18 +120,19 @@ public class BoxImpl implements Box {
         }
     }
 
-    private boolean isInBounds(int x, int y) {
-    boolean isOnBorder = (x <= boxDistance || x >= gridSize - boxDistance - 1) || 
-    (y <= boxDistance || y >= gridSize - boxDistance - 1);
-    return isOnBorder && x >= 0 && x < gridSize && y >= 0 && y < gridSize;
+    private boolean isInBounds(final int x, final int y) {
+        final boolean isOnBorder = (x <= boxDistance || x >= gridSize - boxDistance - 1)
+            || (y <= boxDistance || y >= gridSize - boxDistance - 1);
+        return isOnBorder
+            && x >= 0 && x < gridSize
+            && y >= 0 && y < gridSize;
     }
 
+    /**
+     * Returns the list of shadow positions generated by the boxes.
+     * @return list of shadow positions
+     */
     public List<Position> getShadows() {
         return new ArrayList<>(shadows);
     }
-
 }
-
-
-
-    

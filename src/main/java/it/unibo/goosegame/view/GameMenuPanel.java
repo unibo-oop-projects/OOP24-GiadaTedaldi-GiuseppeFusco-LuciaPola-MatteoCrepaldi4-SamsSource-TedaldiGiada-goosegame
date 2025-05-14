@@ -1,14 +1,23 @@
 package it.unibo.goosegame.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
 /**
  * Reusable menu panel for minigames, with background image support.
  */
-public class GameMenuPanel extends JPanel {
+public final class GameMenuPanel extends JPanel {
     private final Image backgroundImg;
 
     /**
@@ -17,28 +26,32 @@ public class GameMenuPanel extends JPanel {
      * @param startText The text for the start button
      * @param onStart Action to perform when the start button is pressed
      */
-    public GameMenuPanel(String gameName, String startText, Runnable onStart) {
+    public GameMenuPanel(final String gameName, final String startText, final Runnable onStart) {
         super(new GridBagLayout());
         this.backgroundImg = loadBackgroundImage(gameName);
         setOpaque(false);
-        JButton startButton = new JButton(startText);
+        final JButton startButton = new JButton(startText);
         startButton.setFont(new Font("Arial", Font.BOLD, 28));
         startButton.addActionListener(e -> onStart.run());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0; gbc.gridy = 0; gbc.insets = new Insets(10,10,10,10);
+        final GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
         add(startButton, gbc);
     }
 
-    private Image loadBackgroundImage(String gameName) {
-        if (gameName == null) return null;
-        String path = "/img/" + gameName + "_menu.png";
-        URL resource = getClass().getResource(path);
+    private Image loadBackgroundImage(final String gameName) {
+        if (gameName == null) {
+            return null;
+        }
+        final String path = "/img/" + gameName + "_menu.png";
+        final URL resource = getClass().getResource(path);
         if (resource != null) {
             return new ImageIcon(resource).getImage();
         } else {
             // fallback: colored background
-            BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2 = img.createGraphics();
+            final BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+            final Graphics2D g2 = img.createGraphics();
             g2.setColor(new Color(0, 0, 128, 180));
             g2.fillRect(0, 0, 32, 32);
             g2.dispose();
@@ -46,12 +59,16 @@ public class GameMenuPanel extends JPanel {
         }
     }
 
+    /**
+     * Paints the background image or a fallback color, then the panel components.
+     * @param g the Graphics context
+     */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         if (backgroundImg != null) {
             g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);
         } else {
-            g.setColor(new Color(0,0,0,180));
+            g.setColor(new Color(0, 0, 0, 180));
             g.fillRect(0, 0, getWidth(), getHeight());
         }
         super.paintComponent(g);

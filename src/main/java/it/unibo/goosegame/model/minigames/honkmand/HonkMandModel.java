@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import it.unibo.goosegame.utilities.Colors;
-
-/**
- * Modello logico del minigioco HonkMand (Simon Game).
- * Gestisce la sequenza, il punteggio, il livello e la verifica degli input.
- */
 import it.unibo.goosegame.model.general.MinigamesModel;
 
-public class HonkMandModel implements MinigamesModel {
+/**
+ * Logic model for the HonkMand (Simon Game) minigame.
+ * Manages the sequence, score, level, and input validation.
+ */
+public final class HonkMandModel implements MinigamesModel {
 
-    // Livello massimo per vincere il gioco (ora in HonkMandConstants)
-    public static final int MAX_LEVEL = it.unibo.goosegame.utilities.HonkMandConstants.MAX_LEVEL; // per retrocompatibilità
+    /**
+     * Maximum level to win the game (now in HonkMandConstants).
+     */
+    public static final int MAX_LEVEL = it.unibo.goosegame.utilities.HonkMandConstants.MAX_LEVEL; // for backward compatibility
 
     private List<Colors> sequence;
     private List<Colors> playerSequence;
@@ -23,29 +24,37 @@ public class HonkMandModel implements MinigamesModel {
     private Random random;
 
     /**
-     * Stati possibili del gioco.
+     * Possible states of the game.
      */
     public enum GameState {
+        /** The game has not started yet. */
         NOT_STARTED,
+        /** The game is in progress. */
         PLAYING,
+        /** The game is over (lost). */
         GAME_OVER,
+        /** The game is won. */
         GAME_WIN
     }
 
     private GameState gameState;
 
     /**
-     * Risultati possibili dopo un input del giocatore.
+     * Possible results after a player input.
      */
     public enum InputResult {
-        CORRECT,      // Input corretto, attendi il prossimo
-        NEXT_ROUND,   // Sequenza completata, passa al prossimo round
-        GAME_OVER,    // Input errato, partita persa
-        GAME_WIN      // Partita vinta
+        /** Input is correct, wait for next input. */
+        CORRECT,
+        /** Sequence completed, go to next round. */
+        NEXT_ROUND,
+        /** Wrong input, game lost. */
+        GAME_OVER,
+        /** Game won. */
+        GAME_WIN
     }
 
     /**
-     * Costruttore. Inizializza lo stato del gioco.
+     * Constructs a HonkMandModel object and initializes the game state.
      */
     public HonkMandModel() {
         sequence = new ArrayList<>();
@@ -57,7 +66,7 @@ public class HonkMandModel implements MinigamesModel {
     }
 
     /**
-     * Avvia una nuova partita, azzerando punteggio e sequenze.
+     * Starts a new game, resetting score and sequences.
      */
     public void startGame() {
         sequence.clear();
@@ -69,7 +78,7 @@ public class HonkMandModel implements MinigamesModel {
     }
 
     /**
-     * Passa al round successivo, incrementando il livello e generando una nuova sequenza.
+     * Advances to the next round, increasing the level and generating a new sequence.
      */
     public void nextRound() {
         level++;
@@ -83,26 +92,33 @@ public class HonkMandModel implements MinigamesModel {
     }
 
     /**
-     * Genera una nuova sequenza casuale per il livello corrente.
+     * Generates a new random sequence for the current level.
      */
     private void generateNewSequence() {
         sequence.clear();
         for (int i = 0; i < level; i++) {
-            int index = random.nextInt(Colors.values().length);
+            final int index = random.nextInt(Colors.values().length);
             sequence.add(Colors.values()[index]);
         }
     }
 
     /**
-     * Verifica l'input del giocatore confrontandolo con la sequenza.
-     * @param colorId colore scelto dal giocatore
-     * @return risultato dell'input
+     * Checks the player's input against the sequence.
+     * @param colorId the color chosen by the player
+     * @return the result of the input
      */
-    public InputResult checkPlayerInput(Colors colorId) {
-        if (gameState != GameState.PLAYING) return InputResult.GAME_OVER;
+    public InputResult checkPlayerInput(final Colors colorId) {
+        if (gameState != GameState.PLAYING) {
+            return InputResult.GAME_OVER;
+        }
         playerSequence.add(colorId);
-        int currentIndex = playerSequence.size() - 1;
+        final int currentIndex = playerSequence.size() - 1;
 
+        // Fix: check bounds before accessing sequence
+        if (currentIndex >= sequence.size()) {
+            gameState = GameState.GAME_OVER;
+            return InputResult.GAME_OVER;
+        }
         if (playerSequence.get(currentIndex).equals(sequence.get(currentIndex))) {
             if (playerSequence.size() == sequence.size()) {
                 score++;
@@ -119,27 +135,60 @@ public class HonkMandModel implements MinigamesModel {
         }
     }
 
-    /** @return la sequenza da riprodurre */
-    public List<Colors> getSequence() { return sequence; }
-    /** @return il livello corrente */
-    public int getLevel() { return level; }
-    /** @return il punteggio corrente */
-    public int getScore() { return score; }
-    /** @return lo stato attuale del gioco */
-    public GameState getGameState() { return gameState; }
+    /**
+     * Returns the sequence to be reproduced.
+     * @return the sequence to be reproduced
+     */
+    public List<Colors> getSequence() {
+        return sequence;
+    }
 
-    // --- Implementazione MinigamesModel ---
+    /**
+     * Returns the current level.
+     * @return the current level
+     */
+    public int getLevel() {
+        return level;
+    }
+
+    /**
+     * Returns the current score.
+     * @return the current score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * Returns the current game state.
+     * @return the current game state
+     */
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    // --- MinigamesModel implementation ---
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resetGame() {
         startGame();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isOver() {
         return gameState == GameState.GAME_OVER || gameState == GameState.GAME_WIN;
     }
 
-    /** Restituisce lo stato generale del minigioco secondo l'interfaccia MinigamesModel. */
+    /**
+     * Returns the general state of the minigame according to the MinigamesModel interface.
+     * @return the general state of the minigame
+     */
     public MinigamesModel.GameState getGameStateGeneral() {
         return switch (gameState) {
             case PLAYING, NOT_STARTED -> MinigamesModel.GameState.ONGOING;

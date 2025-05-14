@@ -2,50 +2,69 @@ package it.unibo.goosegame.view;
 
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.utilities.HonkMandMessages;
-import javax.swing.*;
-import java.awt.*;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Modern and resizable view for the HonkMand minigame (Simon Game).
- * Round buttons with glow, flexible layout, and attractive UI.
- * Now extends JPanel and supports side bands and end-of-game screen.
+ * View for the HonkMand (Simon Game) minigame.
+ * Handles the graphical presentation and user interface.
  */
-public class HonkMandView extends JPanel {
+public final class HonkMandView extends JPanel {
     private final Map<Colors, RoundButton> buttons;
     private final JButton startButton;
     private final JLabel levelLabel;
     private final JLabel scoreLabel;
     private final JLabel messageLabel;
-    private JFrame frameRef; // riferimento al frame principale
+    private JFrame frameRef; // Reference to the main frame
 
+    /**
+     * Constructs a HonkMandView and initializes the UI components.
+     */
     public HonkMandView() {
         setLayout(new BorderLayout());
         setBackground(new Color(245, 245, 245));
 
-        // Bande laterali grigie
-        JPanel leftPanel = new JPanel();
+        // Side gray panels
+        final JPanel leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(60, 0));
         leftPanel.setBackground(Color.LIGHT_GRAY);
-        JPanel rightPanel = new JPanel();
+        final JPanel rightPanel = new JPanel();
         rightPanel.setPreferredSize(new Dimension(60, 0));
         rightPanel.setBackground(Color.LIGHT_GRAY);
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
 
-        // Font moderno
-        Font mainFont = new Font("Segoe UI", Font.BOLD, 22);
-        Font labelFont = new Font("Segoe UI", Font.PLAIN, 18);
+        // Modern fonts
+        final Font mainFont = new Font("Segoe UI", Font.BOLD, 22);
+        final Font labelFont = new Font("Segoe UI", Font.PLAIN, 18);
 
-        // Messaggio centrale
+        // Central message
         messageLabel = new JLabel("", SwingConstants.CENTER);
         messageLabel.setFont(mainFont);
         messageLabel.setPreferredSize(new Dimension(400, 40));
 
-        // Pannello info
-        JPanel infoPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        // Info panel
+        final JPanel infoPanel = new JPanel(new GridLayout(1, 2, 20, 0));
         infoPanel.setOpaque(false);
         levelLabel = new JLabel(HonkMandMessages.LEVEL_LABEL + "0");
         levelLabel.setFont(labelFont);
@@ -54,14 +73,14 @@ public class HonkMandView extends JPanel {
         infoPanel.add(levelLabel);
         infoPanel.add(scoreLabel);
 
-        // Pulsante start/restart
+        // Start/restart button
         startButton = new JButton(HonkMandMessages.START_BUTTON);
         startButton.setFont(labelFont);
         startButton.setFocusPainted(false);
         startButton.setPreferredSize(new Dimension(180, 40));
 
-        // Pannello pulsanti colorati (GridBagLayout per adattabilità)
-        JPanel colorPanel = new JPanel(new GridBagLayout());
+        // Colored buttons panel (GridBagLayout for adaptability)
+        final JPanel colorPanel = new JPanel(new GridBagLayout());
         colorPanel.setOpaque(false);
         buttons = new HashMap<>();
         buttons.put(Colors.GREEN, new RoundButton(Color.GREEN));
@@ -69,32 +88,41 @@ public class HonkMandView extends JPanel {
         buttons.put(Colors.YELLOW, new RoundButton(Color.YELLOW));
         buttons.put(Colors.BLUE, new RoundButton(Colors.BLUE.getAwtColor()));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20); // spazio tra i bottoni
+        final GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 20, 20, 20); // space between buttons
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         colorPanel.add(buttons.get(Colors.GREEN), gbc);
-        gbc.gridx = 1; gbc.gridy = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         colorPanel.add(buttons.get(Colors.RED), gbc);
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         colorPanel.add(buttons.get(Colors.YELLOW), gbc);
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         colorPanel.add(buttons.get(Colors.BLUE), gbc);
 
-        // Layout centrale (GridBagLayout per adattabilità)
-        JPanel mainPanel = new JPanel(new GridBagLayout());
+        // Central layout (GridBagLayout for adaptability)
+        final JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setOpaque(false);
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0; c.gridy = 0; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
+        final GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(20, 20, 10, 20);
         mainPanel.add(messageLabel, c);
         c.gridy++;
         c.insets = new Insets(10, 20, 10, 20);
-        c.fill = GridBagConstraints.BOTH; c.weighty = 1.0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weighty = 1.0;
         mainPanel.add(colorPanel, c);
-        c.gridy++; c.weighty = 0;
+        c.gridy++;
+        c.weighty = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(infoPanel, c);
         c.gridy++;
@@ -103,87 +131,153 @@ public class HonkMandView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-    // --- Metodi pubblici per Controller ---
-
-    public void setFrameRef(JFrame frame) {
+    /**
+     * Sets the reference to the main JFrame.
+     * @param frame the main JFrame
+     */
+    public void setFrameRef(final JFrame frame) {
         this.frameRef = frame;
     }
 
-    public void updateLevel(int level) {
+    /**
+     * Updates the level label.
+     * @param level the current level
+     */
+    public void updateLevel(final int level) {
         levelLabel.setText(HonkMandMessages.LEVEL_LABEL + level);
     }
-    public void updateScore(int score) {
+
+    /**
+     * Updates the score label.
+     * @param score the current score
+     */
+    public void updateScore(final int score) {
         scoreLabel.setText(HonkMandMessages.SCORE_LABEL + score);
     }
-    public void showMessage(String message, boolean isError) {
+
+    /**
+     * Shows a message in the central label.
+     * @param message the message to show
+     * @param isError true if the message is an error, false otherwise
+     */
+    public void showMessage(final String message, final boolean isError) {
         messageLabel.setText(message);
         messageLabel.setForeground(isError ? Color.RED : Color.DARK_GRAY);
     }
+
+    /**
+     * Clears the central message label.
+     */
     public void clearMessage() {
         messageLabel.setText("");
     }
-    public void showGameOverPanel(boolean hasWon) {
-        if (frameRef == null) return;
-        String msg = hasWon ? "You Win!" : "You Lose!";
+
+    /**
+     * Shows the end-of-game panel.
+     * @param hasWon true if the player has won, false otherwise
+     */
+    public void showGameOverPanel(final boolean hasWon) {
+        if (frameRef == null) {
+            return;
+        }
+        final String msg = hasWon ? "You Win!" : "You Lose!";
         frameRef.getContentPane().removeAll();
         frameRef.getContentPane().add(new GameEndPanel(msg, frameRef::dispose, "HonkMand", hasWon), BorderLayout.CENTER);
         frameRef.revalidate();
         frameRef.repaint();
     }
-    public void setButtonsEnabled(boolean enabled) {
-        for (RoundButton btn : buttons.values()) {
+
+    /**
+     * Enables or disables the colored buttons.
+     * @param enabled true to enable, false to disable
+     */
+    public void setButtonsEnabled(final boolean enabled) {
+        for (final RoundButton btn : buttons.values()) {
             btn.setEnabled(enabled);
         }
     }
-    public void setGameActive(boolean active) {
+
+    /**
+     * Sets the game as active or inactive (changes start button text and state).
+     * @param active true if the game is active, false otherwise
+     */
+    public void setGameActive(final boolean active) {
         startButton.setText(active ? HonkMandMessages.RESTART_BUTTON : HonkMandMessages.START_BUTTON);
         startButton.setEnabled(!active);
     }
-    public void addStartButtonListener(ActionListener listener) {
+
+    /**
+     * Adds an ActionListener to the start button.
+     * @param listener the ActionListener to add
+     */
+    public void addStartButtonListener(final ActionListener listener) {
         startButton.addActionListener(listener);
     }
-    public void addColorButtonListener(Colors colorId, ActionListener listener) {
+
+    /**
+     * Adds an ActionListener to a colored button.
+     * @param colorId the color of the button
+     * @param listener the ActionListener to add
+     */
+    public void addColorButtonListener(final Colors colorId, final ActionListener listener) {
         buttons.get(colorId).addActionListener(listener);
     }
+
     /**
-     * Illumina un pulsante per la durata specificata (effetto glow).
+     * Lights up a button for the specified duration (glow effect).
+     * @param colorId the color of the button
+     * @param duration the duration in milliseconds
      */
-    public void lightUpButton(Colors colorId, int duration) {
-        RoundButton btn = buttons.get(colorId);
+    public void lightUpButton(final Colors colorId, final int duration) {
+        final RoundButton btn = buttons.get(colorId);
         btn.setGlowing(true);
-        Timer t = new Timer(duration, e -> btn.setGlowing(false));
+        final Timer t = new Timer(duration, e -> btn.setGlowing(false));
         t.setRepeats(false);
         t.start();
     }
 
-    /** Pulsante rotondo custom con effetto glow, ridimensionabile e senza tagli. */
+    /**
+     * Custom round button with glow effect, resizable and without clipping.
+     */
     private static class RoundButton extends JButton {
         private final Color baseColor;
-        private boolean glowing = false;
-        public RoundButton(Color color) {
+        private boolean glowing;
+
+        /**
+         * Constructs a RoundButton with the given color.
+         * @param color the base color
+         */
+        RoundButton(final Color color) {
             this.baseColor = color;
             setOpaque(false);
             setFocusPainted(false);
             setBorderPainted(false);
             setContentAreaFilled(false);
         }
-        public void setGlowing(boolean glowing) {
+
+        /**
+         * Sets the glowing state of the button.
+         * @param glowing true to enable glow, false to disable
+         */
+        public void setGlowing(final boolean glowing) {
             this.glowing = glowing;
             repaint();
         }
+
         @Override
         public Insets getInsets() {
-            // Margine interno per evitare tagli del glow
+            // Internal margin to avoid glow clipping
             return new Insets(18, 18, 18, 18);
         }
+
         @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g.create();
+        protected void paintComponent(final Graphics g) {
+            final Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            int margin = 16;
-            int size = Math.min(getWidth(), getHeight()) - 2 * margin;
-            int x = (getWidth() - size) / 2;
-            int y = (getHeight() - size) / 2;
+            final int margin = 16;
+            final int size = Math.min(getWidth(), getHeight()) - 2 * margin;
+            final int x = (getWidth() - size) / 2;
+            final int y = (getHeight() - size) / 2;
             if (glowing) {
                 g2.setColor(baseColor.brighter().brighter());
                 g2.setStroke(new BasicStroke(18f));
@@ -193,11 +287,13 @@ public class HonkMandView extends JPanel {
             g2.fillOval(x, y, size, size);
             g2.dispose();
         }
+
         @Override
         public Dimension getPreferredSize() {
-            // Preferenza: quadrato grande, ma si adatta
+            // Preference: large square, but adapts
             return new Dimension(120, 120);
         }
+
         @Override
         public Dimension getMinimumSize() {
             return new Dimension(60, 60);

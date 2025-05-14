@@ -1,16 +1,16 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 import it.unibo.goosegame.utilities.Position;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of the Dog interface for the Herding Hound minigame.
  * Manages the dog's position, direction, state, and visible area logic.
  */
-public class DogImpl implements Dog {
+public final class DogImpl implements Dog {
 
     private static final int CENTER_DIVISOR = 2;
     private static final int FIRST_STEP = 1;
@@ -23,7 +23,11 @@ public class DogImpl implements Dog {
     private Position position;
     private final List<Position> visibleArea;
 
-    public DogImpl(int gridSize) {
+    /**
+     * Constructs a DogImpl object.
+     * @param gridSize the size of the grid
+     */
+    public DogImpl(final int gridSize) {
         this.gridSize = gridSize;
         this.position = new Position(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
         this.direction = INITIAL_DIRECTION;
@@ -31,11 +35,15 @@ public class DogImpl implements Dog {
         this.visibleArea = new ArrayList<>();
     }
 
-    public void refreshDirection(GooseImpl goose) {
-        int gx = goose.getCoord().x();
-        int gy = goose.getCoord().y();
-        int px = position.x();
-        int py = position.y();
+    /**
+     * Updates the dog's direction based on the goose's position.
+     * @param goose the goose instance
+     */
+    public void refreshDirection(final GooseImpl goose) {
+        final int gx = goose.getCoord().x();
+        final int gy = goose.getCoord().y();
+        final int px = position.x();
+        final int py = position.y();
 
         if (gx == 0 && py < gridSize - 1) {
             direction = Direction.LEFT;
@@ -50,6 +58,9 @@ public class DogImpl implements Dog {
         updateVisibleArea();
     }
 
+    /**
+     * Updates the dog's state to the next one in the cycle.
+     */
     public void refreshState() {
         switch (state) {
             case ASLEEP -> state = State.ALERT;
@@ -58,15 +69,25 @@ public class DogImpl implements Dog {
         }
     }
 
+    /**
+     * Returns the current state of the dog.
+     * @return the current state
+     */
     public State getState() {
         return this.state;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Position getCoord() {
         return new Position(position.x(), position.y());
@@ -78,8 +99,8 @@ public class DogImpl implements Dog {
             return;
         }
 
-        int x = position.x();
-        int y = position.y();
+        final int x = position.x();
+        final int y = position.y();
 
         switch (direction) {
             case UP -> {
@@ -121,10 +142,17 @@ public class DogImpl implements Dog {
         }
     }
 
+    /**
+     * Returns the list of positions visible by the dog.
+     * @return list of visible positions
+     */
     public List<Position> getVisibleArea() {
         return new ArrayList<>(visibleArea);
     }
 
+    /**
+     * Resets the dog's position, direction, state, and visible area.
+     */
     public void reset() {
         this.position = new Position(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
         this.direction = INITIAL_DIRECTION;
@@ -132,5 +160,3 @@ public class DogImpl implements Dog {
         this.visibleArea.clear();
     }
 }
-
-

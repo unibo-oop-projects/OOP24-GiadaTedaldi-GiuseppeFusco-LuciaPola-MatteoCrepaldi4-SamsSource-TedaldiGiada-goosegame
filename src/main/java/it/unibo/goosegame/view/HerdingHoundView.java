@@ -4,18 +4,24 @@ import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
 import it.unibo.goosegame.utilities.Position;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.util.Objects;
 
 /**
  * View for the Herding Hound minigame.
  * Handles only the graphical presentation.
  */
-public class HerdingHoundView extends JPanel {
-    // ... altre costanti e variabili ...
+public final class HerdingHoundView extends JPanel {
     private static final int BLINK_DELAY = 200;
-    private static final int BLINK_TOTAL = 6; // 3 lampeggi (on+off)
+    private static final int BLINK_TOTAL = 6; // 3 blinks (on+off)
     private static final int DEFAULT_SIZE = 600;
     private static final Color BACKGROUND_COLOR = new Color(0x7EC850);
     private static final Color GRID_COLOR = new Color(0x3E3E3E);
@@ -30,34 +36,41 @@ public class HerdingHoundView extends JPanel {
     private final HerdingHoundModel model;
 
     // Blinking of red zones
-    private boolean blinking = false;
+    private boolean blinking;
     private boolean blinkOn = true;
-    private int blinkCount = 0;
+    private int blinkCount;
     private Timer blinkTimer;
     // Goose blinking
-    private boolean blinkGoose = false;
+    private boolean blinkGoose;
     private boolean blinkGooseOn = true;
 
     // Initial countdown
-    private boolean countdownActive = false;
+    private boolean countdownActive;
     private int countdownValue = 3;
-    private boolean showGoText = false;
+    private boolean showGoText;
     private Timer countdownTimer;
     private Runnable countdownFinishCallback;
 
+    /**
+     * Constructs a HerdingHoundView.
+     * @param model the game model (must not be null)
+     */
     public HerdingHoundView(final HerdingHoundModel model) {
         this.model = Objects.requireNonNull(model, "Model cannot be null");
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(BACKGROUND_COLOR);
     }
 
-    /** Starts the initial countdown, then calls onFinish.run() */
-    public void startCountdown(Runnable onFinish) {
+    /**
+     * Starts the initial countdown, then calls onFinish.run().
+     * @param onFinish the callback to execute when the countdown finishes
+     */
+    public void startCountdown(final Runnable onFinish) {
         countdownValue = 3;
         showGoText = false;
         countdownActive = true;
         countdownFinishCallback = onFinish;
-        repaint(); // Mostra subito il 3
+        repaint(); // Show 3 immediately
         countdownTimer = new Timer(1000, e -> {
             if (countdownValue > 1) {
                 countdownValue--;
@@ -76,18 +89,24 @@ public class HerdingHoundView extends JPanel {
             }
             repaint();
         });
-        countdownTimer.setInitialDelay(1000); // Aspetta 1 secondo prima del primo tick
+        countdownTimer.setInitialDelay(1000); // Wait 1 second before the first tick
         countdownTimer.start();
     }
 
+    /**
+     * Returns whether the countdown is active.
+     * @return true if the countdown is active, false otherwise
+     */
     public boolean isCountdownActive() {
         return countdownActive;
     }
 
     /**
      * Starts the end-of-game blinking animation. If the player has won, the goose blinks.
+     * @param frame the JFrame to show the end panel on
+     * @param hasWon true if the player has won, false otherwise
      */
-    public void startBlinking(JFrame frame, boolean hasWon) {
+    public void startBlinking(final JFrame frame, final boolean hasWon) {
         blinking = true;
         blinkOn = true;
         blinkCount = 0;
@@ -111,6 +130,10 @@ public class HerdingHoundView extends JPanel {
         blinkTimer.start();
     }
 
+    /**
+     * Paints the game grid, elements, and effects.
+     * @param g the Graphics context
+     */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
@@ -136,27 +159,27 @@ public class HerdingHoundView extends JPanel {
 
         // Zones potentially visible by the dog (light green)
         g.setColor(VISIBLE_AREA_COLOR);
-        for (Position pos : model.getDog().getVisibleArea()) {
+        for (final Position pos : model.getDog().getVisibleArea()) {
             drawCell(g, pos, cellSize, xOffset, yOffset);
         }
 
         // Zones actually visible by the dog when awake (transparent red)
         if (model.getDog().getState() == DogImpl.State.AWAKE && (!blinking || blinkOn)) {
             g.setColor(DOG_VISIBLE_COLOR);
-            for (Position pos : model.getVisible()) {
+            for (final Position pos : model.getVisible()) {
                 drawCell(g, pos, cellSize, xOffset, yOffset);
             }
         }
 
         // Shadows
         g.setColor(DOG_SHADOW_COLOR);
-        for (Position shadow : model.getShadows()) {
+        for (final Position shadow : model.getShadows()) {
             drawCell(g, shadow, cellSize, xOffset, yOffset);
         }
 
         // Boxes
         g.setColor(BOX_COLOR);
-        for (Position box : model.getBoxes()) {
+        for (final Position box : model.getBoxes()) {
             drawCell(g, box, cellSize, xOffset, yOffset);
         }
 
@@ -192,14 +215,14 @@ public class HerdingHoundView extends JPanel {
         // Central countdown
         if (countdownActive) {
             g.setColor(Color.BLACK);
-            String text = showGoText ? "RUN RUN!" : (countdownValue > 0 ? String.valueOf(countdownValue) : "");
-            Font font = new Font("Arial", Font.BOLD, showGoText ? 60 : 80);
+            final String text = showGoText ? "RUN RUN!" : (countdownValue > 0 ? String.valueOf(countdownValue) : "");
+            final Font font = new Font("Arial", Font.BOLD, showGoText ? 60 : 80);
             g.setFont(font);
-            FontMetrics fm = g.getFontMetrics();
-            int textWidth = fm.stringWidth(text);
-            int textHeight = fm.getHeight();
-            int cx = w / 2 - textWidth / 2;
-            int cy = h / 2 + textHeight / 4;
+            final FontMetrics fm = g.getFontMetrics();
+            final int textWidth = fm.stringWidth(text);
+            final int textHeight = fm.getHeight();
+            final int cx = w / 2 - textWidth / 2;
+            final int cy = h / 2 + textHeight / 4;
             g.drawString(text, cx, cy);
         }
     }
@@ -211,14 +234,20 @@ public class HerdingHoundView extends JPanel {
         g.fillRect(x, y, size, size);
     }
 
-    /** Aggiorna la view. */
+    /**
+     * Updates the view (repaints the panel).
+     */
     public void updateView() {
         repaint();
     }
 
-    /** Mostra un pannello di fine gioco con messaggio e pulsante Chiudi. */
-    public void showGameOverPanel(JFrame frame, boolean hasWon) {
-        String message = hasWon ? "You Win!" : "You Lose!";
+    /**
+     * Shows an end-of-game panel with a message and close button.
+     * @param frame the JFrame to show the panel on
+     * @param hasWon true if the player has won, false otherwise
+     */
+    public void showGameOverPanel(final JFrame frame, final boolean hasWon) {
+        final String message = hasWon ? "You Win!" : "You Lose!";
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new GameEndPanel(message, frame::dispose, "HerdingHound", hasWon), BorderLayout.CENTER);
         frame.revalidate();
