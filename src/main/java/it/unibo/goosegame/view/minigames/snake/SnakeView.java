@@ -2,13 +2,13 @@ package it.unibo.goosegame.view.minigames.snake;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Position;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.List;
 
 /**
  * The SnakeView class represents the view of the snake game.
@@ -17,19 +17,16 @@ import java.util.List;
 public class SnakeView extends JPanel {
     private static final long serialVersionUID = 1L;
     private final JLabel score;
-    private final List<Position> snakeBody;
-    private final Position food;
-    private final int scorePoint;
+    private final transient SnakeModel model;
 
     /**
      * Constructor.
      * Initializes the SnakeView with a SnakeModel and sets the background color.
      * @param model the SnakeModel to be used for the view
      */
+    @SuppressFBWarnings(value = "EI2", justification = "Reference to mutable model is intentional in this class: need it to update the view.")
     public SnakeView(final SnakeModel model) {
-        this.snakeBody = List.copyOf(model.getSnakeBody());
-        this.food = model.getFood();
-        this.scorePoint = model.getScore();
+        this.model = model;
         super.setBackground(Color.BLACK);
         score = new JLabel("Score: " + model.getScore());
         score.setForeground(Color.WHITE);
@@ -50,14 +47,14 @@ public class SnakeView extends JPanel {
 
         // Draw snake
         g.setColor(Color.GREEN);
-        for (final Position p : snakeBody) {
+        for (final Position p : model.getSnakeBody()) {
             g.fillRect(p.x() * cellSize, p.y() * cellSize, cellSize, cellSize);
         }
 
         // Draw food
         g.setColor(Color.RED);
-        g.fillRect(food.x() * cellSize, food.y() * cellSize, cellSize, cellSize);
+        g.fillRect(model.getFood().x() * cellSize, model.getFood().y() * cellSize, cellSize, cellSize);
 
-        score.setText("Score: " + scorePoint);
+        score.setText("Score: " + model.getScore());
     }
 }
