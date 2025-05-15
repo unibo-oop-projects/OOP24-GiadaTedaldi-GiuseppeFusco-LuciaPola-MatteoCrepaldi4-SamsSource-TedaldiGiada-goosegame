@@ -2,8 +2,6 @@ package it.unibo.goosegame.utilities;
 
 public final class HonkMandConstants {
 
-    private HonkMandConstants() { }
-
     /** Duration for which a button lights up on click (ms). */
     public static final int BUTTON_CLICK_LIGHT_DURATION = 300;
     /** Delay before enabling buttons after sequence (ms). */
@@ -26,4 +24,6 @@ public final class HonkMandConstants {
     public static final int SEQUENCE_STEP_DELAY = 700;
     /** Delay before showing the win dialog (ms). */
     public static final int WIN_DIALOG_DELAY = 1000;
+
+    private HonkMandConstants() { }
 }

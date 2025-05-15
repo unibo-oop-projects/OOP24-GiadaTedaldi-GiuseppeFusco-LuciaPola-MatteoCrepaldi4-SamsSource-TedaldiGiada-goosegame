@@ -18,6 +18,7 @@ import java.net.URL;
  * Reusable menu panel for minigames, with background image support.
  */
 public final class GameMenuPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private final Image backgroundImg;
 
     private static final int BUTTON_FONT_SIZE = 28;

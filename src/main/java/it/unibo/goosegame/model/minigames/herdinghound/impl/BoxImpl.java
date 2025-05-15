@@ -59,7 +59,7 @@ public final class BoxImpl implements Box {
         for (int x = 0; x < boxDistance; x++) {
             for (int y = boxDistance; y < gridSize - boxDistance; y++) {
                 // Skip start and end positions
-                if (!((x == 0 && y == boxDistance) || (x == 0 && y == gridSize - boxDistance - 1))) {
+                if (!(x == 0 && y == boxDistance || x == 0 && y == gridSize - boxDistance - 1)) {
                     allBoxes.add(new Position(x, y));
                 }
             }
@@ -106,7 +106,7 @@ public final class BoxImpl implements Box {
         int shadowX = box.x() + stepX;
         int shadowY = box.y() + stepY;
 
-        while (isInBounds(shadowX, shadowY) && shadowLength-- > 0) {
+        while (isInBounds(shadowX, shadowY) && shadowLength > 0) {
             for (int i = -shadowWidth; i <= shadowWidth; i++) {
                 final int newShadowX = shadowX + i * stepY;
                 final int newShadowY = shadowY + i * stepX;
@@ -117,12 +117,13 @@ public final class BoxImpl implements Box {
             }
             shadowX += stepX;
             shadowY += stepY;
+            shadowLength--;
         }
     }
 
     private boolean isInBounds(final int x, final int y) {
-        final boolean isOnBorder = (x <= boxDistance || x >= gridSize - boxDistance - 1)
-            || (y <= boxDistance || y >= gridSize - boxDistance - 1);
+        final boolean isOnBorder = x <= boxDistance || x >= gridSize - boxDistance - 1
+            || y <= boxDistance || y >= gridSize - boxDistance - 1;
         return isOnBorder
             && x >= 0 && x < gridSize
             && y >= 0 && y < gridSize;

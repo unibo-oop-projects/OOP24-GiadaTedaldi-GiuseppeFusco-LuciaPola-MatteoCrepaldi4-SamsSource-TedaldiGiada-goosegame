@@ -14,11 +14,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
-/**
- * Panel on the right side of the Herding Hound minigame.
- * Displays the timer and the dog's state image.
- */
 public final class RightPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private static final int PANEL_WIDTH = 200;
     private static final int IMAGE_SIZE = 120;
     private static final int TIMER_FONT_SIZE = 22;

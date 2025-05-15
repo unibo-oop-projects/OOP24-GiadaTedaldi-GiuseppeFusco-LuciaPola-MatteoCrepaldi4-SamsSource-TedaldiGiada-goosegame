@@ -1,14 +1,22 @@
 package it.unibo.goosegame.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
-/**
- * Reusable end-of-game panel for minigames, with background image support.
- */
 public final class GameEndPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private final Image backgroundImg;
 
     private static final int BUTTON_FONT_SIZE = 20;

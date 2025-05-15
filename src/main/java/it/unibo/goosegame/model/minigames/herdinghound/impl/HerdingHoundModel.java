@@ -2,14 +2,9 @@ package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.utilities.Position;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Model for the Herding Hound minigame.
- * Manages the game logic and state.
- */
 public final class HerdingHoundModel implements MinigamesModel {
     private static final int START_X = 0;
     private static final int START_Y = 0;
@@ -146,6 +141,7 @@ public final class HerdingHoundModel implements MinigamesModel {
      * Indicates whether the game is over.
      * @return true if the game is finished, false otherwise
      */
+    @Override
     public boolean isOver() {
         return hasWon() || hasLost() || getRemainingTime() == 0;
     }
@@ -156,10 +152,7 @@ public final class HerdingHoundModel implements MinigamesModel {
     }
 
     private boolean hasLost() {
-        if (dog.getState() != DogImpl.State.AWAKE) {
-            return false;
-        }
-        return getVisible().contains(goose.getCoord());
+        return dog.getState() == DogImpl.State.AWAKE && getVisible().contains(goose.getCoord());
     }
 
     /**

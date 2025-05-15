@@ -1,15 +1,11 @@
 package it.unibo.goosegame.model.minigames.honkmand;
 
+import it.unibo.goosegame.model.general.MinigamesModel;
+import it.unibo.goosegame.utilities.Colors;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import it.unibo.goosegame.utilities.Colors;
-import it.unibo.goosegame.model.general.MinigamesModel;
 
-/**
- * Logic model for the HonkMand (Simon Game) minigame.
- * Manages the sequence, score, level, and input validation.
- */
 public final class HonkMandModel implements MinigamesModel {
 
     /**
@@ -17,11 +13,11 @@ public final class HonkMandModel implements MinigamesModel {
      */
     public static final int MAX_LEVEL = it.unibo.goosegame.utilities.HonkMandConstants.MAX_LEVEL; // for backward compatibility
 
-    private List<Colors> sequence;
-    private List<Colors> playerSequence;
+    private final List<Colors> sequence;
+    private final List<Colors> playerSequence;
     private int level;
     private int score;
-    private Random random;
+    private final Random random;
 
     /**
      * Possible states of the game.

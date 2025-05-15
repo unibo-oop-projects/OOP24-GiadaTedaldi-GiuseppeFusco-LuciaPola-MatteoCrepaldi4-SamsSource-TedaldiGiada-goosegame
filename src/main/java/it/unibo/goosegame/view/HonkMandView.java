@@ -5,16 +5,13 @@ import it.unibo.goosegame.utilities.HonkMandMessages;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.EnumMap;
 
-/**
- * View for the HonkMand (Simon Game) minigame.
- * Handles the graphical presentation and user interface.
- */
 public final class HonkMandView extends JPanel {
-    private final Map<Colors, RoundButton> buttons;
+    private static final long serialVersionUID = 1L;
+    private final EnumMap<Colors, RoundButton> buttons;
     private final JButton startButton;
     private final JLabel levelLabel;
     private final JLabel scoreLabel;
@@ -85,7 +82,7 @@ public final class HonkMandView extends JPanel {
         // Colored buttons panel (GridBagLayout for adaptability)
         final JPanel colorPanel = new JPanel(new GridBagLayout());
         colorPanel.setOpaque(false);
-        buttons = new HashMap<>();
+        buttons = new EnumMap<>(Colors.class);
         buttons.put(Colors.GREEN, new RoundButton(Color.GREEN));
         buttons.put(Colors.RED, new RoundButton(Color.RED));
         buttons.put(Colors.YELLOW, new RoundButton(Color.YELLOW));
@@ -243,6 +240,7 @@ public final class HonkMandView extends JPanel {
      * Custom round button with glow effect, resizable and without clipping.
      */
     private static class RoundButton extends JButton {
+        private static final long serialVersionUID = 1L;
         private final Color baseColor;
         private boolean glowing;
 

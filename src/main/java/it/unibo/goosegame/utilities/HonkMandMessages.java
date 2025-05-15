@@ -2,8 +2,6 @@ package it.unibo.goosegame.utilities;
 
 public final class HonkMandMessages {
 
-    private HonkMandMessages() { }
-
     /** Label for the close game button. */
     public static final String CLOSE_GAME = "Close Game";
     /** Message shown when the player input is correct. */
@@ -32,4 +30,6 @@ public final class HonkMandMessages {
     public static final String WIN = "You won!";
     /** Message shown when it's the player's turn. */
     public static final String YOUR_TURN = "Your turn!";
+
+    private HonkMandMessages() { }
 }

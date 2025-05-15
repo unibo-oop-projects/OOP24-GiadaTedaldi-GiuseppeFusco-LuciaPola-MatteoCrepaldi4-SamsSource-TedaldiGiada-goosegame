@@ -20,6 +20,7 @@ import java.util.Objects;
  * Handles only the graphical presentation.
  */
 public final class HerdingHoundView extends JPanel {
+    private static final long serialVersionUID = 1L;
     private static final int BLINK_DELAY = 200;
     private static final int BLINK_TOTAL = 6; // 3 blinks (on+off)
     private static final int DEFAULT_SIZE = 600;
@@ -215,7 +216,7 @@ public final class HerdingHoundView extends JPanel {
         // Central countdown
         if (countdownActive) {
             g.setColor(Color.BLACK);
-            final String text = showGoText ? "RUN RUN!" : (countdownValue > 0 ? String.valueOf(countdownValue) : "");
+            final String text = showGoText ? "RUN RUN!" : countdownValue > 0 ? String.valueOf(countdownValue) : "";
             final Font font = new Font("Arial", Font.BOLD, showGoText ? 60 : 80);
             g.setFont(font);
             final FontMetrics fm = g.getFontMetrics();
