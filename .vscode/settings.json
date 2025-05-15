@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
+=======
+    "java.compile.nullAnalysis.mode": "automatic",
+>>>>>>> Fusco
     "java.configuration.updateBuildConfiguration": "interactive"
 }
