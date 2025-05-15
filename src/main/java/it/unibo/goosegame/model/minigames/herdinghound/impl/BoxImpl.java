@@ -92,10 +92,8 @@ public final class BoxImpl implements Box {
     private void generateShadows(final Position box) {
         final int lightX = pointLux.x();
         final int lightY = pointLux.y();
-
         final int dx = box.x() - lightX;
         final int dy = box.y() - lightY;
-
         final int stepX = Integer.compare(dx, 0);
         final int stepY = Integer.compare(dy, 0);
 

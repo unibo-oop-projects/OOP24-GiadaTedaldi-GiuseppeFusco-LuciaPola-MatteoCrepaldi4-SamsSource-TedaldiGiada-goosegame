@@ -272,6 +272,11 @@ public final class HonkMandView extends JPanel {
          */
         RoundButton(final Color color) {
             this.baseColor = color;
+        }
+
+        // Instance initializer block: executed after superclass constructor, before this constructor
+        {
+            // Safe: RoundButton is private and final, so no subclassing issues.
             setOpaque(false);
             setFocusPainted(false);
             setBorderPainted(false);
