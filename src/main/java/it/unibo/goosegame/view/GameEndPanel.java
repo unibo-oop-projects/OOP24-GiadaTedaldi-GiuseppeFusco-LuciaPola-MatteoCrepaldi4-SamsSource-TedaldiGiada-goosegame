@@ -1,25 +1,22 @@
 package it.unibo.goosegame.view;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
 /**
- * Reusable panel for the end-of-game screen (win/lose) with background image support.
+ * Reusable end-of-game panel for minigames, with background image support.
  */
 public final class GameEndPanel extends JPanel {
     private final Image backgroundImg;
+
+    private static final int BUTTON_FONT_SIZE = 20;
+    private static final int COLOR_ALPHA = 180;
+    private static final int COLOR_GREEN = 128;
+    private static final int COLOR_RED = 128;
+    private static final int FALLBACK_IMG_SIZE = 32;
+    private static final int LABEL_FONT_SIZE = 32;
 
     /**
      * Constructs a new end-of-game panel with background image.
@@ -33,10 +30,10 @@ public final class GameEndPanel extends JPanel {
         this.backgroundImg = loadBackgroundImage(gameName, hasWon);
         setOpaque(false);
         final JLabel label = new JLabel(message);
-        label.setFont(new Font("Arial", Font.BOLD, 32));
+        label.setFont(new Font("Arial", Font.BOLD, LABEL_FONT_SIZE));
         label.setForeground(Color.WHITE);
         final JButton closeButton = new JButton("Close");
-        closeButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        closeButton.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
         closeButton.addActionListener(e -> onClose.run());
 
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -68,10 +65,10 @@ public final class GameEndPanel extends JPanel {
             return new ImageIcon(resource).getImage();
         } else {
             // fallback: colored background
-            final BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+            final BufferedImage img = new BufferedImage(FALLBACK_IMG_SIZE, FALLBACK_IMG_SIZE, BufferedImage.TYPE_INT_ARGB);
             final Graphics2D g2 = img.createGraphics();
-            g2.setColor(hasWon ? new Color(0, 128, 0, 180) : new Color(128, 0, 0, 180));
-            g2.fillRect(0, 0, 32, 32);
+            g2.setColor(hasWon ? new Color(0, COLOR_GREEN, 0, COLOR_ALPHA) : new Color(COLOR_RED, 0, 0, COLOR_ALPHA));
+            g2.fillRect(0, 0, FALLBACK_IMG_SIZE, FALLBACK_IMG_SIZE);
             g2.dispose();
             return img;
         }

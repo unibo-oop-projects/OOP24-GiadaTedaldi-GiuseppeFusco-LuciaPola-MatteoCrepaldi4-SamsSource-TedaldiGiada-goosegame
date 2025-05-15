@@ -18,6 +18,7 @@ public class HonkMandController {
     private final HonkMandModel model;
     private final HonkMandView view;
     private Timer sequenceTimer;
+    private boolean isShowingSequence;
 
     /**
      * Constructor. Connects model and view and initializes listeners.
@@ -72,6 +73,7 @@ public class HonkMandController {
      * Plays the color sequence with animation.
      */
     private void playSequence() {
+        isShowingSequence = true; // <--- Set flag true at start
         view.setButtonsEnabled(false);
         final List<Colors> sequence = model.getSequence();
 
@@ -95,6 +97,7 @@ public class HonkMandController {
                     // Add a short delay before enabling the buttons
                     final Timer enableButtonsTimer = new Timer(
                         it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_ENABLE_DELAY, event -> {
+                        isShowingSequence = false; // <--- Set flag false when done
                         view.setButtonsEnabled(true);
                         view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.YOUR_TURN, false);
                         ((Timer) event.getSource()).stop();
@@ -115,6 +118,9 @@ public class HonkMandController {
      * @param colorId the selected color
      */
     private void handleButtonClick(final Colors colorId) {
+        if (isShowingSequence) {
+            return; // Ignore clicks during sequence display
+        }
         // Use the new state management
         if (model.getGameState() != GameState.PLAYING) {
             return;
@@ -130,6 +136,7 @@ public class HonkMandController {
             case NEXT_ROUND:
                 view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.CORRECT, false);
                 view.updateScore(model.getScore());
+                view.setButtonsEnabled(false);
                 final Timer nextRoundTimer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.NEXT_ROUND_DELAY, e -> {
                     model.nextRound();
                     view.updateLevel(model.getLevel());

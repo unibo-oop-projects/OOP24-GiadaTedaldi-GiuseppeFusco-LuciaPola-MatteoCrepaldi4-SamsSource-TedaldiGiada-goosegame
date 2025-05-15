@@ -20,6 +20,11 @@ import java.net.URL;
 public final class GameMenuPanel extends JPanel {
     private final Image backgroundImg;
 
+    private static final int BUTTON_FONT_SIZE = 28;
+    private static final int COLOR_ALPHA = 180;
+    private static final int COLOR_MENU_BLUE = 128;
+    private static final int FALLBACK_IMG_SIZE = 32;
+
     /**
      * Constructs a new menu panel with background image.
      * @param gameName The name of the minigame (e.g., "HerdingHound", "HonkMand")
@@ -31,7 +36,7 @@ public final class GameMenuPanel extends JPanel {
         this.backgroundImg = loadBackgroundImage(gameName);
         setOpaque(false);
         final JButton startButton = new JButton(startText);
-        startButton.setFont(new Font("Arial", Font.BOLD, 28));
+        startButton.setFont(new Font("Arial", Font.BOLD, BUTTON_FONT_SIZE));
         startButton.addActionListener(e -> onStart.run());
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -50,10 +55,10 @@ public final class GameMenuPanel extends JPanel {
             return new ImageIcon(resource).getImage();
         } else {
             // fallback: colored background
-            final BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+            final BufferedImage img = new BufferedImage(FALLBACK_IMG_SIZE, FALLBACK_IMG_SIZE, BufferedImage.TYPE_INT_ARGB);
             final Graphics2D g2 = img.createGraphics();
-            g2.setColor(new Color(0, 0, 128, 180));
-            g2.fillRect(0, 0, 32, 32);
+            g2.setColor(new Color(0, 0, COLOR_MENU_BLUE, COLOR_ALPHA));
+            g2.fillRect(0, 0, FALLBACK_IMG_SIZE, FALLBACK_IMG_SIZE);
             g2.dispose();
             return img;
         }

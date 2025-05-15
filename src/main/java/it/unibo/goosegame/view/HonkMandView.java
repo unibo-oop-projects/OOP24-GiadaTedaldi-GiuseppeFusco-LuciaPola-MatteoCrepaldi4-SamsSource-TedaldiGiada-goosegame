@@ -3,25 +3,9 @@ package it.unibo.goosegame.view;
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.utilities.HonkMandMessages;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.RenderingHints;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,19 +21,38 @@ public final class HonkMandView extends JPanel {
     private final JLabel messageLabel;
     private JFrame frameRef; // Reference to the main frame
 
+    private static final int BG_COLOR_B = 245;
+    private static final int BG_COLOR_G = 245;
+    private static final int BG_COLOR_R = 245;
+    private static final int BUTTON_INSET = 20;
+    private static final int MAIN_PANEL_BOTTOM_INSET = 20;
+    private static final int MAIN_PANEL_MID_INSET = 10;
+    private static final int MAIN_PANEL_SIDE_INSET = 20;
+    private static final int MAIN_PANEL_TOP_INSET = 20;
+    private static final int MESSAGE_LABEL_HEIGHT = 40;
+    private static final int MESSAGE_LABEL_WIDTH = 400;
+    private static final int ROUND_BUTTON_GLOW_OFFSET = 9;
+    private static final int ROUND_BUTTON_GLOW_STROKE = 18;
+    private static final int ROUND_BUTTON_INSETS = 18;
+    private static final int ROUND_BUTTON_MIN_SIZE = 60;
+    private static final int ROUND_BUTTON_PREFERRED_SIZE = 120;
+    private static final int SIDE_PANEL_WIDTH = 60;
+    private static final int START_BUTTON_HEIGHT = 40;
+    private static final int START_BUTTON_WIDTH = 180;
+
     /**
      * Constructs a HonkMandView and initializes the UI components.
      */
     public HonkMandView() {
         setLayout(new BorderLayout());
-        setBackground(new Color(245, 245, 245));
+        setBackground(new Color(BG_COLOR_R, BG_COLOR_G, BG_COLOR_B));
 
         // Side gray panels
         final JPanel leftPanel = new JPanel();
-        leftPanel.setPreferredSize(new Dimension(60, 0));
+        leftPanel.setPreferredSize(new Dimension(SIDE_PANEL_WIDTH, 0));
         leftPanel.setBackground(Color.LIGHT_GRAY);
         final JPanel rightPanel = new JPanel();
-        rightPanel.setPreferredSize(new Dimension(60, 0));
+        rightPanel.setPreferredSize(new Dimension(SIDE_PANEL_WIDTH, 0));
         rightPanel.setBackground(Color.LIGHT_GRAY);
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
@@ -61,7 +64,7 @@ public final class HonkMandView extends JPanel {
         // Central message
         messageLabel = new JLabel("", SwingConstants.CENTER);
         messageLabel.setFont(mainFont);
-        messageLabel.setPreferredSize(new Dimension(400, 40));
+        messageLabel.setPreferredSize(new Dimension(MESSAGE_LABEL_WIDTH, MESSAGE_LABEL_HEIGHT));
 
         // Info panel
         final JPanel infoPanel = new JPanel(new GridLayout(1, 2, 20, 0));
@@ -77,7 +80,7 @@ public final class HonkMandView extends JPanel {
         startButton = new JButton(HonkMandMessages.START_BUTTON);
         startButton.setFont(labelFont);
         startButton.setFocusPainted(false);
-        startButton.setPreferredSize(new Dimension(180, 40));
+        startButton.setPreferredSize(new Dimension(START_BUTTON_WIDTH, START_BUTTON_HEIGHT));
 
         // Colored buttons panel (GridBagLayout for adaptability)
         final JPanel colorPanel = new JPanel(new GridBagLayout());
@@ -89,7 +92,7 @@ public final class HonkMandView extends JPanel {
         buttons.put(Colors.BLUE, new RoundButton(Colors.BLUE.getAwtColor()));
 
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20); // space between buttons
+        gbc.insets = new Insets(BUTTON_INSET, BUTTON_INSET, BUTTON_INSET, BUTTON_INSET); // space between buttons
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -114,10 +117,10 @@ public final class HonkMandView extends JPanel {
         c.gridy = 0;
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(20, 20, 10, 20);
+        c.insets = new Insets(MAIN_PANEL_TOP_INSET, MAIN_PANEL_SIDE_INSET, MAIN_PANEL_MID_INSET, MAIN_PANEL_SIDE_INSET);
         mainPanel.add(messageLabel, c);
         c.gridy++;
-        c.insets = new Insets(10, 20, 10, 20);
+        c.insets = new Insets(MAIN_PANEL_MID_INSET, MAIN_PANEL_SIDE_INSET, MAIN_PANEL_MID_INSET, MAIN_PANEL_SIDE_INSET);
         c.fill = GridBagConstraints.BOTH;
         c.weighty = 1.0;
         mainPanel.add(colorPanel, c);
@@ -126,7 +129,7 @@ public final class HonkMandView extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(infoPanel, c);
         c.gridy++;
-        c.insets = new Insets(10, 20, 20, 20);
+        c.insets = new Insets(MAIN_PANEL_MID_INSET, MAIN_PANEL_SIDE_INSET, MAIN_PANEL_BOTTOM_INSET, MAIN_PANEL_SIDE_INSET);
         mainPanel.add(startButton, c);
         add(mainPanel, BorderLayout.CENTER);
     }
@@ -267,7 +270,7 @@ public final class HonkMandView extends JPanel {
         @Override
         public Insets getInsets() {
             // Internal margin to avoid glow clipping
-            return new Insets(18, 18, 18, 18);
+            return new Insets(ROUND_BUTTON_INSETS, ROUND_BUTTON_INSETS, ROUND_BUTTON_INSETS, ROUND_BUTTON_INSETS);
         }
 
         @Override
@@ -280,10 +283,16 @@ public final class HonkMandView extends JPanel {
             final int y = (getHeight() - size) / 2;
             if (glowing) {
                 g2.setColor(baseColor.brighter().brighter());
-                g2.setStroke(new BasicStroke(18f));
-                g2.drawOval(x - 9, y - 9, size + 18, size + 18);
+                g2.setStroke(new BasicStroke(ROUND_BUTTON_GLOW_STROKE));
+                g2.drawOval(x - ROUND_BUTTON_GLOW_OFFSET, y - ROUND_BUTTON_GLOW_OFFSET,
+                    size + ROUND_BUTTON_GLOW_STROKE, size + ROUND_BUTTON_GLOW_STROKE);
             }
-            g2.setColor(baseColor);
+            // Cambia colore se disabilitato
+            if (!isEnabled()) {
+                g2.setColor(baseColor.darker().darker());
+            } else {
+                g2.setColor(baseColor);
+            }
             g2.fillOval(x, y, size, size);
             g2.dispose();
         }
@@ -291,12 +300,21 @@ public final class HonkMandView extends JPanel {
         @Override
         public Dimension getPreferredSize() {
             // Preference: large square, but adapts
-            return new Dimension(120, 120);
+            return new Dimension(ROUND_BUTTON_PREFERRED_SIZE, ROUND_BUTTON_PREFERRED_SIZE);
         }
 
         @Override
         public Dimension getMinimumSize() {
-            return new Dimension(60, 60);
+            return new Dimension(ROUND_BUTTON_MIN_SIZE, ROUND_BUTTON_MIN_SIZE);
+        }
+
+        // Blocco fisico degli eventi mouse se disabilitato
+        @Override
+        protected void processMouseEvent(final MouseEvent e) {
+            if (!isEnabled()) {
+                return;
+            }
+            super.processMouseEvent(e);
         }
     }
 }

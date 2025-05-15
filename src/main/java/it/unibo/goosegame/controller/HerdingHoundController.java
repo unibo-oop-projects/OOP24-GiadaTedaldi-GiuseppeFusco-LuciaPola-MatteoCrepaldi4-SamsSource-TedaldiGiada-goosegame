@@ -17,6 +17,10 @@ import java.util.Random;
  * Handles user input, game logic, and updates the view and right panel.
  */
 public class HerdingHoundController {
+    private static final int DOG_ALERT_DELAY = 1_000;
+    private static final int DOG_OTHER_DELAY_BASE = 2_000;
+    private static final int DOG_OTHER_DELAY_RANDOM = 3;
+
     private final HerdingHoundModel model;
     private final HerdingHoundView view;
     private final JFrame frame;
@@ -26,10 +30,6 @@ public class HerdingHoundController {
     private final Random rnd = new Random();
     private boolean spacePressed;
     private boolean gameActive;
-
-    private static final int DOG_ALERT_DELAY = 1_000;
-    private static final int DOG_OTHER_DELAY_BASE = 2_000;
-    private static final int DOG_OTHER_DELAY_RANDOM = 3;
 
     /**
      * Constructs the controller, sets up listeners and connects model, view, and right panel.
@@ -98,8 +98,8 @@ public class HerdingHoundController {
             return;
         }
         final int delay = (currentState == DogImpl.State.ALERT)
-                    ? DOG_ALERT_DELAY
-                    : DOG_OTHER_DELAY_BASE + rnd.nextInt(DOG_OTHER_DELAY_RANDOM) * 1_000;
+                ? DOG_ALERT_DELAY
+                : DOG_OTHER_DELAY_BASE + rnd.nextInt(DOG_OTHER_DELAY_RANDOM) * 1_000;
         if (dogStateTimer != null) {
             dogStateTimer.stop();
         }
@@ -128,7 +128,7 @@ public class HerdingHoundController {
             dogStateTimer.stop();
         }
         final boolean hasWon = model.getGameState() == GameState.WON;
-        view.startBlinking(frame, hasWon); // lampeggia prima di mostrare la schermata finale
+        view.startBlinking(frame, hasWon); // blink before showing the end screen
         view.setFocusable(false);
     }
 }
