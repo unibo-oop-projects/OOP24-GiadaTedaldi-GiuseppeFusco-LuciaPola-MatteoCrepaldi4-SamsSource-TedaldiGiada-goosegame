@@ -24,7 +24,7 @@ public final class GameMenuPanel extends JPanel {
     private static final int COLOR_MENU_BLUE = 128;
     private static final int FALLBACK_IMG_SIZE = 32;
 
-    private final Image backgroundImg;
+    private final transient Image backgroundImg;
 
     /**
      * Constructs a new menu panel with background image.

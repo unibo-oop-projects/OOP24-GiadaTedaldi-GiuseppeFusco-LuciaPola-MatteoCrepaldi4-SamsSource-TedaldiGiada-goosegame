@@ -15,6 +15,10 @@ import java.util.List;
  * Handles user input, game logic, and updates the view.
  */
 public class HonkMandController {
+    /**
+     * References to model and view are intentionally stored as mutable references provided externally.
+     * This controller does not assume responsibility for external modifications to these objects.
+     */
     private final HonkMandModel model;
     private final HonkMandView view;
     private Timer sequenceTimer;

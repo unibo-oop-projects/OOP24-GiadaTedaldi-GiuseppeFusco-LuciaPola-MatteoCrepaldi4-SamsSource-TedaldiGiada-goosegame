@@ -21,6 +21,10 @@ public class HerdingHoundController {
     private static final int DOG_OTHER_DELAY_BASE = 2_000;
     private static final int DOG_OTHER_DELAY_RANDOM = 3;
 
+    /**
+     * References to model, view, frame, and rightPanel are intentionally stored as mutable references provided externally.
+     * This controller does not assume responsibility for external modifications to these objects.
+     */
     private final HerdingHoundModel model;
     private final HerdingHoundView view;
     private final JFrame frame;

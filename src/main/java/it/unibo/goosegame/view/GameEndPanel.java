@@ -30,7 +30,7 @@ public final class GameEndPanel extends JPanel {
     private static final int FALLBACK_IMG_SIZE = 32;
     private static final int LABEL_FONT_SIZE = 32;
 
-    private final Image backgroundImg;
+    private final transient Image backgroundImg;
 
     /**
      * Constructs a new end-of-game panel with background image.

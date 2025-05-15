@@ -57,6 +57,10 @@ public final class HonkMandView extends JPanel {
     private final JLabel levelLabel;
     private final JLabel scoreLabel;
     private final JLabel messageLabel;
+    /**
+     * Reference to the main frame. This is intentionally stored as a mutable reference.
+     * The class does not assume responsibility for external modifications to the frame.
+     */
     private JFrame frameRef; // Reference to the main frame
 
     /**
@@ -154,7 +158,8 @@ public final class HonkMandView extends JPanel {
     }
 
     /**
-     * Sets the reference to the main JFrame.
+     * Sets the reference to the main JFrame. This method stores a mutable reference provided externally.
+     * The class does not assume responsibility for external modifications to the frame.
      * @param frame the main JFrame
      */
     public void setFrameRef(final JFrame frame) {

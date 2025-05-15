@@ -34,7 +34,7 @@ public final class HerdingHoundView extends JPanel {
     private static final Color DOG_ALERT_COLOR = Color.YELLOW;
     private static final Color DOG_DEFAULT_COLOR = Color.WHITE;
 
-    private final HerdingHoundModel model;
+    private final transient HerdingHoundModel model;
 
     // Blinking of red zones
     private boolean blinking;
@@ -50,7 +50,7 @@ public final class HerdingHoundView extends JPanel {
     private int countdownValue = 3;
     private boolean showGoText;
     private Timer countdownTimer;
-    private Runnable countdownFinishCallback;
+    private transient Runnable countdownFinishCallback;
 
     /**
      * Constructs a HerdingHoundView.

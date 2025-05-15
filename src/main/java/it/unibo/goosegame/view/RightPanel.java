@@ -24,8 +24,8 @@ public final class RightPanel extends JPanel {
     private static final int PANEL_WIDTH = 200;
     private static final int IMAGE_SIZE = 120;
     private static final int TIMER_FONT_SIZE = 22;
-    private final HerdingHoundModel model;
-    private final Image awakeImage, alertImage, asleepImage;
+    private final transient HerdingHoundModel model;
+    private final transient Image awakeImage, alertImage, asleepImage;
 
     /**
      * Constructs a RightPanel.

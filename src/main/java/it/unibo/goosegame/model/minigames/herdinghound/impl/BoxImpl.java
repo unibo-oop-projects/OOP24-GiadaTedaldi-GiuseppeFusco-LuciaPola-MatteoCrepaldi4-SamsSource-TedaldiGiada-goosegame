@@ -97,13 +97,13 @@ public final class BoxImpl implements Box {
         final int stepX = Integer.compare(dx, 0);
         final int stepY = Integer.compare(dy, 0);
 
-        // Evita loop infinito: se la box coincide con la luce, nessuna ombra
+        // Avoid infinite loop: if the box coincides with the light, no shadow.
         if (stepX == 0 && stepY == 0) {
             return;
         }
 
         final double distance = Math.sqrt(dx * dx + dy * dy);
-        final int shadowWidth = (int) Math.max(gridSize / SHADOW_WIDTH_MIN_DIVISOR, gridSize / distance);
+        final int shadowWidth = (int) Math.max((double) gridSize / SHADOW_WIDTH_MIN_DIVISOR, gridSize / distance);
         int shadowLength = Math.min(gridSize, SHADOW_MAX_LENGTH);
 
         int shadowX = box.x() + stepX;

@@ -142,8 +142,12 @@ public final class HonkMandModel implements MinigamesModel {
      * Returns the sequence to be reproduced.
      * @return the sequence to be reproduced
      */
+    /**
+     * Returns a defensive copy of the sequence to avoid exposing internal representation.
+     * @return an unmodifiable copy of the sequence to be reproduced
+     */
     public List<Colors> getSequence() {
-        return sequence;
+        return List.copyOf(sequence); // Defensive copy to avoid exposing internal state
     }
 
     /**
