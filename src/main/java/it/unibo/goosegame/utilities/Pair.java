@@ -1,11 +1,10 @@
 package it.unibo.goosegame.utilities;
 
 /**
- * A generic class representing a pair of objects.
- * This class is used to store two related objects of potentially different types.
- *
- * @param <X> the type of the first object
- * @param <Y> the type of the second object
+ * A generic Pair class.
+ * 
+ * @param <X> the type of the first element
+ * @param <Y> the type of the second element
  */
 public class Pair<X, Y> {
 
@@ -13,10 +12,10 @@ public class Pair<X, Y> {
     private final Y y;
 
     /**
-     * Constructor to create a Pair object.
-     *
-     * @param x the first object
-     * @param y the second object
+     * Constructs a new Pair with the specified values.
+     * 
+     * @param x the first value
+     * @param y the second value
      */
     public Pair(final X x, final Y y) {
         super();
@@ -25,29 +24,21 @@ public class Pair<X, Y> {
     }
 
     /**
-     * Returns the first object of the pair.
-     *
-     * @return the first object
+     * @return the first element of the pair 
      */
     public X getX() {
         return this.x;
     }
 
     /**
-     * Returns the second object of the pair.
-     *
-     * @return the second object
+     * @return the second element of the pair 
      */
     public Y getY() {
         return this.y;
     }
 
     /**
-     * Checks if this pair is equal to another object.
-     * Two pairs are considered equal if both their first and second objects are equal.
-     *
-     * @param obj the object to compare with
-     * @return true if the objects are equal, false otherwise
+     * {@inheritDoc}
      */
     @SuppressWarnings("rawtypes")
     @Override
@@ -80,10 +71,7 @@ public class Pair<X, Y> {
     }
 
     /**
-     * Generates a hash code for this pair.
-     * The hash code is computed based on the hash codes of both objects in the pair.
-     *
-     * @return the hash code
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -95,7 +83,7 @@ public class Pair<X, Y> {
     }
 
     /**
-     * Returns a string representation of this pair.
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
