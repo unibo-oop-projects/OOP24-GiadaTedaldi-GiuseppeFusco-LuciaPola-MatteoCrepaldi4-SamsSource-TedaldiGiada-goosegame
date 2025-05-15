@@ -19,12 +19,12 @@ import java.net.URL;
  */
 public final class GameMenuPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final Image backgroundImg;
-
     private static final int BUTTON_FONT_SIZE = 28;
     private static final int COLOR_ALPHA = 180;
     private static final int COLOR_MENU_BLUE = 128;
     private static final int FALLBACK_IMG_SIZE = 32;
+
+    private final Image backgroundImg;
 
     /**
      * Constructs a new menu panel with background image.

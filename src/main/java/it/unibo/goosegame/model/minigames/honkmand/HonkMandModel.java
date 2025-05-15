@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Model class for the HonkMand minigame (a Simon-like memory game).
+ * <p>
+ * This class manages the game logic, including the sequence generation, player input checking,
+ * level progression, score tracking, and game state transitions (playing, win, lose).
+ * It implements the {@link MinigamesModel} interface for integration with the general minigame framework.
+ */
 public final class HonkMandModel implements MinigamesModel {
 
     /**

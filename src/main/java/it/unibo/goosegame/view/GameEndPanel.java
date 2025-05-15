@@ -17,14 +17,14 @@ import java.net.URL;
 
 public final class GameEndPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final Image backgroundImg;
-
     private static final int BUTTON_FONT_SIZE = 20;
     private static final int COLOR_ALPHA = 180;
     private static final int COLOR_GREEN = 128;
     private static final int COLOR_RED = 128;
     private static final int FALLBACK_IMG_SIZE = 32;
     private static final int LABEL_FONT_SIZE = 32;
+
+    private final Image backgroundImg;
 
     /**
      * Constructs a new end-of-game panel with background image.

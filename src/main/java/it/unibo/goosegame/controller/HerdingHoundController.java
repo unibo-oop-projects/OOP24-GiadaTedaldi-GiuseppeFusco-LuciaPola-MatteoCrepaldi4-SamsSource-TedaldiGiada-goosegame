@@ -38,7 +38,12 @@ public class HerdingHoundController {
      * @param frame the main JFrame
      * @param rightPanel the right panel (timer, dog state)
      */
-    public HerdingHoundController(final HerdingHoundModel model, final HerdingHoundView view, final JFrame frame, final RightPanel rightPanel) {
+    public HerdingHoundController(
+            final HerdingHoundModel model,
+            final HerdingHoundView view,
+            final JFrame frame,
+            final RightPanel rightPanel
+    ) {
         this.model = model;
         this.view = view;
         this.frame = frame;

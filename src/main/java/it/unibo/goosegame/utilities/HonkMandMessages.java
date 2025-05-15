@@ -1,5 +1,11 @@
 package it.unibo.goosegame.utilities;
 
+/**
+ * Utility class containing UI messages and labels for the HonkMand minigame.
+ * <p>
+ * This class centralizes all user-facing strings for the HonkMand game, making localization and maintenance easier.
+ * It is not intended to be instantiated.
+ */
 public final class HonkMandMessages {
 
     /** Label for the close game button. */

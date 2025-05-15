@@ -5,6 +5,10 @@ import it.unibo.goosegame.utilities.Position;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Model for the Herding Hound minigame.
+ * Manages the state, logic, and entities of the game.
+ */
 public final class HerdingHoundModel implements MinigamesModel {
     private static final int START_X = 0;
     private static final int START_Y = 0;

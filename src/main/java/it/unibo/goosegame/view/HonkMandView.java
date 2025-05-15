@@ -8,16 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.EnumMap;
+import java.util.Map;
 
 public final class HonkMandView extends JPanel {
     private static final long serialVersionUID = 1L;
-    private final EnumMap<Colors, RoundButton> buttons;
-    private final JButton startButton;
-    private final JLabel levelLabel;
-    private final JLabel scoreLabel;
-    private final JLabel messageLabel;
-    private JFrame frameRef; // Reference to the main frame
-
     private static final int BG_COLOR_B = 245;
     private static final int BG_COLOR_G = 245;
     private static final int BG_COLOR_R = 245;
@@ -36,6 +30,13 @@ public final class HonkMandView extends JPanel {
     private static final int SIDE_PANEL_WIDTH = 60;
     private static final int START_BUTTON_HEIGHT = 40;
     private static final int START_BUTTON_WIDTH = 180;
+
+    private final Map<Colors, RoundButton> buttons;
+    private final JButton startButton;
+    private final JLabel levelLabel;
+    private final JLabel scoreLabel;
+    private final JLabel messageLabel;
+    private JFrame frameRef; // Reference to the main frame
 
     /**
      * Constructs a HonkMandView and initializes the UI components.

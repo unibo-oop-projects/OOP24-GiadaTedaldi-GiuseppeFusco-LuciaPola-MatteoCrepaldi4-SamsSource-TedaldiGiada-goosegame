@@ -1,5 +1,11 @@
 package it.unibo.goosegame.utilities;
 
+/**
+ * Utility class containing constants for the HonkMand minigame.
+ * <p>
+ * This class defines timing, animation, and game configuration constants used throughout the HonkMand game logic and UI.
+ * It is not intended to be instantiated.
+ */
 public final class HonkMandConstants {
 
     /** Duration for which a button lights up on click (ms). */
