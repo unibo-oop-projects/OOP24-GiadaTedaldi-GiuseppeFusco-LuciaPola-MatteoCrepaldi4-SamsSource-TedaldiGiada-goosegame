@@ -15,6 +15,12 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
+/**
+ * Panel for displaying the end-of-game screen with a background image or fallback color.
+ * <p>
+ * Shows a message (win/lose), a close button, and optionally a themed background for the minigame.
+ * Supports both modern and legacy construction for backward compatibility.
+ */
 public final class GameEndPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int BUTTON_FONT_SIZE = 20;

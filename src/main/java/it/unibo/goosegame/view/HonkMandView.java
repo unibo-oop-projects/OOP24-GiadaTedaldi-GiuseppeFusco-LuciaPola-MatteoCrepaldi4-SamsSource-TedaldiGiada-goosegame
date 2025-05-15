@@ -3,13 +3,34 @@ package it.unibo.goosegame.view;
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.utilities.HonkMandMessages;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.BasicStroke;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * View class for the HonkMand minigame, providing the user interface and interaction logic.
+ * <p>
+ * Displays colored buttons, score, level, messages, and manages user input and feedback effects.
+ */
 public final class HonkMandView extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final int BG_COLOR_B = 245;
