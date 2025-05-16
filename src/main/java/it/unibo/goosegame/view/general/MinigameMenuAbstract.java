@@ -21,121 +21,167 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * This is an abstract class representing a menu for the mini-games.
+ */
 public abstract class MinigameMenuAbstract extends JFrame {
 
-    private JPanel cardPanel;
-    private CardLayout cardLayout;
-    private final JButton startButton, infoButton;
+    private static final int WINDOW_WIDTH = 600;
+    private static final int WINDOW_HEIGHT = 400;
+    private static final int BUTTON_WIDTH = 130;
+    private static final int BUTTON_HEIGHT = 110;
+    private static final int ICON_SIZE = 25;
+    private static final int FONT_SIZE = 14;
+    private static final int COLOR = 240;
+    private static final int COLOR_WHITE = 255;
+    private static final int TOP = 100;
+    private static final int BOTTOM = 30;
+    private static final int BOTTOM1 = 40;
+    private static final int LEFT_RIGHT = 50;
+    private static final long serialVersionUID = 1L;
+
+    private final JPanel cardPanel;
+    private final CardLayout cardLayout;
     private final JPanel mainPanel, infoPanel;
     private final Image background;
-    private final JTextArea infoArea;
 
-    private final ImageIcon startIcon = new ImageIcon(getClass().getResource("/play.png"));
-    private final ImageIcon infoIcon = new ImageIcon(getClass().getResource("/i.png"));
-    private final ImageIcon backIcon = new ImageIcon(getClass().getResource("/torna.png"));
+    private final ImageIcon startIcon = new ImageIcon(MinigameMenuAbstract.class.getResource("/play.png"));
+    private final ImageIcon infoIcon = new ImageIcon(MinigameMenuAbstract.class.getResource("/i.png"));
+    private final ImageIcon backIcon = new ImageIcon(MinigameMenuAbstract.class.getResource("/torna.png"));
 
-    public MinigameMenuAbstract(String imgPath, String title, String infoMsg, JPanel gamePanel) {
-        setTitle(title);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600, 400);
-        setLocationRelativeTo(null);
-        
-        background = new ImageIcon(getClass().getResource(imgPath)).getImage();
+    private JButton startButton;
+    private JButton infoButton;
+    private JTextArea infoArea;
 
+    /**
+     * @param imgPath the path of the background image.
+     * @param title the title of the menu window.
+     * @param infoMsg the information message displayed in the info section.
+     * @param gamePanel the panel representing the game.
+     */
+    @SuppressWarnings("ConstructorCallsOverridableMethod")
+    public MinigameMenuAbstract(final String imgPath, final String title, final String infoMsg, final JPanel gamePanel) {
+        background = new ImageIcon(MinigameMenuAbstract.class.getResource(imgPath)).getImage();
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
-        setContentPane(cardPanel);
 
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                scaleComponents();
-            }
-        });
-
-        mainPanel = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        mainPanel.setOpaque(false);
-
-        
-        startButton = createButtonIcon(startIcon, 130, 110);
-        infoButton = createButtonIcon(infoIcon, 25, 25);
-        
-        startButton.addActionListener(e -> cardLayout.show(cardPanel, "Game"));
-        infoButton.addActionListener(e -> cardLayout.show(cardPanel, "Info"));
-
-        JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setOpaque(false);
-        centerPanel.add(startButton);
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        bottomPanel.setOpaque(false);
-        bottomPanel.add(infoButton);
-        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
-
-
-        infoPanel = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-        infoPanel.setOpaque(false);
-
-        infoArea = new JTextArea(infoMsg);
-        infoArea.setWrapStyleWord(true);
-        infoArea.setLineWrap(true);
-        infoArea.setEditable(false);
-        infoArea.setBackground(new Color(240, 240, 240, 255));
-        infoArea.setFont(new Font("Dialog", Font.BOLD, 14));
-
-        JScrollPane scrollPane = new JScrollPane(infoArea);
-        scrollPane.setBackground(new Color(240, 240, 240, 90));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(100, 50, 30, 50));
-
-        JPanel southPanel = new JPanel();
-        JButton backButton = createButtonIcon(backIcon, 25, 25);
-        backButton.addActionListener((ActionEvent e) -> {
-            cardLayout.show(cardPanel, "Menu");
-        });
-        southPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 40,10));
-        southPanel.setOpaque(false);
-        southPanel.add(backButton, BorderLayout.WEST);
-
-        infoPanel.add(scrollPane, BorderLayout.CENTER);
-        infoPanel.add(southPanel, BorderLayout.SOUTH);
+        mainPanel = createMainPanel();
+        infoPanel = createInfoPanel(infoMsg);
 
         cardPanel.add(mainPanel, "Menu");
         cardPanel.add(infoPanel, "Info");
         cardPanel.add(gamePanel, "Game");
 
+        super.setTitle(title);
+    }
+
+    /**
+     * Initializes and sets up the components of the minigames's menu view.
+     */
+    public void initializeView() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setLocationRelativeTo(null);
+        setContentPane(cardPanel);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(final ComponentEvent e) {
+                scaleComponents();
+            }
+        });
         cardLayout.show(cardPanel, "Menu");
         setVisible(true);
     }
-        
 
-    private JButton createButtonIcon(ImageIcon image, int w, int h) {
-        JButton button = new JButton();
-        button.setPreferredSize(new Dimension(w,h));
+    /**
+     * @return mainPanel
+     */
+    private JPanel createMainPanel() {
+        final JPanel panel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(final Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        panel.setOpaque(false);
+
+        startButton = createButtonIcon(startIcon, BUTTON_WIDTH, BUTTON_HEIGHT);
+        infoButton = createButtonIcon(infoIcon, ICON_SIZE, ICON_SIZE);
+        startButton.addActionListener(e -> cardLayout.show(cardPanel, "Game"));
+        infoButton.addActionListener(e -> cardLayout.show(cardPanel, "Info"));
+
+        final JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setOpaque(false);
+        centerPanel.add(startButton);
+        panel.add(centerPanel, BorderLayout.CENTER);
+
+        final JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(infoButton);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+        return panel;
+    }
+
+    /**
+     * @param infoMsg The information about the game to display.
+     * @return infoPanel 
+     */
+    private JPanel createInfoPanel(final String infoMsg) {
+        final JPanel info = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(final Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        info.setOpaque(false);
+
+        infoArea = new JTextArea(infoMsg);
+        infoArea.setWrapStyleWord(true);
+        infoArea.setLineWrap(true);
+        infoArea.setEditable(false);
+        infoArea.setBackground(new Color(COLOR, COLOR, COLOR, COLOR_WHITE));
+        infoArea.setFont(new Font("Verdana", Font.BOLD, FONT_SIZE));
+        final JScrollPane scrollPane = new JScrollPane(infoArea);
+        scrollPane.setBackground(new Color(COLOR, COLOR, COLOR, 90));
+        info.setBorder(BorderFactory.createEmptyBorder(TOP, LEFT_RIGHT, BOTTOM, LEFT_RIGHT));
+
+        final JPanel southPanel = new JPanel();
+        final JButton backButton = createButtonIcon(backIcon, ICON_SIZE, ICON_SIZE);
+        backButton.addActionListener((ActionEvent e) -> {
+            cardLayout.show(cardPanel, "Menu");
+        });
+        southPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, BOTTOM1, 10));
+        southPanel.setOpaque(false);
+        southPanel.add(backButton, BorderLayout.WEST);
+
+        info.add(scrollPane, BorderLayout.CENTER);
+        info.add(southPanel, BorderLayout.SOUTH);
+        return info;
+    }
+
+    /**
+     * @param image the icon image for the button.
+     * @param w the width of the button.
+     * @param h the height of the button.
+     * @return the created button.
+     */
+    private JButton createButtonIcon(final ImageIcon image, final int w, final int h) {
+        final JButton button = new JButton();
+        button.setPreferredSize(new Dimension(w, h));
         button.setIcon(image);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
-    
         button.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
-                int width = button.getWidth();
-                int height = button.getHeight();
-                if(width > 0 && height > 0) {
-                    Image scaledImage = image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            public void componentResized(final ComponentEvent e) {
+                final int width = button.getWidth();
+                final int height = button.getHeight();
+                if (width > 0 && height > 0) {
+                    final Image scaledImage = image.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
                     button.setIcon(new ImageIcon(scaledImage));
                 }
             }
@@ -143,29 +189,33 @@ public abstract class MinigameMenuAbstract extends JFrame {
         return button;
     }
 
+    /**
+     * scales the components according to the window size.
+     */
     private void scaleComponents() {
-        double scaleX = (double) getWidth()/600;
-        double scaleY = (double) getHeight()/400;
-        double scale = Math.min(scaleX, scaleY);
+        final double scaleX = (double) getWidth() / WINDOW_WIDTH;
+        final double scaleY = (double) getHeight() / WINDOW_HEIGHT;
+        final double scale = Math.min(scaleX, scaleY);
 
-        int btnW = (int)(150 * scale);
-        int btnH = (int)(110 * scale);
+        final int btnW = (int) (BUTTON_WIDTH * scale);
+        final int btnH = (int) (BUTTON_HEIGHT * scale);
         startButton.setPreferredSize(new Dimension(btnW, btnH));
-        Image scaledImage = startIcon.getImage().getScaledInstance(btnW, btnH, Image.SCALE_SMOOTH);
+        final Image scaledImage = startIcon.getImage().getScaledInstance(btnW, btnH, Image.SCALE_SMOOTH);
         startButton.setIcon(new ImageIcon(scaledImage));
 
-        if(scale < 1) infoArea.setFont(new Font("Verdana", Font.BOLD, (int)(14*scale)));
+        if (scale < 1) {
+            infoArea.setFont(new Font("Verdana", Font.BOLD, (int) (FONT_SIZE * scale)));
+        }
 
-
-        int iconSize = (int)(25*scale);
+        final int iconSize = (int) (ICON_SIZE * scale);
         infoButton.setPreferredSize(new Dimension(iconSize, iconSize));
-        Image scaledIcon = infoIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
+        final Image scaledIcon = infoIcon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
         infoButton.setIcon(new ImageIcon(scaledIcon));
 
-        infoPanel.setBorder(BorderFactory.createEmptyBorder((int)(100*scale), (int)(50*scale), (int)(30*scale), (int)(50*scale)));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder((int) (TOP * scale), 
+            (int) (LEFT_RIGHT * scale), (int) (BOTTOM * scale), (int) (LEFT_RIGHT * scale)));
 
         mainPanel.revalidate();
         mainPanel.repaint();
     }
-   
 }
