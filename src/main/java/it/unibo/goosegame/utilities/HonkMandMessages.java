@@ -18,8 +18,7 @@ public final class HonkMandMessages {
     public static final String LEVEL_LABEL = "Level: ";
     /** Label for the maximum level. */
     public static final String MAX_LEVEL_LABEL = "Max level: ";
-    /** Label for the restart button. */
-    public static final String RESTART_BUTTON = "Restart";
+
     /** Label for the current score. */
     public static final String SCORE_LABEL = "Score: ";
     /** Label for the start button. */

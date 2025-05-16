@@ -8,6 +8,9 @@ import it.unibo.goosegame.view.RightPanel;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -42,6 +45,11 @@ public class HerdingHoundController {
      * @param frame the main JFrame
      * @param rightPanel the right panel (timer, dog state)
      */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "Controller uses externally provided references to model, view, frame, and panel."
+    + "Assumes trusted injection without copying."
+        )
     public HerdingHoundController(
             final HerdingHoundModel model,
             final HerdingHoundView view,

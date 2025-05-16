@@ -6,6 +6,9 @@ import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.view.HonkMandView;
 
 import javax.swing.Timer;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -29,6 +32,8 @@ public class HonkMandController {
      * @param model the game logic model
      * @param view the game view
      */
+    @SuppressFBWarnings(value = "EI2",
+     justification = "Controller does not modify external view/model and assumes trusted injection")
     public HonkMandController(final HonkMandModel model, final HonkMandView view) {
         this.model = model;
         this.view = view;

@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -162,6 +165,11 @@ public final class HonkMandView extends JPanel {
      * The class does not assume responsibility for external modifications to the frame.
      * @param frame the main JFrame
      */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "The JFrame reference is intentionally stored for later use (e.g. dialog display)."
+    + "Responsibility for lifecycle remains external."
+    )
     public void setFrameRef(final JFrame frame) {
         this.frameRef = frame;
     }
@@ -229,7 +237,7 @@ public final class HonkMandView extends JPanel {
      * @param active true if the game is active, false otherwise
      */
     public void setGameActive(final boolean active) {
-        startButton.setText(active ? HonkMandMessages.RESTART_BUTTON : HonkMandMessages.START_BUTTON);
+        startButton.setText(HonkMandMessages.START_BUTTON);
         startButton.setEnabled(!active);
     }
 
