@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,64 +18,90 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class GameInfo extends JPanel{
-    private final JButton backButton;
-    private final GameMenu menuView;
-    private final Image background;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+/**
+ * The class implements the game information window.
+ */
+public class GameInfo extends JPanel {
+    private static final int BUTTON_SIZE = 35;
+    private static final int FONT_SIZE = 14;
+    private static final int WINDOW_HEIGHT = 400;
+    private static final int WINDOW_WIDTH = 500;
+    private static final int MARGIN_TOP = 100;
+    private static final int MARGIN_BOTTOM = 30;
+    private static final int BOTTOM_MARGIN = 40;
+    private static final int MARGIN_LEFT = 50;
+    private static final int MARGIN_RIGHT = 50;
+    private static final int COLOR = 240;
+    private static final int COLOR_WHITE = 255;
+    private static final long serialVersionUID = 1L;
+
+    @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
+    private final transient GameMenu menuView;
+    private final transient Image background;
     private final ImageIcon imageButton;
-    private final JTextArea infoArea;
-    private final JPanel textPanel;
 
-    public GameInfo(GameMenu menu) {
-        this.menuView = menu;
-        this.background = new ImageIcon(getClass().getResource("/ImmagineMenu.png")).getImage();
-        this.imageButton = new ImageIcon(getClass().getResource("/torna.png"));
-        setLayout(new BorderLayout());
+    private JButton backButton;
+    private JTextArea infoArea;
+    private JPanel textPanel;
+    /**
+     * @param menu The reference to the main menu to switch views.
+     */
+    @SuppressFBWarnings("EI2")
+    public GameInfo(final GameMenu menu) {
+        this.menuView = Objects.requireNonNull(menu);
+        this.background = new ImageIcon(GameInfo.class.getResource("/ImmagineMenu.png")).getImage();
+        this.imageButton = new ImageIcon(GameInfo.class.getResource("/torna.png"));
+        super.setLayout(new BorderLayout());
+    }
 
-        infoArea = new JTextArea("""
+    /**
+     * Initializes and sets up the components of the GameInfo view.
+     */
+    public void initializeView() {
+        infoArea = new JTextArea(""" 
+        RULES OF THE GOOSE GAME
 
-                                            REGOLE GIOCO DELL'OCA
+        1.  During their turn, the player must roll two dice (by pressing two buttons).
+            The number of spaces moved forward will depend on the sum of the dice.
 
-                                           1. Durante il proprio turno il giocatore dovrà lanciare due dadi (premere due tasti).
-                                              L'avanzamento di casella dipenderà dalla somma di quest'ultimi.
-                                           
-                                           2. A seconda della cella in cui il giocatore si ferma, si possono verificare tre eventi:
-                                                
-                                              STAZIONAMENTO: si rimane fermi.
+        2.  Depending on the cell where the player lands, one of three events may occur:
+                STATIONARY: The player remains on the same cell.
 
-                                              MALUS: Il giocatore subisce una penalità:
-                                                        - Retrocede di n celle
-                                                        - Salta n turni
-                                                        - Torna alla casella iniziale
+                MALUS: The player receives a penalty:
+                    - Moves back by n cells
+                    - Skips n turns
+                    - Returns to the starting cell
 
-                                              MINIGIOCO: Il giocatore dovrà affrontare un minigioco, in caso di vittoria può ottenere due tipi di "Carte Bonus":
-                                                            - SALTA MALUS: permette di evitare il prossimo malus
-                                                            - AVANZA CASELLA: permette di far avanzare il giocatore di n caselle
+                MINIGAME: The player must complete a minigame. If they win, they may receive one of two types of "Bonus Cards":
+                    - SKIP MALUS: Allows the player to avoid the next malus
+                    - ADVANCE SPACES: Allows the player to move forward by n cells
 
-                                           3. Il primo giocatore a raggiungere l'ultima casella con il numero esatto di avanzamenti, VINCE.
-                                            """);
+        3. The first player to reach the last square with the exact number of moves WINS.
+        """);
         infoArea.setWrapStyleWord(true);
         infoArea.setLineWrap(true);
         infoArea.setEditable(false);
         infoArea.setCaretPosition(0);
-        infoArea.setBackground(new Color(240, 240, 240, 255));
+        infoArea.setBackground(new Color(COLOR, COLOR, COLOR, COLOR_WHITE));
         infoArea.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
-        infoArea.setFont(new Font("Verdana", Font.BOLD, 14));
+        infoArea.setFont(new Font("Verdana", Font.BOLD, FONT_SIZE));
 
-        JScrollPane scrollPane = new JScrollPane(infoArea);
-        scrollPane.setBackground(new Color(240, 240, 240, 90));
+        final JScrollPane scrollPane = new JScrollPane(infoArea);
+        scrollPane.setBackground(new Color(COLOR, COLOR, COLOR, 90));
 
         textPanel = new JPanel(new BorderLayout());
         textPanel.setOpaque(false);
-        textPanel.setBorder(BorderFactory.createEmptyBorder(100, 50, 30, 50));
+        textPanel.setBorder(BorderFactory.createEmptyBorder(MARGIN_TOP, MARGIN_LEFT, MARGIN_BOTTOM, MARGIN_RIGHT));
         textPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel();
-        backButton = menuView.createButtonIcon(imageButton, 35, 35);
+        final JPanel bottomPanel = new JPanel();
+        backButton = menuView.createButtonIcon(imageButton, BUTTON_SIZE, BUTTON_SIZE);
         backButton.addActionListener((ActionEvent e) -> {
             menuView.showMenu();
         });
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 40,10));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, BOTTOM_MARGIN, 10));
         bottomPanel.setOpaque(false);
         bottomPanel.add(backButton, BorderLayout.WEST);
 
@@ -83,32 +110,40 @@ public class GameInfo extends JPanel{
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
+            public void componentResized(final ComponentEvent e) {
                 scaleComponents();
             }
         });
     }
 
+    /**
+     * @param g the graphics context used for rendering.
+     */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
     }
 
     private void scaleComponents() {
-        double scaleX = (double) getWidth()/500;
-        double scaleY = (double) getHeight()/400;
-        double scale = Math.min(scaleX, scaleY);
+        final double scaleX = (double) getWidth() / WINDOW_WIDTH;
+        final double scaleY = (double) getHeight() / WINDOW_HEIGHT;
+        final double scale = Math.min(scaleX, scaleY);
+        final double newButtonSize = BUTTON_SIZE * scale;
 
-        if(scale < 1) infoArea.setFont(new Font("Verdana", Font.BOLD, (int)(14*scale)));
-        textPanel.setBorder(BorderFactory.createEmptyBorder((int)(100*scale), (int)(50*scale), (int)(30*scale), (int)(50*scale)));
-
-        backButton.setPreferredSize(new Dimension((int)(35*scale), (int)(35*scale)));
-        Image scaledImage = imageButton.getImage().getScaledInstance((int)(35*scale), (int)(35*scale), Image.SCALE_SMOOTH);
+        if (scale < 1) {
+            infoArea.setFont(new Font("Verdana", 
+                Font.BOLD, (int) (FONT_SIZE * scale)));
+        }
+        textPanel.setBorder(BorderFactory.createEmptyBorder((int) (MARGIN_TOP * scale), 
+            (int) (MARGIN_LEFT * scale), (int) (MARGIN_BOTTOM * scale), (int) (MARGIN_RIGHT * scale)));
+        final Dimension d = new Dimension((int) newButtonSize, (int) newButtonSize);
+        backButton.setPreferredSize(d);
+        final Image scaledImage = imageButton.getImage().getScaledInstance((int) newButtonSize, 
+            (int) newButtonSize, Image.SCALE_SMOOTH);
         backButton.setIcon(new ImageIcon(scaledImage));
 
         revalidate();
         repaint();
     }
 }
-
