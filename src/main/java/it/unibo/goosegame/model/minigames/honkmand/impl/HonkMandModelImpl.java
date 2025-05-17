@@ -42,6 +42,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
     /**
      * Starts a new game, resetting score and sequences.
      */
+    @Override
     public void startGame() {
         sequence.clear();
         playerSequence.clear();
@@ -54,6 +55,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
     /**
      * Advances to the next round, increasing the level and generating a new sequence.
      */
+    @Override
     public void nextRound() {
         level++;
         playerSequence.clear();
@@ -81,6 +83,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      * @param colorId the color chosen by the player
      * @return the result of the input
      */
+    @Override
     public HonkMandModel.InputResult checkPlayerInput(final Colors colorId) {
         if (gameState != GameState.ONGOING) {
             return InputResult.GAME_OVER;
@@ -110,13 +113,10 @@ public final class HonkMandModelImpl implements HonkMandModel {
     }
 
     /**
-     * Returns the sequence to be reproduced.
-     * @return the sequence to be reproduced
-     */
-    /**
      * Returns a defensive copy of the sequence to avoid exposing internal representation.
      * @return an unmodifiable copy of the sequence to be reproduced
      */
+    @Override
     public List<Colors> getSequence() {
         return List.copyOf(sequence); // Defensive copy to avoid exposing internal state
     }
@@ -125,6 +125,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      * Returns the current level.
      * @return the current level
      */
+    @Override
     public int getLevel() {
         return level;
     }
@@ -133,6 +134,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      * Returns the current score.
      * @return the current score
      */
+    @Override
     public int getScore() {
         return score;
     }
@@ -141,6 +143,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      * Returns the current game state.
      * @return the current game state
      */
+    @Override
     public GameState getGameState() {
         return gameState;
     }

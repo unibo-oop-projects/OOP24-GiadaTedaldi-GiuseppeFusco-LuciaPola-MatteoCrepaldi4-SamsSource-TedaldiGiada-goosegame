@@ -38,6 +38,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
     /**
      * Performs the next automatic move of the goose (for demo/test).
      */
+    @Override
     public void nextGooseMove() {
         final Position pos = goose.getCoord();
         final int x = pos.x();
@@ -56,6 +57,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the goose instance.
      * @return the goose instance
      */
+    @Override
     public GooseImpl getGoose() {
         return this.goose;
     }
@@ -64,6 +66,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the dog instance.
      * @return the dog instance
      */
+    @Override
     public DogImpl getDog() {
         return this.dog;
     }
@@ -72,6 +75,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the box instance.
      * @return the box instance
      */
+    @Override
     public BoxImpl getBox() {
         return this.box;
     }
@@ -80,6 +84,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the grid size.
      * @return the grid size
      */
+    @Override
     public int getGrid() {
         return this.gridSize;
     }
@@ -88,6 +93,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the list of shadow positions.
      * @return list of shadow positions
      */
+    @Override
     public List<Position> getShadows() {
         return this.box.getShadows();
     }
@@ -107,6 +113,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
     /**
      * Starts the game and resets the timer.
      */
+    @Override
     public void startGame() {
         this.startTime = System.currentTimeMillis();
         this.started = true;
@@ -116,6 +123,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the remaining time for the game.
      * @return the remaining time in milliseconds
      */
+    @Override
     public long getRemainingTime() {
         if (!started) {
             return TIME_LIMIT_MS;
@@ -128,6 +136,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the current game state.
      * @return the current game state
      */
+    @Override
     public GameState getGameState() {
         if (getRemainingTime() == 0) {
             return GameState.LOST;
@@ -163,6 +172,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the cells visible by the dog, excluding shadows and boxes.
      * @return list of visible positions
      */
+    @Override
     public List<Position> getVisible() {
         return dog.getVisibleArea().stream()
             .filter(pos -> !box.getShadows().contains(pos))
@@ -173,6 +183,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
     /**
      * Advances the dog's state to the next one (ASLEEP->ALERT->AWAKE->ASLEEP).
      */
+    @Override
     public void nextDogState() {
         dog.refreshState();
         dog.refreshDirection(goose);
@@ -182,6 +193,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * Returns the list of box positions.
      * @return list of box positions
      */
+    @Override
     public List<Position> getBoxes() {
         return box.getBoxes();
     }

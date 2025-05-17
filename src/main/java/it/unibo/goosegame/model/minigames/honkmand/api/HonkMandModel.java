@@ -13,11 +13,15 @@ public interface HonkMandModel extends MinigamesModel {
      * Possible results after a player input.
      */
     enum InputResult {
-        CORRECT,
-        NEXT_ROUND,
-        GAME_OVER,
-        GAME_WIN
-    }
+    /** The input was correct, but the sequence is not yet complete. */
+    CORRECT,
+    /** The input completed the sequence, advancing to the next round. */
+    NEXT_ROUND,
+    /** The input was incorrect, resulting in game over. */
+    GAME_OVER,
+    /** The input completed the final sequence, resulting in a win. */
+    GAME_WIN
+}
 
     /**
      * Starts a new game, resetting score and sequences.
