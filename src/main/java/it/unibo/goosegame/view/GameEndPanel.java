@@ -44,8 +44,10 @@ public final class GameEndPanel extends JPanel {
         this.backgroundImg = loadBackgroundImage(gameName, hasWon);
         setOpaque(false);
         final JLabel label = new JLabel(message);
+        label.setOpaque(true);
         label.setFont(new Font("Arial", Font.BOLD, LABEL_FONT_SIZE));
         label.setForeground(Color.WHITE);
+        label.setBackground(Color.BLACK);
         final JButton closeButton = new JButton("Close");
         closeButton.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
         closeButton.addActionListener(e -> onClose.run());

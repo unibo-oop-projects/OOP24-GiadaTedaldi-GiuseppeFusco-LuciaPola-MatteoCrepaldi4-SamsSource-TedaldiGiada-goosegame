@@ -215,7 +215,7 @@ public final class HonkMandView extends JPanel {
         if (frameRef == null) {
             return;
         }
-        final String msg = hasWon ? "You Win!" : "You Lose!";
+        final String msg = hasWon ? "You Won!" : "You Lost!";
         frameRef.getContentPane().removeAll();
         frameRef.getContentPane().add(new GameEndPanel(msg, frameRef::dispose, "HonkMand", hasWon), BorderLayout.CENTER);
         frameRef.revalidate();
