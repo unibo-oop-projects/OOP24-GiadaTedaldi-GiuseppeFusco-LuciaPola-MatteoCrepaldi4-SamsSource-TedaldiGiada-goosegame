@@ -1,7 +1,7 @@
 package it.unibo.goosegame.application;
 
 import it.unibo.goosegame.controller.HonkMandController;
-import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
+import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.view.GameMenuPanel;
 import it.unibo.goosegame.view.HonkMandView;
 
@@ -45,7 +45,7 @@ public final class HonkMandMain {
                 frame.add(view, BorderLayout.CENTER);
                 frame.revalidate();
                 frame.repaint();
-                final HonkMandModel model = new HonkMandModel();
+                final HonkMandModelImpl model = new HonkMandModelImpl();
                 new HonkMandController(model, view);
             });
             frame.add(menuPanel, BorderLayout.CENTER);

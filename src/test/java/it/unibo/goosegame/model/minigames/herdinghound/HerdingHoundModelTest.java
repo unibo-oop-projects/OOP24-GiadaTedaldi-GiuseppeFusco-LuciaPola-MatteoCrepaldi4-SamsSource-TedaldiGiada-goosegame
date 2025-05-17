@@ -1,6 +1,6 @@
 package it.unibo.goosegame.model.minigames.herdinghound;
 
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,8 +19,8 @@ class HerdingHoundModelTest {
      */
     @Test
     void testGameStartsOngoing() {
-        final HerdingHoundModel model = new HerdingHoundModel(GRID_SIZE_5);
-        assertEquals(HerdingHoundModel.GameState.ONGOING, model.getGameState());
+        final HerdingHoundModelImpl model = new HerdingHoundModelImpl(GRID_SIZE_5);
+        assertEquals(HerdingHoundModelImpl.GameState.ONGOING, model.getGameState());
         assertFalse(model.isOver());
     }
 
@@ -29,10 +29,10 @@ class HerdingHoundModelTest {
      */
     @Test
     void testWinCondition() {
-        final HerdingHoundModel model = new HerdingHoundModel(GRID_SIZE_3);
+        final HerdingHoundModelImpl model = new HerdingHoundModelImpl(GRID_SIZE_3);
         // Move the goose to the winning position
         model.getGoose().move(0, 2);
-        assertEquals(HerdingHoundModel.GameState.WON, model.getGameState());
+        assertEquals(HerdingHoundModelImpl.GameState.WON, model.getGameState());
         assertTrue(model.isOver());
     }
 
@@ -41,7 +41,7 @@ class HerdingHoundModelTest {
      */
     @Test
     void testResetGame() {
-        final HerdingHoundModel model = new HerdingHoundModel(GRID_SIZE_5);
+        final HerdingHoundModelImpl model = new HerdingHoundModelImpl(GRID_SIZE_5);
         model.getGoose().move(1, 0);
         model.resetGame();
         assertEquals(0, model.getGoose().getCoord().x());

@@ -1,7 +1,7 @@
 package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.view.HerdingHoundView;
 import it.unibo.goosegame.view.RightPanel;
@@ -28,7 +28,7 @@ public class HerdingHoundController {
      * References to model, view, frame, and rightPanel are intentionally stored as mutable references provided externally.
      * This controller does not assume responsibility for external modifications to these objects.
      */
-    private final HerdingHoundModel model;
+    private final HerdingHoundModelImpl model;
     private final HerdingHoundView view;
     private final JFrame frame;
     private final RightPanel rightPanel;
@@ -51,7 +51,7 @@ public class HerdingHoundController {
     + "Assumes trusted injection without copying."
         )
     public HerdingHoundController(
-            final HerdingHoundModel model,
+            final HerdingHoundModelImpl model,
             final HerdingHoundView view,
             final JFrame frame,
             final RightPanel rightPanel

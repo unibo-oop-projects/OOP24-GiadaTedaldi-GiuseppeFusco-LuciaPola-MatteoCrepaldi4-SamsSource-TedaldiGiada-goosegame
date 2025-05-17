@@ -1,7 +1,7 @@
 package it.unibo.goosegame.controller;
 
-import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel;
-import it.unibo.goosegame.model.minigames.honkmand.HonkMandModel.GameState;
+import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.view.HonkMandView;
 
@@ -22,7 +22,7 @@ public class HonkMandController {
      * References to model and view are intentionally stored as mutable references provided externally.
      * This controller does not assume responsibility for external modifications to these objects.
      */
-    private final HonkMandModel model;
+    private final HonkMandModelImpl model;
     private final HonkMandView view;
     private Timer sequenceTimer;
     private boolean isShowingSequence;
@@ -34,7 +34,7 @@ public class HonkMandController {
      */
     @SuppressFBWarnings(value = "EI2",
      justification = "Controller does not modify external view/model and assumes trusted injection")
-    public HonkMandController(final HonkMandModel model, final HonkMandView view) {
+    public HonkMandController(final HonkMandModelImpl model, final HonkMandView view) {
         this.model = model;
         this.view = view;
         initController();
@@ -131,12 +131,12 @@ public class HonkMandController {
             return; // Ignore clicks during sequence display
         }
         // Use the new state management
-        if (model.getGameState() != GameState.PLAYING) {
+        if (model.getGameState() != GameState.ONGOING) {
             return;
         }
 
         view.lightUpButton(colorId, it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_CLICK_LIGHT_DURATION);
-        final HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
+        final HonkMandModelImpl.InputResult result = model.checkPlayerInput(colorId);
 
         switch (result) {
             case CORRECT:

@@ -1,6 +1,6 @@
-package it.unibo.goosegame.model.minigames.honkmand;
+package it.unibo.goosegame.model.minigames.honkmand.impl;
 
-import it.unibo.goosegame.model.general.MinigamesModel;
+import it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel;
 import it.unibo.goosegame.utilities.Colors;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.Random;
  * <p>
  * This class manages the game logic, including the sequence generation, player input checking,
  * level progression, score tracking, and game state transitions (playing, win, lose).
- * It implements the {@link MinigamesModel} interface for integration with the general minigame framework.
+ * It implements the {@link HonkMandModel} interface for integration with the general minigame framework.
  */
-public final class HonkMandModel implements MinigamesModel {
+public final class HonkMandModelImpl implements HonkMandModel {
 
     /**
      * Maximum level to win the game (now in HonkMandConstants).
@@ -25,41 +25,12 @@ public final class HonkMandModel implements MinigamesModel {
     private int level;
     private int score;
     private final Random random;
-
-    /**
-     * Possible states of the game.
-     */
-    public enum GameState {
-        /** The game has not started yet. */
-        NOT_STARTED,
-        /** The game is in progress. */
-        PLAYING,
-        /** The game is over (lost). */
-        GAME_OVER,
-        /** The game is won. */
-        GAME_WIN
-    }
-
     private GameState gameState;
-
-    /**
-     * Possible results after a player input.
-     */
-    public enum InputResult {
-        /** Input is correct, wait for next input. */
-        CORRECT,
-        /** Sequence completed, go to next round. */
-        NEXT_ROUND,
-        /** Wrong input, game lost. */
-        GAME_OVER,
-        /** Game won. */
-        GAME_WIN
-    }
 
     /**
      * Constructs a HonkMandModel object and initializes the game state.
      */
-    public HonkMandModel() {
+    public HonkMandModelImpl() {
         sequence = new ArrayList<>();
         playerSequence = new ArrayList<>();
         level = 0;
@@ -76,7 +47,7 @@ public final class HonkMandModel implements MinigamesModel {
         playerSequence.clear();
         level = 0;
         score = 0;
-        gameState = GameState.PLAYING;
+        gameState = GameState.ONGOING;
         nextRound();
     }
 
@@ -88,7 +59,7 @@ public final class HonkMandModel implements MinigamesModel {
         playerSequence.clear();
 
         if (level > MAX_LEVEL) {
-            gameState = GameState.GAME_WIN;
+            gameState = GameState.WON;
             return;
         }
         generateNewSequence();
@@ -110,8 +81,8 @@ public final class HonkMandModel implements MinigamesModel {
      * @param colorId the color chosen by the player
      * @return the result of the input
      */
-    public InputResult checkPlayerInput(final Colors colorId) {
-        if (gameState != GameState.PLAYING) {
+    public HonkMandModel.InputResult checkPlayerInput(final Colors colorId) {
+        if (gameState != GameState.ONGOING) {
             return InputResult.GAME_OVER;
         }
         playerSequence.add(colorId);
@@ -119,21 +90,21 @@ public final class HonkMandModel implements MinigamesModel {
 
         // Fix: check bounds before accessing sequence
         if (currentIndex >= sequence.size()) {
-            gameState = GameState.GAME_OVER;
+            gameState = GameState.LOST;
             return InputResult.GAME_OVER;
         }
         if (playerSequence.get(currentIndex).equals(sequence.get(currentIndex))) {
             if (playerSequence.size() == sequence.size()) {
                 score++;
                 if (level == MAX_LEVEL) {
-                    gameState = GameState.GAME_WIN;
+                    gameState = GameState.WON;
                     return InputResult.GAME_WIN;
                 }
                 return InputResult.NEXT_ROUND;
             }
             return InputResult.CORRECT;
         } else {
-            gameState = GameState.GAME_OVER;
+            gameState = GameState.LOST;
             return InputResult.GAME_OVER;
         }
     }
@@ -189,18 +160,6 @@ public final class HonkMandModel implements MinigamesModel {
      */
     @Override
     public boolean isOver() {
-        return gameState == GameState.GAME_OVER || gameState == GameState.GAME_WIN;
-    }
-
-    /**
-     * Returns the general state of the minigame according to the MinigamesModel interface.
-     * @return the general state of the minigame
-     */
-    public MinigamesModel.GameState getGameStateGeneral() {
-        return switch (gameState) {
-            case PLAYING, NOT_STARTED -> MinigamesModel.GameState.ONGOING;
-            case GAME_WIN -> MinigamesModel.GameState.WON;
-            case GAME_OVER -> MinigamesModel.GameState.LOST;
-        };
+        return gameState == GameState.LOST || gameState == GameState.WON;
     }
 }

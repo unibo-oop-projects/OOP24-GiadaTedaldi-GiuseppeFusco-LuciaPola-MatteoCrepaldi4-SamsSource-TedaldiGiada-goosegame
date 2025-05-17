@@ -11,6 +11,10 @@ public interface MinigamesModel {
      */
     enum GameState {
         /**
+         * The game is not started yet.
+         */
+        NOT_STARTED,
+        /**
          * The game is ongoing.
          */
         ONGOING,

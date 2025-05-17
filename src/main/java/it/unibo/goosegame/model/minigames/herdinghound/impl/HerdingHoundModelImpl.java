@@ -1,6 +1,6 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
-import it.unibo.goosegame.model.general.MinigamesModel;
+import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
 import it.unibo.goosegame.utilities.Position;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  * Model for the Herding Hound minigame.
  * Manages the state, logic, and entities of the game.
  */
-public final class HerdingHoundModel implements MinigamesModel {
+public final class HerdingHoundModelImpl implements HerdingHoundModel {
     private static final int START_X = 0;
     private static final int START_Y = 0;
     private static final long TIME_LIMIT_MS = 60_000;
@@ -25,7 +25,7 @@ public final class HerdingHoundModel implements MinigamesModel {
      * Constructs a HerdingHoundModel object.
      * @param gridSize the size of the grid
      */
-    public HerdingHoundModel(final int gridSize) {
+    public HerdingHoundModelImpl(final int gridSize) {
         this.gridSize = gridSize;
         this.goose = new GooseImpl(START_X, START_Y);
         this.dog = new DogImpl(gridSize);

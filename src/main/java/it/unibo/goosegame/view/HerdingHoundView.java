@@ -1,7 +1,7 @@
 package it.unibo.goosegame.view;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.utilities.Position;
 
 import javax.swing.JPanel;
@@ -34,7 +34,7 @@ public final class HerdingHoundView extends JPanel {
     private static final Color DOG_ALERT_COLOR = Color.YELLOW;
     private static final Color DOG_DEFAULT_COLOR = Color.WHITE;
 
-    private final transient HerdingHoundModel model;
+    private final transient HerdingHoundModelImpl model;
 
     // Blinking of red zones
     private boolean blinking;
@@ -56,7 +56,7 @@ public final class HerdingHoundView extends JPanel {
      * Constructs a HerdingHoundView.
      * @param model the game model (must not be null)
      */
-    public HerdingHoundView(final HerdingHoundModel model) {
+    public HerdingHoundView(final HerdingHoundModelImpl model) {
         this.model = Objects.requireNonNull(model, "Model cannot be null");
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(BACKGROUND_COLOR);

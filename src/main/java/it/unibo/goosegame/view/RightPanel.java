@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view;
 
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModel;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -24,14 +24,14 @@ public final class RightPanel extends JPanel {
     private static final int PANEL_WIDTH = 200;
     private static final int IMAGE_SIZE = 120;
     private static final int TIMER_FONT_SIZE = 22;
-    private final transient HerdingHoundModel model;
+    private final transient HerdingHoundModelImpl model;
     private final transient Image awakeImage, alertImage, asleepImage;
 
     /**
      * Constructs a RightPanel.
      * @param model the game model
      */
-    public RightPanel(final HerdingHoundModel model) {
+    public RightPanel(final HerdingHoundModelImpl model) {
         this.model = model;
         setPreferredSize(new Dimension(PANEL_WIDTH, 0));
         setBackground(Color.LIGHT_GRAY);

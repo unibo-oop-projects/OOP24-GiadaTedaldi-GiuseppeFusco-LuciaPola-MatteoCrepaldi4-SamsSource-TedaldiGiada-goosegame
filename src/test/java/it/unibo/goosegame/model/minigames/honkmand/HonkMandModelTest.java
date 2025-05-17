@@ -1,5 +1,6 @@
 package it.unibo.goosegame.model.minigames.honkmand;
 
+import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.utilities.Colors;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,11 +16,11 @@ class HonkMandModelTest {
      */
     @Test
     void testStartGameInitializesState() {
-        final HonkMandModel model = new HonkMandModel();
+        final HonkMandModelImpl model = new HonkMandModelImpl();
         model.startGame();
         assertEquals(1, model.getLevel());
         assertEquals(0, model.getScore());
-        assertEquals(HonkMandModel.GameState.PLAYING, model.getGameState());
+        assertEquals(HonkMandModelImpl.GameState.ONGOING, model.getGameState());
         assertFalse(model.getSequence().isEmpty());
     }
 
@@ -28,10 +29,10 @@ class HonkMandModelTest {
      */
     @Test
     void testCorrectInputAdvancesRound() {
-        final HonkMandModel model = new HonkMandModel();
+        final HonkMandModelImpl model = new HonkMandModelImpl();
         model.startGame();
         final Colors first = model.getSequence().get(0);
-        assertEquals(HonkMandModel.InputResult.NEXT_ROUND, model.checkPlayerInput(first));
+        assertEquals(HonkMandModelImpl.InputResult.NEXT_ROUND, model.checkPlayerInput(first));
     }
 
     /**
@@ -39,9 +40,9 @@ class HonkMandModelTest {
      */
     @Test
     void testWrongInputEndsGame() {
-        final HonkMandModel model = new HonkMandModel();
+        final HonkMandModelImpl model = new HonkMandModelImpl();
         model.startGame();
         final Colors wrong = Colors.values()[(model.getSequence().get(0).ordinal() + 1) % Colors.values().length];
-        assertEquals(HonkMandModel.InputResult.GAME_OVER, model.checkPlayerInput(wrong));
+        assertEquals(HonkMandModelImpl.InputResult.GAME_OVER, model.checkPlayerInput(wrong));
     }
 }
