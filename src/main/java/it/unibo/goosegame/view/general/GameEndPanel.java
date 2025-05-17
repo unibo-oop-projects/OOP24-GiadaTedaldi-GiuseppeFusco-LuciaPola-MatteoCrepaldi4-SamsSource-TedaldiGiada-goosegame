@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view;
+package it.unibo.goosegame.view.general;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

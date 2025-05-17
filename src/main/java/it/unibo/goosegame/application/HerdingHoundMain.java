@@ -6,9 +6,9 @@ import javax.swing.SwingUtilities;
 
 import it.unibo.goosegame.controller.HerdingHoundController;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
-import it.unibo.goosegame.view.GameMenuPanel;
-import it.unibo.goosegame.view.HerdingHoundView;
-import it.unibo.goosegame.view.RightPanel;
+import it.unibo.goosegame.view.general.GameMenuPanel;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundView;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

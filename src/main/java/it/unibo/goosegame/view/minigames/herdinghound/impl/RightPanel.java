@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view;
+package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 

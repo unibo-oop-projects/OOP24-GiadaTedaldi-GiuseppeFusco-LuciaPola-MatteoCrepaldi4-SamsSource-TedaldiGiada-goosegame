@@ -3,7 +3,7 @@ package it.unibo.goosegame.controller;
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
-import it.unibo.goosegame.view.HonkMandView;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandView;
 
 import javax.swing.Timer;
 

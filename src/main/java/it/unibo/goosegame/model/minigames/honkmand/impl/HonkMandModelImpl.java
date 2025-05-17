@@ -148,8 +148,6 @@ public final class HonkMandModelImpl implements HonkMandModel {
         return gameState;
     }
 
-    // --- MinigamesModel implementation ---
-
     /**
      * {@inheritDoc}
      */

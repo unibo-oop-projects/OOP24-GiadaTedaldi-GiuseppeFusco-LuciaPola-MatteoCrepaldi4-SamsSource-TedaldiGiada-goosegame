@@ -2,8 +2,8 @@ package it.unibo.goosegame.application;
 
 import it.unibo.goosegame.controller.HonkMandController;
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
-import it.unibo.goosegame.view.GameMenuPanel;
-import it.unibo.goosegame.view.HonkMandView;
+import it.unibo.goosegame.view.general.GameMenuPanel;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandView;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;

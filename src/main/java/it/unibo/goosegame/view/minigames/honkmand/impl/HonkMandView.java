@@ -1,7 +1,8 @@
-package it.unibo.goosegame.view;
+package it.unibo.goosegame.view.minigames.honkmand.impl;
 
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.utilities.HonkMandMessages;
+import it.unibo.goosegame.view.general.GameEndPanel;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
