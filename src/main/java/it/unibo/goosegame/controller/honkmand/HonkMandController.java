@@ -1,4 +1,4 @@
-package it.unibo.goosegame.controller;
+package it.unibo.goosegame.controller.honkmand;
 
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;

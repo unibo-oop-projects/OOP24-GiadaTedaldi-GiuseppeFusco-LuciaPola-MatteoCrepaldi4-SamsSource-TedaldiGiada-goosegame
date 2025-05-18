@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import it.unibo.goosegame.controller.HerdingHoundController;
+import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.view.general.GameMenuPanel;
 import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
