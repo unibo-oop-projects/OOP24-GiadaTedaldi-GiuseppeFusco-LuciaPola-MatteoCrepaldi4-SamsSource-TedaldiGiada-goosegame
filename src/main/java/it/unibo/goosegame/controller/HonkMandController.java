@@ -3,7 +3,7 @@ package it.unibo.goosegame.controller;
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
-import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandView;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandViewImpl;
 
 import javax.swing.Timer;
 
@@ -23,7 +23,7 @@ public class HonkMandController {
      * This controller does not assume responsibility for external modifications to these objects.
      */
     private final HonkMandModelImpl model;
-    private final HonkMandView view;
+    private final HonkMandViewImpl view;
     private Timer sequenceTimer;
     private boolean isShowingSequence;
 
@@ -34,7 +34,7 @@ public class HonkMandController {
      */
     @SuppressFBWarnings(value = "EI2",
      justification = "Controller does not modify external view/model and assumes trusted injection")
-    public HonkMandController(final HonkMandModelImpl model, final HonkMandView view) {
+    public HonkMandController(final HonkMandModelImpl model, final HonkMandViewImpl view) {
         this.model = model;
         this.view = view;
         initController();

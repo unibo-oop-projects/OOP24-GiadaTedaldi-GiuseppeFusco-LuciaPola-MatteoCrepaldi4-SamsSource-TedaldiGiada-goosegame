@@ -2,8 +2,8 @@ package it.unibo.goosegame.controller;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundView;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanel;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 
 import javax.swing.JFrame;
@@ -29,9 +29,9 @@ public class HerdingHoundController {
      * This controller does not assume responsibility for external modifications to these objects.
      */
     private final HerdingHoundModelImpl model;
-    private final HerdingHoundView view;
+    private final HerdingHoundViewImpl view;
     private final JFrame frame;
-    private final RightPanel rightPanel;
+    private final RightPanelImpl rightPanel;
     private Timer dogStateTimer;
     private Timer gameTimer;
     private final Random rnd = new Random();
@@ -52,9 +52,9 @@ public class HerdingHoundController {
         )
     public HerdingHoundController(
             final HerdingHoundModelImpl model,
-            final HerdingHoundView view,
+            final HerdingHoundViewImpl view,
             final JFrame frame,
-            final RightPanel rightPanel
+            final RightPanelImpl rightPanel
     ) {
         this.model = model;
         this.view = view;

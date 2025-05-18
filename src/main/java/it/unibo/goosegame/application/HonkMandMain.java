@@ -3,7 +3,7 @@ package it.unibo.goosegame.application;
 import it.unibo.goosegame.controller.HonkMandController;
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.view.general.GameMenuPanel;
-import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandView;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandViewImpl;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -40,7 +40,7 @@ public final class HonkMandMain {
             // Menu panel with background image
             final GameMenuPanel menuPanel = new GameMenuPanel("HonkMand", "Start Game", () -> {
                 frame.getContentPane().removeAll();
-                final HonkMandView view = new HonkMandView();
+                final HonkMandViewImpl view = new HonkMandViewImpl();
                 view.setFrameRef(frame);
                 frame.add(view, BorderLayout.CENTER);
                 frame.revalidate();

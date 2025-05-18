@@ -4,6 +4,7 @@ import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.general.GameEndPanel;
+import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -20,7 +21,7 @@ import java.util.Objects;
  * View for the Herding Hound minigame.
  * Handles only the graphical presentation.
  */
-public final class HerdingHoundView extends JPanel {
+public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundView {
     private static final long serialVersionUID = 1L;
     private static final int BLINK_DELAY = 200;
     private static final int BLINK_TOTAL = 6; // 3 blinks (on+off)
@@ -57,7 +58,7 @@ public final class HerdingHoundView extends JPanel {
      * Constructs a HerdingHoundView.
      * @param model the game model (must not be null)
      */
-    public HerdingHoundView(final HerdingHoundModelImpl model) {
+    public HerdingHoundViewImpl(final HerdingHoundModelImpl model) {
         this.model = Objects.requireNonNull(model, "Model cannot be null");
         setPreferredSize(new Dimension(DEFAULT_SIZE, DEFAULT_SIZE));
         setBackground(BACKGROUND_COLOR);
@@ -67,6 +68,7 @@ public final class HerdingHoundView extends JPanel {
      * Starts the initial countdown, then calls onFinish.run().
      * @param onFinish the callback to execute when the countdown finishes
      */
+    @Override
     public void startCountdown(final Runnable onFinish) {
         countdownValue = 3;
         showGoText = false;
@@ -99,6 +101,7 @@ public final class HerdingHoundView extends JPanel {
      * Returns whether the countdown is active.
      * @return true if the countdown is active, false otherwise
      */
+    @Override
     public boolean isCountdownActive() {
         return countdownActive;
     }
@@ -108,6 +111,7 @@ public final class HerdingHoundView extends JPanel {
      * @param frame the JFrame to show the end panel on
      * @param hasWon true if the player has won, false otherwise
      */
+    @Override
     public void startBlinking(final JFrame frame, final boolean hasWon) {
         blinking = true;
         blinkOn = true;
@@ -239,6 +243,7 @@ public final class HerdingHoundView extends JPanel {
     /**
      * Updates the view (repaints the panel).
      */
+    @Override
     public void updateView() {
         repaint();
     }
@@ -248,6 +253,7 @@ public final class HerdingHoundView extends JPanel {
      * @param frame the JFrame to show the panel on
      * @param hasWon true if the player has won, false otherwise
      */
+    @Override
     public void showGameOverPanel(final JFrame frame, final boolean hasWon) {
         final String message = hasWon ? "You Won!" : "You Lost!";
         frame.getContentPane().removeAll();

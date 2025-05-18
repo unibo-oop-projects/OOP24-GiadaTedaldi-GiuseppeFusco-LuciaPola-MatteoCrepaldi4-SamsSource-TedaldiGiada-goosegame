@@ -1,6 +1,7 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
+import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ import java.net.URL;
  * <p>
  * Shows a countdown timer and a visual representation of the dog's current state (awake, alert, asleep).
  */
-public final class RightPanel extends JPanel {
+public final class RightPanelImpl extends JPanel implements RightPanel {
     private static final long serialVersionUID = 1L;
     private static final int PANEL_WIDTH = 200;
     private static final int IMAGE_SIZE = 120;
@@ -31,7 +32,7 @@ public final class RightPanel extends JPanel {
      * Constructs a RightPanel.
      * @param model the game model
      */
-    public RightPanel(final HerdingHoundModelImpl model) {
+    public RightPanelImpl(final HerdingHoundModelImpl model) {
         this.model = model;
         setPreferredSize(new Dimension(PANEL_WIDTH, 0));
         setBackground(Color.LIGHT_GRAY);
@@ -90,6 +91,7 @@ public final class RightPanel extends JPanel {
     /**
      * Updates the panel (repaints it).
      */
+    @Override
     public void updatePanel() {
         repaint();
     }

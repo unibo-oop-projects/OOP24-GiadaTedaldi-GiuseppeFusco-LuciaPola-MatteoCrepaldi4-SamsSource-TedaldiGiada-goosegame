@@ -3,6 +3,7 @@ package it.unibo.goosegame.view.minigames.honkmand.impl;
 import it.unibo.goosegame.utilities.Colors;
 import it.unibo.goosegame.utilities.HonkMandMessages;
 import it.unibo.goosegame.view.general.GameEndPanel;
+import it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -35,7 +36,7 @@ import java.util.Map;
  * <p>
  * Displays colored buttons, score, level, messages, and manages user input and feedback effects.
  */
-public final class HonkMandView extends JPanel {
+public final class HonkMandViewImpl extends JPanel implements HonkMandView {
     private static final long serialVersionUID = 1L;
     private static final int BG_COLOR_B = 245;
     private static final int BG_COLOR_G = 245;
@@ -70,7 +71,7 @@ public final class HonkMandView extends JPanel {
     /**
      * Constructs a HonkMandView and initializes the UI components.
      */
-    public HonkMandView() {
+    public HonkMandViewImpl() {
         setLayout(new BorderLayout());
         setBackground(new Color(BG_COLOR_R, BG_COLOR_G, BG_COLOR_B));
 
@@ -171,6 +172,7 @@ public final class HonkMandView extends JPanel {
     justification = "The JFrame reference is intentionally stored for later use (e.g. dialog display)."
     + "Responsibility for lifecycle remains external."
     )
+    @Override
     public void setFrameRef(final JFrame frame) {
         this.frameRef = frame;
     }
@@ -179,6 +181,7 @@ public final class HonkMandView extends JPanel {
      * Updates the level label.
      * @param level the current level
      */
+    @Override
     public void updateLevel(final int level) {
         levelLabel.setText(HonkMandMessages.LEVEL_LABEL + level);
     }
@@ -187,6 +190,7 @@ public final class HonkMandView extends JPanel {
      * Updates the score label.
      * @param score the current score
      */
+    @Override
     public void updateScore(final int score) {
         scoreLabel.setText(HonkMandMessages.SCORE_LABEL + score);
     }
@@ -196,6 +200,7 @@ public final class HonkMandView extends JPanel {
      * @param message the message to show
      * @param isError true if the message is an error, false otherwise
      */
+    @Override
     public void showMessage(final String message, final boolean isError) {
         messageLabel.setText(message);
         messageLabel.setForeground(isError ? Color.RED : Color.DARK_GRAY);
@@ -204,6 +209,7 @@ public final class HonkMandView extends JPanel {
     /**
      * Clears the central message label.
      */
+    @Override
     public void clearMessage() {
         messageLabel.setText("");
     }
@@ -212,6 +218,7 @@ public final class HonkMandView extends JPanel {
      * Shows the end-of-game panel.
      * @param hasWon true if the player has won, false otherwise
      */
+    @Override
     public void showGameOverPanel(final boolean hasWon) {
         if (frameRef == null) {
             return;
@@ -227,6 +234,7 @@ public final class HonkMandView extends JPanel {
      * Enables or disables the colored buttons.
      * @param enabled true to enable, false to disable
      */
+    @Override
     public void setButtonsEnabled(final boolean enabled) {
         for (final RoundButton btn : buttons.values()) {
             btn.setEnabled(enabled);
@@ -237,6 +245,7 @@ public final class HonkMandView extends JPanel {
      * Sets the game as active or inactive (changes start button text and state).
      * @param active true if the game is active, false otherwise
      */
+    @Override
     public void setGameActive(final boolean active) {
         startButton.setText(HonkMandMessages.START_BUTTON);
         startButton.setEnabled(!active);
@@ -246,6 +255,7 @@ public final class HonkMandView extends JPanel {
      * Adds an ActionListener to the start button.
      * @param listener the ActionListener to add
      */
+    @Override
     public void addStartButtonListener(final ActionListener listener) {
         startButton.addActionListener(listener);
     }
@@ -255,6 +265,7 @@ public final class HonkMandView extends JPanel {
      * @param colorId the color of the button
      * @param listener the ActionListener to add
      */
+    @Override
     public void addColorButtonListener(final Colors colorId, final ActionListener listener) {
         buttons.get(colorId).addActionListener(listener);
     }
@@ -264,6 +275,7 @@ public final class HonkMandView extends JPanel {
      * @param colorId the color of the button
      * @param duration the duration in milliseconds
      */
+    @Override
     public void lightUpButton(final Colors colorId, final int duration) {
         final RoundButton btn = buttons.get(colorId);
         btn.setGlowing(true);

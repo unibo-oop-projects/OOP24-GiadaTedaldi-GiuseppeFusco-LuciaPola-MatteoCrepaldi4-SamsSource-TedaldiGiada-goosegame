@@ -7,8 +7,8 @@ import javax.swing.SwingUtilities;
 import it.unibo.goosegame.controller.HerdingHoundController;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.view.general.GameMenuPanel;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundView;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanel;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanelImpl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -44,8 +44,8 @@ public final class HerdingHoundMain {
             final GameMenuPanel menuPanel = new GameMenuPanel("HerdingHound", "Start Game", () -> {
                 final int gridSize = GRID_SIZE;
                 final HerdingHoundModelImpl model = new HerdingHoundModelImpl(gridSize);
-                final HerdingHoundView view = new HerdingHoundView(model);
-                final RightPanel rightPanel = new RightPanel(model);
+                final HerdingHoundViewImpl view = new HerdingHoundViewImpl(model);
+                final RightPanelImpl rightPanel = new RightPanelImpl(model);
 
                 final JPanel leftPanel = new JPanel();
                 leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, 0));
