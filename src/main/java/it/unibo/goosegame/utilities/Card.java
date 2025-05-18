@@ -5,16 +5,16 @@ public enum Card {
     NAME2("Nome2", "descrizione", 4, true, false), 
     NAME3("Nome3", "descrizione", 4, true, false), 
     NAME4("Nome4", "descrizione", 4, true, false), 
-    NAME5("Nome5", "descrizione", 4, true, false),
+    NAME5("Nome5", "descrizione", 4, false, true),
     NAME6("Nome6", "descrizione", 4, true, false), 
     NAME7("Nome7", "descrizione", 4, true, false), 
     NAME8("Nome8", "descrizione", 4, true, false), 
     NAME9("Nome9", "descrizione", 4, true, false),
     NAME10("Nome10", "descrizione", 4, true, false), 
     NAME11("Nome11", "descrizione", 4, true, false), 
-    NAME12("Nome12", "descrizione", 4, true, false), 
+    NAME12("Nome12", "descrizione", 4, false, false), 
     NAME13("Nome13", "descrizione", 4, true, false),
-    NAME14("Nome14", "descrizione", 4, true, false), 
+    NAME14("Nome14", "descrizione", 4, false, true), 
     NAME15("Nome15", "descrizione", 4, true, false);
 
     private final String name;
