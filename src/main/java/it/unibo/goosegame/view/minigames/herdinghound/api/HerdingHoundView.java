@@ -2,39 +2,34 @@ package it.unibo.goosegame.view.minigames.herdinghound.api;
 
 import javax.swing.JFrame;
 
-/**
- * Interface for the Herding Hound minigame view.
- * Provides methods to control the countdown, blinking animation, view updates, and game over panel.
- */
 public interface HerdingHoundView {
     /**
-     * Starts the initial countdown, then executes the callback when finished.
-     * @param onFinish the callback to execute at the end of the countdown
+     * Avvia il conto alla rovescia iniziale, poi esegue la callback.
+     * @param onFinish callback da eseguire al termine del countdown
      */
     void startCountdown(Runnable onFinish);
 
     /**
-     * Returns true if the countdown is active.
-     * @return true if the countdown is active, false otherwise
+     * Ritorna true se il countdown è attivo.
      */
     boolean isCountdownActive();
 
     /**
-     * Starts the end-of-game blinking animation.
-     * @param frame the JFrame on which to show the final panel
-     * @param hasWon true if the player has won
+     * Avvia l'animazione di lampeggio di fine partita.
+     * @param frame JFrame su cui mostrare il pannello finale
+     * @param hasWon true se il giocatore ha vinto
      */
     void startBlinking(JFrame frame, boolean hasWon);
 
     /**
-     * Updates the view (calls repaint).
+     * Aggiorna la vista (richiama repaint).
      */
     void updateView();
 
     /**
-     * Shows the end-of-game panel.
-     * @param frame the JFrame on which to show the panel
-     * @param hasWon true if the player has won
+     * Mostra il pannello di fine partita.
+     * @param frame JFrame su cui mostrare il pannello
+     * @param hasWon true se il giocatore ha vinto
      */
     void showGameOverPanel(JFrame frame, boolean hasWon);
 }
