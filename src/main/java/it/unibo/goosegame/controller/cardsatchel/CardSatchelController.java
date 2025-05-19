@@ -15,7 +15,7 @@ public class CardSatchelController {
      * Constructs a controller with the given CardSatchelModel.
      * @param satchelModel the model to control
      */
-    public CardSatchelController(CardSatchelModelImpl satchelModel) {
+    public CardSatchelController(final CardSatchelModelImpl satchelModel) {
         this.satchelModel = satchelModel;
     }
 
@@ -24,7 +24,7 @@ public class CardSatchelController {
      * @param card the card to add
      * @return true if added, false otherwise
      */
-    public boolean addCard(Card card) {
+    public boolean addCard(final Card card) {
         return satchelModel.addCard(card);
     }
 
@@ -33,7 +33,7 @@ public class CardSatchelController {
      * @param card the card to remove
      * @return true if removed, false otherwise
      */
-    public boolean removeCard(Card card) {
+    public boolean removeCard(final Card card) {
         return satchelModel.removeCard(card);
     }
 
@@ -42,7 +42,7 @@ public class CardSatchelController {
      * @param card the card to play
      * @return true if the card was present and removed, false otherwise
      */
-    public boolean playCard(Card card) {
+    public boolean playCard(final Card card) {
         return this.removeCard(card);
     }
 

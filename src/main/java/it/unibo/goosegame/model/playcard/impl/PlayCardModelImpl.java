@@ -20,8 +20,9 @@ public class PlayCardModelImpl implements PlayCardModel {
      * Estrae una carta random in base allo stato del minigioco.
      * Se WON: bonus, se LOST: malus.
      */
-    public Card drawCard(GameState state) {
-        List<Card> pool = List.of(Card.values()).stream()
+    @Override
+    public Card drawCard(final GameState state) {
+        final List<Card> pool = List.of(Card.values()).stream()
             .filter(c -> state == GameState.WON ? c.isBonus() : !c.isBonus())
             .collect(Collectors.toList());
         if (pool.isEmpty()) {
@@ -34,46 +35,62 @@ public class PlayCardModelImpl implements PlayCardModel {
     /**
      * Verifica se la carta può essere aggiunta al satchel del giocatore corrente (dopo minigioco).
      */
-    public boolean canAddToSatchel(Card card, Player currentPlayer, GameState gameState) {
-        if (card == null) return false;
-        if (!card.isBonus() && gameState == GameState.LOST) return false;
-        if (card.isRemove() && !card.isBonus()) return false;
-        if (currentPlayer.getSatchel().isFull()) return false;
-        if (!card.isBonus() && !card.isThrowable()) return false;
-        return true;
+    @Override
+    public boolean canAddToSatchel(final Card card, final Player currentPlayer, final GameState gameState) {
+        if (card == null) {
+            return false;
+        }
+        if (!card.isBonus() && gameState == GameState.LOST) {
+            return false;
+        }
+        if (card.isRemove() && !card.isBonus()) {
+            return false;
+        }
+        if (currentPlayer.getSatchel().isFull()) {
+            return false;
+        }
+        return !( !card.isBonus() && !card.isThrowable() );
     }
 
     /**
      * Verifica se la carta può essere giocata dal satchel (senza considerare GameState).
      */
-    public boolean canPlayCardFromSatchel(Card card, Player currentPlayer) {
-        if (card == null) return false;
-        if (card.isRemove() && !card.isBonus()) return false; // self remove non può essere rimessa
-        if (!card.isBonus() && !card.isThrowable()) return false; // malus non throwable non può essere lanciato
-        // Altri controlli se servono
-        return true;
+    @Override
+    public boolean canPlayCardFromSatchel(final Card card, final Player currentPlayer) {
+        if (card == null) {
+            return false;
+        }
+        if (card.isRemove() && !card.isBonus()) {
+            return false; // self remove non può essere rimessa
+        }
+        return !( !card.isBonus() && !card.isThrowable() ); // malus non throwable non può essere lanciato
     }
 
     /**
      * Metodi di sola logica/regola sulle carte.
      */
-    public boolean isRemoveSelf(Card card) {
+    @Override
+    public boolean isRemoveSelf(final Card card) {
         return card != null && card.isRemove() && !card.isBonus();
     }
 
-    public boolean isRemoveOpponent(Card card) {
+    @Override
+    public boolean isRemoveOpponent(final Card card) {
         return card != null && card.isRemove() && card.isBonus();
     }
 
-    public boolean isMalusThrowable(Card card) {
+    @Override
+    public boolean isMalusThrowable(final Card card) {
         return card != null && !card.isBonus() && card.isThrowable();
     }
 
-    public boolean isMalusNotThrowable(Card card) {
+    @Override
+    public boolean isMalusNotThrowable(final Card card) {
         return card != null && !card.isBonus() && !card.isThrowable();
     }
 
-    public boolean isBonus(Card card) {
+    @Override
+    public boolean isBonus(final Card card) {
         return card != null && card.isBonus();
     }
 }

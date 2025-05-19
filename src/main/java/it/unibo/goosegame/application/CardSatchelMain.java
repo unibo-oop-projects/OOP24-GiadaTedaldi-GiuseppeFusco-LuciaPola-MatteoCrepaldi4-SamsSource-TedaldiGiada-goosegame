@@ -1,88 +1,109 @@
 package it.unibo.goosegame.application;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelViewImpl;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Logger;
 
+/**
+ * Main class to test the CardSatchel GUI.
+ */
 public class CardSatchelMain {
-    public static void main(String[] args) {
+
+    private static final Logger LOGGER = Logger.getLogger(CardSatchelMain.class.getName());
+
+    private CardSatchelMain() {
+        throw new AssertionError();
+    }
+
+    /**
+     * Launches the CardSatchel test GUI.
+     * @param args the command line arguments (not used)
+     */
+    public static void main(final String[] args) {
         SwingUtilities.invokeLater(CardSatchelMain::createAndShowGUI);
     }
 
     private static void createAndShowGUI() {
-        CardSatchelModelImpl model = new CardSatchelModelImpl();
-        CardSatchelController controller = new CardSatchelController(model);
-        CardSatchelViewImpl view = new CardSatchelViewImpl(controller);
+        final CardSatchelModelImpl model = new CardSatchelModelImpl();
+        final CardSatchelController controller = new CardSatchelController(model);
+        final CardSatchelViewImpl view = new CardSatchelViewImpl(controller);
 
-        JFrame frame = new JFrame("Satchel Test");
+        final JFrame frame = new JFrame("Satchel Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(view, BorderLayout.CENTER);
 
         // Pannello bottoni per test
-        JPanel buttonPanel = new JPanel();
-        JButton addRandomButton = new JButton("Aggiungi carta random");
-        JButton removeRandomButton = new JButton("Rimuovi carta random");
-        JButton playRandomButton = new JButton("Gioca carta random");
+        final JPanel buttonPanel = new JPanel();
+        final JButton addRandomButton = new JButton("Aggiungi carta random");
+        final JButton removeRandomButton = new JButton("Rimuovi carta random");
+        final JButton playRandomButton = new JButton("Gioca carta random");
         buttonPanel.add(addRandomButton);
         buttonPanel.add(removeRandomButton);
         buttonPanel.add(playRandomButton);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
-        Random random = new Random();
+        final Random random = new Random();
 
         addRandomButton.addActionListener((ActionEvent e) -> {
-            Card[] allCards = Card.values();
-            Card card = allCards[random.nextInt(allCards.length)];
-            boolean added = controller.addCard(card);
+            final Card[] allCards = Card.values();
+            final Card card = allCards[random.nextInt(allCards.length)];
+            final boolean added = controller.addCard(card);
             if (added) {
-                System.out.println("Aggiunta carta: " + card.getName());
+                LOGGER.info("Aggiunta carta: " + card.getName());
             } else {
-                System.out.println("Impossibile aggiungere la carta: " + card.getName());
+                LOGGER.info("Impossibile aggiungere la carta: " + card.getName());
             }
             view.updateCards(controller.getCards());
         });
 
         removeRandomButton.addActionListener((ActionEvent e) -> {
-            List<Card> cards = controller.getCards();
+            final List<Card> cards = controller.getCards();
             if (cards.isEmpty()) {
-                System.out.println("Nessuna carta da rimuovere.");
+                LOGGER.info("Nessuna carta da rimuovere.");
                 return;
             }
-            Card card = cards.get(random.nextInt(cards.size()));
-            boolean removed = controller.removeCard(card);
+            final Card card = cards.get(random.nextInt(cards.size()));
+            final boolean removed = controller.removeCard(card);
             if (removed) {
-                System.out.println("Rimossa carta: " + card.getName());
+                LOGGER.info("Rimossa carta: " + card.getName());
             } else {
-                System.out.println("Impossibile rimuovere la carta: " + card.getName());
+                LOGGER.info("Impossibile rimuovere la carta: " + card.getName());
             }
             view.updateCards(controller.getCards());
         });
 
         playRandomButton.addActionListener((ActionEvent e) -> {
-            List<Card> cards = controller.getCards();
+            final List<Card> cards = controller.getCards();
             if (cards.isEmpty()) {
-                System.out.println("Nessuna carta da giocare.");
+                LOGGER.info("Nessuna carta da giocare.");
                 return;
             }
-            Card card = cards.get(random.nextInt(cards.size()));
-            boolean played = controller.playCard(card);
+            final Card card = cards.get(random.nextInt(cards.size()));
+            final boolean played = controller.playCard(card);
             if (played) {
-                System.out.println("Giocata carta: " + card.getName());
+                LOGGER.info("Giocata carta: " + card.getName());
             } else {
-                System.out.println("Impossibile giocare la carta: " + card.getName());
+                LOGGER.info("Impossibile giocare la carta: " + card.getName());
             }
             view.updateCards(controller.getCards());
         });
 
-        frame.setSize(900, 300);
+        final int frameWidth = 900;
+        final int frameHeight = 300;
+        frame.setSize(frameWidth, frameHeight);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

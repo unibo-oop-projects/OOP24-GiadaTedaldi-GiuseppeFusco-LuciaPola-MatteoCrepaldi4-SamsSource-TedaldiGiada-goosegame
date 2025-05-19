@@ -2,6 +2,9 @@ package it.unibo.goosegame.view.minigames.herdinghound.api;
 
 import javax.swing.JFrame;
 
+/**
+ * API for the Herding Hound minigame view.
+ */
 public interface HerdingHoundView {
     /**
      * Avvia il conto alla rovescia iniziale, poi esegue la callback.
@@ -11,6 +14,7 @@ public interface HerdingHoundView {
 
     /**
      * Ritorna true se il countdown è attivo.
+     * @return true se il countdown è attivo, false altrimenti
      */
     boolean isCountdownActive();
 

@@ -8,10 +8,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class CardSatchelModelTest {
+/**
+ * Unit tests for {@link CardSatchelModel}.
+ */
+final class CardSatchelModelTest {
 
+    private static final int MAX_CARDS = 6;
     private CardSatchelModel satchel;
 
     @BeforeEach
@@ -21,7 +29,7 @@ public class CardSatchelModelTest {
 
     @Test
     void testAddCardBonus() {
-        Card bonusCard = getFirstCardByType(true);
+        final Card bonusCard = getFirstCardByType(true);
         assertTrue(satchel.addCard(bonusCard));
         assertEquals(1, satchel.getCards().size());
         assertTrue(satchel.getCards().contains(bonusCard));
@@ -29,25 +37,25 @@ public class CardSatchelModelTest {
 
     @Test
     void testAddCardMalusNotThrowable() {
-        Card malusNotThrowable = getFirstMalusNotThrowable();
+        final Card malusNotThrowable = getFirstMalusNotThrowable();
         assertFalse(satchel.addCard(malusNotThrowable));
         assertEquals(0, satchel.getCards().size());
     }
 
     @Test
     void testAddCardMaxLimit() {
-        Card bonusCard = getFirstCardByType(true);
-        for (int i = 0; i < 6; i++) {
+        final Card bonusCard = getFirstCardByType(true);
+        for (int i = 0; i < MAX_CARDS; i++) {
             assertTrue(satchel.addCard(bonusCard));
         }
         assertFalse(satchel.addCard(bonusCard));
-        assertEquals(6, satchel.getCards().size());
+        assertEquals(MAX_CARDS, satchel.getCards().size());
         assertTrue(satchel.isFull());
     }
 
     @Test
     void testRemoveCard() {
-        Card bonusCard = getFirstCardByType(true);
+        final Card bonusCard = getFirstCardByType(true);
         satchel.addCard(bonusCard);
         assertTrue(satchel.removeCard(bonusCard));
         assertEquals(0, satchel.getCards().size());
@@ -55,21 +63,21 @@ public class CardSatchelModelTest {
 
     @Test
     void testRemoveCardNotPresent() {
-        Card bonusCard = getFirstCardByType(true);
+        final Card bonusCard = getFirstCardByType(true);
         assertFalse(satchel.removeCard(bonusCard));
     }
 
     @Test
     void testGetCardsUnmodifiable() {
-        Card bonusCard = getFirstCardByType(true);
+        final Card bonusCard = getFirstCardByType(true);
         satchel.addCard(bonusCard);
-        List<Card> cards = satchel.getCards();
+        final List<Card> cards = satchel.getCards();
         assertThrows(UnsupportedOperationException.class, () -> cards.add(bonusCard));
     }
 
     @Test
     void testClear() {
-        Card bonusCard = getFirstCardByType(true);
+        final Card bonusCard = getFirstCardByType(true);
         satchel.addCard(bonusCard);
         satchel.clear();
         assertEquals(0, satchel.getCards().size());
@@ -77,17 +85,21 @@ public class CardSatchelModelTest {
 
     // --- Utility methods for test cards ---
 
-    private Card getFirstCardByType(boolean bonus) {
-        for (Card c : Card.values()) {
-            if (c.isBonus() == bonus) return c;
+    private Card getFirstCardByType(final boolean bonus) {
+        for (final Card c : Card.values()) {
+            if (c.isBonus() == bonus) {
+                return c;
+            }
         }
         fail("No card of requested type found");
         return null;
     }
 
     private Card getFirstMalusNotThrowable() {
-        for (Card c : Card.values()) {
-            if (!c.isBonus() && !c.isThrowable()) return c;
+        for (final Card c : Card.values()) {
+            if (!c.isBonus() && !c.isThrowable()) {
+                return c;
+            }
         }
         fail("No malus not throwable card found");
         return null;

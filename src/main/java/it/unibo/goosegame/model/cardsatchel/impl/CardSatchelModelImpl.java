@@ -13,7 +13,7 @@ import java.util.List;
  */
 import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 
-public class CardSatchelModelImpl implements CardSatchelModel {
+public final class CardSatchelModelImpl implements CardSatchelModel {
     private static final int MAX_CARDS = 6;
     private final List<Card> cards = new ArrayList<>();
 
@@ -22,7 +22,8 @@ public class CardSatchelModelImpl implements CardSatchelModel {
      * @param card the card to add
      * @return true if added, false otherwise
      */
-    public boolean addCard(Card card) {
+    @Override
+    public boolean addCard(final Card card) {
         if (cards.size() >= MAX_CARDS) {
             return false;
         }
@@ -39,7 +40,8 @@ public class CardSatchelModelImpl implements CardSatchelModel {
      * @param card the card to remove
      * @return true if removed, false if not present
      */
-    public boolean removeCard(Card card) {
+    @Override
+    public boolean removeCard(final Card card) {
         return cards.remove(card);
     }
 
@@ -47,6 +49,7 @@ public class CardSatchelModelImpl implements CardSatchelModel {
      * Returns an unmodifiable list of cards in the satchel.
      * @return list of cards
      */
+    @Override
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
@@ -55,6 +58,7 @@ public class CardSatchelModelImpl implements CardSatchelModel {
      * Checks if the satchel is full.
      * @return true if full
      */
+    @Override
     public boolean isFull() {
         return cards.size() >= MAX_CARDS;
     }
@@ -62,6 +66,7 @@ public class CardSatchelModelImpl implements CardSatchelModel {
     /**
      * Removes all cards from the satchel.
      */
+    @Override
     public void clear() {
         cards.clear();
     }
