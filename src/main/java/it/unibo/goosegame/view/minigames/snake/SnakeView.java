@@ -24,7 +24,10 @@ public class SnakeView extends JPanel {
      * Initializes the SnakeView with a SnakeModel and sets the background color.
      * @param model the SnakeModel to be used for the view
      */
-    @SuppressFBWarnings(value = "EI2", justification = "Reference to mutable model is intentional in this class: need it to update the view.")
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "Reference to mutable model is intentional in this class: need it to update the view."
+    )
     public SnakeView(final SnakeModel model) {
         this.model = model;
         super.setBackground(Color.BLACK);
