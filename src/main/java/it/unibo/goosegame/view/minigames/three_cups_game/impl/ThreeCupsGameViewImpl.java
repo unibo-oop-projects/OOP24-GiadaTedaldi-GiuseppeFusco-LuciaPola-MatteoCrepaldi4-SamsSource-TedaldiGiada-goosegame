@@ -12,7 +12,7 @@ import java.util.List;
  * Implementation of {@link ThreeCupsGameView} interface with Java Swing
  */
 public class ThreeCupsGameViewImpl implements ThreeCupsGameView {
-    private final List<JButton> buttons = new ArrayList<JButton>();
+    private final List<JButton> buttons = new ArrayList<>();
     private final JFrame frame;
     private final JLabel infoLabel;
     private final ThreeCupsGameModel model;
