@@ -90,6 +90,29 @@ public class PlayCardController {
     }
 
     /**
+     * Wrapper per la view: controlla se la carta è self remove.
+     */
+    public boolean isRemoveSelf(Card card) {
+        return model.isRemoveSelf(card);
+    }
+
+    public boolean isRemoveOpponent(Card card) {
+        return model.isRemoveOpponent(card);
+    }
+
+    public boolean isMalusThrowable(Card card) {
+        return model.isMalusThrowable(card);
+    }
+
+    public boolean isMalusNotThrowable(Card card) {
+        return model.isMalusNotThrowable(card);
+    }
+
+    public boolean isBonus(Card card) {
+        return model.isBonus(card);
+    }
+
+    /**
      * Applica la carta estratta a un altro giocatore (ad esempio per lanciare o rimuovere).
      * @param target il giocatore bersaglio
      */
