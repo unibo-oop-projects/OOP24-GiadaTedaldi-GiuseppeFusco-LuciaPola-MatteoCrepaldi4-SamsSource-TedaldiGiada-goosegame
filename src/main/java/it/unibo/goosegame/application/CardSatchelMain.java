@@ -1,9 +1,9 @@
 package it.unibo.goosegame.application;
 
-import it.unibo.goosegame.model.CardSatchelModel;
-import it.unibo.goosegame.controller.CardSatchelController;
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
+import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.view.CardSatchelView;
+import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelViewImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +17,9 @@ public class CardSatchelMain {
     }
 
     private static void createAndShowGUI() {
-        CardSatchelModel model = new CardSatchelModel();
+        CardSatchelModelImpl model = new CardSatchelModelImpl();
         CardSatchelController controller = new CardSatchelController(model);
-        CardSatchelView view = new CardSatchelView(controller);
+        CardSatchelViewImpl view = new CardSatchelViewImpl(controller);
 
         JFrame frame = new JFrame("Satchel Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

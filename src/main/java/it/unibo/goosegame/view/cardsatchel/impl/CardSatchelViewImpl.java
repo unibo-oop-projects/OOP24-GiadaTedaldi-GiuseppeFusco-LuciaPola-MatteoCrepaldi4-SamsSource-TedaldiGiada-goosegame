@@ -1,6 +1,6 @@
-package it.unibo.goosegame.view;
+package it.unibo.goosegame.view.cardsatchel.impl;
 
-import it.unibo.goosegame.controller.CardSatchelController;
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.utilities.Card;
 
 import javax.swing.*;
@@ -11,12 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class CardSatchelView extends JPanel {
+import it.unibo.goosegame.view.cardsatchel.api.CardSatchelView;
+
+public class CardSatchelViewImpl extends JPanel implements CardSatchelView {
     private static final int MAX_CARDS = 6;
     private final CardPanel[] cardPanels;
     private final CardSatchelController controller;
 
-    public CardSatchelView(CardSatchelController controller) {
+    public CardSatchelViewImpl(CardSatchelController controller) {
         this.controller = controller;
         setBackground(new Color(139, 69, 19)); // Marrone sacchetto
         setLayout(new GridLayout(1, MAX_CARDS, 10, 10));
@@ -58,7 +60,7 @@ public class CardSatchelView extends JPanel {
                     if (CardPanel.this.card != null) {
                         controller.playCard(CardPanel.this.card);
                         // Aggiorna la view dopo aver giocato la carta
-                        CardSatchelView.this.updateCards(controller.getCards());
+                        CardSatchelViewImpl.this.updateCards(controller.getCards());
                     }
                 }
             });

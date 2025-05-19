@@ -1,21 +1,21 @@
 package it.unibo.goosegame.utilities;
 
-import it.unibo.goosegame.model.CardSatchelModel;
+import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 
 public class Player {
     private final String name;
-    private final CardSatchelModel satchel;
+    private final CardSatchelModelImpl satchel;
 
     public Player(String name) {
         this.name = name;
-        this.satchel = new CardSatchelModel();
+        this.satchel = new CardSatchelModelImpl();
     }
 
     public String getName() {
         return name;
     }
 
-    public CardSatchelModel getSatchel() {
+    public CardSatchelModelImpl getSatchel() {
         return satchel;
     }
 

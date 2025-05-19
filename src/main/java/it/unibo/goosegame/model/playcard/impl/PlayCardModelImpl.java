@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model;
+package it.unibo.goosegame.model.playcard.impl;
 
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.utilities.Player;
@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class PlayCardModel {
+import it.unibo.goosegame.model.playcard.api.PlayCardModel;
+
+public class PlayCardModelImpl implements PlayCardModel {
     private final Random random = new Random();
 
-    public PlayCardModel() {
+    public PlayCardModelImpl() {
         // Nessuna inizializzazione necessaria per ora
     }
 

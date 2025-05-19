@@ -1,9 +1,10 @@
-package it.unibo.goosegame.controller;
+package it.unibo.goosegame.controller.playcard;
 
-import it.unibo.goosegame.model.PlayCardModel;
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.utilities.Player;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
+import it.unibo.goosegame.model.playcard.impl.PlayCardModelImpl;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,7 @@ public class PlayCardController {
     private final List<Player> allPlayers;
     private final Player currentPlayer;
     private final GameState gameState; // può essere null se non serve
-    private final PlayCardModel model;
+    private final PlayCardModelImpl model;
     private Card drawnCard;
 
     // Costruttore per la fase post-minigioco (con GameState)
@@ -19,7 +20,7 @@ public class PlayCardController {
         this.currentPlayer = currentPlayer;
         this.allPlayers = allPlayers;
         this.gameState = gameState;
-        this.model = new PlayCardModel();
+        this.model = new PlayCardModelImpl();
     }
 
     // Costruttore per la gestione dal satchel (senza GameState)
@@ -27,7 +28,7 @@ public class PlayCardController {
         this.currentPlayer = currentPlayer;
         this.allPlayers = allPlayers;
         this.gameState = null;
-        this.model = new PlayCardModel();
+        this.model = new PlayCardModelImpl();
     }
 
     /**

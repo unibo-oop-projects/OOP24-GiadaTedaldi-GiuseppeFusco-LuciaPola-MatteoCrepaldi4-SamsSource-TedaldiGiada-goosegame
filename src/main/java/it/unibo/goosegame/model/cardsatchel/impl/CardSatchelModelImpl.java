@@ -1,4 +1,4 @@
-package it.unibo.goosegame.model;
+package it.unibo.goosegame.model.cardsatchel.impl;
 
 import it.unibo.goosegame.utilities.Card;
 import java.util.ArrayList;
@@ -11,7 +11,9 @@ import java.util.List;
  * - Max 6 cards
  * - Malus cards (bonus == false) that are not throwable cannot be added
  */
-public class CardSatchelModel {
+import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
+
+public class CardSatchelModelImpl implements CardSatchelModel {
     private static final int MAX_CARDS = 6;
     private final List<Card> cards = new ArrayList<>();
 

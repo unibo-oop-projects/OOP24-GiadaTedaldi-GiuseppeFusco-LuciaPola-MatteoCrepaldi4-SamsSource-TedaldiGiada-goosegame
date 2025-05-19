@@ -1,6 +1,6 @@
-package it.unibo.goosegame.controller;
+package it.unibo.goosegame.controller.cardsatchel;
 
-import it.unibo.goosegame.model.CardSatchelModel;
+import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
 import java.util.List;
 
@@ -9,13 +9,13 @@ import java.util.List;
  * Acts as an interface between the model and the rest of the game logic/UI.
  */
 public class CardSatchelController {
-    private final CardSatchelModel satchelModel;
+    private final CardSatchelModelImpl satchelModel;
 
     /**
      * Constructs a controller with the given CardSatchelModel.
      * @param satchelModel the model to control
      */
-    public CardSatchelController(CardSatchelModel satchelModel) {
+    public CardSatchelController(CardSatchelModelImpl satchelModel) {
         this.satchelModel = satchelModel;
     }
 

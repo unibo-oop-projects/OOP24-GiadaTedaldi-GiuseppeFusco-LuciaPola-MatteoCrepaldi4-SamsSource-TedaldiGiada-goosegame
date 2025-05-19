@@ -1,8 +1,9 @@
-package it.unibo.goosegame.view;
+package it.unibo.goosegame.view.playcard.impl;
 
-import it.unibo.goosegame.controller.PlayCardController;
+import it.unibo.goosegame.controller.playcard.PlayCardController;
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.utilities.Player;
+import it.unibo.goosegame.view.playcard.api.PlayerCardView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.util.List;
  * PlayCardView: pannello che mostra una singola carta (pescata o dal satchel) e permette di giocarla, lanciarla o rimetterla nel satchel.
  * Si chiude solo dopo una mossa (gioca/lancia) o se si rimette la carta nel satchel.
  */
-public class PlayCardView extends JDialog {
+public class PlayCardViewImp extends JDialog implements PlayerCardView {
     private final PlayCardController controller;
     private final Card card;
     private final List<Player> otherPlayers;
@@ -22,7 +23,7 @@ public class PlayCardView extends JDialog {
      * @param controller controller PlayCard
      * @param card la carta da mostrare/giocare
      */
-    public PlayCardView(JFrame parent, PlayCardController controller, Card card) {
+    public PlayCardViewImp(JFrame parent, PlayCardController controller, Card card) {
         super(parent, "Play Card", true);
         this.controller = controller;
         this.card = card;
@@ -92,6 +93,25 @@ public class PlayCardView extends JDialog {
 
         pack();
         setLocationRelativeTo(parent);
+    }
+
+    @Override
+    public void showCard(Card card, List<Player> otherPlayers) {
+        // In questa implementazione, la card viene già mostrata dal costruttore.
+        // Questo metodo può essere usato per rendere visibile la dialog.
+        setVisible(true);
+    }
+
+    @Override
+    public void close() {
+        setVisible(false);
+        dispose();
+    }
+
+    @Override
+    public void update(Card card, List<Player> otherPlayers) {
+        // Aggiorna la UI se necessario (non implementato in questa versione)
+        // Si può aggiungere logica per aggiornare la card e i bottoni
     }
 
     private void closeAndNotifySatchel() {
