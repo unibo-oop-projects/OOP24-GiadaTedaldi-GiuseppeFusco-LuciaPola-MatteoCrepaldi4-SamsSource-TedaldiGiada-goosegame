@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Position;
@@ -28,10 +27,6 @@ public class SnakeView extends JFrame {
      * Initializes the SnakeView with a SnakeModel and sets the background color.
      * @param model the SnakeModel to be used for the view
      */
-    @SuppressFBWarnings(
-        value = "EI2",
-        justification = "Reference to mutable model is intentional in this class: need it to update the view."
-    )
     public SnakeView(final SnakeModel model) {
         this.panelGame = new JPanel() {
 
