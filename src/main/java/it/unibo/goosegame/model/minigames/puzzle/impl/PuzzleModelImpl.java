@@ -155,4 +155,12 @@ public class PuzzleModelImpl implements PuzzleModel {
         this.timeOver = timeOver;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PuzzleModel getCopy() {
+        return new PuzzleModelImpl(this);
+    }
+
 }
