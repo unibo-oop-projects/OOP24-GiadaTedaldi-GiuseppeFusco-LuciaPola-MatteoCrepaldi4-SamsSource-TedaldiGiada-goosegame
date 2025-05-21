@@ -82,8 +82,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public boolean isOver() {
-        final List<Integer> remaining = values.keySet().stream().filter(p -> !this.shown.contains(p)).map(values::get).toList();
-        return remaining.stream().distinct().count() == remaining.size();
+        return this.shown.size() == this.values.size();
     }
 
     /**

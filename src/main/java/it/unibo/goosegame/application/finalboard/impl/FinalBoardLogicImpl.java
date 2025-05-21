@@ -1,5 +1,7 @@
 package it.unibo.goosegame.application.finalboard.impl;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import it.unibo.goosegame.application.finalboard.api.FinalBoardLogic;
@@ -15,7 +17,18 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
      */
     @Override
     public Map<String, Integer> getFinalBoard() {
-        return Map.of("Player1", 1, "Player2", 2, "Player3", 3);
+        final Map<String, Integer> finalBoard = new HashMap<>();
+        finalBoard.put("Player1", 1);
+        finalBoard.put("Player2", 2);
+        finalBoard.put("Player3", 3);
+        return finalBoard.entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByValue())
+            .collect(
+                    LinkedHashMap::new,
+                    (map, entry) -> map.put(entry.getKey(), entry.getValue()),
+                    LinkedHashMap::putAll
+            );
     }
 
 }

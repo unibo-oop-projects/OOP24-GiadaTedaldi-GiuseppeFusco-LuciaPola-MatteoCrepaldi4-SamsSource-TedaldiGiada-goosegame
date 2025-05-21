@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
-import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -48,7 +47,6 @@ public class FinalBoardGui {
         };
         imagePanel.setLayout(new BorderLayout());
         final Object[][] rows = logic.getFinalBoard().entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
                 .map(e -> new Object[]{e.getKey(), e.getValue()})
                 .toArray(Object[][]::new);
 
