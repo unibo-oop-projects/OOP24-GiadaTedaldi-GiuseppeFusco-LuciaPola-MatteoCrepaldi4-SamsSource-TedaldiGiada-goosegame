@@ -1,5 +1,6 @@
 package it.unibo.goosegame.application;
 
+<<<<<<< HEAD
 import javax.swing.SwingUtilities;
 /**
  * Entry point of the Goose Game application.
@@ -18,4 +19,11 @@ public final class Main {
       menu.setVisible(true);
     });
   }
+=======
+/**
+ * Main class for the Goose game application.
+ */
+public class Main {
+
+>>>>>>> master
 }
