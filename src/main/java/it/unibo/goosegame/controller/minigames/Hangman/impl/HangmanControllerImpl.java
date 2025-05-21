@@ -30,12 +30,6 @@ public class HangmanControllerImpl implements HangmanController {
         init();
     }
 
-    private void init() {
-        view.setController(this);
-        view.updateImage(model.getAttempts());
-        view.updateWord(model.getHiddenWord());
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -63,5 +57,21 @@ public class HangmanControllerImpl implements HangmanController {
                 window.dispose();
             }
         }
+    }
+    /**
+     * {@inheritDoc}
+     */
+     @Override
+    public final void startGame() {
+        model.resetGame();
+        view.enableAllButton();
+        view.updateImage(model.getAttempts());
+        view.updateWord(model.getHiddenWord());
+    }
+
+    private void init() {
+        view.setController(this);
+        view.updateImage(model.getAttempts());
+        view.updateWord(model.getHiddenWord());
     }
 }
