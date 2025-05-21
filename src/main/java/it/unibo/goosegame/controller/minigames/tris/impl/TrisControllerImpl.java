@@ -127,12 +127,4 @@ public class TrisControllerImpl implements TrisController {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TrisController startGame() {
-        return new TrisControllerImpl(model);
-    }
-
 }
