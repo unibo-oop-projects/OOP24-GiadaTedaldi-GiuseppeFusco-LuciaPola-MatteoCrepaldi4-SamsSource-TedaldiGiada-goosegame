@@ -44,7 +44,6 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override
@@ -88,5 +87,14 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
                 window.dispose();
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void startGame() {
+        model.resetGame();
+        view.enableAllButtons();
     }
 }
