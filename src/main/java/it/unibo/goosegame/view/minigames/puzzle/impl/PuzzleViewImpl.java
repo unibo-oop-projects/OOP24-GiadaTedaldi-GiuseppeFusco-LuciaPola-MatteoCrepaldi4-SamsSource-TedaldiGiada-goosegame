@@ -44,6 +44,8 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
 
     /**
      * Constructs a new instance of {@link PuzzleViewImpl}.
+     * 
+     * @param controller 
      */
     public PuzzleViewImpl(final PuzzleController controller) {
         super();

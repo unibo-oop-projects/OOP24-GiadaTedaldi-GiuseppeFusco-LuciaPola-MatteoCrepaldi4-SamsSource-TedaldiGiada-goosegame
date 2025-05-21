@@ -8,7 +8,6 @@ import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
 import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
-import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
 
 /**
  * Implementation of the {@link PuzzleController} interface.
@@ -16,26 +15,19 @@ import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
  */
 public class PuzzleControllerImpl implements PuzzleController {
     private final PuzzleModel model;
-    private PuzzleView view;
+    private final PuzzleView view;
 
     /**
      * Constructs a new instance of {@link PuzzleControllerImpl}.
      * 
      * @param model the {@link PuzzleModel} representing the game logic
-     * @param view the {@link PuzzleViewImpl} representing the game view
+     * @param view the {@link PuzzleView} representing the game view
      */
-    public PuzzleControllerImpl(final PuzzleModel model) {
+    public PuzzleControllerImpl(final PuzzleModel model, final PuzzleView view) {
         if (!(model instanceof PuzzleModelImpl)) {
             throw new IllegalArgumentException("model must be a PuzzleModelImpl");
         }
         this.model = new PuzzleModelImpl((PuzzleModelImpl) model);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setView(final PuzzleView view) {
         this.view = view;
     }
 
