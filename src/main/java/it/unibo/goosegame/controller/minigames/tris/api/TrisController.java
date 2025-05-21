@@ -25,11 +25,4 @@ public interface TrisController {
      */
     void endGame();
 
-    /**
-     * Starts a new game session. Initializes the game state and view for a new match.
-     * 
-     * @return the TrisController instance
-     */
-    TrisController startGame();
-
 }
