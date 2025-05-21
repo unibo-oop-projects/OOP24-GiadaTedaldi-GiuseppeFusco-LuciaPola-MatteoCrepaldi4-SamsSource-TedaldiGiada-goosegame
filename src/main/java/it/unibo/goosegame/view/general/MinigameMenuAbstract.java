@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -39,7 +40,6 @@ public abstract class MinigameMenuAbstract extends JFrame {
     private static final int BOTTOM1 = 40;
     private static final int LEFT_RIGHT = 50;
     private static final long serialVersionUID = 1L;
-
     private final JPanel cardPanel;
     private final CardLayout cardLayout;
     private final JPanel mainPanel, infoPanel;
@@ -58,21 +58,23 @@ public abstract class MinigameMenuAbstract extends JFrame {
      * @param title the title of the menu window.
      * @param infoMsg the information message displayed in the info section.
      * @param gamePanel the panel representing the game.
+     * @param al the listener to start the game.
      */
     @SuppressWarnings("ConstructorCallsOverridableMethod")
-    public MinigameMenuAbstract(final String imgPath, final String title, final String infoMsg, final JPanel gamePanel) {
+    public MinigameMenuAbstract(final String imgPath, final String title, 
+            final String infoMsg, final JPanel gamePanel, final ActionListener al) {
+        super(title);
         background = new ImageIcon(MinigameMenuAbstract.class.getResource(imgPath)).getImage();
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        mainPanel = createMainPanel();
+        mainPanel = createMainPanel(al);
         infoPanel = createInfoPanel(infoMsg);
 
         cardPanel.add(mainPanel, "Menu");
         cardPanel.add(infoPanel, "Info");
         cardPanel.add(gamePanel, "Game");
 
-        super.setTitle(title);
     }
 
     /**
@@ -95,9 +97,26 @@ public abstract class MinigameMenuAbstract extends JFrame {
     }
 
     /**
+     * @return the start button
+     */
+    @SuppressWarnings("EI_EXPOSE_REP")
+    protected final JButton getStartButton() {
+        return startButton;
+    }
+
+    /**
+     * @return the start button
+     */
+    @SuppressWarnings("EI_EXPOSE_REP")
+    protected JPanel getCardPanel() {
+        return cardPanel;
+    }
+
+    /**
+     * @param al the Actionerlistener
      * @return mainPanel
      */
-    private JPanel createMainPanel() {
+    private JPanel createMainPanel(final ActionListener al) {
         final JPanel panel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(final Graphics g) {
@@ -109,6 +128,7 @@ public abstract class MinigameMenuAbstract extends JFrame {
 
         startButton = createButtonIcon(startIcon, BUTTON_WIDTH, BUTTON_HEIGHT);
         infoButton = createButtonIcon(infoIcon, ICON_SIZE, ICON_SIZE);
+        startButton.addActionListener(al);
         startButton.addActionListener(e -> cardLayout.show(cardPanel, "Game"));
         infoButton.addActionListener(e -> cardLayout.show(cardPanel, "Info"));
 
