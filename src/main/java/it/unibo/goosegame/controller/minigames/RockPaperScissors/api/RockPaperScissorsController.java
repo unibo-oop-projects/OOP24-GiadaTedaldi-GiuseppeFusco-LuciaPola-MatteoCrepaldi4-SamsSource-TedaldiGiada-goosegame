@@ -8,4 +8,8 @@ public interface RockPaperScissorsController {
      * @param playerChoice the player's choice (Rock, Paper, Scissors)
      */
     void playTurn(String playerChoice);
+    /**
+     * This method starts the game.
+     */
+    void startGame();
 }
