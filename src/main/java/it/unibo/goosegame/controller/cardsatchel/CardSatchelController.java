@@ -1,21 +1,27 @@
 package it.unibo.goosegame.controller.cardsatchel;
 
-import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
+import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 import it.unibo.goosegame.utilities.Card;
 import java.util.List;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Controller for managing the player's card satchel (bag).
  * Acts as an interface between the model and the rest of the game logic/UI.
  */
 public class CardSatchelController {
-    private final CardSatchelModelImpl satchelModel;
+    private final CardSatchelModel satchelModel;
 
     /**
      * Constructs a controller with the given CardSatchelModel.
      * @param satchelModel the model to control
      */
-    public CardSatchelController(final CardSatchelModelImpl satchelModel) {
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "The controller must operate on the same externally provided model to maintain state consistency."
+)
+    public CardSatchelController(final CardSatchelModel satchelModel) {
         this.satchelModel = satchelModel;
     }
 

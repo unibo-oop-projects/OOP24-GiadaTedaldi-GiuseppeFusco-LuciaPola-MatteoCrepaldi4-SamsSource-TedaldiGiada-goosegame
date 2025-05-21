@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 /**
  * Main class to test the CardSatchel GUI.
  */
-public class CardSatchelMain {
+public final class CardSatchelMain {
 
     private static final Logger LOGGER = Logger.getLogger(CardSatchelMain.class.getName());
 

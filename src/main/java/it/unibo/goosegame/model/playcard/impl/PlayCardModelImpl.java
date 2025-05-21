@@ -9,9 +9,16 @@ import java.util.stream.Collectors;
 
 import it.unibo.goosegame.model.playcard.api.PlayCardModel;
 
-public class PlayCardModelImpl implements PlayCardModel {
+/**
+ * Implementation of the PlayCardModel interface.
+ * This class manages the logic for drawing and validating cards after minigames and from the satchel.
+ */
+public final class PlayCardModelImpl implements PlayCardModel {
     private final Random random = new Random();
 
+    /**
+     * Constructs a new PlayCardModelImpl.
+     */
     public PlayCardModelImpl() {
         // Nessuna inizializzazione necessaria per ora
     }
@@ -37,19 +44,11 @@ public class PlayCardModelImpl implements PlayCardModel {
      */
     @Override
     public boolean canAddToSatchel(final Card card, final Player currentPlayer, final GameState gameState) {
-        if (card == null) {
-            return false;
-        }
-        if (!card.isBonus() && gameState == GameState.LOST) {
-            return false;
-        }
-        if (card.isRemove() && !card.isBonus()) {
-            return false;
-        }
-        if (currentPlayer.getSatchel().isFull()) {
-            return false;
-        }
-        return !( !card.isBonus() && !card.isThrowable() );
+        return card != null
+        && (card.isBonus() || gameState != GameState.LOST)
+        && (!card.isRemove() || card.isBonus())
+        && !currentPlayer.getSatchel().isFull()
+        && (card.isBonus() || card.isThrowable());
     }
 
     /**
@@ -63,32 +62,54 @@ public class PlayCardModelImpl implements PlayCardModel {
         if (card.isRemove() && !card.isBonus()) {
             return false; // self remove non può essere rimessa
         }
-        return !( !card.isBonus() && !card.isThrowable() ); // malus non throwable non può essere lanciato
+        return !(!card.isBonus() && !card.isThrowable()); // malus non throwable non può essere lanciato
     }
 
     /**
-     * Metodi di sola logica/regola sulle carte.
+     * Checks if the card is a self-remove card.
+     * @param card the card to check
+     * @return true if the card is a self-remove card, false otherwise
      */
     @Override
     public boolean isRemoveSelf(final Card card) {
         return card != null && card.isRemove() && !card.isBonus();
     }
 
+    /**
+     * Checks if the card is a remove-opponent card.
+     * @param card the card to check
+     * @return true if the card is a remove-opponent card, false otherwise
+     */
     @Override
     public boolean isRemoveOpponent(final Card card) {
         return card != null && card.isRemove() && card.isBonus();
     }
 
+    /**
+     * Checks if the card is a throwable malus.
+     * @param card the card to check
+     * @return true if the card is a throwable malus, false otherwise
+     */
     @Override
     public boolean isMalusThrowable(final Card card) {
         return card != null && !card.isBonus() && card.isThrowable();
     }
 
+    /**
+     * Checks if the card is a non-throwable malus.
+     * @param card the card to check
+     * @return true if the card is a non-throwable malus, false otherwise
+     */
     @Override
     public boolean isMalusNotThrowable(final Card card) {
         return card != null && !card.isBonus() && !card.isThrowable();
     }
 
+    /**
+     * Checks if the card is a bonus.
+     * @param card the card to check
+     * @return true if the card is a bonus, false otherwise
+     */
     @Override
     public boolean isBonus(final Card card) {
         return card != null && card.isBonus();

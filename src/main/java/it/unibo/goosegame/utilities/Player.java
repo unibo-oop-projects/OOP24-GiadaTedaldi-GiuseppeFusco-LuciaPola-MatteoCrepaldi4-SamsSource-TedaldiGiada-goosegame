@@ -1,5 +1,7 @@
 package it.unibo.goosegame.utilities;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 
 /**
@@ -7,12 +9,17 @@ import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
  */
 public final class Player {
     private final String name;
-    private final CardSatchelModelImpl satchel;
+    private final CardSatchelModel satchel;
 
     /**
      * Constructs a new player with the given name.
      * @param name the name of the player
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "The satchel is intentionally exposed as its management" 
+    + "is handled in a controlled manner elsewhere."
+)
     public Player(final String name) {
         this.name = name;
         this.satchel = new CardSatchelModelImpl();
@@ -30,8 +37,13 @@ public final class Player {
      * Returns the player's card satchel.
      * @return the player's satchel
      */
-    public CardSatchelModelImpl getSatchel() {
-        return satchel;
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "The satchel is intentionally exposed because its lifecycle" 
+    + "and access are tightly controlled elsewhere in the application."
+)
+    public CardSatchelModel getSatchel() {
+        return this.satchel;
     }
 
     /**

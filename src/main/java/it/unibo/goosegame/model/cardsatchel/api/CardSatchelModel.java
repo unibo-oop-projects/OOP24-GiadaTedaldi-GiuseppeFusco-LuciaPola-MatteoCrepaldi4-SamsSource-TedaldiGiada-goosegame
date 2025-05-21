@@ -12,14 +12,14 @@ public interface CardSatchelModel {
      * @param card the card to add
      * @return true if added, false otherwise
      */
-    boolean addCard(final Card card);
+    boolean addCard(Card card);
 
     /**
      * Removes a card from the satchel.
      * @param card the card to remove
      * @return true if removed, false if not present
      */
-    boolean removeCard(final Card card);
+    boolean removeCard(Card card);
 
     /**
      * Returns an unmodifiable list of cards in the satchel.

@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Model for the player's card satchel (bag).
- * Manages a list of cards with rules:
- * - Max 6 cards
- * - Malus cards (bonus == false) that are not throwable cannot be added
- */
 import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 
+/**
+ * Implementation of the CardSatchelModel interface.
+ * This class manages the logic for a player's card satchel (bag), including
+ * adding, removing, and listing cards, as well as enforcing satchel rules.
+ */
 public final class CardSatchelModelImpl implements CardSatchelModel {
     private static final int MAX_CARDS = 6;
     private final List<Card> cards = new ArrayList<>();

@@ -4,16 +4,21 @@ import it.unibo.goosegame.model.playcard.impl.PlayCardModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.utilities.Player;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.logging.Logger;
+
 
 /**
  * Controller for managing play card logic after minigames and from the satchel.
  */
 public final class PlayCardController {
+    private static final Logger LOGGER = Logger.getLogger(PlayCardController.class.getName());
     private final List<Player> allPlayers;
     private final Player currentPlayer;
-    private final GameState gameState; // può essere null se non serve
+    private final GameState gameState; // it could be null
     private final PlayCardModelImpl model;
     private Card drawnCard;
 
@@ -25,7 +30,7 @@ public final class PlayCardController {
      */
     public PlayCardController(final Player currentPlayer, final List<Player> allPlayers, final GameState gameState) {
         this.currentPlayer = currentPlayer;
-        this.allPlayers = allPlayers;
+        this.allPlayers = new ArrayList<>(allPlayers);
         this.gameState = gameState;
         this.model = new PlayCardModelImpl();
     }
@@ -37,7 +42,7 @@ public final class PlayCardController {
      */
     public PlayCardController(final Player currentPlayer, final List<Player> allPlayers) {
         this.currentPlayer = currentPlayer;
-        this.allPlayers = allPlayers;
+        this.allPlayers = new ArrayList<>(allPlayers);
         this.gameState = null;
         this.model = new PlayCardModelImpl();
     }
@@ -79,10 +84,7 @@ public final class PlayCardController {
      * @return true if added, false otherwise
      */
     public boolean addCardToSatchel() {
-        if (canAddToSatchel()) {
-            return currentPlayer.getSatchel().addCard(drawnCard);
-        }
-        return false;
+        return canAddToSatchel() && currentPlayer.getSatchel().addCard(drawnCard);
     }
 
     /**
@@ -94,10 +96,12 @@ public final class PlayCardController {
             currentPlayer.getSatchel().clear();
         }
         if (model.isMalusNotThrowable(drawnCard)) {
-            // no-op (TODO: implement logic to move player on board)
+            // @TODO: implement logic to move player on board
+            LOGGER.info("Malus not throwable - logic to be implemented");
         }
         if (model.isBonus(drawnCard)) {
-            // no-op (TODO: implement logic to apply bonus)
+            // @TODO: implement logic to apply bonus
+            LOGGER.info("Malus not throwable - logic to be implemented");
         }
     }
 
@@ -154,7 +158,8 @@ public final class PlayCardController {
         if (model.isRemoveOpponent(drawnCard)) {
             target.getSatchel().clear();
         } else if (model.isMalusThrowable(drawnCard)) {
-            // no-op (TODO: implement logic to move player on board)
+            // @TODO: implement logic to move player on board
+            LOGGER.info("Malus throwable - logic to move player on board to be implemented.");
         }
         // Other special effects if needed
     }

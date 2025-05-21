@@ -4,6 +4,9 @@ import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.utilities.Card;
 
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -44,12 +47,17 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
     private static final Color BORDER_COLOR = new Color(101, 67, 33);
 
     private final CardPanel[] cardPanels;
-    private final CardSatchelController controller;
+    private final transient CardSatchelController controller;
 
     /**
      * Constructs the CardSatchelViewImpl.
      * @param controller the controller for the satchel
      */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "The controller reference is intentionally stored to allow the view to interact with the game logic." 
+    + "The controller's lifecycle and mutability are managed externally."
+)
     public CardSatchelViewImpl(final CardSatchelController controller) {
         this.controller = controller;
         setBackground(SATCHEL_BROWN); // Marrone sacchetto
@@ -78,7 +86,7 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
     }
 
     // Pannello singola carta
-    private class CardPanel extends JPanel {
+    private final class CardPanel extends JPanel {
         private static final long serialVersionUID = 1L;
         private Card card;
         private boolean showDescription;
@@ -152,7 +160,7 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
             playButton.setBounds(x + cardW - btnW - padding, y + cardH - btnH - padding, btnW, btnH);
 
             // Disegna sfondo carta
-            g.setColor(card == null ? CARD_COLOR : CARD_COLOR);
+            g.setColor(CARD_COLOR);
             g.fillRoundRect(x, y, cardW, cardH, BORDER_ARC, BORDER_ARC);
 
             // Disegna bordo più spesso

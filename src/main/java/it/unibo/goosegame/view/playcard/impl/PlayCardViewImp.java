@@ -7,6 +7,9 @@ import it.unibo.goosegame.view.playcard.api.PlayerCardView;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
@@ -17,10 +20,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * PlayCardView: pannello che mostra una singola carta (pescata o dal satchel) e permette di giocarla, lanciarla o rimetterla nel satchel.
+ * PlayCardView: pannello che mostra una singola carta (pescata o dal satchel) e permette di giocarla,
+ * lanciarla o rimetterla nel satchel.
  * Si chiude solo dopo una mossa (gioca/lancia) o se si rimette la carta nel satchel.
  */
 public final class PlayCardViewImp extends JDialog implements PlayerCardView {
@@ -37,6 +42,9 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
     private static final int BORDER_R = 101;
     private static final int BORDER_G = 67;
     private static final int BORDER_B = 33;
+    private static final int CARD_COLOR_R = 210;
+    private static final int CARD_COLOR_G = 180;
+    private static final int CARD_COLOR_B = 140;
     private static final float NAME_FONT_SIZE = 20f;
     private static final float DESC_FONT_SIZE = 14f;
     private static final int NAME_X = 60;
@@ -44,9 +52,13 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
     private static final int DESC_X = 60;
     private static final int DESC_Y = 100;
 
-    private final PlayCardController controller;
+    private final transient PlayCardController controller;
     private final Card card;
-    private final List<Player> otherPlayers;
+    @SuppressFBWarnings(
+    value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    justification = "UI-only field, not needed after deserialization"
+)
+    private final transient List<Player> otherPlayers;
 
     /**
      * Constructs the PlayCardViewImp dialog.
@@ -54,11 +66,19 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
      * @param controller the PlayCardController
      * @param card the card to display/play
      */
-    public PlayCardViewImp(final JFrame parent, final PlayCardController controller, final Card card) {
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = ""
+)
+    public PlayCardViewImp(
+            final JFrame parent,
+            final PlayCardController controller,
+            final Card card
+    ) {
         super(parent, "Play Card", true);
         this.controller = controller;
         this.card = card;
-        this.otherPlayers = controller.getOtherPlayers();
+        this.otherPlayers = new ArrayList<>(controller.getOtherPlayers());
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
@@ -67,7 +87,7 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
-                g.setColor(new Color(210, 180, 140));
+                g.setColor(new Color(CARD_COLOR_R, CARD_COLOR_G, CARD_COLOR_B));
                 g.fillRoundRect(CARD_X, CARD_Y, CARD_W, CARD_H, CARD_ARC, CARD_ARC);
                 g.setColor(new Color(BORDER_R, BORDER_G, BORDER_B));
                 g.drawRoundRect(CARD_X, CARD_Y, CARD_W, CARD_H, CARD_ARC, CARD_ARC);
@@ -87,10 +107,14 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
         final JButton addToSatchelButton = new JButton("Metti nel satchel");
 
         final JComboBox<Player> playerCombo = new JComboBox<>(otherPlayers.toArray(new Player[0]));
-        playerCombo.setVisible(this.controller.isMalusThrowable(this.card) || this.controller.isRemoveOpponent(this.card));
+        playerCombo.setVisible(this.controller.isMalusThrowable(this.card)
+                || this.controller.isRemoveOpponent(this.card));
 
-        playButton.setEnabled(this.controller.isRemoveSelf(this.card) || this.controller.isMalusNotThrowable(this.card) || this.controller.isBonus(this.card));
-        throwButton.setEnabled(this.controller.isMalusThrowable(this.card) || this.controller.isRemoveOpponent(this.card));
+        playButton.setEnabled(this.controller.isRemoveSelf(this.card)
+                || this.controller.isMalusNotThrowable(this.card)
+                || this.controller.isBonus(this.card));
+        throwButton.setEnabled(this.controller.isMalusThrowable(this.card)
+                || this.controller.isRemoveOpponent(this.card));
         addToSatchelButton.setEnabled(this.controller.canPlayCardFromSatchel(this.card));
 
         playButton.addActionListener(new ActionListener() {
