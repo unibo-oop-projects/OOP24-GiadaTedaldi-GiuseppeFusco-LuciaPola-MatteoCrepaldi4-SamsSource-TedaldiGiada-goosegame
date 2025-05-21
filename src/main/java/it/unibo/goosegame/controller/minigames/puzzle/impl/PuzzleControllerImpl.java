@@ -1,5 +1,8 @@
 package it.unibo.goosegame.controller.minigames.puzzle.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
 import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
@@ -13,7 +16,7 @@ import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
  */
 public class PuzzleControllerImpl implements PuzzleController {
     private final PuzzleModel model;
-    private final PuzzleView view;
+    private PuzzleView view;
 
     /**
      * Constructs a new instance of {@link PuzzleControllerImpl}.
@@ -21,11 +24,18 @@ public class PuzzleControllerImpl implements PuzzleController {
      * @param model the {@link PuzzleModel} representing the game logic
      * @param view the {@link PuzzleViewImpl} representing the game view
      */
-    public PuzzleControllerImpl(final PuzzleModel model, final PuzzleView view) {
+    public PuzzleControllerImpl(final PuzzleModel model) {
         if (!(model instanceof PuzzleModelImpl)) {
             throw new IllegalArgumentException("model must be a PuzzleModelImpl");
         }
         this.model = new PuzzleModelImpl((PuzzleModelImpl) model);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setView(final PuzzleView view) {
         this.view = view;
     }
 
@@ -55,7 +65,7 @@ public class PuzzleControllerImpl implements PuzzleController {
      * {@inheritDoc}
      */
     @Override
-    public PuzzleModel getModel() {
-        return new PuzzleModelImpl((PuzzleModelImpl) this.model);
+    public Map<Position, Integer> getGridData() {
+        return new HashMap<>(this.model.getGrid());
     }
 }

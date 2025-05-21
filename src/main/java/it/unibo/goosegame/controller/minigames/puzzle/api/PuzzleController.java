@@ -1,7 +1,9 @@
 package it.unibo.goosegame.controller.minigames.puzzle.api;
 
-import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
+import java.util.Map;
+
 import it.unibo.goosegame.utilities.Position;
+import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
 
 /**
  * Interface representing the controller of a Puzzle minigame.
@@ -21,7 +23,14 @@ public interface PuzzleController {
     void shufflePuzzle();
 
     /** 
-     * @return the puzzle model associated with this controller
+     * @return ad unmodifiable map representing the puzzle grid 
      */
-    PuzzleModel getModel();
+    public Map<Position, Integer> getGridData();
+
+    /**
+     * Sets the view associated with this controller.
+     * 
+     * @param view the PuzzleView to be linked to the controller
+     */
+    public void setView(final PuzzleView view);
 }

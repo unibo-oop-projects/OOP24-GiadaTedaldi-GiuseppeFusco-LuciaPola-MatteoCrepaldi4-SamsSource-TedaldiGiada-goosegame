@@ -22,9 +22,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
-import it.unibo.goosegame.controller.minigames.puzzle.impl.PuzzleControllerImpl;
-import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
-import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
 
@@ -48,10 +45,9 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     /**
      * Constructs a new instance of {@link PuzzleViewImpl}.
      */
-    public PuzzleViewImpl() {
+    public PuzzleViewImpl(final PuzzleController controller) {
         super();
-        final PuzzleModel model = new PuzzleModelImpl();
-        this.controller = new PuzzleControllerImpl(model, this);
+        this.controller = controller;
         SwingUtilities.invokeLater(this::configUI);
     }
 
@@ -134,7 +130,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     public final void updateView() {
         final int cellWidth = buttons[0][0].getWidth();
         final int cellHeight = buttons[0][0].getHeight();
-        final Map<Position, Integer> grid = this.controller.getModel().getGrid();
+        final Map<Position, Integer> grid = this.controller.getGridData();
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 final int tileVal = grid.get(new Position(i, j));
