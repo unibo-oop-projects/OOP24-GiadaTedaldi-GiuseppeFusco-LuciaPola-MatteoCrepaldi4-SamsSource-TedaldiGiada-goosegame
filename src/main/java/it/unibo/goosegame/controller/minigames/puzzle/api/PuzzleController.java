@@ -1,6 +1,7 @@
 package it.unibo.goosegame.controller.minigames.puzzle.api;
 
-import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
+import java.util.Map;
+
 import it.unibo.goosegame.utilities.Position;
 
 /**
@@ -21,7 +22,8 @@ public interface PuzzleController {
     void shufflePuzzle();
 
     /** 
-     * @return the puzzle model associated with this controller
+     * @return ad unmodifiable map representing the puzzle grid 
      */
-    PuzzleModel getModel();
+    Map<Position, Integer> getGridData();
+
 }

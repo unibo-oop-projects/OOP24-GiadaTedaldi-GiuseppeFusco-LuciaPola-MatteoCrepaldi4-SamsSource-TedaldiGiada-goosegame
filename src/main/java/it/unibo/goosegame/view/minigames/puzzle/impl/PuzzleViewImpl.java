@@ -22,16 +22,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
-import it.unibo.goosegame.controller.minigames.puzzle.impl.PuzzleControllerImpl;
-import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
-import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
+import it.unibo.goosegame.view.minigames.puzzle.api.ReadPuzzleView;
 
 /**
  * Implementation of the {@link PuzzleView} interface using JavaSwing.
  */
-public class PuzzleViewImpl extends JFrame implements PuzzleView {
+public class PuzzleViewImpl extends JFrame implements PuzzleView, ReadPuzzleView {
     private static final long serialVersionUID = 1L;
     private static final int GRID_SIZE = 5;
     private static final int WIDTH = 500;
@@ -39,7 +37,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     private static final int INIT_TIME = 150;
     private final transient Logger logger = Logger.getLogger(PuzzleViewImpl.class.getName());
     private final JButton[][] buttons = new JButton[GRID_SIZE][GRID_SIZE];
-    private final transient PuzzleController controller;
+    private transient PuzzleController controller;
     private final JLabel timerLabel = new JLabel("Time: 02:30");
     private final JButton startButton = new JButton("Start");
     private Timer gameTimer;
@@ -47,12 +45,19 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
 
     /**
      * Constructs a new instance of {@link PuzzleViewImpl}.
+     * 
      */
     public PuzzleViewImpl() {
         super();
-        final PuzzleModel model = new PuzzleModelImpl();
-        this.controller = new PuzzleControllerImpl(model, this);
         SwingUtilities.invokeLater(this::configUI);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setController(final PuzzleController controller) {
+        this.controller = controller;
     }
 
     /**
@@ -134,7 +139,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     public final void updateView() {
         final int cellWidth = buttons[0][0].getWidth();
         final int cellHeight = buttons[0][0].getHeight();
-        final Map<Position, Integer> grid = this.controller.getModel().getGrid();
+        final Map<Position, Integer> grid = this.controller.getGridData();
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 final int tileVal = grid.get(new Position(i, j));

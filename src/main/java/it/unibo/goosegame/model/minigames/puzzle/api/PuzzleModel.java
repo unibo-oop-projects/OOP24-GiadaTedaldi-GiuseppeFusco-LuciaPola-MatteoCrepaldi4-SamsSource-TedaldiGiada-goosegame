@@ -40,4 +40,9 @@ public interface PuzzleModel extends MinigamesModel {
      */
     Map<Position, Integer> getGrid();
 
+    /**
+     * @return a new indipendent copy of this PuzzleModel
+     */
+    PuzzleModel getCopy();
+
 }
