@@ -1,7 +1,5 @@
 package it.unibo.goosegame.view.minigames.rockpaperscissors;
 
-import javax.swing.SwingUtilities;
-
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
 import it.unibo.goosegame.view.general.MinigameMenuAbstract;
@@ -28,26 +26,27 @@ public class RockPaperScissorsMenu extends MinigameMenuAbstract {
                 --> Paper beats Rock
                 --> Scissors beats Paper
             """,
-            createView()
+            new RockPaperScissorsViewImpl(),
+            null
         );
+        initialize();
+    }
+
+    /**
+     *  Inizialize view.
+     */
+    private void initialize() {
+       final RockPaperScissorsViewImpl view = (RockPaperScissorsViewImpl) super.getCardPanel().getComponent(2);
+       view.initializeView();
+       final RockPaperScissorsModelImpl model = new RockPaperScissorsModelImpl();
+       final RockPaperScissorsControllerImpl controller = new RockPaperScissorsControllerImpl(model, view);
+       getStartButton().addActionListener(e -> controller.startGame());
     }
     /**
-     * @return Th created view.
-     */
-    private static RockPaperScissorsViewImpl createView() {
-        final RockPaperScissorsViewImpl view = new RockPaperScissorsViewImpl();
-        view.initializeView();
-        final RockPaperScissorsModelImpl model = new RockPaperScissorsModelImpl();
-        new RockPaperScissorsControllerImpl(model, view);
-        return view;
-    }
-    /**
-     * @param args Command-line arguments.
-     */
-    public static void main(final String[] args) {
+    pulic static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
             final RockPaperScissorsMenu menu = new RockPaperScissorsMenu();
             menu.initializeView();
         });
-    }
+    }*/
 }
