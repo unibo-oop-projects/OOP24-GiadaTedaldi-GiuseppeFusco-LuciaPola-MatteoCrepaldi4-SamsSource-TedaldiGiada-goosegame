@@ -1,6 +1,5 @@
 package it.unibo.goosegame.controller.minigames.snake;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -9,7 +8,6 @@ import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Direction;
 import it.unibo.goosegame.view.minigames.snake.SnakeView;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -20,10 +18,7 @@ import java.awt.event.KeyEvent;
  * It handles user input and updates the game state.
  */
 public class SnakeController {
-    private static final int INIT_HEIGHT = 400;
-    private static final int INIT_WIDTH = 600;
     private final SnakeModel model;
-    private final JFrame frame;
     private final SnakeView view;
     private final Timer timer;
 
@@ -34,18 +29,8 @@ public class SnakeController {
     public SnakeController() {
         model = new SnakeModelImpl();
         view = new SnakeView(model);
-        frame = new JFrame();
 
-        frame.add(view);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle(model.getName());
-        view.setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setResizable(false); 
-
-        frame.addKeyListener(new KeyAdapter() {
+        view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
                 switch (e.getKeyCode()) {
@@ -68,7 +53,7 @@ public class SnakeController {
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
                     JOptionPane.showMessageDialog(null, model.getResult() == 1 ? "You win!" : "You lose...");
-                    frame.dispose();
+                    view.dispose();
                 }
             }
         });
