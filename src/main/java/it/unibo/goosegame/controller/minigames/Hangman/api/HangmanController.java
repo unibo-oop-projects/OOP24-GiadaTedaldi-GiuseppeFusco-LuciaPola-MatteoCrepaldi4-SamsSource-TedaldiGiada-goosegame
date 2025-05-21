@@ -9,4 +9,8 @@ public interface HangmanController {
      * @param letter the letter pressed by the player
      */
     void onLetterPressed(char letter);
+    /**
+     * This method starts the game.
+     */
+    void startGame();
 }
