@@ -95,7 +95,7 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
         CardPanel(final Card card) {
             setOpaque(false);
             setLayout(null); // Layout libero per posizionamento custom
-            playButton = new JButton("Gioca");
+            playButton = new JButton("Play");
             playButton.setVisible(false);
             playButton.setFocusable(false);
             playButton.setMargin(new Insets(2, 8, 2, 8));

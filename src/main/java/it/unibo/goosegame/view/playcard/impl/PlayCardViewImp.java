@@ -102,8 +102,8 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
         add(cardPanel, BorderLayout.CENTER);
 
         final JPanel buttonPanel = new JPanel();
-        final JButton playButton = new JButton("Gioca");
-        final JButton throwButton = new JButton("Lancia");
+        final JButton playButton = new JButton("Play");
+        final JButton throwButton = new JButton("Throw");
         final JButton addToSatchelButton = new JButton("Metti nel satchel");
 
         final JComboBox<Player> playerCombo = new JComboBox<>(otherPlayers.toArray(new Player[0]));
