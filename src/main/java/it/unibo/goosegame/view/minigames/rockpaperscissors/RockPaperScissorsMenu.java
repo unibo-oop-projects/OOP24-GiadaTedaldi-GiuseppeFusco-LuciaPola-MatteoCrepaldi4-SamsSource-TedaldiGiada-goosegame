@@ -42,11 +42,4 @@ public class RockPaperScissorsMenu extends MinigameMenuAbstract {
        final RockPaperScissorsControllerImpl controller = new RockPaperScissorsControllerImpl(model, view);
        getStartButton().addActionListener(e -> controller.startGame());
     }
-    /**
-    pulic static void main(final String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            final RockPaperScissorsMenu menu = new RockPaperScissorsMenu();
-            menu.initializeView();
-        });
-    }*/
 }

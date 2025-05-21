@@ -84,11 +84,4 @@ public class HangmanMenu extends MinigameMenuAbstract {
        final HangmanControllerImpl controller = new HangmanControllerImpl(view, model);
        getStartButton().addActionListener(e -> controller.startGame());
     }
-
-    /*public static void main(final String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            final HangmanMenu menu = new HangmanMenu();
-            menu.initializeView();
-        });
-    }*/
 }
