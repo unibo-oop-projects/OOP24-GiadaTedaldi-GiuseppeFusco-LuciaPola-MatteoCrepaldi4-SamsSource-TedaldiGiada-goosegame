@@ -1,4 +1,16 @@
 package it.unibo.goosegame.view.minigames.memory.impl;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -7,23 +19,11 @@ import it.unibo.goosegame.model.minigames.memory.api.MemoryModel;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.memory.api.MemoryView;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.List;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-
 /**
  * The MemoryViewImpl class implements the MemoryView interface.
  * It is responsible for displaying the memory game to the user.
  */
-public class MemoryViewImpl implements MemoryView {
+public class MemoryViewImpl implements MemoryView  { 
 
     /**
      * The size of the buttons.
