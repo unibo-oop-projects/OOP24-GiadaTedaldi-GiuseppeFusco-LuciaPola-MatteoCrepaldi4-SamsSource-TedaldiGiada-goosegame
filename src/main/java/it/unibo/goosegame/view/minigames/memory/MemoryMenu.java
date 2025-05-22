@@ -2,7 +2,9 @@ package it.unibo.goosegame.view.minigames.memory;
 
 import java.awt.event.ActionListener;
 
-import it.unibo.goosegame.view.general.MinigameMenuAbstract;
+import javax.swing.JPanel;
+
+import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
 
 /**
  * The MemoryMenu class represents the menu for the memory game.
@@ -19,8 +21,8 @@ public class MemoryMenu extends MinigameMenuAbstract {
      * @param infoMsg the message to show in the instructions
      * @param al the action listener for the start button
      */
-    public MemoryMenu(final String imgPath, final String title, final String infoMsg, final ActionListener al) {
-        super(imgPath, title, infoMsg, al);
+    public MemoryMenu(final String imgPath, final String title, final String infoMsg, final JPanel panel, final ActionListener al) {
+        super(imgPath, title, infoMsg, panel, al);
         /*
          --Hypothetical Memory menu:
         ActionListener al = e -> {
