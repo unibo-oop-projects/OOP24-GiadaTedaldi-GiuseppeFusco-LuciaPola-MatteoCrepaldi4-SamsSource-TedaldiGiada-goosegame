@@ -12,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -21,7 +22,7 @@ import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissors
 /**
  * This class represents the view for the Rock-Paper-Scissors game.
  */
-public class RockPaperScissorsViewImpl extends JPanel implements RockPaperScissorsView {
+public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScissorsView {
 
     private static final int RGB_WHITE = 255;
     private static final int IMAGE_SIZE = 100;
@@ -40,6 +41,7 @@ public class RockPaperScissorsViewImpl extends JPanel implements RockPaperScisso
     private final JButton rock = new JButton("ROCK");
     private final JButton paper = new JButton("PAPER");
     private final JButton scissors = new JButton("SCISSORS");
+    private final JPanel mainPanel;
 
     private ImageIcon currentPlayerIcon;
     private ImageIcon currentComputerIcon;
@@ -50,9 +52,10 @@ public class RockPaperScissorsViewImpl extends JPanel implements RockPaperScisso
      * Create game's view.
      */
     public RockPaperScissorsViewImpl() {
-        super();
-        super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        super.setBackground(new Color(RGB_WHITE, RGB_WHITE, 180));
+        super("Rock Paper Scissors");
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(new Color(RGB_WHITE, RGB_WHITE, 180));
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
@@ -79,10 +82,19 @@ public class RockPaperScissorsViewImpl extends JPanel implements RockPaperScisso
         computerChoice.setBorderPainted(false);
         computerChoice.setFocusPainted(false);
 
-        this.add(createTopPanel());
-        this.add(createScorePanel());
-        this.add(createChoicePanel());
-        this.add(createResultPanel());
+        mainPanel.add(createTopPanel());
+        mainPanel.add(createScorePanel());
+        mainPanel.add(createChoicePanel());
+        mainPanel.add(createResultPanel());
+
+        setContentPane(mainPanel);
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        scaleComponents();
     }
 
     /**

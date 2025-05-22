@@ -16,6 +16,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -26,7 +27,7 @@ import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
 /**
  * A class that extends the hangman game's view.
  */
-public class HangmanViewImpl extends JPanel implements HangmanView {
+public class HangmanViewImpl extends JFrame implements HangmanView {
     private static final int MAX_ATTEMPTS = 5;
     private static final long serialVersionUID = 1L;
     private static final int FONT_SIZE = 34;
@@ -36,7 +37,7 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
     private static final int WINDOW_HEIGHT = 400;
     private static final int BUTTONW = 55;
     private static final int BUTTONH = 25;
-
+    private final JPanel panel;
 
     private JLabel wordLabel; 
     private JLabel imageLabel;
@@ -48,16 +49,23 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
     /**
      * Constructor of the class. Initializes the view of Hangman game.
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public HangmanViewImpl() {
-        super();
-        super.setLayout(new BorderLayout());
+        super("Hangman");
         currentAttempts = MAX_ATTEMPTS;
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
+        super.setContentPane(panel);
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 scaleComponents();
             }
         });
+        super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        super.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        super.setLocationRelativeTo(null);
     }
     /**
      * {@inheritDoc}
@@ -66,8 +74,8 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
     public void initializeView() {
         final JPanel mainPanel = createMainPanel();
         final JPanel rightPanel = createImagePanel();
-        this.add(mainPanel, BorderLayout.CENTER);
-        this.add(rightPanel, BorderLayout.EAST);
+        panel.add(mainPanel, BorderLayout.CENTER);
+        panel.add(rightPanel, BorderLayout.EAST);
     }
     /**
      * {@inheritDoc}
@@ -137,7 +145,7 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
     public void enableAllButton() {
         for (final Component comp : keyboardPanel.getComponents()) {
             if (comp instanceof  JButton button) {
-                button.setEnabled(false);
+                button.setEnabled(true);
             }
         }
     }
@@ -194,7 +202,7 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
     }
 
     private JPanel createKeyboardPanel() {
-        final JPanel panel  = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        final JPanel keyPanel  = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         for (char letter = 'A'; letter <= 'Z'; letter++) {
             final JButton button = new JButton(String.valueOf(letter));
             button.setBackground(new Color(COLOR_WHITE, COLOR_WHITE, 180));
@@ -206,9 +214,9 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
                     disableButton(selectedLetter);
                 }
             });
-            panel.add(button);
+            keyPanel.add(button);
         }
-        return panel;
+        return keyPanel;
     }
 
     private void scaleComponents() {
