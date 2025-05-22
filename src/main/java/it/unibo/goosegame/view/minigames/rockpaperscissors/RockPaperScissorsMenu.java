@@ -10,6 +10,9 @@ import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissor
  */
 public class RockPaperScissorsMenu extends MinigameMenuAbstract {
     private static final long serialVersionUID = 1L;
+    private transient RockPaperScissorsControllerImpl controller;
+    private transient RockPaperScissorsModelImpl model;
+    private transient RockPaperScissorsViewImpl view;
     /**
      * Constructor for the RockPaperScissorsMenu class.
      */
@@ -26,7 +29,6 @@ public class RockPaperScissorsMenu extends MinigameMenuAbstract {
                 --> Paper beats Rock
                 --> Scissors beats Paper
             """,
-            new RockPaperScissorsViewImpl(),
             null
         );
         initialize();
@@ -36,10 +38,12 @@ public class RockPaperScissorsMenu extends MinigameMenuAbstract {
      *  Inizialize view.
      */
     private void initialize() {
-       final RockPaperScissorsViewImpl view = (RockPaperScissorsViewImpl) super.getCardPanel().getComponent(2);
-       view.initializeView();
-       final RockPaperScissorsModelImpl model = new RockPaperScissorsModelImpl();
-       final RockPaperScissorsControllerImpl controller = new RockPaperScissorsControllerImpl(model, view);
-       getStartButton().addActionListener(e -> controller.startGame());
+       model = new RockPaperScissorsModelImpl();
+       getStartButton().addActionListener(e -> {
+            view = new RockPaperScissorsViewImpl();
+            controller = new RockPaperScissorsControllerImpl(model, view, this);
+            view.initializeView();
+            controller.startGame();
+       });
     }
 }

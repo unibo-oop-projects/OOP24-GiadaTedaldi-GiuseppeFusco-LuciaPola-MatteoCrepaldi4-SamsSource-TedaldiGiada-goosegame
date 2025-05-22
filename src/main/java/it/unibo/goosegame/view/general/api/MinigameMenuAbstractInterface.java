@@ -1,19 +1,16 @@
 package it.unibo.goosegame.view.general.api;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
+/**
+ * Interface for the MinigameMenuAbstract.
+ */
 public interface MinigameMenuAbstractInterface {
     /**
-     * Initializes and sets up the components of the minigames's menu view.
-     */
-    void initializeView();
-    /**
-     * @return the start button
+     * @return the start button.
      */
     JButton getStartButton();
     /**
-     * @return the start button
+     * Initialize view.
      */
-    JPanel getCardPanel();
+    void initializeView();
 }

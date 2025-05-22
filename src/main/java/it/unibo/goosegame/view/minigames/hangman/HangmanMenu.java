@@ -29,7 +29,7 @@ public class HangmanMenu extends MinigameMenuAbstract {
     */
     public HangmanMenu() { 
         super(
-            "/hangmanImage1.png", 
+            "/hangmanImage.png", 
             "Hangman", 
             """
             The game involves guessing a randomly selected word. 
@@ -41,7 +41,6 @@ public class HangmanMenu extends MinigameMenuAbstract {
             If the player exhausts all their lives without guessing the word correctly, they lose.
             If the player correctly identifies all the letters in the word before running out of lives, they win.
             """, 
-            new HangmanViewImpl(),
            null
 
         );
@@ -78,10 +77,14 @@ public class HangmanMenu extends MinigameMenuAbstract {
      * Initialize view.
      */
     private void initialize() {
-       final HangmanViewImpl view = (HangmanViewImpl) super.getCardPanel().getComponent(2);
-       view.initializeView();
-       final HangmanModelImpl model = new HangmanModelImpl(loadWords().toArray(new String[0]));
-       final HangmanControllerImpl controller = new HangmanControllerImpl(view, model);
-       getStartButton().addActionListener(e -> controller.startGame());
+        final HangmanViewImpl view = new HangmanViewImpl();
+        view.initializeView();
+        final HangmanModelImpl model = new HangmanModelImpl(loadWords().toArray(new String[0]));
+        final HangmanControllerImpl controller = new HangmanControllerImpl(view, model, this);
+        view.setController(controller);
+        getStartButton().addActionListener(e -> {
+            view.setVisible(true);
+            controller.startGame();
+        });
     }
 }
