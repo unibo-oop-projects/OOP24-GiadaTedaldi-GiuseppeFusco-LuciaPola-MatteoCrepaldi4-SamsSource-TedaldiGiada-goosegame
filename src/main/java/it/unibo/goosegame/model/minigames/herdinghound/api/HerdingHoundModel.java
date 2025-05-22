@@ -59,7 +59,8 @@ public interface HerdingHoundModel extends MinigamesModel {
      * Returns the current game state.
      * @return the current game state
      */
-    MinigamesModel.GameState getGameState();
+    @Override
+    GameState getGameState();
 
     /**
      * Returns the cells visible by the dog, excluding shadows and boxes.
