@@ -1,4 +1,4 @@
-package it.unibo.goosegame.controller.herdinghound;
+package it.unibo.goosegame.controller.minigames.herdinghound;
 
 import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
