@@ -82,7 +82,8 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override
     public boolean isOver() {
-        return this.shown.size() == this.values.size();
+        final List<Integer> remaining = values.keySet().stream().filter(p -> !this.shown.contains(p)).map(values::get).toList();
+        return remaining.stream().distinct().count() == remaining.size();
     }
 
     /**
@@ -97,7 +98,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override 
     public GameState getGameState() {
-        return shown.size() == values.size() ?  GameState.WON : GameState.LOST;
+        return shown.size() == values.size() ? GameState.WON : GameState.LOST;
     }
 
     /**

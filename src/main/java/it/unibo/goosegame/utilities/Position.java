@@ -1,13 +1,12 @@
 package it.unibo.goosegame.utilities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Represents a position in a 2D coordinate system with integer values.
  */
-public class Position implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Position {
+
     private final int x;
     private final int y;
 
@@ -69,5 +68,4 @@ public class Position implements Serializable {
     public String toString() {
         return "Position (" + x + ", " + y + ")";
     }
-
 }
