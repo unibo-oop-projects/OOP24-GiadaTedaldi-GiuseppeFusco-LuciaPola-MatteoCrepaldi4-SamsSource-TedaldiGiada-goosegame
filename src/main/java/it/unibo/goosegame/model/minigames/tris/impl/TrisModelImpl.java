@@ -55,19 +55,19 @@ public class TrisModelImpl implements TrisModel {
      * {@inheritDoc}
      */
     @Override
-    public int getResult() {
+    public GameState getGameState() {
         if (this.checkWin()) {
            for (final Set<Position> line : WINNING_LINES) {
                 if (line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
-                    return 1;
+                    return GameState.WON;
                 } else if (line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
-                    return -1;
+                    return GameState.LOST;
                 }
             } 
         } else if (this.isFull()) {
-            return GRID_SIZE;
+            return GameState.TIE;
         }
-        return 0;
+        return GameState.ONGOING;
     }
 
     /**
