@@ -20,12 +20,14 @@ public final class PlayCardModelImpl implements PlayCardModel {
      * Constructs a new PlayCardModelImpl.
      */
     public PlayCardModelImpl() {
-        // Nessuna inizializzazione necessaria per ora
+        // No initialization needed for now
     }
 
     /**
-     * Estrae una carta random in base allo stato del minigioco.
-     * Se WON: bonus, se LOST: malus.
+     * Draws a random card based on the minigame state.
+     * If WON: bonus, if LOST: malus.
+     * @param state the result of the minigame
+     * @return the drawn card
      */
     @Override
     public Card drawCard(final GameState state) {
@@ -40,7 +42,11 @@ public final class PlayCardModelImpl implements PlayCardModel {
     }
 
     /**
-     * Verifica se la carta può essere aggiunta al satchel del giocatore corrente (dopo minigioco).
+     * Checks if the card can be added to the current player's satchel (after minigame).
+     * @param card the card to check
+     * @param currentPlayer the player
+     * @param gameState the minigame state
+     * @return true if the card can be added, false otherwise
      */
     @Override
     public boolean canAddToSatchel(final Card card, final Player currentPlayer, final GameState gameState) {
@@ -52,7 +58,10 @@ public final class PlayCardModelImpl implements PlayCardModel {
     }
 
     /**
-     * Verifica se la carta può essere giocata dal satchel (senza considerare GameState).
+     * Checks if the card can be played from the satchel (without considering GameState).
+     * @param card the card to check
+     * @param currentPlayer the player
+     * @return true if the card can be played, false otherwise
      */
     @Override
     public boolean canPlayCardFromSatchel(final Card card, final Player currentPlayer) {
@@ -60,9 +69,9 @@ public final class PlayCardModelImpl implements PlayCardModel {
             return false;
         }
         if (card.isRemove() && !card.isBonus()) {
-            return false; // self remove non può essere rimessa
+            return false; // self remove cannot be put back
         }
-        return !(!card.isBonus() && !card.isThrowable()); // malus non throwable non può essere lanciato
+        return !(!card.isBonus() && !card.isThrowable()); // non-throwable malus cannot be thrown
     }
 
     /**

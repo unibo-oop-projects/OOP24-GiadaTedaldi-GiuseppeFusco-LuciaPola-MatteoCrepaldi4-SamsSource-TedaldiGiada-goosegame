@@ -359,7 +359,7 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
             return new Dimension(ROUND_BUTTON_MIN_SIZE, ROUND_BUTTON_MIN_SIZE);
         }
 
-        // Blocco fisico degli eventi mouse se disabilitato
+        // Physically block mouse events if disabled
         @Override
         protected void processMouseEvent(final MouseEvent e) {
             if (!isEnabled()) {

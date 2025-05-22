@@ -7,33 +7,33 @@ import javax.swing.JFrame;
  */
 public interface HerdingHoundView {
     /**
-     * Avvia il conto alla rovescia iniziale, poi esegue la callback.
-     * @param onFinish callback da eseguire al termine del countdown
+     * Starts the initial countdown, then executes the callback.
+     * @param onFinish callback to execute at the end of the countdown
      */
     void startCountdown(Runnable onFinish);
 
     /**
-     * Ritorna true se il countdown è attivo.
-     * @return true se il countdown è attivo, false altrimenti
+     * Returns true if the countdown is active.
+     * @return true if the countdown is active, false otherwise
      */
     boolean isCountdownActive();
 
     /**
-     * Avvia l'animazione di lampeggio di fine partita.
-     * @param frame JFrame su cui mostrare il pannello finale
-     * @param hasWon true se il giocatore ha vinto
+     * Starts the end-of-game blinking animation.
+     * @param frame JFrame on which to show the final panel
+     * @param hasWon true if the player has won
      */
     void startBlinking(JFrame frame, boolean hasWon);
 
     /**
-     * Aggiorna la vista (richiama repaint).
+     * Updates the view (calls repaint).
      */
     void updateView();
 
     /**
-     * Mostra il pannello di fine partita.
-     * @param frame JFrame su cui mostrare il pannello
-     * @param hasWon true se il giocatore ha vinto
+     * Shows the end-of-game panel.
+     * @param frame JFrame on which to show the panel
+     * @param hasWon true if the player has won
      */
     void showGameOverPanel(JFrame frame, boolean hasWon);
 }

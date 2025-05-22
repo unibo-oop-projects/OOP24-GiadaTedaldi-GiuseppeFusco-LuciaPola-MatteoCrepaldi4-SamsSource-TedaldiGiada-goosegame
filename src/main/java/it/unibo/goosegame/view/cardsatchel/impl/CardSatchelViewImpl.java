@@ -37,7 +37,7 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
     )
     public CardSatchelViewImpl(final CardSatchelController controller) {
         this.controller = controller;
-        setBackground(SATCHEL_BROWN); // Marrone sacchetto
+        setBackground(SATCHEL_BROWN); // brown satchel
         setLayout(new GridLayout(1, MAX_CARDS, 10, 10));
         cardPanels = new CardPanelView[MAX_CARDS];
         final List<Card> cards = this.controller.getCards();
