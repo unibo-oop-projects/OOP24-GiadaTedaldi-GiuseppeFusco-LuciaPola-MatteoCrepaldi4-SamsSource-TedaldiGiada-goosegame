@@ -2,7 +2,7 @@ package it.unibo.goosegame.view.minigames.rockpaperscissors;
 
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
-import it.unibo.goosegame.view.general.MinigameMenuAbstract;
+import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissorsViewImpl;
 
 /**

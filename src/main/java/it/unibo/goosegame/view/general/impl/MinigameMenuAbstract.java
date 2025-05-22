@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.general;
+package it.unibo.goosegame.view.general.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -22,10 +22,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import it.unibo.goosegame.view.general.api.MinigameMenuAbstractInterface;
+
 /**
  * This is an abstract class representing a menu for the mini-games.
  */
-public abstract class MinigameMenuAbstract extends JFrame {
+public abstract class MinigameMenuAbstract extends JFrame implements MinigameMenuAbstractInterface{
 
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 400;
@@ -80,8 +82,9 @@ public abstract class MinigameMenuAbstract extends JFrame {
     }
 
     /**
-     * Initializes and sets up the components of the minigames's menu view.
+     * {@inheritDoc }
      */
+    @Override
     public void initializeView() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -99,17 +102,19 @@ public abstract class MinigameMenuAbstract extends JFrame {
     }
 
     /**
-     * @return the start button
+     * {@inheritDoc}
      */
     @SuppressWarnings("EI_EXPOSE_REP")
+    @Override
     public final JButton getStartButton() {
         return startButton;
     }
 
     /**
-     * @return the start button
+     * {@inheritDoc }
      */
     @SuppressWarnings("EI_EXPOSE_REP")
+    @Override
     public JPanel getCardPanel() {
         return cardPanel;
     }

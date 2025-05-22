@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
-import it.unibo.goosegame.view.general.MinigameMenuAbstract;
+import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
 import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 
 /**
