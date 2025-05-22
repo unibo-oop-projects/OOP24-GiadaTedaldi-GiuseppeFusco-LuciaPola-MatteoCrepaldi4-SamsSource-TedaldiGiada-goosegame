@@ -1,16 +1,15 @@
 package it.unibo.goosegame.controller.minigames.rockpaperscissors.impl;
 
-import java.awt.Window;
 import java.util.Locale;
 import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.api.RockPaperScissorsController;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
+import it.unibo.goosegame.view.minigames.rockpaperscissors.RockPaperScissorsMenu;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissorsViewImpl;
 /** 
  * This class handles the interaction between the Rock-Paper-Scissors
@@ -21,6 +20,7 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
     @SuppressFBWarnings(value = "EI2", justification = "View reference is safe in MVC context and not modified internally.")
     private final transient RockPaperScissorsViewImpl view;
     private final transient RockPaperScissorsModelImpl model;
+    private final transient RockPaperScissorsMenu menu;
 
     private final ImageIcon rockImage;
     private final ImageIcon paperImage;
@@ -29,9 +29,16 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
     /**
      * @param m the game model
      * @param v the game view
+     * @param menu the view of game's menu
      */
-    public RockPaperScissorsControllerImpl(final RockPaperScissorsModelImpl m, final RockPaperScissorsViewImpl v) {
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "The menu is intentionally shared for interaction between view and controller."
+    )
+    public RockPaperScissorsControllerImpl(final RockPaperScissorsModelImpl m, 
+            final RockPaperScissorsViewImpl v, final RockPaperScissorsMenu menu) {
         this.model = m;
+        this.menu = Objects.requireNonNull(menu);
         this.view = Objects.requireNonNull(v);
 
         view.addRockListener(e -> playTurn("ROCK"));
@@ -81,11 +88,8 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
             } else {
                 JOptionPane.showMessageDialog(view, "GAME OVER - YOU LOSE");
             }
-
-            final Window window = SwingUtilities.getWindowAncestor(view);
-            if (window != null) {
-                window.dispose();
-            }
+            menu.dispose();
+            view.dispose();
         }
     }
 

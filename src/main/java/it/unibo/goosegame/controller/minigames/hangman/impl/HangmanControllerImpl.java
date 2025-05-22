@@ -1,14 +1,13 @@
 package  it.unibo.goosegame.controller.minigames.hangman.impl;
 
-import java.awt.Window;
 import java.util.Objects;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
+import it.unibo.goosegame.view.minigames.hangman.HangmanMenu;
 import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 /**
  * This class manages the interaction between the Hangman model and view.
@@ -19,14 +18,21 @@ public class HangmanControllerImpl implements HangmanController {
      @SuppressFBWarnings(value = "EI2", justification = "Reference to view is safe and immutable in MVC pattern")
     private final transient HangmanViewImpl view;
     private final transient HangmanModelImpl model;
+    private final transient HangmanMenu menu;
 
     /**
      * @param view the game view
      * @param model the game model
+     * @param menu the view of game's menu.
      */
-    public HangmanControllerImpl(final HangmanViewImpl view, final HangmanModelImpl model) {
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "The menu is intentionally shared for interaction between view and controller."
+    )
+    public HangmanControllerImpl(final HangmanViewImpl view, final HangmanModelImpl model, final HangmanMenu menu) {
         this.model = Objects.requireNonNull(model);
         this.view = Objects.requireNonNull(view);
+        this.menu = Objects.requireNonNull(menu);
         init();
     }
 
@@ -52,10 +58,8 @@ public class HangmanControllerImpl implements HangmanController {
                                                     YOU LOSE...
                                                     The word is \t""" + model.getSelectedWord());
             }
-            final Window window = SwingUtilities.getWindowAncestor(view);
-            if (window != null) {
-                window.dispose();
-            }
+            menu.dispose();
+            view.dispose();
         }
     }
     /**
