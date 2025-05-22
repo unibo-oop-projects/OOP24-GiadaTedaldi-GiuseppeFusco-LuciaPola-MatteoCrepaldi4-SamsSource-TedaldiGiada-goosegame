@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.minigames.memory;
 
-import it.unibo.goosegame.controller.minigames.memory.MemoryController;
+//import it.unibo.goosegame.controller.minigames.memory.MemoryController;
 import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
 
 /**
@@ -19,7 +19,7 @@ public class MemoryMenu extends MinigameMenuAbstract {
             "informazioni di gioco da inserire",
             null
         );
-        getStartButton().addActionListener(e -> new MemoryController());
+        //getStartButton().addActionListener(e -> new MemoryController());
 
         /*
          --Hypothetical Memory menu:
