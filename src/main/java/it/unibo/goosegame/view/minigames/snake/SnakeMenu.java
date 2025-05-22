@@ -2,8 +2,6 @@ package it.unibo.goosegame.view.minigames.snake;
 
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
-
 import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
 
 //import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
@@ -21,11 +19,11 @@ public class SnakeMenu extends MinigameMenuAbstract {
      * @param imgPath the path of the image background
      * @param title the title of the frame
      * @param infoMsg the message to show in the instructions
-     * @param gamePanel the panel representing the game.
      * @param al the action listener for the start button
      */
-    public SnakeMenu(final String imgPath, final String title, final String infoMsg, final JPanel gamePanel, final ActionListener al) {
-        super(imgPath, title, infoMsg, gamePanel, al);
+    public SnakeMenu(final String imgPath, final String title, 
+        final String infoMsg, final ActionListener al) {
+        super(imgPath, title, infoMsg, al);
         /*
         SnakeModelImpl sm = new SnakeModelImpl();
         super(imgPath, sm.getName(), infoMsg, al);
