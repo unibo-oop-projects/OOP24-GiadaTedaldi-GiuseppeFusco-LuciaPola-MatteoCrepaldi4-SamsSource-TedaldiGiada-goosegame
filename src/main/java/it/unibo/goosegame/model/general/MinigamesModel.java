@@ -1,34 +1,57 @@
 package it.unibo.goosegame.model.general;
 
 /**
- * Represents the general interface for a minigame model.
- * All minigames must implement this interface to ensure consistent behavior.
+ * Base interface for minigame models.
+ * Defines common methods for managing the game state.
  */
 public interface MinigamesModel {
 
     /**
-     * Resets the game to its initial state.
+     * General states of the minigame.
+     */
+    enum GameState {
+        /**
+         * The game is not started yet.
+         */
+        NOT_STARTED,
+        /**
+         * The game is ongoing.
+         */
+        ONGOING,
+        /**
+         * The game has been won.
+         */
+        WON,
+        /**
+         * The game has been lost.
+         */
+        LOST,
+        /**
+         * The game is tied.
+         */
+        TIE
+    }
+
+    /**
+     * Resets the game state to the beginning.
      */
     void resetGame();
 
     /**
-     * Returns the result of the game.
-     * The meaning of the result value depends on the specific minigame implementation.
-     * 
-     * @return an integer representing the game result
+     * Indicates whether the game is over.
+     * @return true if the game is finished, false otherwise
      */
-    int getResult();
+    boolean isOver();
 
     /**
-     * @return the name of the minigame as a String
+     * Indicates the mini game name.
+     * @return the mini game name.
      */
     String getName();
 
     /**
-     * Checks whether the game has ended.
-     * 
-     * @return true if the game is over, false otherwise
+     * Indicates the mini game state.
+     * @return the mini game state.
      */
-    boolean isOver();
-
+    GameState getGameState();
 }

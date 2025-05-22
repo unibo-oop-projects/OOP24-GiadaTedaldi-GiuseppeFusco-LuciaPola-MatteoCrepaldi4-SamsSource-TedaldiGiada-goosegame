@@ -1,11 +1,13 @@
 package it.unibo.goosegame.controller.minigames.puzzle.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
-import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
-import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
+import it.unibo.goosegame.view.minigames.puzzle.api.ReadPuzzleView;
 
 /**
  * Implementation of the {@link PuzzleController} interface.
@@ -13,19 +15,19 @@ import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
  */
 public class PuzzleControllerImpl implements PuzzleController {
     private final PuzzleModel model;
-    private final PuzzleView view;
+    private final ReadPuzzleView view;
 
     /**
      * Constructs a new instance of {@link PuzzleControllerImpl}.
      * 
      * @param model the {@link PuzzleModel} representing the game logic
-     * @param view the {@link PuzzleViewImpl} representing the game view
+     * @param view the {@link PuzzleView} representing the game view
      */
-    public PuzzleControllerImpl(final PuzzleModel model, final PuzzleView view) {
-        if (!(model instanceof PuzzleModelImpl)) {
-            throw new IllegalArgumentException("model must be a PuzzleModelImpl");
+    public PuzzleControllerImpl(final PuzzleModel model, final ReadPuzzleView view) {
+        if (model == null || view == null) {
+            throw new IllegalArgumentException("model and view cannot be null");
         }
-        this.model = new PuzzleModelImpl((PuzzleModelImpl) model);
+        this.model = model.getCopy();
         this.view = view;
     }
 
@@ -55,7 +57,7 @@ public class PuzzleControllerImpl implements PuzzleController {
      * {@inheritDoc}
      */
     @Override
-    public PuzzleModel getModel() {
-        return new PuzzleModelImpl((PuzzleModelImpl) this.model);
+    public Map<Position, Integer> getGridData() {
+        return new HashMap<>(this.model.getGrid());
     }
 }

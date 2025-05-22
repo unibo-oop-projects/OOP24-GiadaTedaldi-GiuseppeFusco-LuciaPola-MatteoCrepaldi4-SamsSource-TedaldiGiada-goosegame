@@ -3,6 +3,7 @@ package it.unibo.goosegame.controller.minigames.tris.impl;
 import javax.swing.Timer;
 
 import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.tris.api.TrisView;
@@ -78,20 +79,20 @@ public class TrisControllerImpl implements TrisController {
     @Override
     public void endGame() {
         this.gameOver = true;
-        final int result = this.model.getResult();
+        final GameState result = this.model.getGameState();
         switch (result) {
-            case 1:
+            case WON:
                 this.humanWins++;
                 this.view.setStatus("You win this round!"); 
                 break;
-            case -1:
+            case LOST:
                 this.pcWins++;
                 this.view.setStatus("PC wins this round!"); 
                 break;
-            case 3: 
+            case TIE: 
                 this.view.setStatus("Draw!"); 
                 break;
-            case 0: 
+            case ONGOING: 
                 this.view.setStatus("Still playing..."); 
                 return;
             default: 
@@ -125,14 +126,6 @@ public class TrisControllerImpl implements TrisController {
             timer.setRepeats(false);
             timer.start();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TrisController startGame() {
-        return new TrisControllerImpl(model);
     }
 
 }

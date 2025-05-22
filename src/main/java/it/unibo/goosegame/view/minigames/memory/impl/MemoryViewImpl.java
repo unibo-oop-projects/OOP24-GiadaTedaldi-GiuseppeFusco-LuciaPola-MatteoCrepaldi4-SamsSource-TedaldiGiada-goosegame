@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.memory.api.MemoryModel;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.memory.api.MemoryView;
@@ -71,7 +72,7 @@ public class MemoryViewImpl implements MemoryView  {
             this.model.hit(this.cells.get(jb));
             this.redraw();
             if (this.model.isOver()) {
-                JOptionPane.showMessageDialog(null, model.getResult() == 1 ? "You Win!" : "You Lose...");
+                JOptionPane.showMessageDialog(null, model.getGameState() == GameState.WON ? "You Win!" : "You Lose...");
                 this.frame.dispose();
             }
         };

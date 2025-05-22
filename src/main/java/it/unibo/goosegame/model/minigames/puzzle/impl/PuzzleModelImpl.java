@@ -64,11 +64,11 @@ public class PuzzleModelImpl implements PuzzleModel {
      * {@inheritDoc}
      */
     @Override
-    public int getResult() {
+    public GameState getGameState() {
         if (!this.isOver() || this.timeOver) {
-            return 0;
+            return GameState.LOST;
         }
-        return 1;
+        return GameState.WON;
     }
 
     /**
@@ -153,6 +153,14 @@ public class PuzzleModelImpl implements PuzzleModel {
     @Override
     public void setTimeOver(final boolean timeOver) {
         this.timeOver = timeOver;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PuzzleModel getCopy() {
+        return new PuzzleModelImpl(this);
     }
 
 }

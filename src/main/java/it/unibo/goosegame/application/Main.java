@@ -2,7 +2,7 @@ package it.unibo.goosegame.application;
 
 import javax.swing.SwingUtilities;
 /**
- * Main class for the Goose game application.
+ * Main.
  */
 public final class Main {
   private Main() {

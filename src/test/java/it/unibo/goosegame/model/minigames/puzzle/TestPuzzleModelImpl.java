@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
 import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
@@ -68,7 +69,7 @@ class TestPuzzleModelImpl {
      */
     @Test
     void testGetResultWin() {
-        assertEquals(1, this.model.getResult());
+        assertEquals(GameState.WON, this.model.getGameState());
     }
 
     /**
@@ -77,7 +78,7 @@ class TestPuzzleModelImpl {
     @Test
     void testGetResultTimeOver() {
         this.model.setTimeOver(true);
-        assertEquals(0, this.model.getResult());
+        assertEquals(GameState.LOST, this.model.getGameState());
     }
 
     /**
