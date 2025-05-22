@@ -14,17 +14,24 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 /**
- * Main frame for the CardSatchel GUI test.
- * Encapsulates all UI setup and test logic.
+ * A JFrame for testing and demonstrating the Card Satchel GUI component.
+ * <p>
+ * This frame initializes the CardSatchelModel, CardSatchelController, and CardSatchelViewImpl,
+ * and provides buttons to add, remove, and play random cards for testing purposes.
+ * </p>
  */
 public class CardSatchelFrame extends JFrame {
+    private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(CardSatchelFrame.class.getName());
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 300;
 
+    /**
+     * CardSatchel Frame constructor.
+     */
     public CardSatchelFrame() {
         super("Satchel Test");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setLocationRelativeTo(null);
