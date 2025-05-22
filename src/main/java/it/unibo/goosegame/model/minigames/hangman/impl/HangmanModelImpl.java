@@ -93,8 +93,8 @@ public class HangmanModelImpl implements HangmanModel {
     * {@inheritDoc}
     */
     @Override
-    public int getResult() {
-        return won ? 1 : 0;
+    public GameState getGameState() {
+        return won ? GameState.WON : GameState.LOST;
     }
     /**
     * {@inheritDoc}

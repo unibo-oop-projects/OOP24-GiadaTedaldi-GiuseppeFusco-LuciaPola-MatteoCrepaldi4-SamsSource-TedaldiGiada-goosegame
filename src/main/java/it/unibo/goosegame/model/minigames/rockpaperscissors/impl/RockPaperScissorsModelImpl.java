@@ -76,11 +76,11 @@ public class RockPaperScissorsModelImpl implements RockPaperScissorsModel {
     * {@inheritDoc}
     */
     @Override
-    public int getResult() {
+    public GameState getGameState() {
         if (!over) {
             throw new IllegalStateException("Game is not over yet.");
         }
-        return "PLAYER".equals(winner) ? 1 : 0;
+        return "PLAYER".equals(winner) ? GameState.WON : GameState.LOST;
     }
     /**
     * {@inheritDoc}
