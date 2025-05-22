@@ -1,5 +1,6 @@
 package it.unibo.goosegame.model.minigames.tris;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
 import it.unibo.goosegame.model.minigames.tris.impl.TrisModelImpl;
 import it.unibo.goosegame.utilities.Position;
@@ -86,7 +87,7 @@ class TestTrisModelImpl {
         TestUtils.forceMove(model, new Position(0, 2), true);
         assertTrue(model.checkWin());
         assertTrue(model.isOver());
-        assertEquals(1, model.getResult());
+        assertEquals(GameState.WON, model.getGameState());
     }
 
     /**
@@ -106,7 +107,7 @@ class TestTrisModelImpl {
         assertTrue(model.isFull());
         assertTrue(model.isOver());
         assertFalse(model.checkWin());
-        assertEquals(3, model.getResult());
+        assertEquals(GameState.TIE, model.getGameState());
     }
 
     /**
@@ -121,7 +122,7 @@ class TestTrisModelImpl {
         TestUtils.forceMove(model, new Position(0, 2), false);
         assertTrue(model.isOver());
         assertTrue(model.checkWin());
-        assertEquals(-1, model.getResult());
+        assertEquals(GameState.LOST, model.getGameState());
     }
 
     /**

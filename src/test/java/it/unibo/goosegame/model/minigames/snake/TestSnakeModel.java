@@ -1,5 +1,6 @@
 package it.unibo.goosegame.model.minigames.snake;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Direction;
@@ -94,7 +95,7 @@ class SnakeModelImplTest {
         model.move();
         assertEquals(EXP_SCORE, model.getScore());
         assertTrue(model.checkWin());
-        assertEquals(1, model.getResult());
+        assertEquals(GameState.WON, model.getGameState());
     }
 
     /**

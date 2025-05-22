@@ -1,5 +1,6 @@
 package it.unibo.goosegame.model.minigames.memory;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.memory.api.MemoryModel;
 import it.unibo.goosegame.model.minigames.memory.impl.MemoryModelImpl;
 import it.unibo.goosegame.utilities.Position;
@@ -89,7 +90,7 @@ class MemoryModelImplTest {
     @Test
     void testGameIsNotOverInitially() {
         assertFalse(model.isOver());
-        assertEquals(0, model.getResult());
+        assertEquals(GameState.LOST, model.getGameState());
     }
 
     /**
@@ -118,7 +119,7 @@ class MemoryModelImplTest {
         }
 
         assertTrue(model.isOver());
-        assertEquals(1, model.getResult());
+        assertEquals(GameState.WON, model.getGameState());
     }
 }
 
