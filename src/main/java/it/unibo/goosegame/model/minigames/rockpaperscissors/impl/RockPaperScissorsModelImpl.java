@@ -80,7 +80,7 @@ public class RockPaperScissorsModelImpl implements RockPaperScissorsModel {
         if (!over) {
             throw new IllegalStateException("Game is not over yet.");
         }
-        return "PLAYER".equals(winner) ? playerScore : computerScore;
+        return "PLAYER".equals(winner) ? 1 : 0;
     }
     /**
     * {@inheritDoc}
