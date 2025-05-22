@@ -5,6 +5,9 @@ import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.view.general.GameMenuPanel;
 
 import javax.swing.JFrame;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 
 /**
@@ -12,22 +15,24 @@ import java.awt.BorderLayout;
  * Encapsulates all UI setup and game start logic.
  */
 public class HonkMandFrame extends JFrame {
+    private static final long serialVersionUID = 1L;
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 600;
 
     /**
      * HonkMand Frame constructor.
      */
+    @SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR")
     public HonkMandFrame() {
         super("HonkMand");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        setLocationRelativeTo(null);
-        setResizable(true);
+        super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        super.setLayout(new BorderLayout());
+        super.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        super.setLocationRelativeTo(null);
+        super.setResizable(true);
 
         final GameMenuPanel menuPanel = new GameMenuPanel("HonkMand", "Start Game", this::startGame);
-        add(menuPanel, BorderLayout.CENTER);
+        super.add(menuPanel, BorderLayout.CENTER);
     }
 
     private void startGame() {

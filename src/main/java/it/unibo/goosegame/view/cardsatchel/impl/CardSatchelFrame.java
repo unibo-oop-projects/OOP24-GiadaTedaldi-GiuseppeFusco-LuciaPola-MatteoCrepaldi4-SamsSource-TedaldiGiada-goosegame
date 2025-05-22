@@ -31,15 +31,15 @@ public class CardSatchelFrame extends JFrame {
      */
     public CardSatchelFrame() {
         super("Satchel Test");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        setLocationRelativeTo(null);
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.setLayout(new BorderLayout());
+        super.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        super.setLocationRelativeTo(null);
 
         final CardSatchelModelImpl model = new CardSatchelModelImpl();
         final CardSatchelController controller = new CardSatchelController(model);
         final CardSatchelViewImpl view = new CardSatchelViewImpl(controller);
-        add(view, BorderLayout.CENTER);
+        super.add(view, BorderLayout.CENTER);
 
         // Button panel for test
         final JPanel buttonPanel = new JPanel();
@@ -49,7 +49,7 @@ public class CardSatchelFrame extends JFrame {
         buttonPanel.add(addRandomButton);
         buttonPanel.add(removeRandomButton);
         buttonPanel.add(playRandomButton);
-        add(buttonPanel, BorderLayout.SOUTH);
+        super.add(buttonPanel, BorderLayout.SOUTH);
 
         final Random random = new Random();
 
