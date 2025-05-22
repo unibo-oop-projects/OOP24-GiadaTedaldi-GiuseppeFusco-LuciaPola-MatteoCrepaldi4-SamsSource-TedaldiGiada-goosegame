@@ -1,9 +1,6 @@
 package it.unibo.goosegame.view.minigames.memory;
 
-import java.awt.event.ActionListener;
-
-import javax.swing.JPanel;
-
+import it.unibo.goosegame.controller.minigames.memory.MemoryController;
 import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
 
 /**
@@ -11,19 +8,19 @@ import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
  * It extends the MinigameMenuAbstract class and provides a specific implementation for the memory game.
  */
 public class MemoryMenu extends MinigameMenuAbstract {
-
     private static final long serialVersionUID = 1L;
-
     /**
-     * Constructor.
-     * @param imgPath the path of the image background
-     * @param title the title of the frame
-     * @param infoMsg the message to show in the instructions
-     * @param gamePanel the panel representing the game.
-     * @param al the action listener for the start button
+     * Constructor for the MemoryMenu class.
      */
-    public MemoryMenu(final String imgPath, final String title, final String infoMsg, final JPanel gamePanel, final ActionListener al) {
-        super(imgPath, title, infoMsg, gamePanel, al);
+    public MemoryMenu() {
+        super(
+            "/nomeImmagine.png", 
+            "Memory", 
+            "informazioni di gioco da inserire",
+            null
+        );
+        getStartButton().addActionListener(e -> new MemoryController());
+
         /*
          --Hypothetical Memory menu:
         ActionListener al = e -> {
@@ -35,5 +32,4 @@ public class MemoryMenu extends MinigameMenuAbstract {
                         "-find them all and you win\n", al);
          */
     }
-
 }
