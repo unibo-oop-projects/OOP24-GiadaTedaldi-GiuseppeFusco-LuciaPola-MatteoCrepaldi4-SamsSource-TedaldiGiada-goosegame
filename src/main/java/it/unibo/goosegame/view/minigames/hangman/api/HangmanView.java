@@ -28,6 +28,10 @@ public interface HangmanView {
      */
     void disableAllButton();
     /**
+     * Enable all the buttons.
+     */
+    void enableAllButton();
+    /**
      * @param controller 
      */
     void setController(HangmanController controller);

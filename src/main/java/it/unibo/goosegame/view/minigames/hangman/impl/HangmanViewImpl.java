@@ -121,12 +121,25 @@ public class HangmanViewImpl extends JPanel implements HangmanView {
             }
         }
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public final void setController(final HangmanController controller) {
        this.controller = controller;
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public void enableAllButton() {
+        for (final Component comp : keyboardPanel.getComponents()) {
+            if (comp instanceof  JButton button) {
+                button.setEnabled(false);
+            }
+        }
     }
 
     private JPanel createMainPanel() {

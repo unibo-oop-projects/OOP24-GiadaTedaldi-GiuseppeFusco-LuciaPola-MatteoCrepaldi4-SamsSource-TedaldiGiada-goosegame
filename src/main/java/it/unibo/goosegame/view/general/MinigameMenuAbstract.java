@@ -102,7 +102,7 @@ public abstract class MinigameMenuAbstract extends JFrame {
      * @return the start button
      */
     @SuppressWarnings("EI_EXPOSE_REP")
-    protected final JButton getStartButton() {
+    public final JButton getStartButton() {
         return startButton;
     }
 
@@ -110,7 +110,7 @@ public abstract class MinigameMenuAbstract extends JFrame {
      * @return the start button
      */
     @SuppressWarnings("EI_EXPOSE_REP")
-    protected JPanel getCardPanel() {
+    public JPanel getCardPanel() {
         return cardPanel;
     }
 

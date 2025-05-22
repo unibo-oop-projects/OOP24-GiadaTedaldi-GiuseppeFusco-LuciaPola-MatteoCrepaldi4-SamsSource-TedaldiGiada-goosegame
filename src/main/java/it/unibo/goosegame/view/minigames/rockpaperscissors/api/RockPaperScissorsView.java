@@ -45,4 +45,8 @@ public interface RockPaperScissorsView {
      * @param l listener the ActionListener to register
      */
     void addScissorsListener(ActionListener l);
+    /**
+     * Enable all the buttons.
+     */
+    void enableAllButtons();
 }

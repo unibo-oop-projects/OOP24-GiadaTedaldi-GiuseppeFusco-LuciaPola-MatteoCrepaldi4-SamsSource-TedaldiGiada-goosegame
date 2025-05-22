@@ -150,6 +150,15 @@ public class RockPaperScissorsViewImpl extends JPanel implements RockPaperScisso
     public void addScissorsListener(final ActionListener l) {
         scissors.addActionListener(l);
     }
+    /**
+     * Enabled all the buttons.
+     */
+    @Override
+    public void enableAllButtons() {
+        rock.setEnabled(true);
+        paper.setEnabled(true);
+        scissors.setEnabled(true);
+    }
 
     private JButton createButtonIcon(final ImageIcon image, final int w, final int h) {
         final JButton button = new JButton();
