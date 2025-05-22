@@ -66,8 +66,8 @@ public class SnakeModelImpl implements SnakeModel {
      * {@inheritDoc}
      */
     @Override
-    public int getResult() {
-        return checkWin() ? 1 : -1;
+    public GameState getGameState() {
+        return checkWin() ? GameState.WON : GameState.LOST;
     }
 
     /**

@@ -3,6 +3,7 @@ package it.unibo.goosegame.controller.minigames.snake;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Direction;
@@ -52,7 +53,7 @@ public class SnakeController {
                 view.repaint();
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
-                    JOptionPane.showMessageDialog(null, model.getResult() == 1 ? "You win!" : "You lose...");
+                    JOptionPane.showMessageDialog(null, model.getGameState() == GameState.WON ? "You win!" : "You lose...");
                     view.dispose();
                 }
             }
