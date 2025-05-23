@@ -1,6 +1,8 @@
 package it.unibo.goosegame.application;
 
 import javax.swing.SwingUtilities;
+
+import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
 /**
  * Main.
  */

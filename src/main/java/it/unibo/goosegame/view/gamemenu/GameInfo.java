@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
 
 /**
  * The class implements the game information window.

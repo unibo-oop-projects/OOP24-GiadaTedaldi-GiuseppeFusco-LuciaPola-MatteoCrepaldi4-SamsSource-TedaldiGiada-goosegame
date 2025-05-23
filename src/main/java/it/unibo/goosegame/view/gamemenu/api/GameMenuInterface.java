@@ -4,7 +4,7 @@ package it.unibo.goosegame.view.gamemenu.api;
  * This interface abstracts the UI interactions related to the game's main menu,
  * including displaying screens and handling player input.
  */
-public interface GameMenuView {
+public interface GameMenuInterface {
     /**
      * Display the instructions screen.
      */
