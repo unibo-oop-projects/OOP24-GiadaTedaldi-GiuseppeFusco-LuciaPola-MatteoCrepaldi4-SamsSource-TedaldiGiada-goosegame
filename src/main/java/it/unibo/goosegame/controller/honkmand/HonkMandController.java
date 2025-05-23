@@ -1,9 +1,9 @@
 package it.unibo.goosegame.controller.honkmand;
 
-import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
+import it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
-import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandViewImpl;
+import it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView;
 
 import javax.swing.Timer;
 
@@ -22,8 +22,8 @@ public class HonkMandController {
      * References to model and view are intentionally stored as mutable references provided externally.
      * This controller does not assume responsibility for external modifications to these objects.
      */
-    private final HonkMandModelImpl model;
-    private final HonkMandViewImpl view;
+    private final HonkMandModel model;
+    private final HonkMandView view;
     private Timer sequenceTimer;
     private boolean isShowingSequence;
 
@@ -34,7 +34,7 @@ public class HonkMandController {
      */
     @SuppressFBWarnings(value = "EI2",
      justification = "Controller does not modify external view/model and assumes trusted injection")
-    public HonkMandController(final HonkMandModelImpl model, final HonkMandViewImpl view) {
+    public HonkMandController(final HonkMandModel model, final HonkMandView view) {
         this.model = model;
         this.view = view;
         initController();
@@ -136,7 +136,7 @@ public class HonkMandController {
         }
 
         view.lightUpButton(colorId, it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_CLICK_LIGHT_DURATION);
-        final HonkMandModelImpl.InputResult result = model.checkPlayerInput(colorId);
+        final HonkMandModel.InputResult result = model.checkPlayerInput(colorId);
 
         switch (result) {
             case CORRECT:

@@ -1,7 +1,5 @@
 package it.unibo.goosegame.view.minigames.honkmand.impl;
 
-import it.unibo.goosegame.controller.honkmand.HonkMandController;
-import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.view.general.GameMenuPanel;
 
 import javax.swing.JFrame;
@@ -37,12 +35,13 @@ public class HonkMandFrame extends JFrame {
 
     private void startGame() {
         getContentPane().removeAll();
-        final HonkMandViewImpl view = new HonkMandViewImpl();
+        final it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView view = new HonkMandViewImpl();
         view.setFrameRef(this);
-        add(view, BorderLayout.CENTER);
+        add((javax.swing.JPanel) view, BorderLayout.CENTER);
         revalidate();
         repaint();
-        final HonkMandModelImpl model = new HonkMandModelImpl();
-        new HonkMandController(model, view);
+        final it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel model =
+         new it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl();
+        new it.unibo.goosegame.controller.honkmand.HonkMandController(model, view);
     }
 }
