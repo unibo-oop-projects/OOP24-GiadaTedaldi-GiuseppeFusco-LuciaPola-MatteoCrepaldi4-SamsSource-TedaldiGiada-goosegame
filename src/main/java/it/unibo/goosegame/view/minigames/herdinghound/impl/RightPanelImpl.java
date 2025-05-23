@@ -5,6 +5,9 @@ import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,7 +28,7 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
     private static final int PANEL_WIDTH = 200;
     private static final int IMAGE_SIZE = 120;
     private static final int TIMER_FONT_SIZE = 22;
-    private HerdingHoundController controller;
+    private transient HerdingHoundController controller;
     private final transient Image awakeImage, alertImage, asleepImage;
 
     /**
@@ -39,7 +42,15 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
         this.asleepImage = loadImage("/img/dog_asleep.png");
     }
 
-    public void setController(HerdingHoundController controller) {
+    /**
+     * Sets the controller for the right panel.
+     * @param controller
+     */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "Panel must keep a reference to the controller as per MVC pattern."
+    )
+    public void setController(final HerdingHoundController controller) {
         this.controller = controller;
     }
 

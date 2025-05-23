@@ -8,6 +8,9 @@ import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,7 +38,7 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
     private static final Color DOG_ALERT_COLOR = Color.YELLOW;
     private static final Color DOG_DEFAULT_COLOR = Color.WHITE;
 
-    private HerdingHoundController controller;
+    private transient HerdingHoundController controller;
 
     // Blinking of red zones
     private boolean blinking;
@@ -61,7 +64,15 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
         setBackground(BACKGROUND_COLOR);
     }
 
-    public void setController(HerdingHoundController controller) {
+    /**
+     * Sets the controller.
+     * @param controller
+     */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "View must keep a reference to the controller as per MVC pattern."
+    )
+    public void setController(final HerdingHoundController controller) {
         this.controller = controller;
     }
 
@@ -177,7 +188,7 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
         }
 
         // Dog
-        Position dogPos = controller.getDogPosition();
+        final Position dogPos = controller.getDogPosition();
         g.setColor(switch (controller.getDogState()) {
             case AWAKE -> DOG_AWAKE_COLOR;
             case ALERT -> DOG_ALERT_COLOR;

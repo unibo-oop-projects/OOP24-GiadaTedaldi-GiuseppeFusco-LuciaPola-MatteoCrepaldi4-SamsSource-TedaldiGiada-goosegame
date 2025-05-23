@@ -143,38 +143,66 @@ public class HerdingHoundController {
     }
 
     // --- GETTER per la View e il RightPanel ---
+
+    /**
+     * @return the grid size of the game
+     */
     public int getGridSize() {
         return model.getGrid();
     }
 
+    /**
+     * @return the current position of the goose
+     */
     public Position getGoosePosition() {
         return model.getGoose().getCoord();
     }
 
+    /**
+     * @return the current state of the dog
+     */
     public DogImpl.State getDogState() {
         return model.getDog().getState();
     }
 
+    /**
+     * @return the area visible to the dog
+     */
     public List<Position> getDogVisibleArea() {
         return model.getDog().getVisibleArea();
     }
 
+    /**
+     * @return the current position of the dog
+     */
     public Position getDogPosition() {
         return model.getDog().getCoord();
     }
 
+    /**
+     * @return the list of visible cells
+     */
     public List<Position> getVisibleCells() {
         return model.getVisible();
     }
 
+    /**
+     * @return the list of shadowed cells
+     */
     public List<Position> getShadows() {
         return model.getShadows();
     }
 
+    /**
+     * @return the list of box positions
+     */
     public List<Position> getBoxes() {
         return model.getBoxes();
     }
 
+    /**
+     * @return the remaining time in the game
+     */
     public long getRemainingTime() {
         return model.getRemainingTime();
     }
