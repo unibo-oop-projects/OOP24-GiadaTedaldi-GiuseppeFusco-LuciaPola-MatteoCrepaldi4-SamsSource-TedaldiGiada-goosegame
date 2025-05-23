@@ -190,14 +190,19 @@ public final class CardPanelView extends JPanel {
                 }
             } else {
                 // Draw image if present
-                final String imgPath = "/img/" + card.name() + "_image.png";
+                final String imgPath = "/img/" + card.getName() + "_image.png";
                 final java.net.URL imgURL = getClass().getResource(imgPath);
                 if (imgURL != null) {
                     final ImageIcon icon = new ImageIcon(imgURL);
                     final Image img = icon.getImage();
+
+                    int nameHeight = fm.getHeight() + padding;
+                    int availableHeight = cardH - nameHeight - BUTTON_HEIGHT - 2 * padding;
                     final int imgW = cardW - 2 * padding;
-                    final int imgH = cardH / 2;
-                    g.drawImage(img, x + padding, y + cardH / 4, imgW, imgH, this);
+                    final int imgH = (int) (availableHeight * 1.1);
+                    final int imgX = x + padding;
+                    final int imgY = y+ nameHeight + padding;
+                    g.drawImage(img, imgX, imgY, imgW, imgH, this);
                 }
             }
         }
