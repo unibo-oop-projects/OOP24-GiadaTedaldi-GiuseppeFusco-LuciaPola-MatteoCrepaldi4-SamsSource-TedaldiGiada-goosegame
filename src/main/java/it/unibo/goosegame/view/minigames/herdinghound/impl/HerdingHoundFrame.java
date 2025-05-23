@@ -6,12 +6,11 @@ import it.unibo.goosegame.view.general.GameMenuPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Main frame for the Herding Hound minigame.
@@ -42,8 +41,11 @@ public class HerdingHoundFrame extends JFrame {
 
     private void startGame() {
         final HerdingHoundModelImpl model = new HerdingHoundModelImpl(GRID_SIZE);
-        final HerdingHoundViewImpl view = new HerdingHoundViewImpl(model);
-        final RightPanelImpl rightPanel = new RightPanelImpl(model);
+        final HerdingHoundViewImpl view = new HerdingHoundViewImpl();
+        final RightPanelImpl rightPanel = new RightPanelImpl();
+        final HerdingHoundController controller = new HerdingHoundController(model, view, this, rightPanel);
+        view.setController(controller);
+        rightPanel.setController(controller);
 
         final JPanel leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, 0));
@@ -56,7 +58,6 @@ public class HerdingHoundFrame extends JFrame {
         revalidate();
         repaint();
 
-        final HerdingHoundController controller = new HerdingHoundController(model, view, this, rightPanel);
         view.requestFocusInWindow();
 
         // Initial countdown, then the game starts

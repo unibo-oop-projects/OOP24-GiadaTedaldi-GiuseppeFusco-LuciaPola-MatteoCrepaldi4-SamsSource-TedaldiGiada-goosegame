@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
+import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
 import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
 
 import javax.swing.ImageIcon;
@@ -25,20 +25,22 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
     private static final int PANEL_WIDTH = 200;
     private static final int IMAGE_SIZE = 120;
     private static final int TIMER_FONT_SIZE = 22;
-    private final transient HerdingHoundModelImpl model;
+    private HerdingHoundController controller;
     private final transient Image awakeImage, alertImage, asleepImage;
 
     /**
      * Constructs a RightPanel.
-     * @param model the game model
      */
-    public RightPanelImpl(final HerdingHoundModelImpl model) {
-        this.model = model;
+    public RightPanelImpl() {
         setPreferredSize(new Dimension(PANEL_WIDTH, 0));
         setBackground(Color.LIGHT_GRAY);
         this.awakeImage = loadImage("/img/dog_awake.png");
         this.alertImage = loadImage("/img/dog_alert.png");
         this.asleepImage = loadImage("/img/dog_asleep.png");
+    }
+
+    public void setController(HerdingHoundController controller) {
+        this.controller = controller;
     }
 
     private Image loadImage(final String path) {
@@ -55,16 +57,14 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
         }
     }
 
-    /**
-     * Paints the timer and the dog's state image.
-     * @param g the Graphics context
-     */
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-
+        if (controller == null) {
+            return;
+        }
         // Timer in the top right
-        final long remMs = model.getRemainingTime();
+        final long remMs = controller.getRemainingTime();
         final long sec = remMs / 1000;
         final String text = String.format("Time %02d:%02d", sec / 60, sec % 60);
 
@@ -78,7 +78,7 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
         g.drawString(text, tx, ty);
 
         // Dog state image centered vertically
-        final Image stateImage = switch (model.getDog().getState()) {
+        final Image stateImage = switch (controller.getDogState()) {
             case AWAKE -> awakeImage;
             case ALERT -> alertImage;
             default -> asleepImage;
@@ -88,9 +88,6 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
         g.drawImage(stateImage, imgX, imgY, IMAGE_SIZE, IMAGE_SIZE, this);
     }
 
-    /**
-     * Updates the panel (repaints it).
-     */
     @Override
     public void updatePanel() {
         repaint();

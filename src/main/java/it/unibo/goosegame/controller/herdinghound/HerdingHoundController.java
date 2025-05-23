@@ -5,6 +5,7 @@ import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImp
 import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
 import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
+import it.unibo.goosegame.utilities.Position;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -13,6 +14,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -24,10 +26,6 @@ public class HerdingHoundController {
     private static final int DOG_OTHER_DELAY_BASE = 2_000;
     private static final int DOG_OTHER_DELAY_RANDOM = 3;
 
-    /**
-     * References to model, view, frame, and rightPanel are intentionally stored as mutable references provided externally.
-     * This controller does not assume responsibility for external modifications to these objects.
-     */
     private final HerdingHoundModelImpl model;
     private final HerdingHoundViewImpl view;
     private final JFrame frame;
@@ -43,7 +41,7 @@ public class HerdingHoundController {
      * @param model the game model
      * @param view the game view
      * @param frame the main JFrame
-     * @param rightPanel the right panel (timer, dog state)
+     * @param rightPanel the right panel
      */
     @SuppressFBWarnings(
     value = "EI2",
@@ -60,8 +58,10 @@ public class HerdingHoundController {
         this.view = view;
         this.frame = frame;
         this.rightPanel = rightPanel;
+        setupKeyListener();
+    }
 
-        // Add key listener for goose movement
+    private void setupKeyListener() {
         view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -106,10 +106,6 @@ public class HerdingHoundController {
         gameTimer.start();
     }
 
-    /**
-     * Schedules the next dog state change with a random delay, unless the game is over.
-     * @param currentState the current state of the dog
-     */
     private void scheduleNextDogState(final DogImpl.State currentState) {
         if (model.isOver()) {
             return;
@@ -134,9 +130,6 @@ public class HerdingHoundController {
         dogStateTimer.start();
     }
 
-    /**
-     * Ends the game: stops timers, triggers end animation and disables input.
-     */
     private void endGame() {
         if (gameTimer != null) {
             gameTimer.stop();
@@ -147,5 +140,42 @@ public class HerdingHoundController {
         final boolean hasWon = model.getGameState() == GameState.WON;
         view.startBlinking(frame, hasWon); // blink before showing the end screen
         view.setFocusable(false);
+    }
+
+    // --- GETTER per la View e il RightPanel ---
+    public int getGridSize() {
+        return model.getGrid();
+    }
+
+    public Position getGoosePosition() {
+        return model.getGoose().getCoord();
+    }
+
+    public DogImpl.State getDogState() {
+        return model.getDog().getState();
+    }
+
+    public List<Position> getDogVisibleArea() {
+        return model.getDog().getVisibleArea();
+    }
+
+    public Position getDogPosition() {
+        return model.getDog().getCoord();
+    }
+
+    public List<Position> getVisibleCells() {
+        return model.getVisible();
+    }
+
+    public List<Position> getShadows() {
+        return model.getShadows();
+    }
+
+    public List<Position> getBoxes() {
+        return model.getBoxes();
+    }
+
+    public long getRemainingTime() {
+        return model.getRemainingTime();
     }
 }
