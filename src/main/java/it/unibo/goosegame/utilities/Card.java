@@ -4,14 +4,24 @@ package it.unibo.goosegame.utilities;
  * Enum representing all possible cards in the game.
  */
 public enum Card {
-    /** Example bonus card 1. */
-    NAME1("Dora the Zdora", "description1", 4, false, false, false),
-    /** Example bonus card 2. */
-    NAME2("Franco Letame", "description2", 6, false, false, false),
-    /** Example bonus card 3. */
+    /** Example malus card 1. */
+    NAME1("Dora the Zdora", "Dora, the iconic Romagnol housewife," 
+    + "hears your honk from the garden."
+    + "Inspired, she dreams up a new recipe… with goose in it!"
+    + "She waddles after you for 2 spaces, but quickly gives up, out of breath.",
+     2, false, false, false),
+    /** Example malus card 2. */
+    NAME2("Franco the Fuming Farmer", "Franco Letame has anger issues… and more." 
+    + "You interrupted his “session” with a loud honk in the garden. Enraged," 
+    + "he charges after you — but after 4 spaces of furious pursuit, he trips over his own trousers and faceplants into the dirt."
+    + "You still move back 4 spaces… but at least he’s out of the game for now.",
+     4, false, false, false),
+    /** Example malus card 3. */
     NAME3("Furio", "description3", 10, false, false, false),
     /** Example bonus card 4. */
-    NAME4("Pijacked", "description4", 8, true, true, false),
+    NAME4("Pijacked", "Unleash a furious flock of pigeons on your opponent!" 
+    + "Pecking relentlessly, the birds drive them back 6 spaces in sheer panic and feathered fury.",
+     6, true, true, false),
     /** Example throwable malus card. */
     NAME5("Name5", "description5", 4, false, true, false),
     /** Example bonus card 5. */
@@ -35,9 +45,13 @@ public enum Card {
     /** Example bonus card 12. */
     NAME15("Name15", "description15", 4, true, false, false),
     /** Removes all cards from the opponent. */
-    REMOVE_OPPONENT("Remove opponent", "Removes all cards from the opponent", 0, true, true, true),
+    REMOVE_OPPONENT("Goblin Hexmage", "This mischievous goblin wizard unleashes a powerful hex," 
+    + "banishing all of your opponent’s cards" 
+    + " The affected player loses their entire hand", 0, true, true, true),
     /** Removes all your own cards. */
-    REMOVE_SELF("Remove own", "Removes all your own cards", 0, false, false, true);
+    REMOVE_SELF("Sneaky Goblin Thief", "This slippery goblin vanishes with everything you've got" 
+    + "Discard your entire deck — every last card disappears into the shadows.",
+     0, false, false, true);
 
     private final String name;
     private final String description;
