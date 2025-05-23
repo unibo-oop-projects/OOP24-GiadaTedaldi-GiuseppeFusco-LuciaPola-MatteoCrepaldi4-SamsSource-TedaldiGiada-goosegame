@@ -196,12 +196,12 @@ public final class CardPanelView extends JPanel {
                     final ImageIcon icon = new ImageIcon(imgURL);
                     final Image img = icon.getImage();
 
-                    int nameHeight = fm.getHeight() + padding;
-                    int availableHeight = cardH - nameHeight - BUTTON_HEIGHT - 2 * padding;
+                    final int nameHeight = fm.getHeight() + padding;
+                    final int availableHeight = cardH - nameHeight - BUTTON_HEIGHT - 2 * padding;
                     final int imgW = cardW - 2 * padding;
                     final int imgH = (int) (availableHeight * 1.1);
                     final int imgX = x + padding;
-                    final int imgY = y+ nameHeight + padding;
+                    final int imgY = y + nameHeight + padding;
                     g.drawImage(img, imgX, imgY, imgW, imgH, this);
                 }
             }
