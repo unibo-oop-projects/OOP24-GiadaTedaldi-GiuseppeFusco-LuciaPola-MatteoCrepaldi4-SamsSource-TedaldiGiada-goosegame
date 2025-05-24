@@ -81,21 +81,18 @@ public class TrisControllerImpl implements TrisController {
         this.gameOver = true;
         final GameState result = this.model.getGameState();
         switch (result) {
-            case WON -> {
+            case WON:
                 this.humanWins++;
                 this.view.setStatus("You win this round!");
-            }
-            case LOST -> {
+            case LOST:
                 this.pcWins++;
                 this.view.setStatus("PC wins this round!");
-            }
-            case TIE -> this.view.setStatus("Draw!");
-            case ONGOING -> {
+            case TIE:
+                this.view.setStatus("Draw!");
+            case ONGOING:
                 this.view.setStatus("Still playing..."); 
                 return;
-            }
-            default -> {
-            }
+            default:
         }
         this.rounds++;
         if (this.humanWins == 2 || this.pcWins == 2 || this.rounds == 3) {
