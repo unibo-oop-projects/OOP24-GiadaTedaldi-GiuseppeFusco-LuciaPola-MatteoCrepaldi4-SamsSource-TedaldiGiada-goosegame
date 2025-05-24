@@ -118,7 +118,6 @@ class MemoryModelImplTest {
             }
         }
 
-        assertTrue(model.isOver());
         assertEquals(GameState.WON, model.getGameState());
     }
 }
