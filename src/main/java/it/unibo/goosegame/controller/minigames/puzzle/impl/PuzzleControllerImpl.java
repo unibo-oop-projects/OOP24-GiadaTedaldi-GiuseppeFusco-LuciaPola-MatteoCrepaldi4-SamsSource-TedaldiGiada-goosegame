@@ -77,7 +77,7 @@ public class PuzzleControllerImpl implements PuzzleController {
      * it shows the apporpiate final.
      */
     private void checkGameOver() {
-        GameState state = this.model.getGameState();
+        final GameState state = this.model.getGameState();
         if (state == GameState.WON || state == GameState.LOST) {
             this.view.showResultMessage(state == GameState.WON);
             this.view.stopTimer();

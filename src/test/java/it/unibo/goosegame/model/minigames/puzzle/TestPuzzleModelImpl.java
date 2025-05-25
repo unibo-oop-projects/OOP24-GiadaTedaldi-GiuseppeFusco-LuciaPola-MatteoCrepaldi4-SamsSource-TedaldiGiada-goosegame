@@ -65,7 +65,7 @@ class TestPuzzleModelImpl {
     }
 
     /**
-     * Tests that the result is 1 when the puzzle is correctly solved in time.
+     * Tests that the result is WON when the puzzle is correctly solved in time.
      */
     @Test
     void testGetResultWin() {
@@ -73,10 +73,11 @@ class TestPuzzleModelImpl {
     }
 
     /**
-     * Tests that the result is 0 when the time is over.
+     * Tests that the result is LOST when the time is over.
      */
     @Test
     void testGetResultTimeOver() {
+        this.model.shuffle();
         this.model.setTimeOver(true);
         assertEquals(GameState.LOST, this.model.getGameState());
     }
