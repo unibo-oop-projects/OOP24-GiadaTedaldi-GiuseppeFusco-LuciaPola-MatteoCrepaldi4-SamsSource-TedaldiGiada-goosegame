@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import it.unibo.goosegame.model.finalboard.api.FinalBoardLogic;
 import it.unibo.goosegame.model.finalboard.impl.FinalBoardLogicImpl;
+import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
 
 /**
  * FinalBoardGui class represents the graphical user interface for displaying the final board of the game.
@@ -33,8 +34,8 @@ public class FinalBoardGui {
      * Constructor for the FinalBoardGUI class.
      * Initializes the GUI components and displays the final board.
      */
-    public FinalBoardGui() {
-        this.logic = new FinalBoardLogicImpl();
+    public FinalBoardGui(GameBoardModel gameBoardModel) {
+        this.logic = new FinalBoardLogicImpl(gameBoardModel);
         final JFrame frame = new JFrame("Final Board");
         final Image backgroundImage = new ImageIcon("resources/FinalBoard.png").getImage();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
