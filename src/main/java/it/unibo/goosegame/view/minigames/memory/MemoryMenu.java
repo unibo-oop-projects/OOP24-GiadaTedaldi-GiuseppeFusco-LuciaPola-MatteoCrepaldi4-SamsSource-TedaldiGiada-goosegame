@@ -1,13 +1,13 @@
 package it.unibo.goosegame.view.minigames.memory;
 
 //import it.unibo.goosegame.controller.minigames.memory.MemoryController;
-import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
+import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
 /**
  * The MemoryMenu class represents the menu for the memory game.
- * It extends the MinigameMenuAbstract class and provides a specific implementation for the memory game.
+ * It extends the MinigameMenuImpl class and provides a specific implementation for the memory game.
  */
-public class MemoryMenu extends MinigameMenuAbstract {
+public class MemoryMenu extends MinigameMenuImpl {
     private static final long serialVersionUID = 1L;
     /**
      * Constructor for the MemoryMenu class.
