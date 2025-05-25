@@ -42,6 +42,7 @@ public class MenuLogicImpl implements MenuLogic {
         if (players.size() == 1) {
             JOptionPane.showMessageDialog(view, "Minimum number of players: 2");
         } else {
+            view.dispose();
             new GameBoardImpl(playerCount);
         }
     }
