@@ -11,6 +11,8 @@ import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScisso
  * This class contains unit tests for the RockPaperScissorsModel class.
  */
 class TestRockPaperScissorsModelImpl {
+    private static final int MAX = 15;
+
     private static final String ROCK = "ROCK";
     private static final String PAPER = "PAPER";
     private static final String SCISSORS = "SCISSORS"; 
@@ -75,7 +77,7 @@ class TestRockPaperScissorsModelImpl {
      */
     @Test
     void testGameEndsAtThreePoints() {
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < MAX; i++) {
             model.playRound(ROCK);
         }
         assertTrue(model.isOver());
