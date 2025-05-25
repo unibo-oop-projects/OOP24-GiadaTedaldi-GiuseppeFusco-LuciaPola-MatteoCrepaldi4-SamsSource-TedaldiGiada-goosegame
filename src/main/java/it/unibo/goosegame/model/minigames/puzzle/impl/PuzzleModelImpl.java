@@ -49,10 +49,13 @@ public class PuzzleModelImpl implements PuzzleModel {
      */
     @Override
     public GameState getGameState() {
-        if (!this.isOver() || this.timeOver) {
+        if (this.isOver()) {
+            return GameState.WON;
+        }
+        if (this.timeOver) {
             return GameState.LOST;
         }
-        return GameState.WON;
+        return GameState.ONGOING;
     }
 
     /**
