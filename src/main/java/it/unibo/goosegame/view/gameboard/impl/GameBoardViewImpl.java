@@ -1,7 +1,7 @@
 package it.unibo.goosegame.view.gameboard.impl;
 
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
-import it.unibo.goosegame.utilities.player.api.Player;
+import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 
 import javax.swing.JLabel;

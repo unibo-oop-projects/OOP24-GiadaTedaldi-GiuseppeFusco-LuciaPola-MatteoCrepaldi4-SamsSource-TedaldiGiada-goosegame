@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.gameboard.api;
 
-import it.unibo.goosegame.utilities.player.api.Player;
+import it.unibo.goosegame.model.player.api.Player;
 
 /**
  * Class storing all the view information for {@link it.unibo.goosegame.controller.gameboard.api.GameBoard}.
