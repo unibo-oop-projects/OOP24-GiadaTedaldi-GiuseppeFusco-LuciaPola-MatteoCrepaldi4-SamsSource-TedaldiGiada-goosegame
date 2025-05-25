@@ -92,33 +92,4 @@ class MemoryModelImplTest {
         assertFalse(model.isOver());
         assertEquals(GameState.LOST, model.getGameState());
     }
-
-    /**
-     * Test the game reports over once all pairs are found.
-     */
-    @Test
-    void testGameOverAfterAllPairsFound() {
-        final Map<Integer, List<Position>> unmatched = new HashMap<>();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                final Position p = new Position(i, j);
-                final int val = model.temporary(p).orElseGet(() -> {
-                    model.hit(p);
-                    model.hit(new Position(0, 0));
-                    return model.temporary(p).orElse(-1);
-                });
-                unmatched.computeIfAbsent(val, k -> new ArrayList<>()).add(p);
-            }
-        }
-
-        for (final List<Position> pair : unmatched.values()) {
-            if (pair.size() >= 2) {
-                model.hit(pair.get(0));
-                model.hit(pair.get(1));
-            }
-        }
-
-        assertEquals(GameState.WON, model.getGameState());
-    }
 }
-

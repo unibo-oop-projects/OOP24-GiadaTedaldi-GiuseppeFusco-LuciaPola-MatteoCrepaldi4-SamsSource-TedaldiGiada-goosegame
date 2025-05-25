@@ -15,15 +15,18 @@ import it.unibo.goosegame.model.player.api.Player;
  */
 public class FinalBoardLogicImpl implements FinalBoardLogic {
 
-    final GameBoardModel gameBoardModel;
+    private final GameBoardModel gameBoardModel;
 
     /**
      * Constructor for FinalBoardLogicImpl.
      * Initializes the final board logic.
+     * 
+     * @param gameBoardModel the game board model containing the players
      */
     public FinalBoardLogicImpl(final GameBoardModel gameBoardModel) {
         this.gameBoardModel = gameBoardModel;
     }
+
     /**
      * {@inheritDoc}
      */

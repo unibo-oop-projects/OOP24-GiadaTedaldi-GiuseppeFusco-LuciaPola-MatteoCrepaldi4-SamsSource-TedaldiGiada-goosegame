@@ -33,8 +33,10 @@ public class FinalBoardGui {
     /**
      * Constructor for the FinalBoardGUI class.
      * Initializes the GUI components and displays the final board.
+     * 
+     * @param gameBoardModel the game board model containing the players' final positions
      */
-    public FinalBoardGui(GameBoardModel gameBoardModel) {
+    public FinalBoardGui(final GameBoardModel gameBoardModel) {
         this.logic = new FinalBoardLogicImpl(gameBoardModel);
         final JFrame frame = new JFrame("Final Board");
         final Image backgroundImage = new ImageIcon("resources/FinalBoard.png").getImage();
