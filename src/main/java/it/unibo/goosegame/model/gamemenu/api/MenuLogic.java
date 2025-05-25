@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application.api;
+package it.unibo.goosegame.model.gamemenu.api;
 /**
  *  Defines the core logic for the game menu.
  * This interface provides the main operations for handling user interactions,

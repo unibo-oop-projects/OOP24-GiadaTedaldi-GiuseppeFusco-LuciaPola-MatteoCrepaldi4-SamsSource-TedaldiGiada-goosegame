@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application.impl;
+package it.unibo.goosegame.model.gamemenu.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,15 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.goosegame.application.GameMenu;
-import it.unibo.goosegame.application.api.MenuLogic;
+import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
+import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
 /**
  * The MenuLogicImpl class implements the logic behind the game menu, 
  * handling the player management (adding players, checking the maximum number of players).
  */
 public class MenuLogicImpl implements MenuLogic {
 
-    private static final int MAX_PLAYERS = 6;
+    private static final int MAX_PLAYERS = 4;
     /**
      * Reference to the GameMenu view.
      * This is assumed to be owned by this class and not modified externally after being passed in the constructor.
@@ -38,7 +38,11 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public void startGame() {
-        //funzione
+        if (players.size() == 1) {
+            JOptionPane.showMessageDialog(view, "Minimum number of players: 2");
+        } else {
+            final GameBoardImpl gameBoard = new GameBoardImpl(playerCount);
+        }
     }
 
     /**

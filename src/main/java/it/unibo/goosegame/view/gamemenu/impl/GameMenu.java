@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application;
+package it.unibo.goosegame.view.gamemenu.impl;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -24,13 +24,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.goosegame.application.api.GameMenuView;
-import it.unibo.goosegame.application.impl.MenuLogicImpl;
+import it.unibo.goosegame.model.gamemenu.impl.MenuLogicImpl;
+import it.unibo.goosegame.view.gamemenu.GameInfo;
+import it.unibo.goosegame.view.gamemenu.api.GameMenuInterface;
 
 /**
  * The class GameMenu implements the view of the game's menu.
  */
-public class GameMenu extends JFrame implements GameMenuView {
+public class GameMenu extends JFrame implements GameMenuInterface {
     private static final int WINDOW_WIDTH = 500;
     private static final int WINDOW_HEIGHT = 400;
     private static final int MARGIN = 10;

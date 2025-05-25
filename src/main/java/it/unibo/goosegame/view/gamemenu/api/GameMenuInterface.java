@@ -1,10 +1,10 @@
-package it.unibo.goosegame.application.api;
+package it.unibo.goosegame.view.gamemenu.api;
 /**
  * Defines the contract for the game menu's view component.
  * This interface abstracts the UI interactions related to the game's main menu,
  * including displaying screens and handling player input.
  */
-public interface GameMenuView {
+public interface GameMenuInterface {
     /**
      * Display the instructions screen.
      */

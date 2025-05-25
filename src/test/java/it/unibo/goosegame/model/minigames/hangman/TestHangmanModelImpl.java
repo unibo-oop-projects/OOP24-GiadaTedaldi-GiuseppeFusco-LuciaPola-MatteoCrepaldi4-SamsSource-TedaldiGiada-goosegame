@@ -10,7 +10,7 @@ import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 /**
  * This class implements the test for the HangmanModel class.
  */
-class HangmanModelTest {
+class TestHangmanModelImpl {
     private static final int ATTEMPTS = 5;
 
     private HangmanModelImpl model;
