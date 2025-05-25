@@ -3,24 +3,40 @@ package it.unibo.goosegame.view.minigames.three_cups_game.impl;
 import it.unibo.goosegame.model.minigames.three_cups_game.api.ThreeCupsGameModel;
 import it.unibo.goosegame.view.minigames.three_cups_game.api.ThreeCupsGameView;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@link ThreeCupsGameView} interface with Java Swing
+ * Implementation of {@link ThreeCupsGameView} interface with Java Swing.
  */
-public class ThreeCupsGameViewImpl implements ThreeCupsGameView {
+public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
+    private static final int FRAME_SIZE = 600;
+    private static final int BUTTONS_HEIGHT = 40;
+
     private final List<JButton> buttons = new ArrayList<>();
     private final JFrame frame;
     private final JLabel infoLabel;
     private final ThreeCupsGameModel model;
 
     /**
-     * Builds the interface
+     * Builds the interface.
+     *
+     * @param model the model of the Three Cups Game minigame
      */
-    public ThreeCupsGameViewImpl(ThreeCupsGameModel model) {
+    public ThreeCupsGameViewImpl(final ThreeCupsGameModel model) {
         this.frame = new JFrame();
         this.infoLabel = new JLabel();
         this.model = model;
@@ -28,32 +44,28 @@ public class ThreeCupsGameViewImpl implements ThreeCupsGameView {
         initInterface();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initInterface() {
+    private void initInterface() {
         frame.setTitle(model.getName());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
         // Barra superiore
-        JPanel infoBar = new JPanel();
-        infoBar.setPreferredSize(new Dimension(0, 40));  // Altezza fissa, larghezza flessibile
+        final JPanel infoBar = new JPanel();
+        infoBar.setPreferredSize(new Dimension(0, BUTTONS_HEIGHT));  // Altezza fissa, larghezza flessibile
         infoBar.setBackground(Color.LIGHT_GRAY);
         infoBar.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoBar.add(infoLabel);
         frame.add(infoBar, BorderLayout.NORTH);
 
         // Pannello centrale con le tazze
-        JPanel cupsPanel = new JPanel();
+        final JPanel cupsPanel = new JPanel();
         cupsPanel.setLayout(new GridLayout(1, 3, 10, 10));  // Tre colonne, con spazio tra loro
         cupsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        Icon image = new ImageIcon("tazza.png");
+        final Icon image = new ImageIcon("tazza.png");
 
         for (int i = 0; i < 3; i++) {
-            JButton cup = new JButton();
+            final JButton cup = new JButton();
             cup.setIcon(image);
             //cup.setBackground(Color.LIGHT_GRAY);
 
@@ -69,19 +81,17 @@ public class ThreeCupsGameViewImpl implements ThreeCupsGameView {
         frame.add(cupsPanel, BorderLayout.CENTER);
 
         // Impostazioni base della finestra
-        frame.setSize(600, 400);
+        frame.setSize(FRAME_SIZE, FRAME_SIZE);
         frame.setLocationRelativeTo(null);  // Centra la finestra
     }
 
-    private void onClickActions(JButton cup) {
+    private void onClickActions(final JButton cup) {
         // Registers which button has been pressed by the user
-        boolean correctGuess = model.makeChoice(buttons.indexOf(cup));
         String message;
 
-        if (correctGuess) {
+        if (model.makeChoice(buttons.indexOf(cup))) {
             message = "You guessed correctly!";
-        }
-        else {
+        } else {
             message = "You guessed incorrectly!";
         }
 
@@ -89,10 +99,12 @@ public class ThreeCupsGameViewImpl implements ThreeCupsGameView {
         infoLabel.setText(model.getStatus());
 
         // Code executed when the game is over
-        if(this.model.isOver()) {
-            if(this.model.getResult() >= 3) message = "You win!";
-            else message = "You lose!";
-
+        if (this.model.isOver()) {
+            if (this.model.getResult() >= 3) {
+                message = "You win!";
+            } else {
+                message = "You lose!";
+            }
 
             this.frame.dispose();
         }

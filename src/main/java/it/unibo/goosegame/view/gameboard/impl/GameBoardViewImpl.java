@@ -4,42 +4,58 @@ import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
 import it.unibo.goosegame.utilities.player.api.Player;
 import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Color;
+import java.net.URL;
 import java.util.Objects;
 
-public class GameBoardViewImpl implements GameBoardView {
-    private static final String WINDOW_NAME = "Goose Game";
+/**
+ * Implementation of {@link GameBoardView}.
+ */
+public final class GameBoardViewImpl implements GameBoardView {
+    private static final int TRANSPARENCY = 150;
 
-    JLabel infoLabel;
-    JFrame frame;
-    private final GameBoardModel model;
+    private final JLabel infoLabel;
+    private final JFrame frame;
 
-    public GameBoardViewImpl(GameBoardModel model) {
-        this.model = model;
+    /**
+     * Constructor of the minigame view.
+     *
+     * @param model the model of the minigame
+     */
+    public GameBoardViewImpl(final GameBoardModel model) {
         frame = new JFrame(model.getWindowTitle());
         infoLabel = new JLabel("Lorem Ipsum is simply dummy text");
 
-        InitializeComponents();
+        initializeComponents();
     }
 
     /**
-     * Initializes all the graphical components
+     * Initializes all the graphical components.
      */
-    private void InitializeComponents() {
+    private void initializeComponents() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(size.width / 2, size.height / 2);
 
         // Immagine di sfondo
-        Icon backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/gameboard/tabellone_temp.png")));
+        final URL gametableImage = Objects.requireNonNull(getClass().getResource("/gameboard/tabellone_temp.png"));
+        final Icon backgroundImage = new ImageIcon(gametableImage);
 
-        JLabel backgroundLabel = new JLabel(backgroundImage);
+        final JLabel backgroundLabel = new JLabel(backgroundImage);
         backgroundLabel.setLayout(new BorderLayout()); // Per poter aggiungere componenti sopra
 
         // Topbar: pannello in alto per informazioni
-        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        topBar.setBackground(new Color(0, 0, 0, 150)); // Trasparente parziale
+        final JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topBar.setBackground(new Color(0, 0, 0, TRANSPARENCY)); // Trasparente parziale
 
         infoLabel.setForeground(Color.WHITE); // Colore testo
         topBar.add(infoLabel);
@@ -61,12 +77,12 @@ public class GameBoardViewImpl implements GameBoardView {
      * {@inheritDoc}
      */
     @Override
-    public void drawPlayer(Player player) {
+    public void drawPlayer(final Player player) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void updateInformation(String string) {
+    public void updateInformation(final String string) {
         infoLabel.setText(string);
     }
 }

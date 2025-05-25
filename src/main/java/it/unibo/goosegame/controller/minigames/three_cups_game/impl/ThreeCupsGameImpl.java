@@ -6,14 +6,17 @@ import it.unibo.goosegame.model.minigames.three_cups_game.impl.ThreeCupsGameMode
 import it.unibo.goosegame.view.minigames.three_cups_game.api.ThreeCupsGameView;
 import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameViewImpl;
 
+/**
+ * Implementation of {@link ThreeCupsGame}.
+ */
 public class ThreeCupsGameImpl implements ThreeCupsGame {
-    private final ThreeCupsGameView view;
-    private final ThreeCupsGameModel model;
-
+    /**
+     * Construct for the Three Cups Game minigame.
+     */
     public ThreeCupsGameImpl() {
-        this.model = new ThreeCupsGameModelImpl();
-        this.view = new ThreeCupsGameViewImpl(model);
+        final ThreeCupsGameModel model = new ThreeCupsGameModelImpl();
+        final ThreeCupsGameView view = new ThreeCupsGameViewImpl(model);
 
-        this.view.show();
+        view.show();
     }
 }
