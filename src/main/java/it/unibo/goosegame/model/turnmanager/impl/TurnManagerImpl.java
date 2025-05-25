@@ -1,15 +1,16 @@
-package it.unibo.goosegame.model.gameboard.impl;
+package it.unibo.goosegame.model.turnmanager.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.model.turnmanager.api.TurnManager;
 
 /**
  * This class manages the turn order of players in game, including the ability to skip turns.
  */
-public class TurnManager {
+public class TurnManagerImpl implements TurnManager{
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 4;
     private final List<Player> players;
@@ -23,7 +24,7 @@ public class TurnManager {
      * @param players the list of players participating in the game
      * @throws IllegalArgumentException if the player list is null, has fewer than 2 or more than 4 players
      */
-    public TurnManager(final List<Player> players) {
+    public TurnManagerImpl(final List<Player> players) {
         if (players == null) {
             throw new IllegalArgumentException("La lista dei giocatori non può essere nulla");
         }
