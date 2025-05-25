@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
 import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
@@ -42,11 +43,17 @@ public class PuzzleControllerImpl implements PuzzleController {
     public void clickHandler(final Position pos) {
         if (this.model.hit(pos)) {
             this.view.updateView();
-            if (this.model.isOver()) {
-                this.view.stopTimer();
-                this.view.showWinMessage();
-            }
+            this.checkGameOver();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void timeOver() {
+        this.model.setTimeOver(true);
+        this.checkGameOver();
     }
 
     /**
@@ -63,5 +70,19 @@ public class PuzzleControllerImpl implements PuzzleController {
     @Override
     public Map<Position, Integer> getGridData() {
         return new HashMap<>(this.model.getGrid());
+    }
+
+    /**
+     * Checks whether the game has reached a conclusion (either win or loss),
+     * it shows the apporpiate final.
+     */
+    private void checkGameOver() {
+        final boolean isWon = this.model.isOver();
+        final boolean isLost = this.model.getGameState() == GameState.LOST;
+        if (isWon || isLost) {
+            this.view.showResultMessage(isWon);
+            this.view.stopTimer();
+            this.view.endGame();
+        }
     }
 }

@@ -22,6 +22,11 @@ public interface PuzzleController {
     void clickHandler(Position pos);
 
     /**
+     * Called when the game timer reaches zero.
+     */
+    void timeOver();
+
+    /**
      * Randomly shuffles the puzzle tiles to start a new game or reset the current one.
      */
     void shufflePuzzle();

@@ -124,8 +124,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
             timerLabel.setText(String.format("Time: %02d:%02d", min, sec));
             if (this.timeLeft <= 0) {
                 this.gameTimer.stop();
-                JOptionPane.showMessageDialog(this, "Time is over! You lost.");
-                this.gameOver();
+                this.controller.timeOver();
             }
         });
         this.gameTimer.start();
@@ -141,9 +140,13 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
         final Map<Position, Integer> grid = this.controller.getGridData();
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
-                final int tileVal = grid.get(new Position(i, j));
-                buttons[i][j].setIcon(loadAndScale(tileVal, cellWidth, cellHeight));
+                buttons[i][j].setIcon(null);
             }
+        }
+        for (final Map.Entry<Position, Integer> entry : grid.entrySet()) {
+            final Position pos = entry.getKey();
+            final int tileVal = entry.getValue();
+            buttons[pos.x()][pos.y()].setIcon(loadAndScale(tileVal, cellWidth, cellHeight));
         }
     }
 
@@ -179,14 +182,6 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
             }
         }
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showWinMessage() {
-        JOptionPane.showMessageDialog(this, "Puzzle completed! You won.");
-        this.gameOver();
-    }
 
     /**
      * {@inheritDoc}
@@ -199,11 +194,22 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     }
 
     /**
-     * Ends the game by disabling the buttons and setting the default close operation.
+     * {@inheritDoc}
      */
-    private void gameOver() {
+    @Override
+    public final void endGame() {
         startButton.setEnabled(false);
         this.enableButtons(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.dispose();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showResultMessage(final boolean isWin) {
+        final String resultMsg = isWin ? "Puzzle completed: YOU WON!" : "Time is Over: YOU LOST!";
+        JOptionPane.showMessageDialog(this, resultMsg);
     }
 }

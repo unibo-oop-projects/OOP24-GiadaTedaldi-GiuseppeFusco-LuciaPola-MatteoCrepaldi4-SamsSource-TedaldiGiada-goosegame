@@ -20,13 +20,20 @@ public interface PuzzleView {
     void updateView();
 
     /**
-     * Displays a message indicating that the puzzle has been completed successfully.
+     * Displays a message indicating game result.
+     * 
+     * @param result the result of the mini game
      */
-    void showWinMessage();
+    void showResultMessage(boolean result);
 
     /**
      * Stops the game timer if it's currently running.
      */
     void stopTimer();
+
+     /**
+     * Ends the game showing a win message, by disabling the buttons and setting the default close operation.
+     */
+    void endGame();
 
 }
