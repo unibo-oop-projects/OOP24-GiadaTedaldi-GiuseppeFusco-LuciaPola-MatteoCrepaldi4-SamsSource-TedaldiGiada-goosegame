@@ -1,16 +1,19 @@
 package it.unibo.goosegame.model.minigames.click_the_color.impl;
 
 import it.unibo.goosegame.model.minigames.click_the_color.api.ClickTheColorModel;
-import it.unibo.goosegame.utilities.Pair;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-public class ClickTheColorModelImpl implements ClickTheColorModel {
-    private final int MAX_WAIT_TIME = 50;       //  After how many update cycles the logic forces the button to be shown (5 seconds)
-    private final int MAX_PLAYER_DELAY = 10;    //  The time the player has to respond to the game (1 second)
-    private final int ROUNDS = 5;
+/**
+ * Implementation of {@link ClickTheColorModel}.
+ */
+public final class ClickTheColorModelImpl implements ClickTheColorModel {
+    private static final int MAX_WAIT_TIME = 50;       //  The max time the program can wait for extraction (5 seconds)
+    private static final int MAX_PLAYER_DELAY = 7;     //  The time the player has to respond to the game (0.7 seconds)
+    private static final int ROUNDS = 10;              //  Number of rounds
+    private static final int LOW_POINTS = 5;
+    private static final int HIGH_POINTS = 10;
+    private static final double EXTRACTION_WEIGHT = 0.01;
 
     private Random random;          //  Random class
     private boolean gameReady;      //  True if the game is waiting for the right time to show the next button
@@ -18,12 +21,15 @@ public class ClickTheColorModelImpl implements ClickTheColorModel {
     private int nextButton;         //  Contains the index of the next button to enable
     private int delay;              //  Measures the time the program has spent waiting for the time to show the button
     private int playerDelay;        //  Measures the time the player is taking to click the right button
-    private int playedRounds;
-    private int score;
+    private int playedRounds;       //  Number of rounds played
+    private int score;              //  Player score
 
+    /**
+     * Implementation of the {@link ClickTheColorModel} interface.
+     */
     public ClickTheColorModelImpl() {
-        resetGame();
-        getNextButton();
+        this.random = new Random();
+        nextButton();
     }
 
     @Override
@@ -55,15 +61,15 @@ public class ClickTheColorModelImpl implements ClickTheColorModel {
     public int update() {
         //  If the game isn't ready turn off all buttons and get next round
         if (!gameReady) {
-            getNextButton();
+            nextButton();
             return -1;
         }
 
         //  If the player waited too much, get the next round
         if (playerDelay > MAX_PLAYER_DELAY) {
-            getNextButton();
+            nextButton();
             playedRounds++;
-            score -= 10;
+            score -= HIGH_POINTS;
             return -1;
         }
 
@@ -73,16 +79,8 @@ public class ClickTheColorModelImpl implements ClickTheColorModel {
             return nextButton;
         }
 
-        //  If the max delay is reached, force the game to show the button
-        if (delay == MAX_WAIT_TIME) {
-            waitingForUser = true;
-            return nextButton;
-        }
-
-        //  Extracts if the program will now show the button or not
-        if(Math.random() < 0.01) {
-            //  The program wants to show the button
-
+        //  If the max delay is reached or the random is within range, make the game show the button
+        if (Math.random() < EXTRACTION_WEIGHT || delay == MAX_WAIT_TIME) {
             waitingForUser = true;
             return nextButton;
         }
@@ -92,16 +90,16 @@ public class ClickTheColorModelImpl implements ClickTheColorModel {
     }
 
     @Override
-    public void clicked(int index) {
+    public void clicked(final int index) {
         //  If the player clicks a button when no button is active or click the wrong button decrease the score
         if (!this.waitingForUser || index != this.nextButton) {
-            this.score -= 5;
+            this.score -= LOW_POINTS;
             return;
         }
 
-        score += 10;
+        score += HIGH_POINTS;
         playedRounds++;
-        getNextButton();
+        nextButton();
     }
 
     @Override
@@ -109,7 +107,10 @@ public class ClickTheColorModelImpl implements ClickTheColorModel {
         return score;
     }
 
-    private void getNextButton() {
+    /**
+     * Utility function to extract the next button and reset the round variables.
+     */
+    private void nextButton() {
         this.nextButton = random.nextInt(4);
         this.delay = 0;
         this.playerDelay = 0;

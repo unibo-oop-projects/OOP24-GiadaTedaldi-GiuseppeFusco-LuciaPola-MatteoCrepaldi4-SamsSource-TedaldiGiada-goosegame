@@ -6,14 +6,17 @@ import it.unibo.goosegame.model.minigames.click_the_color.impl.ClickTheColorMode
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
 import it.unibo.goosegame.view.minigames.click_the_color.impl.ClickTheColorViewImpl;
 
+/**
+ * Implementation of {@link ClickTheColor}.
+ */
 public class ClickTheColorImpl implements ClickTheColor {
-    private final ClickTheColorModel model;
-    private final ClickTheColorView view;
-
+    /**
+     * Constructor method for the Click The Color controller class.
+     */
     public ClickTheColorImpl() {
-        this.model = new ClickTheColorModelImpl();
-        this.view = new ClickTheColorViewImpl(model);
+        final ClickTheColorModel model = new ClickTheColorModelImpl();
+        final ClickTheColorView view = new ClickTheColorViewImpl(model);
 
-        this.view.show();
+        view.show();
     }
 }
