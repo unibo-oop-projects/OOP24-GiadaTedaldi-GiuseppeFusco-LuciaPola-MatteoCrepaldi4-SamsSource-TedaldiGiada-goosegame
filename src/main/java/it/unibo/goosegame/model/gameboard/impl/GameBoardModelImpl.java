@@ -45,19 +45,17 @@ public class GameBoardModelImpl implements GameBoardModel {
     }
 
     /**
-     * Getter method for the number of players.
-     *
-     * @return the number of players
+     * {@inheritDoc}
      */
+    @Override
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
     /**
-     * Getter method for the player list.
-     *
-     * @return list of the players
+     * {@inheritDoc}
      */
+    @Override
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(this.players);
     }
