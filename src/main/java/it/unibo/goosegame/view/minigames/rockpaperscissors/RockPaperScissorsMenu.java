@@ -2,13 +2,13 @@ package it.unibo.goosegame.view.minigames.rockpaperscissors;
 
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
-import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
+import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissorsViewImpl;
 
 /**
  * The RockPaperScissorsMenu class represents the menu for the game.
  */
-public class RockPaperScissorsMenu extends MinigameMenuAbstract {
+public class RockPaperScissorsMenu extends MinigameMenuImpl {
     private static final long serialVersionUID = 1L;
     private transient RockPaperScissorsControllerImpl controller;
     private transient RockPaperScissorsModelImpl model;

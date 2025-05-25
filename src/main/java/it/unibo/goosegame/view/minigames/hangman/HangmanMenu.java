@@ -14,14 +14,14 @@ import javax.swing.JOptionPane;
 
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
-import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
+import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 
 /**
  * Class representing the Hangman game menu.
- * Extends the abstract class MinigameMenuAbstract.
+ * Extends the abstract class MinigameMenuImpl.
  */
-public class HangmanMenu extends MinigameMenuAbstract {
+public class HangmanMenu extends MinigameMenuImpl {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(HangmanMenu.class.getName());
     /**

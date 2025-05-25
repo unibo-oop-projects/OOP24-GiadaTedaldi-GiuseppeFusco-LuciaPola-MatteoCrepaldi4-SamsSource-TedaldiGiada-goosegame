@@ -59,10 +59,10 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public GameMenu() {
         super();
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        super.setLocationRelativeTo(null);
         super.setTitle("GIOCO DELL'OCA");
         super.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         super.setResizable(true);
+        super.setLocationRelativeTo(null);
         initializeView();
 
         super.addComponentListener(new ComponentAdapter() {

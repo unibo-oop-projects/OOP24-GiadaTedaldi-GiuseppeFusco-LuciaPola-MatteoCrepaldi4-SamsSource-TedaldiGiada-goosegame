@@ -2,9 +2,9 @@ package it.unibo.goosegame.view.general.api;
 
 import javax.swing.JButton;
 /**
- * Interface for the MinigameMenuAbstract.
+ * Interface for the MinigameMenuImpl.
  */
-public interface MinigameMenuAbstractInterface {
+public interface MinigameMenu {
     /**
      * @return the start button.
      */

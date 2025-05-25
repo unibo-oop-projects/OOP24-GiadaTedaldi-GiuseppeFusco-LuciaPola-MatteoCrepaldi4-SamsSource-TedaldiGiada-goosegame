@@ -2,16 +2,16 @@ package it.unibo.goosegame.view.minigames.snake;
 
 import java.awt.event.ActionListener;
 
-import it.unibo.goosegame.view.general.impl.MinigameMenuAbstract;
+import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
 //import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 //import it.unibo.goosegame.view.MinigamesMenu.AbstractMinigameMenu;
 
 /**
  * The SnakeMenu class represents the menu for the snake game.
- * It extends the MinigameMenuAbstract class and provides a specific implementation for the snake game.
+ * It extends the MinigameMenuImpl class and provides a specific implementation for the snake game.
  */
-public class SnakeMenu extends MinigameMenuAbstract {
+public class SnakeMenu extends MinigameMenuImpl {
 
     private static final long serialVersionUID = 1L;
     /**

@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.goosegame.view.general.api.MinigameMenuAbstractInterface;
+import it.unibo.goosegame.view.general.api.MinigameMenu;
 
 /**
  * This is an abstract class representing a menu for the mini-games.
  */
-public abstract class MinigameMenuAbstract extends JFrame implements MinigameMenuAbstractInterface {
+public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
 
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 400;
@@ -33,8 +33,8 @@ public abstract class MinigameMenuAbstract extends JFrame implements MinigameMen
     private final JPanel mainPanel;
     private final Image background;
 
-    private final ImageIcon startIcon = new ImageIcon(MinigameMenuAbstract.class.getResource("/play.png"));
-    private final ImageIcon infoIcon = new ImageIcon(MinigameMenuAbstract.class.getResource("/i.png"));
+    private final ImageIcon startIcon = new ImageIcon(MinigameMenuImpl.class.getResource("/play.png"));
+    private final ImageIcon infoIcon = new ImageIcon(MinigameMenuImpl.class.getResource("/i.png"));
     private final String infoMsg;
 
     private JButton startButton;
@@ -48,11 +48,13 @@ public abstract class MinigameMenuAbstract extends JFrame implements MinigameMen
      * @param infoMsg the information message displayed in the info section.
      * @param al the listener to start the game.
      */
-    @SuppressWarnings("ConstructorCallsOverridableMethod")
-    public MinigameMenuAbstract(final String imgPath, final String title, 
+    @SuppressFBWarnings(
+        value = "ConstructorCallsOverridableMethod", 
+        justification = "createMainPanel is not overridden; this usage is safe in this context.")
+    public MinigameMenuImpl(final String imgPath, final String title, 
             final String infoMsg, final ActionListener al) {
         super(title);
-        background = new ImageIcon(MinigameMenuAbstract.class.getResource(imgPath)).getImage();
+        background = new ImageIcon(MinigameMenuImpl.class.getResource(imgPath)).getImage();
         this.infoMsg = infoMsg;
 
         mainPanel = createMainPanel(al);

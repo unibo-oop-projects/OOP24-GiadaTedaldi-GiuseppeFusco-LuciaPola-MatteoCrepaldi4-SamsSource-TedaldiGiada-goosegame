@@ -26,9 +26,9 @@ public class MenuLogicImpl implements MenuLogic {
     private int playerCount;
 
     /**
-     * @param view the GameMenu UI associted with this logic
+     * @param view the GameMenu UI associated with this logic
      */
-    @SuppressFBWarnings("EI2")
+    @SuppressFBWarnings(value = "EI2", justification = "Direct reference to the view is intentional in MVC pattern.")
     public MenuLogicImpl(final GameMenu view) {
         this.players = new ArrayList<>();
         this.view = Objects.requireNonNull(view);
@@ -42,6 +42,7 @@ public class MenuLogicImpl implements MenuLogic {
         if (players.size() == 1) {
             JOptionPane.showMessageDialog(view, "Minimum number of players: 2");
         } else {
+            view.dispose();
             new GameBoardImpl(playerCount);
         }
     }
