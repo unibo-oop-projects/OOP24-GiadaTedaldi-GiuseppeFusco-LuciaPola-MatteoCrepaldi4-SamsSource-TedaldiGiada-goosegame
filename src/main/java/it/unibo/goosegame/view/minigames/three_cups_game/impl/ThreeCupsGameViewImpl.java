@@ -87,7 +87,7 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
 
     private void onClickActions(final JButton cup) {
         // Registers which button has been pressed by the user
-        String message;
+        final String message;
 
         if (model.makeChoice(buttons.indexOf(cup))) {
             message = "You guessed correctly!";
@@ -100,10 +100,10 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
 
         // Code executed when the game is over
         if (this.model.isOver()) {
-            if (this.model.getResult() >= 3) {
-                message = "You win!";
+            if (this.model.getGameState() == ThreeCupsGameModel.GameState.WON) {
+                JOptionPane.showMessageDialog(frame, message, "Won", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                message = "You lose!";
+                JOptionPane.showMessageDialog(frame, message, "Lost", JOptionPane.INFORMATION_MESSAGE);
             }
 
             this.frame.dispose();

@@ -13,6 +13,7 @@ public final class ClickTheColorModelImpl implements ClickTheColorModel {
     private static final int ROUNDS = 10;              //  Number of rounds
     private static final int LOW_POINTS = 5;
     private static final int HIGH_POINTS = 10;
+    private static final int MIN_SCORE = 25;
     private static final double EXTRACTION_WEIGHT = 0.01;
 
     private Random random;          //  Random class
@@ -43,13 +44,21 @@ public final class ClickTheColorModelImpl implements ClickTheColorModel {
     }
 
     @Override
-    public int getResult() {
-        return 0;
+    public String getName() {
+        return "Click the color";
     }
 
     @Override
-    public String getName() {
-        return "Click the color";
+    public GameState getGameState() {
+        if (!isOver()) {
+            return GameState.ONGOING;
+        } else {
+            if (score >= MIN_SCORE) {
+                return GameState.WON;
+            }
+
+            return GameState.LOST;
+        }
     }
 
     @Override

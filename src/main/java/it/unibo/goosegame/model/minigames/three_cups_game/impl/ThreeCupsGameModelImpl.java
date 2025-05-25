@@ -9,6 +9,7 @@ import java.util.Random;
  */
 public final class ThreeCupsGameModelImpl implements ThreeCupsGameModel {
     private static final int ROUNDS = 10;
+    private static final int MIN_VICTORIES = 3;
 
     private int correctCup;
     private int victories;
@@ -51,13 +52,21 @@ public final class ThreeCupsGameModelImpl implements ThreeCupsGameModel {
     }
 
     @Override
-    public int getResult() {
-        return this.victories;
+    public String getName() {
+        return "Three Cups Game";
     }
 
     @Override
-    public String getName() {
-        return "Three Cups Game";
+    public GameState getGameState() {
+        if (!isOver()) {
+            return GameState.ONGOING;
+        } else {
+            if (victories >= MIN_VICTORIES) {
+                return GameState.WON;
+            }
+
+            return GameState.LOST;
+        }
     }
 
     @Override
