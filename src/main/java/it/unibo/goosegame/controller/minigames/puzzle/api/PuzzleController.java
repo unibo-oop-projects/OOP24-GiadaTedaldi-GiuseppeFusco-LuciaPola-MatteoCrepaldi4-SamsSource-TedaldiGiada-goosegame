@@ -8,6 +8,11 @@ import it.unibo.goosegame.utilities.Position;
  * Interface representing the controller of a Puzzle minigame.
  */
 public interface PuzzleController {
+    /**
+     * Initilizes the controller by linking it to the view.
+     * This method must be called after constructing the controller and the view.
+     */
+    void init();
 
     /**
      * Attempts to move the tile at the given position. 

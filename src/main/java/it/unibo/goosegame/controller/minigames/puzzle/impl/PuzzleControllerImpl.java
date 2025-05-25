@@ -5,9 +5,10 @@ import java.util.Map;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
+import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
-import it.unibo.goosegame.view.minigames.puzzle.api.ReadPuzzleView;
+import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
 
 /**
  * Implementation of the {@link PuzzleController} interface.
@@ -15,20 +16,23 @@ import it.unibo.goosegame.view.minigames.puzzle.api.ReadPuzzleView;
  */
 public class PuzzleControllerImpl implements PuzzleController {
     private final PuzzleModel model;
-    private final ReadPuzzleView view;
+    private final PuzzleView view;
 
     /**
      * Constructs a new instance of {@link PuzzleControllerImpl}.
      * 
-     * @param model the {@link PuzzleModel} representing the game logic
-     * @param view the {@link PuzzleView} representing the game view
      */
-    public PuzzleControllerImpl(final PuzzleModel model, final ReadPuzzleView view) {
-        if (model == null || view == null) {
-            throw new IllegalArgumentException("model and view cannot be null");
-        }
-        this.model = model.getCopy();
-        this.view = view;
+    public PuzzleControllerImpl() {
+        this.model = new PuzzleModelImpl();
+        this.view = new PuzzleViewImpl();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init() {
+        this.view.setController(this);
     }
 
     /**

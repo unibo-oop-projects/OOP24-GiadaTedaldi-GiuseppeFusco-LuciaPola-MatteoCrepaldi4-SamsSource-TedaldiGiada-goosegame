@@ -24,12 +24,11 @@ import javax.swing.Timer;
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
-import it.unibo.goosegame.view.minigames.puzzle.api.ReadPuzzleView;
 
 /**
  * Implementation of the {@link PuzzleView} interface using JavaSwing.
  */
-public class PuzzleViewImpl extends JFrame implements PuzzleView, ReadPuzzleView {
+public class PuzzleViewImpl extends JFrame implements PuzzleView {
     private static final long serialVersionUID = 1L;
     private static final int GRID_SIZE = 5;
     private static final int WIDTH = 500;
@@ -56,7 +55,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView, ReadPuzzleView
      * {@inheritDoc}
      */
     @Override
-    public void setController(final PuzzleController controller) {
+    public final void setController(final PuzzleController controller) {
         this.controller = controller;
     }
 

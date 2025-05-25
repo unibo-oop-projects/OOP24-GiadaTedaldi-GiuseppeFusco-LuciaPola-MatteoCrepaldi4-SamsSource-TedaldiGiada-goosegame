@@ -29,22 +29,6 @@ public class PuzzleModelImpl implements PuzzleModel {
         this.resetGame();
     }
 
-    /** 
-     * Copy of the contstructor.
-     * 
-     * @param other the PuzzleModelImpl instance to copy
-    */
-    public PuzzleModelImpl(final PuzzleModelImpl other) {
-        this.timeOver = other.timeOver;
-        this.first = other.first.isPresent() 
-                ? Optional.of(new Position(other.first.get().x(), other.first.get().y())) 
-                : Optional.empty();
-        this.grid = new HashMap<>();
-        for (final Map.Entry<Position, Integer> entry : other.grid.entrySet()) {
-            this.grid.put(new Position(entry.getKey().x(), entry.getKey().y()), entry.getValue());
-        }
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -153,14 +137,6 @@ public class PuzzleModelImpl implements PuzzleModel {
     @Override
     public void setTimeOver(final boolean timeOver) {
         this.timeOver = timeOver;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PuzzleModel getCopy() {
-        return new PuzzleModelImpl(this);
     }
 
 }
