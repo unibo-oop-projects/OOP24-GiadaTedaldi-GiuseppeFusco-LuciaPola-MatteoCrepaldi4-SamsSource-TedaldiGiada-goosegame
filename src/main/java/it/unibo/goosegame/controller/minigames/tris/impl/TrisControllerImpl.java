@@ -46,11 +46,11 @@ public class TrisControllerImpl implements TrisController {
         if (this.model.makeHumanMove(position)) {
             this.view.updateButton(position, "X");
             if (this.model.isOver()) {
-                endGame();
+                this.endGame();
                 return;
             }
             this.model.makePcMove();
-            updateView();
+            this.updateView();
         }
 
     }
@@ -69,7 +69,7 @@ public class TrisControllerImpl implements TrisController {
             }
         }
         if (this.model.isOver()) {
-            endGame();
+            this.endGame();
         }
     }
 
