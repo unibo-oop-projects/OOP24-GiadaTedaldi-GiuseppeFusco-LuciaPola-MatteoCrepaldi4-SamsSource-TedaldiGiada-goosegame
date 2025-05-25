@@ -1,8 +1,8 @@
-package it.unibo.goosegame.application.finalboard.impl;
+package it.unibo.goosegame.model.finalboard.impl;
 
 import java.util.Map;
 
-import it.unibo.goosegame.application.finalboard.api.FinalBoardLogic;
+import it.unibo.goosegame.model.finalboard.api.FinalBoardLogic;
 
 /**
  * Implementation of the FinalBoardLogic interface.

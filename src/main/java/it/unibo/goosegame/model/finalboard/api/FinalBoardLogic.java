@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application.finalboard.api;
+package it.unibo.goosegame.model.finalboard.api;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package it.unibo.goosegame.application.finalboard;
+package it.unibo.goosegame.view.finalboard;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -14,8 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import it.unibo.goosegame.application.finalboard.api.FinalBoardLogic;
-import it.unibo.goosegame.application.finalboard.impl.FinalBoardLogicImpl;
+import it.unibo.goosegame.model.finalboard.api.FinalBoardLogic;
+import it.unibo.goosegame.model.finalboard.impl.FinalBoardLogicImpl;
 
 /**
  * FinalBoardGui class represents the graphical user interface for displaying the final board of the game.
