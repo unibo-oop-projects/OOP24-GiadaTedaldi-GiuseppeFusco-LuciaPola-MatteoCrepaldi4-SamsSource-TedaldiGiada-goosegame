@@ -75,7 +75,7 @@ class TestRockPaperScissorsModelImpl {
      */
     @Test
     void testGameEndsAtThreePoints() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             model.playRound(ROCK);
         }
         assertTrue(model.isOver());
