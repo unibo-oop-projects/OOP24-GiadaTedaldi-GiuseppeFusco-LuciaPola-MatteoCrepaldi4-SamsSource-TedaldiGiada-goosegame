@@ -8,14 +8,15 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.goosegame.model.gameboard.impl.TurnManager;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.player.impl.PlayerImpl;
+import it.unibo.goosegame.model.turnmanager.api.TurnManager;
+import it.unibo.goosegame.model.turnmanager.impl.TurnManagerImpl;
 
 /**
- * Unit tests for {@link TurnManager}.
+ * Unit tests for {@link TurnManagerImpl}.
  */
-class TestTurnManager {
+class TestTurnManagerImpl {
     private Player p1, p2, p3;
     private List<Player> players;
 
@@ -36,13 +37,13 @@ class TestTurnManager {
      */
     @Test
     void testValidPlayers() {
-        final TurnManager tm = new TurnManager(players);
+        final TurnManager tm = new TurnManagerImpl(players);
         assertEquals(p1, tm.getCurrentPlayer());
-        assertThrows(IllegalArgumentException.class, () -> new TurnManager(List.of()));
-        assertThrows(IllegalArgumentException.class, () -> new TurnManager(List.of(p1)));
+        assertThrows(IllegalArgumentException.class, () -> new TurnManagerImpl(List.of()));
+        assertThrows(IllegalArgumentException.class, () -> new TurnManagerImpl(List.of(p1)));
         assertThrows(
             IllegalArgumentException.class, 
-            () -> new TurnManager(
+            () -> new TurnManagerImpl(
                 List.of(
                     p1,
                     p2,
@@ -59,7 +60,7 @@ class TestTurnManager {
      */
     @Test
     void testNextTurnNoSkips() {
-        final TurnManager tm = new TurnManager(players);
+        final TurnManager tm = new TurnManagerImpl(players);
         assertEquals(p1, tm.getCurrentPlayer());
         assertEquals(p2, tm.nextTurn());
         assertEquals(p3, tm.nextTurn());
@@ -71,7 +72,7 @@ class TestTurnManager {
      */
     @Test
     void testSkipNextTurn() {
-        final TurnManager tm = new TurnManager(players);
+        final TurnManager tm = new TurnManagerImpl(players);
         tm.skipNextTurn(p2, 1);
         assertEquals(p3, tm.nextTurn());
         assertEquals(p1, tm.nextTurn());
@@ -83,7 +84,7 @@ class TestTurnManager {
      */
     @Test
     void testSkipNextTurnMultipleSkips() {
-        final TurnManager tm = new TurnManager(players);
+        final TurnManager tm = new TurnManagerImpl(players);
         tm.skipNextTurn(p2, 2);
         assertEquals(p3, tm.nextTurn());
         assertEquals(p1, tm.nextTurn());
@@ -97,7 +98,7 @@ class TestTurnManager {
      */
     @Test
     void testSkipNextTurnInvalidPlayers() {
-        final TurnManager tm = new TurnManager(players);
+        final TurnManager tm = new TurnManagerImpl(players);
         final Player unknown = new PlayerImpl("Unknown", 0);
         assertThrows(IllegalArgumentException.class, () -> tm.skipNextTurn(unknown, 1));
     }
@@ -107,7 +108,7 @@ class TestTurnManager {
      */
     @Test
     void testSkipNextTurnInvalidTurns() {
-        final TurnManager tm = new TurnManager(players);
+        final TurnManager tm = new TurnManagerImpl(players);
         assertThrows(IllegalArgumentException.class, () -> tm.skipNextTurn(p1, 0));
         assertThrows(IllegalArgumentException.class, () -> tm.skipNextTurn(p1, -1));
     }
