@@ -66,9 +66,10 @@ public class TurnManager {
      * Increments the number of turns the specified player must skip by a given amount.
      *
      * @param player the player who will skip their next turn
+     * @param turns the number of turns the player will skip
      * @throws IllegalArgumentException if the player is not part of the current player list or if turns is negative or zero
      */
-    public void skipNextTurn(final Player player, int turns) {
+    public void skipNextTurn(final Player player, final int turns) {
         if (!this.skipTurns.containsKey(player)) {
             throw new IllegalArgumentException("Giocatore " + player.getName() + " non in lista");
         }
