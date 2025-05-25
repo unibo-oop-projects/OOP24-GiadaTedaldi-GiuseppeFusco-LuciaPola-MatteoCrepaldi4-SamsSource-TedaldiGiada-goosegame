@@ -1,13 +1,13 @@
 package it.unibo.goosegame.model.finalboard.impl;
 
-//import java.util.Comparator;
-//import java.util.LinkedHashMap;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Map;
-//import java.util.stream.Collectors;
+import java.util.stream.Collectors;
 
 import it.unibo.goosegame.model.finalboard.api.FinalBoardLogic;
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
-//import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.model.player.api.Player;
 
 /**
  * Implementation of the FinalBoardLogic interface.
@@ -21,7 +21,7 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
      * Constructor for FinalBoardLogicImpl.
      * Initializes the final board logic.
      */
-    public FinalBoardLogicImpl(GameBoardModel gameBoardModel) {
+    public FinalBoardLogicImpl(final GameBoardModel gameBoardModel) {
         this.gameBoardModel = gameBoardModel;
     }
     /**
@@ -29,8 +29,6 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
      */
     @Override
     public Map<String, Integer> getFinalBoard() {
-        return null;
-        /* 
         return gameBoardModel.getPlayers().stream()
         .sorted(Comparator.comparingInt(Player::getPosition).reversed())
         .collect(Collectors.toMap(
@@ -38,7 +36,7 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
             Player::getPosition,
             (a, b) -> a,
             LinkedHashMap::new
-        )); */
+        ));
     }
 
 }
