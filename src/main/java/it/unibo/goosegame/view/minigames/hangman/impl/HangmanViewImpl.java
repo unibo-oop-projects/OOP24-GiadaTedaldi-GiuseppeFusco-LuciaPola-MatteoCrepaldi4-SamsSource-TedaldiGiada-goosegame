@@ -52,7 +52,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @SuppressFBWarnings(
         value = "OverridableMethodCallInConstructor",
-        justification = "Calling methods in constructor is safe because no overridable methods are called before full initialization."
+        justification = "Calling methods in the constructor is safe since no overridable methods run before full initialization"
     )
     public HangmanViewImpl() {
         super("Hangman");

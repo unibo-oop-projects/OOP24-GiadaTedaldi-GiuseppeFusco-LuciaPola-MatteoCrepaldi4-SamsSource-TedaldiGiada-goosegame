@@ -38,6 +38,8 @@ public class GameInfo extends JPanel {
     private static final int COLOR_WHITE = 255;
     private static final long serialVersionUID = 1L;
 
+    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED", 
+        justification = "menuView is transient because it represents a view and should not be serialized")
     private final transient GameMenu menuView;
     private final transient Image background;
     private final ImageIcon imageButton;
