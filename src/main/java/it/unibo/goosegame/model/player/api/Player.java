@@ -1,4 +1,4 @@
-package it.unibo.goosegame.utilities.player.api;
+package it.unibo.goosegame.model.player.api;
 
 import java.awt.Color;
 import java.util.List;

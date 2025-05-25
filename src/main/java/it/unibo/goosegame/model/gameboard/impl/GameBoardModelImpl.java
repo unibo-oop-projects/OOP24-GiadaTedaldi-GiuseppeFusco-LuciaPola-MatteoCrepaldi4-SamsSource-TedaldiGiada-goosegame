@@ -1,8 +1,8 @@
 package it.unibo.goosegame.model.gameboard.impl;
 
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
-import it.unibo.goosegame.utilities.player.api.Player;
-import it.unibo.goosegame.utilities.player.impl.PlayerImpl;
+import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.model.player.impl.PlayerImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
