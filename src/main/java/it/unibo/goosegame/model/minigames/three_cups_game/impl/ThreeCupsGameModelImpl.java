@@ -76,6 +76,6 @@ public final class ThreeCupsGameModelImpl implements ThreeCupsGameModel {
 
     @Override
     public String getStatus() {
-        return "Correct guesses: " + this.victories + " Turn: " + this.turns + "/" + this.ROUNDS;
+        return "Correct guesses: " + this.victories + " Turn: " + this.turns + "/" + ROUNDS;
     }
 }
