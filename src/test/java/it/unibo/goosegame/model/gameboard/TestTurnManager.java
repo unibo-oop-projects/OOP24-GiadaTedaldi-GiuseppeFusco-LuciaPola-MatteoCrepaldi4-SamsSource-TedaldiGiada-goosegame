@@ -9,8 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.goosegame.model.gameboard.impl.TurnManager;
-import it.unibo.goosegame.utilities.player.api.Player;
-import it.unibo.goosegame.utilities.player.impl.PlayerImpl;
+import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.model.player.impl.PlayerImpl;
 
 /**
  * Unit tests for {@link TurnManager}.

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import it.unibo.goosegame.utilities.player.api.Player;
+import it.unibo.goosegame.model.player.api.Player;
 
 /**
  * This class manages the turn order of players in game, including the ability to skip turns.
