@@ -194,7 +194,7 @@ public class TrisModelImpl implements TrisModel {
      */
     @Override
     public String getStatus() {
-        if (checkWin()) {
+        if (this.getGameState() == GameState.LOST) {
             return "Game Over!";
         } else {
             return "Your turn!";
