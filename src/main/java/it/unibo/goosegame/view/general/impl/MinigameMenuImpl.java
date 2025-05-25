@@ -48,7 +48,9 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
      * @param infoMsg the information message displayed in the info section.
      * @param al the listener to start the game.
      */
-    @SuppressWarnings("ConstructorCallsOverridableMethod")
+    @SuppressFBWarnings(
+        value = "ConstructorCallsOverridableMethod", 
+        justification = "createMainPanel is not overridden; this usage is safe in this context.")
     public MinigameMenuImpl(final String imgPath, final String title, 
             final String infoMsg, final ActionListener al) {
         super(title);

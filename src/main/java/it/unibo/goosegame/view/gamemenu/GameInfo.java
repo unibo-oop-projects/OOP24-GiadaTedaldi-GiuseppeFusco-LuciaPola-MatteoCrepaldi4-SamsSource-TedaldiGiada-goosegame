@@ -38,7 +38,6 @@ public class GameInfo extends JPanel {
     private static final int COLOR_WHITE = 255;
     private static final long serialVersionUID = 1L;
 
-    @SuppressFBWarnings("SE_TRANSIENT_FIELD_NOT_RESTORED")
     private final transient GameMenu menuView;
     private final transient Image background;
     private final ImageIcon imageButton;
@@ -49,7 +48,7 @@ public class GameInfo extends JPanel {
     /**
      * @param menu The reference to the main menu to switch views.
      */
-    @SuppressFBWarnings("EI2")
+    @SuppressFBWarnings(value =  "EI2", justification = "Direct reference to the view is intentional in MVC pattern")
     public GameInfo(final GameMenu menu) {
         this.menuView = Objects.requireNonNull(menu);
         this.background = new ImageIcon(GameInfo.class.getResource("/ImmagineMenu.png")).getImage();

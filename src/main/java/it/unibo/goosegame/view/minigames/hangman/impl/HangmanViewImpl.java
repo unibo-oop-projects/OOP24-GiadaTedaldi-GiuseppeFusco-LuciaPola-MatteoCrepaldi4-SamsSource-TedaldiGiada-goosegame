@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
 
@@ -49,7 +50,10 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     /**
      * Constructor of the class. Initializes the view of Hangman game.
      */
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+    @SuppressFBWarnings(
+        value = "OverridableMethodCallInConstructor",
+        justification = "Calling methods in constructor is safe because no overridable methods are called before full initialization."
+    )
     public HangmanViewImpl() {
         super("Hangman");
         currentAttempts = MAX_ATTEMPTS;
