@@ -33,7 +33,6 @@ public class TrisViewImpl extends JFrame implements TrisView {
      */
     public TrisViewImpl() {
         super();
-        SwingUtilities.invokeLater(this::configUI);
     }
 
     /**
