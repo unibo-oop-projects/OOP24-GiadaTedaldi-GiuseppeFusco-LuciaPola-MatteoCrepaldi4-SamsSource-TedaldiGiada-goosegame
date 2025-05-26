@@ -39,7 +39,7 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public void startGame() {
-        if (players.size() == 1) {
+        if (players.size() <= 1) {
             JOptionPane.showMessageDialog(view, "Minimum number of players: 2");
         } else {
             view.dispose();
