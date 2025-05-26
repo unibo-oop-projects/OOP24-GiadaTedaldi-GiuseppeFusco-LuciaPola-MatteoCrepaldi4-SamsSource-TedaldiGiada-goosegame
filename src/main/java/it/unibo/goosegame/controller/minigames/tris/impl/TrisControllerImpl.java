@@ -26,7 +26,6 @@ public class TrisControllerImpl implements TrisController {
     /**
      * Constructs a new instance of {@link TrisControllerImpl}.
      * 
-     * @param model the {@link TrisModel} representing the game logic
      */
     public TrisControllerImpl() {
         this.model = new TrisModelImpl();
