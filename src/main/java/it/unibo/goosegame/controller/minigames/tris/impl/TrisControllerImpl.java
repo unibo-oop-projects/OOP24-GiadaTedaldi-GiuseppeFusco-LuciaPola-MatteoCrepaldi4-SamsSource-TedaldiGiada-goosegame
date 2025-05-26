@@ -5,6 +5,7 @@ import javax.swing.Timer;
 import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
+import it.unibo.goosegame.model.minigames.tris.impl.TrisModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.tris.api.TrisView;
 import it.unibo.goosegame.view.minigames.tris.impl.TrisViewImpl;
@@ -27,11 +28,19 @@ public class TrisControllerImpl implements TrisController {
      * 
      * @param model the {@link TrisModel} representing the game logic
      */
-    public TrisControllerImpl(final TrisModel model) {
-        this.model = model;
-        this.view = new TrisViewImpl(this);
+    public TrisControllerImpl() {
+        this.model = new TrisModelImpl();
+        this.view = new TrisViewImpl();
         this.humanWins = 0;
         this.pcWins = 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init() {
+        this.view.setController(this);
     }
 
     /**

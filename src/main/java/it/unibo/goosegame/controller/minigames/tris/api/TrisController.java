@@ -6,6 +6,11 @@ import it.unibo.goosegame.utilities.Position;
  * Interface representing the controller of a Tris(Tic-Tac-Toe) minigame.
  */
 public interface TrisController {
+    /**
+     * Initilizes the controller by linking it to the view.
+     * This method must be called after constructing the controller and the view.
+     */
+    void init();
 
     /**
      * Handles a moves made by the human player at the specified position.

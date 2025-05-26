@@ -25,15 +25,13 @@ public class TrisViewImpl extends JFrame implements TrisView {
     private static final int HEIGHT = 350;
     private final JButton[][] buttons = new JButton[GRID_SIZE][GRID_SIZE];
     private JLabel statusLabel;
-    private final transient TrisController controller;
+    private TrisController controller;
 
     /**
      * Constructs a new instance of {@link TrisViewImpl}.
      * 
-     * @param controller the {@link TrisController} that manages user actions
      */
-    public TrisViewImpl(final TrisController controller) {
-        this.controller = controller;
+    public TrisViewImpl() {
         SwingUtilities.invokeLater(this::configUI);
     }
 
@@ -59,7 +57,16 @@ public class TrisViewImpl extends JFrame implements TrisView {
         statusLabel = new JLabel("Your Turn!", SwingConstants.CENTER);
         this.add(statusLabel, BorderLayout.NORTH);
         this.add(gridPanel, BorderLayout.CENTER);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setController(final TrisController controller) {
+        this.controller = controller;
     }
 
     /**
