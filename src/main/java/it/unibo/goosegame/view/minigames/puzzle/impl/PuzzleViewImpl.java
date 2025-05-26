@@ -48,7 +48,6 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      */
     public PuzzleViewImpl() {
         super();
-        SwingUtilities.invokeLater(this::configUI);
     }
 
     /**
@@ -57,6 +56,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     @Override
     public final void setController(final PuzzleController controller) {
         this.controller = controller;
+        SwingUtilities.invokeLater(this::configUI);
     }
 
     /**
@@ -77,7 +77,9 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
                 final int r = i;
                 final int c = j;
                 button.addActionListener(e -> {
-                    this.controller.clickHandler(new Position(r, c));
+                    if (this.controller != null) {
+                        this.controller.clickHandler(new Position(r, c));
+                    }
                 });
                 gridPanel.add(button);
             }

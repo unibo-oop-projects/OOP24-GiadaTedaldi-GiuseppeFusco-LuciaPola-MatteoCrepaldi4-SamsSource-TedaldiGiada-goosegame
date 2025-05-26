@@ -1,11 +1,19 @@
 package it.unibo.goosegame.view.minigames.tris.api;
 
+import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.utilities.Position;
 
 /**
  * Interface representing the view of a Tris(Tic-Tac-Toe) minigame.
  */
 public interface TrisView {
+    /**
+     * Sets the controller.
+     * 
+     * @param controller the {@link TrisController} instance to be set for this view
+     */
+    void setController(TrisController controller);
+
     /**
      * Updates the button at the specified position with the given symbol.
      * 
