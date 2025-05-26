@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.utilities.Position;
@@ -33,14 +32,11 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     private static final int GRID_SIZE = 5;
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
-    private static final int INIT_TIME = 150;
     private final transient Logger logger = Logger.getLogger(PuzzleViewImpl.class.getName());
     private final JButton[][] buttons = new JButton[GRID_SIZE][GRID_SIZE];
     private transient PuzzleController controller;
     private final JLabel timerLabel = new JLabel("Time: 02:30");
     private final JButton startButton = new JButton("Start");
-    private Timer gameTimer;
-    private int timeLeft;
 
     /**
      * Constructs a new instance of {@link PuzzleViewImpl}.
@@ -91,7 +87,6 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
             this.controller.shufflePuzzle();
             this.enableButtons(true);
             this.updateView();
-            this.startGameTimer();
             startButton.setEnabled(false);
         });
         this.add(gridPanel, BorderLayout.CENTER);
@@ -108,29 +103,6 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
         });
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-    }
-
-    /**
-     * Starts the game timer.
-     * Stops the timer and shows a message when time is up.
-     */
-    private void startGameTimer() {
-        this.timeLeft = INIT_TIME;
-        timerLabel.setText("Time: 02:30");
-        if (this.gameTimer != null && this.gameTimer.isRunning()) {
-            this.gameTimer.stop();
-        }
-        this.gameTimer = new Timer(1000, e -> {
-            this.timeLeft--;
-            final int min = timeLeft / 60;
-            final int sec = timeLeft % 60;
-            timerLabel.setText(String.format("Time: %02d:%02d", min, sec));
-            if (this.timeLeft <= 0) {
-                this.gameTimer.stop();
-                this.controller.timeOver();
-            }
-        });
-        this.gameTimer.start();
     }
 
     /**
@@ -151,6 +123,14 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
             final int tileVal = entry.getValue();
             buttons[pos.x()][pos.y()].setIcon(loadAndScale(tileVal, cellWidth, cellHeight));
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateTimerLabel(final String time) {
+        SwingUtilities.invokeLater(() -> timerLabel.setText(time));
     }
 
     /**
@@ -190,16 +170,6 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      * {@inheritDoc}
      */
     @Override
-    public void stopTimer() {
-        if (this.gameTimer != null) {
-            this.gameTimer.stop();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public final void endGame() {
         startButton.setEnabled(false);
         this.enableButtons(false);
@@ -215,4 +185,5 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
         final String resultMsg = isWin ? "Puzzle completed: YOU WON!" : "Time is Over: YOU LOST!";
         JOptionPane.showMessageDialog(this, resultMsg);
     }
+
 }

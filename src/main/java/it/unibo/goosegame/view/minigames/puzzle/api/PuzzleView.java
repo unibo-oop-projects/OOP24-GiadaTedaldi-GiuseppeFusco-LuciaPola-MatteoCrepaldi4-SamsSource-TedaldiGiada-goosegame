@@ -20,6 +20,13 @@ public interface PuzzleView {
     void updateView();
 
     /**
+     * Updates the timer display label with the given time string.
+     * 
+     * @param time the time string to display 
+     */
+    void updateTimerLabel(String time);
+
+    /**
      * Displays a message indicating game result.
      * 
      * @param result the result of the mini game
@@ -27,11 +34,6 @@ public interface PuzzleView {
     void showResultMessage(boolean result);
 
     /**
-     * Stops the game timer if it's currently running.
-     */
-    void stopTimer();
-
-     /**
      * Ends the game showing a win message, by disabling the buttons and setting the default close operation.
      */
     void endGame();

@@ -1,7 +1,11 @@
 package it.unibo.goosegame.controller.minigames.puzzle.impl;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.Timer;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
@@ -16,8 +20,11 @@ import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
  * It manages the communication between the model and the view of a Puzzle minigame.
  */
 public class PuzzleControllerImpl implements PuzzleController {
+    private static final int INIT_TIME = 150;
     private final PuzzleModel model;
     private final PuzzleView view;
+    private Timer gameTimer;
+    private int timeLeft;
 
     /**
      * Constructs a new instance of {@link PuzzleControllerImpl}.
@@ -26,6 +33,7 @@ public class PuzzleControllerImpl implements PuzzleController {
     public PuzzleControllerImpl() {
         this.model = new PuzzleModelImpl();
         this.view = new PuzzleViewImpl();
+        this.timeLeft = INIT_TIME;
     }
 
     /**
@@ -62,6 +70,35 @@ public class PuzzleControllerImpl implements PuzzleController {
     @Override
     public void shufflePuzzle() {
         this.model.shuffle();
+        this.startTimer();
+    }
+
+    private void startTimer() {
+        this.updateViewTimer();
+        if (this.gameTimer != null && this.gameTimer.isRunning()) {
+            this.gameTimer.stop();
+        }
+        this.gameTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                timeLeft--;
+                updateViewTimer();
+                if (timeLeft <= 0) {
+                    gameTimer.stop();
+                    timeOver();
+                }
+            }
+        });
+        this.gameTimer.start();
+    }
+    /**
+     * Updates the timer label on the view with the current time left.
+     */
+    private void updateViewTimer() {
+        final int min = this.timeLeft / 60;
+        final int sec = this.timeLeft % 60;
+        final String timeString = String.format("Time: %02d:%02d", min, sec);
+        this.view.updateTimerLabel(timeString);
     }
 
     /**
@@ -80,8 +117,17 @@ public class PuzzleControllerImpl implements PuzzleController {
         final GameState state = this.model.getGameState();
         if (state == GameState.WON || state == GameState.LOST) {
             this.view.showResultMessage(state == GameState.WON);
-            this.view.stopTimer();
+            this.stopTimer();
             this.view.endGame();
+        }
+    }
+
+    /**
+     * Stops the game timer if it is currently running.
+     */
+    private void stopTimer() {
+        if (this.gameTimer != null && this.gameTimer.isRunning()) {
+            this.gameTimer.stop();
         }
     }
 }
