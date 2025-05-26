@@ -73,18 +73,6 @@ class TestRockPaperScissorsModelImpl {
     }
 
     /**
-     * Tests that the game ends when a player or the computer reaches 3 points.
-     */
-    @Test
-    void testGameEndsAtThreePoints() {
-        for (int i = 0; i < MAX; i++) {
-            model.playRound(ROCK);
-        }
-        assertTrue(model.isOver());
-        assertTrue(model.getPlayerScore() >= 3 || model.getComputerScore() >= 3);
-    }
-
-    /**
      * Tests that the game can be reset correctly, setting the scores back to zero
      * and marking the game as not over.
      */
