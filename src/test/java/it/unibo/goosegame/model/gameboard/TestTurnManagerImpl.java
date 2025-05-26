@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.goosegame.model.gameboard.api.TurnManager;
+import it.unibo.goosegame.model.gameboard.impl.TurnManagerImpl;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.player.impl.PlayerImpl;
-import it.unibo.goosegame.model.turnmanager.api.TurnManager;
-import it.unibo.goosegame.model.turnmanager.impl.TurnManagerImpl;
 
 /**
  * Unit tests for {@link TurnManagerImpl}.
