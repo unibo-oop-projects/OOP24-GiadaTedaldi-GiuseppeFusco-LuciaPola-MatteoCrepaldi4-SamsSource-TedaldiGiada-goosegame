@@ -45,7 +45,7 @@ public class MenuLogicImpl implements MenuLogic {
             .filter(p -> p != null && p.getName() != null && !p.getName().isBlank())
             .count();
         if (validPlayers < 2) {
-            JOptionPane.showMessageDialog(view, "Inserisci almeno 2 nomi validi.");
+            JOptionPane.showMessageDialog(view, "Enter at least two valid names.");
             return;
         }
         view.dispose();
