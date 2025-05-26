@@ -39,9 +39,13 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public void startGame() {
-        if (players.size() <= 1) {
-            JOptionPane.showMessageDialog(view, "Minimum number of players: 2");
-        } else {
+        long validPlayers = players.stream()
+            .filter(name -> name != null && !name.trim().isEmpty())
+            .count();
+        if (validPlayers < 2) {
+            JOptionPane.showMessageDialog(view, "Inserisci almeno 2 nomi validi.");
+            return;
+        }else {
             view.dispose();
             new GameBoardImpl(playerCount);
         }
