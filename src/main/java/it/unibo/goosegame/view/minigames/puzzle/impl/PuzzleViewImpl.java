@@ -63,8 +63,8 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      * Configurates the window properties.
      */
     private void configUI() {
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setSize(WIDTH, HEIGHT);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         final JPanel gridPanel = new JPanel(new GridLayout(GRID_SIZE, GRID_SIZE, 0, 0));
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
@@ -92,9 +92,9 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
             this.startGameTimer();
             startButton.setEnabled(false);
         });
-        add(gridPanel, BorderLayout.CENTER);
-        add(controlPanel, BorderLayout.SOUTH);
-        addComponentListener(new ComponentAdapter() {
+        this.add(gridPanel, BorderLayout.CENTER);
+        this.add(controlPanel, BorderLayout.SOUTH);
+        this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 updateView();
@@ -104,7 +104,8 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
                 updateView();
             }
         });
-        setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**
