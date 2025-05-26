@@ -99,7 +99,7 @@ public class MenuLogicImpl implements MenuLogic {
                 .append(' ')
                 .append(i + 1)
                 .append(") ")
-                .append(players.get(i));
+                .append(players.get(i).getName());
         }
         playerListText.append(' ');
         view.updatePlayerLabel(playerListText.toString());
