@@ -10,7 +10,7 @@ import it.unibo.goosegame.model.player.api.Player;
 /**
  * This class manages the turn order of players in game, including the ability to skip turns.
  */
-public class TurnManagerImpl implements TurnManager{
+public class TurnManagerImpl implements TurnManager {
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 4;
     private final List<Player> players;
@@ -40,6 +40,7 @@ public class TurnManagerImpl implements TurnManager{
     /**
      * {@inheritDoc}
      */
+    @Override
     public Player getCurrentPlayer() {
         return this.players.get(this.currentIndex);
     }
@@ -47,6 +48,7 @@ public class TurnManagerImpl implements TurnManager{
     /**
      * {@inheritDoc}
      */
+    @Override
     public Player nextTurn() {
         while (true) {
             this.currentIndex = (this.currentIndex + 1) % this.players.size();
@@ -63,6 +65,7 @@ public class TurnManagerImpl implements TurnManager{
     /**
      * {@inheritDoc}
      */
+    @Override
     public void skipNextTurn(final Player player, final int turns) {
         if (!this.skipTurns.containsKey(player)) {
             throw new IllegalArgumentException("Giocatore " + player.getName() + " non in lista");
