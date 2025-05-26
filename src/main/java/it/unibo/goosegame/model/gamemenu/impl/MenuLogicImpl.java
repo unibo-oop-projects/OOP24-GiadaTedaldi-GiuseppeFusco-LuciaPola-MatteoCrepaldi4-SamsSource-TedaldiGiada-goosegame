@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.gameboard.impl.GameBoardImpl;
 import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
+import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.model.player.impl.PlayerImpl;
 import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
 /**
  * The MenuLogicImpl class implements the logic behind the game menu, 
@@ -22,7 +24,7 @@ public class MenuLogicImpl implements MenuLogic {
      * This is assumed to be owned by this class and not modified externally after being passed in the constructor.
     */
     private final GameMenu view;
-    private final List<String> players;
+    private final List<Player> players;
     private int playerCount;
 
     /**
@@ -39,16 +41,15 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public void startGame() {
-        long validPlayers = players.stream()
-            .filter(name -> name != null && !name.trim().isEmpty())
+        final long validPlayers = players.stream()
+            .filter(p -> p != null && p.getName() != null && !p.getName().isBlank())
             .count();
         if (validPlayers < 2) {
             JOptionPane.showMessageDialog(view, "Inserisci almeno 2 nomi validi.");
             return;
-        }else {
-            view.dispose();
-            new GameBoardImpl(playerCount);
         }
+        view.dispose();
+        new GameBoardImpl(playerCount);
     }
 
     /**
@@ -60,12 +61,12 @@ public class MenuLogicImpl implements MenuLogic {
         if (!playerName.isBlank()) {
             if (players.size() == MAX_PLAYERS) {
                JOptionPane.showMessageDialog(view, "Maximum Players Reached.");
-            } else if (players.contains(playerName)) {
-                JOptionPane.showMessageDialog(view, "Player Name Already Existing.");
-            } else {
-                players.add(playerName);
+            } else if (players.stream().noneMatch(p -> p.getName().equalsIgnoreCase(playerName))) {
+                players.add(new PlayerImpl(playerName, playerCount));
                 playerCount++;
                 updatePlayerList();
+            } else {
+                JOptionPane.showMessageDialog(view, "Player Name Already Existing.");
             }
             view.updatePlayerField();
         }
