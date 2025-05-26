@@ -8,7 +8,7 @@ import it.unibo.goosegame.model.gameboard.api.TurnManager;
 import it.unibo.goosegame.model.player.api.Player;
 
 /**
- * This class manages the turn order of players in game, including the ability to skip turns.
+ * Implementation of the {@link TurnManager} interaface.
  */
 public class TurnManagerImpl implements TurnManager {
     private static final int MIN_PLAYERS = 2;
