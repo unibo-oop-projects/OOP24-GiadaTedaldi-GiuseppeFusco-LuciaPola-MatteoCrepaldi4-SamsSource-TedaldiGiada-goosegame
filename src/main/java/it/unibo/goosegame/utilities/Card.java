@@ -54,7 +54,7 @@ public enum Card {
     /** Example card 10. */
     NAME10("False Alarm", "You flap your wings in the distance like something’s terribly wrong." 
     + "The target freezes, then backs up cautiously," 
-    + "unsure if it’s a trap or just goose drama. Target backwards 2 place",2, true, true, false),
+    + "unsure if it’s a trap or just goose drama. Target backwards 2 place", 2, true, true, false),
     /** Example card 11. */
     NAME11("Psych-Honk", "You don’t do anything… yet." 
     + "You just stare, tilt your head slowly, and smile with your beak."

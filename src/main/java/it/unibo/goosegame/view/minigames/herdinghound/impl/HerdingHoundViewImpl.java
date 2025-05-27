@@ -73,6 +73,7 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
     value = "EI2",
     justification = "View must keep a reference to the controller as per MVC pattern."
     )
+    @Override
     public void setController(final HerdingHoundController controller) {
         this.controller = controller;
     }
@@ -253,18 +254,21 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
         frame.repaint();
     }
 
+    @SuppressWarnings("PMD.UnnecessaryOverride")
     @Override
-    public void addKeyListener(KeyAdapter keyAdapter) {
+    public void addKeyListener(final KeyAdapter keyAdapter) {
         super.addKeyListener(keyAdapter);
     }
 
+    @SuppressWarnings("PMD.UnnecessaryOverride")
     @Override
-    public void setFocusable(boolean focusable) {
+    public void setFocusable(final boolean focusable) {
         super.setFocusable(focusable);
     }
 
+    @SuppressWarnings("PMD.UnnecessaryOverride")
     @Override
-    public boolean requestFocusInWindow(){
+    public boolean requestFocusInWindow() {
         return super.requestFocusInWindow();
     }
 }

@@ -71,13 +71,13 @@ public final class PlayCardViewImp extends JDialog implements PlayerCardView {
         final JButton addToSatchelButton = new JButton("Put in satchel");
 
         final JComboBox<Player> playerCombo = new JComboBox<>(otherPlayers.toArray(new Player[0]));
-        playerCombo.setVisible(this.controller.isMalusThrowable(this.card)
+        playerCombo.setVisible(this.controller.isBonusThrowable(this.card)
                 || this.controller.isRemoveOpponent(this.card));
 
         playButton.setEnabled(this.controller.isRemoveSelf(this.card)
                 || this.controller.isMalusNotThrowable(this.card)
                 || this.controller.isBonus(this.card));
-        throwButton.setEnabled(this.controller.isMalusThrowable(this.card)
+        throwButton.setEnabled(this.controller.isBonusThrowable(this.card)
                 || this.controller.isRemoveOpponent(this.card));
         addToSatchelButton.setEnabled(this.controller.canPlayCardFromSatchel(this.card));
 

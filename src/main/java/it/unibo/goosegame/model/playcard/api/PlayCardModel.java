@@ -49,9 +49,9 @@ public interface PlayCardModel {
     /**
      * Checks if the card is a throwable malus.
      * @param card the card to check
-     * @return true if it is a throwable malus, false otherwise
+     * @return true if it is a throwable bonus, false otherwise
      */
-    boolean isMalusThrowable(Card card);
+    boolean isBonusThrowable(Card card);
 
     /**
      * Checks if the card is a non-throwable malus.

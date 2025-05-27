@@ -128,8 +128,8 @@ public final class PlayCardController {
      * @param card the card to check
      * @return true if the card is a throwable malus, false otherwise
      */
-    public boolean isMalusThrowable(final Card card) {
-        return model.isMalusThrowable(card);
+    public boolean isBonusThrowable(final Card card) {
+        return model.isBonusThrowable(card);
     }
 
     /**
@@ -157,7 +157,7 @@ public final class PlayCardController {
     public void playCardOnPlayer(final Player target) {
         if (model.isRemoveOpponent(drawnCard)) {
             target.getSatchel().clear();
-        } else if (model.isMalusThrowable(drawnCard)) {
+        } else if (model.isBonusThrowable(drawnCard)) {
             // @TODO: implement logic to move player on board
             LOGGER.info("Malus throwable - logic to move player on board to be implemented.");
         }

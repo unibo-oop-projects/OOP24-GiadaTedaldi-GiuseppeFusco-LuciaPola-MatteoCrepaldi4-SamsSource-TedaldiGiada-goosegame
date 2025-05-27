@@ -78,9 +78,9 @@ final class PlayCardModelTest {
     }
 
     @Test
-    void testIsMalusThrowable() {
-        final Card malusThrowable = getFirstMalusThrowable();
-        assertTrue(model.isMalusThrowable(malusThrowable));
+    void testIsBonusThrowable() {
+        final Card bonusThrowable = getFirstBonusThrowable();
+        assertTrue(model.isBonusThrowable(bonusThrowable));
     }
 
     @Test
@@ -137,9 +137,9 @@ final class PlayCardModelTest {
         return null;
     }
 
-    private Card getFirstMalusThrowable() {
+    private Card getFirstBonusThrowable() {
         for (final Card c : Card.values()) {
-            if (!c.isBonus() && c.isThrowable()) {
+            if (c.isBonus() && c.isThrowable()) {
                 return c;
             }
         }

@@ -63,6 +63,7 @@ public final class DogImpl implements Dog {
     /**
      * Updates the dog's state to the next one in the cycle.
      */
+    @Override
     public void refreshState() {
         switch (state) {
             case ASLEEP -> state = State.ALERT;
@@ -75,6 +76,7 @@ public final class DogImpl implements Dog {
      * Returns the current state of the dog.
      * @return the current state
      */
+    @Override
     public State getState() {
         return this.state;
     }
@@ -148,6 +150,7 @@ public final class DogImpl implements Dog {
      * Returns the list of positions visible by the dog.
      * @return list of visible positions
      */
+    @Override
     public List<Position> getVisibleArea() {
         return new ArrayList<>(visibleArea);
     }
@@ -155,6 +158,7 @@ public final class DogImpl implements Dog {
     /**
      * Resets the dog's position, direction, state, and visible area.
      */
+    @Override
     public void reset() {
         this.position = new Position(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
         this.direction = INITIAL_DIRECTION;

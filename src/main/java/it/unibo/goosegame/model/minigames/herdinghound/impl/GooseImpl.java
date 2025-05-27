@@ -45,6 +45,7 @@ public final class GooseImpl implements Goose {
     /**
      * Resets the goose's position to the starting coordinates.
      */
+    @Override
     public void reset() {
         this.position = new Position(startX, startY);
     }

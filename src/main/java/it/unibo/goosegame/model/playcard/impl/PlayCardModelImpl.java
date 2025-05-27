@@ -97,11 +97,11 @@ public final class PlayCardModelImpl implements PlayCardModel {
     /**
      * Checks if the card is a throwable malus.
      * @param card the card to check
-     * @return true if the card is a throwable malus, false otherwise
+     * @return true if the card is a throwable bonus, false otherwise
      */
     @Override
-    public boolean isMalusThrowable(final Card card) {
-        return card != null && !card.isBonus() && card.isThrowable();
+    public boolean isBonusThrowable(final Card card) {
+        return card != null && card.isBonus() && card.isThrowable();
     }
 
     /**
