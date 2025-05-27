@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
-import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.general.GameEndPanel;
 import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
@@ -18,6 +18,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
 
 /**
  * View for the Herding Hound minigame.
@@ -168,7 +169,7 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
         }
 
         // Zones actually visible by the dog when awake (transparent red)
-        if (controller.getDogState() == DogImpl.State.AWAKE && (!blinking || blinkOn)) {
+        if (controller.getDogState() == State.AWAKE && (!blinking || blinkOn)) {
             g.setColor(DOG_VISIBLE_COLOR);
             for (final Position pos : controller.getVisibleCells()) {
                 drawCell(g, pos, cellSize, xOffset, yOffset);
@@ -197,8 +198,8 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
         drawCell(g, dogPos, cellSize, xOffset, yOffset);
 
         // Symbol above the dog
-        if (controller.getDogState() != DogImpl.State.ASLEEP) {
-            final String symbol = controller.getDogState() == DogImpl.State.AWAKE ? "!" : "?";
+        if (controller.getDogState() != State.ASLEEP) {
+            final String symbol = controller.getDogState() == State.AWAKE ? "!" : "?";
             g.setColor(Color.BLACK);
             final Font font = new Font("Arial", Font.BOLD, cellSize / 2);
             g.setFont(font);
@@ -250,5 +251,20 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
         frame.getContentPane().add(new GameEndPanel(message, frame::dispose, "HerdingHound", hasWon), BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
+    }
+
+    @Override
+    public void addKeyListener(KeyAdapter keyAdapter) {
+        super.addKeyListener(keyAdapter);
+    }
+
+    @Override
+    public void setFocusable(boolean focusable) {
+        super.setFocusable(focusable);
+    }
+
+    @Override
+    public boolean requestFocusInWindow(){
+        return super.requestFocusInWindow();
     }
 }

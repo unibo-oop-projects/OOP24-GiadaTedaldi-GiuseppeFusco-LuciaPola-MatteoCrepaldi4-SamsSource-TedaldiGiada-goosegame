@@ -20,4 +20,10 @@ public interface Box {
      */
     void generateBoxes();
 
+    /**
+     * Returns the list of shadows.
+     * @return list of positions
+     */
+    List<Position> getShadows();
+
 }

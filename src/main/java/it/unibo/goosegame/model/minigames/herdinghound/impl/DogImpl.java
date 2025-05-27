@@ -1,6 +1,7 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Goose;
 import it.unibo.goosegame.utilities.Position;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public final class DogImpl implements Dog {
      * Updates the dog's direction based on the goose's position.
      * @param goose the goose instance
      */
-    public void refreshDirection(final GooseImpl goose) {
+    @Override
+    public void refreshDirection(final Goose goose) {
         final int gx = goose.getCoord().x();
         final int gy = goose.getCoord().y();
         final int px = position.x();

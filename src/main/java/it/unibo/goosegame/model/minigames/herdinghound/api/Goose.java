@@ -35,4 +35,9 @@ public interface Goose {
      */
     void move(int dx, int dy);
 
+    /**
+     * Resets the gooose logics.
+     */
+    void reset();
+
 }

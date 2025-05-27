@@ -1,9 +1,9 @@
 package it.unibo.goosegame.controller.herdinghound;
 
-import it.unibo.goosegame.model.minigames.herdinghound.impl.DogImpl;
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanelImpl;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
+import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
+import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
+import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Position;
 
@@ -26,10 +26,10 @@ public class HerdingHoundController {
     private static final int DOG_OTHER_DELAY_BASE = 2_000;
     private static final int DOG_OTHER_DELAY_RANDOM = 3;
 
-    private final HerdingHoundModelImpl model;
-    private final HerdingHoundViewImpl view;
+    private final HerdingHoundModel model;
+    private final HerdingHoundView view;
     private final JFrame frame;
-    private final RightPanelImpl rightPanel;
+    private final RightPanel rightPanel;
     private Timer dogStateTimer;
     private Timer gameTimer;
     private final Random rnd = new Random();
@@ -49,10 +49,10 @@ public class HerdingHoundController {
     + "Assumes trusted injection without copying."
         )
     public HerdingHoundController(
-            final HerdingHoundModelImpl model,
-            final HerdingHoundViewImpl view,
+            final HerdingHoundModel model,
+            final HerdingHoundView view,
             final JFrame frame,
-            final RightPanelImpl rightPanel
+            final RightPanel rightPanel
     ) {
         this.model = model;
         this.view = view;
@@ -106,11 +106,11 @@ public class HerdingHoundController {
         gameTimer.start();
     }
 
-    private void scheduleNextDogState(final DogImpl.State currentState) {
+    private void scheduleNextDogState(final State currentState) {
         if (model.isOver()) {
             return;
         }
-        final int delay = (currentState == DogImpl.State.ALERT)
+        final int delay = (currentState == State.ALERT)
                 ? DOG_ALERT_DELAY
                 : DOG_OTHER_DELAY_BASE + rnd.nextInt(DOG_OTHER_DELAY_RANDOM) * 1_000;
         if (dogStateTimer != null) {
@@ -161,7 +161,7 @@ public class HerdingHoundController {
     /**
      * @return the current state of the dog
      */
-    public DogImpl.State getDogState() {
+    public State getDogState() {
         return model.getDog().getState();
     }
 

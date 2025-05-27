@@ -1,5 +1,7 @@
 package it.unibo.goosegame.model.minigames.herdinghound.api;
 
+import java.util.List;
+
 import it.unibo.goosegame.utilities.Position;
 
 /**
@@ -45,4 +47,32 @@ public interface Dog {
      * @return the direction
      */
     Direction getDirection();
+
+    /**
+     * Changes the direction of the dog.
+     * @param goose
+     */
+    void refreshDirection(Goose goose);
+
+    /**
+     * Resets the dog's logics.
+     */
+    void reset();
+
+    /**
+     * Returns the visible area of the dog.
+     * @return a collection of positions
+     */
+    List<Position> getVisibleArea();
+
+    /**
+     * Refreshes the direction of the dog.
+     */
+    void refreshState();
+
+    /**
+     * Returns the current state of the dog.
+     * @return the state
+     */
+    State getState();
 }

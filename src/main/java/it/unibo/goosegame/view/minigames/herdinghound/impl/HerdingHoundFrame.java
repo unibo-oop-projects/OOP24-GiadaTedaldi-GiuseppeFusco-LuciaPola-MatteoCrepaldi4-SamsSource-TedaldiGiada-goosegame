@@ -1,13 +1,16 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
+import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
+import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
 import it.unibo.goosegame.view.general.GameMenuPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -40,8 +43,8 @@ public class HerdingHoundFrame extends JFrame {
     }
 
     private void startGame() {
-        final HerdingHoundModelImpl model = new HerdingHoundModelImpl(GRID_SIZE);
-        final HerdingHoundViewImpl view = new HerdingHoundViewImpl();
+        final HerdingHoundModel model = new HerdingHoundModelImpl(GRID_SIZE);
+        final HerdingHoundView view = new HerdingHoundViewImpl();
         final RightPanelImpl rightPanel = new RightPanelImpl();
         final HerdingHoundController controller = new HerdingHoundController(model, view, this, rightPanel);
         view.setController(controller);
@@ -53,7 +56,7 @@ public class HerdingHoundFrame extends JFrame {
 
         getContentPane().removeAll();
         add(leftPanel, BorderLayout.WEST);
-        add(view, BorderLayout.CENTER);
+        add((Component) view, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
         revalidate();
         repaint();

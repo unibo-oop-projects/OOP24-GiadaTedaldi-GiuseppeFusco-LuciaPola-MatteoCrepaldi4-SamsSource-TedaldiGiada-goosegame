@@ -1,6 +1,9 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Goose;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Box;
 import it.unibo.goosegame.utilities.Position;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +17,9 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
     private static final int START_Y = 0;
     private static final long TIME_LIMIT_MS = 60_000;
 
-    private final GooseImpl goose;
-    private final DogImpl dog;
-    private final BoxImpl box;
+    private final Goose goose;
+    private final Dog dog;
+    private final Box box;
     private final int gridSize;
     private long startTime;
     private boolean started;
@@ -58,7 +61,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * @return the goose instance
      */
     @Override
-    public GooseImpl getGoose() {
+    public Goose getGoose() {
         return this.goose;
     }
 
@@ -67,7 +70,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * @return the dog instance
      */
     @Override
-    public DogImpl getDog() {
+    public Dog getDog() {
         return this.dog;
     }
 
@@ -76,7 +79,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      * @return the box instance
      */
     @Override
-    public BoxImpl getBox() {
+    public Box getBox() {
         return this.box;
     }
 
@@ -165,7 +168,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
     }
 
     private boolean hasLost() {
-        return dog.getState() == DogImpl.State.AWAKE && getVisible().contains(goose.getCoord());
+        return dog.getState() == Dog.State.AWAKE && getVisible().contains(goose.getCoord());
     }
 
     /**

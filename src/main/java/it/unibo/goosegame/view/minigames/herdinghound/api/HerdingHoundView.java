@@ -1,6 +1,10 @@
 package it.unibo.goosegame.view.minigames.herdinghound.api;
 
+import java.awt.event.KeyAdapter;
+
 import javax.swing.JFrame;
+
+import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
 
 /**
  * API for the Herding Hound minigame view.
@@ -36,4 +40,28 @@ public interface HerdingHoundView {
      * @param hasWon true if the player has won
      */
     void showGameOverPanel(JFrame frame, boolean hasWon);
+
+    /**
+     * Adds a key listener to the view.
+     * @param keyAdapter
+     */
+    void addKeyListener(KeyAdapter keyAdapter);
+
+    /**
+     * Sets the view focusable.
+     * @param b
+     */
+    void setFocusable(boolean b);
+
+    /**
+     * Requests focus in the window.
+     * @return true if the focus was successfully requested
+     */
+    boolean requestFocusInWindow();
+
+    /**
+     * Sets the controller.
+     * @param controller
+     */
+    void setController(HerdingHoundController controller);
 }

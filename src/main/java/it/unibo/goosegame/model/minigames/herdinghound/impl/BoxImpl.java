@@ -1,6 +1,7 @@
 package it.unibo.goosegame.model.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.Box;
+import it.unibo.goosegame.model.minigames.herdinghound.api.Dog;
 import it.unibo.goosegame.utilities.Position;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public final class BoxImpl implements Box {
      * @param gridSize the size of the grid
      * @param dog the dog instance
      */
-    public BoxImpl(final int gridSize, final DogImpl dog) {
+    public BoxImpl(final int gridSize, final Dog dog) {
         this.gridSize = gridSize;
         this.boxDistance = BORDER_MARGIN_DIVISOR;
         this.random = new Random();
