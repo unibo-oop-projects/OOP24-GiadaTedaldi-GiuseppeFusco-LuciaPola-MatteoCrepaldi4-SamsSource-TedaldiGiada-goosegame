@@ -40,9 +40,7 @@ public class HangmanMenu extends MinigameMenuImpl {
             The player has a maximum of 5 incorrect guesses(lives):
             If the player exhausts all their lives without guessing the word correctly, they lose.
             If the player correctly identifies all the letters in the word before running out of lives, they win.
-            """, 
-           null
-
+            """
         );
         initialize();
     }

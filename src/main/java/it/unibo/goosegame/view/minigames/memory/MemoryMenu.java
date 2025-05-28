@@ -20,8 +20,7 @@ public class MemoryMenu extends MinigameMenuImpl {
             "Welcome to Memory Game\n"
             + "Here's some instruction to play:\n"
             + "-Find the couples beyond the cards\n"
-            + "-Find them all and you win\n",
-            null
+            + "-Find them all and you win\n"
         );
         initialize();
     }

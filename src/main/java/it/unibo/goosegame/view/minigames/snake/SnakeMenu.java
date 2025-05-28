@@ -22,8 +22,7 @@ public class SnakeMenu extends MinigameMenuImpl {
             + "Here's some instruction to play:\n"
             + "-Move the snake using < > ^ v buttons\n"
             + "-eat 15 apples and you win\n"
-            + "-hit the walls and you lose",
-            null
+            + "-hit the walls and you lose"
         );
         initialize();
     }
