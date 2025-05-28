@@ -158,6 +158,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     /**
      * {@inheritDoc }
      */
+    @Override
     public void dispose() {
         super.dispose();
     }

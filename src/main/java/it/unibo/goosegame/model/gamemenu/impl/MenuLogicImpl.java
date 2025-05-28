@@ -45,11 +45,7 @@ public class MenuLogicImpl implements MenuLogic {
             .filter(p -> p != null && p.getName() != null && !p.getName().isBlank())
             .count();
         if (validPlayers < 2) {
-<<<<<<< HEAD
-            JOptionPane.showMessageDialog(view, "Enter at least two valid names.");
-=======
-            JOptionPane.showMessageDialog(null, "Inserisci almeno 2 nomi validi.");
->>>>>>> Tedaldi
+            JOptionPane.showMessageDialog(null, "Please enter at least two valid names");
             return;
         }
         view.dispose();
@@ -64,13 +60,9 @@ public class MenuLogicImpl implements MenuLogic {
         final String playerName = view.getPlayerName();
         if (!playerName.isBlank()) {
             if (players.size() == MAX_PLAYERS) {
-<<<<<<< HEAD
-               JOptionPane.showMessageDialog(view, "Maximum Players Reached.");
-            } else if (playerName.length() > 15) {
-                JOptionPane.showMessageDialog(view, "Maximum number of characters: 15");
-=======
                JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
->>>>>>> Tedaldi
+            } else if (playerName.length() > 15) {
+               JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
             } else if (players.stream().noneMatch(p -> p.getName().equalsIgnoreCase(playerName))) {
                 players.add(new PlayerImpl(playerName, playerCount));
                 playerCount++;
