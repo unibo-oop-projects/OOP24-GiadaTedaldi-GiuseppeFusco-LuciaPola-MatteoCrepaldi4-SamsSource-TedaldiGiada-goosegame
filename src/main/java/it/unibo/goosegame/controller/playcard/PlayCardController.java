@@ -3,7 +3,7 @@ package it.unibo.goosegame.controller.playcard;
 import it.unibo.goosegame.model.playcard.impl.PlayCardModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.utilities.Player;
+import it.unibo.goosegame.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
