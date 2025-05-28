@@ -1,5 +1,7 @@
 package it.unibo.goosegame.view.minigames.rockpaperscissors;
 
+import javax.swing.SwingUtilities;
+
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
@@ -46,4 +48,11 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
             controller.startGame();
        });
     }
+    
+  public static void main(final String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      final RockPaperScissorsMenu menu = new RockPaperScissorsMenu();
+      menu.initializeView();
+    });
+}
 }
