@@ -1,8 +1,8 @@
 package it.unibo.goosegame.view.playcard.impl;
 
 import it.unibo.goosegame.controller.playcard.PlayCardController;
+import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.utilities.Player;
 import it.unibo.goosegame.view.playcard.api.PlayerCardView;
 import it.unibo.goosegame.view.general.CardPanelView;
 
