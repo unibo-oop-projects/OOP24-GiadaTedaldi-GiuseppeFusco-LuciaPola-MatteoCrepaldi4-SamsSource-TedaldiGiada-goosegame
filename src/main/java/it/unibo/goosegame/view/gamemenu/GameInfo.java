@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
+import it.unibo.goosegame.view.gamemenu.api.GameMenuInterface;
 
 /**
  * The class implements the game information window.
@@ -40,7 +40,7 @@ public class GameInfo extends JPanel {
 
     @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED", 
         justification = "menuView is transient because it represents a view and should not be serialized")
-    private final transient GameMenu menuView;
+    private final transient GameMenuInterface menuView;
     private final transient Image background;
     private final ImageIcon imageButton;
 
@@ -51,7 +51,7 @@ public class GameInfo extends JPanel {
      * @param menu The reference to the main menu to switch views.
      */
     @SuppressFBWarnings(value =  "EI2", justification = "Direct reference to the view is intentional in MVC pattern")
-    public GameInfo(final GameMenu menu) {
+    public GameInfo(final GameMenuInterface menu) {
         this.menuView = Objects.requireNonNull(menu);
         this.background = new ImageIcon(GameInfo.class.getResource("/ImmagineMenu.png")).getImage();
         this.imageButton = new ImageIcon(GameInfo.class.getResource("/torna.png"));
