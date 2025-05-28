@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissorsView;
 
 /**
@@ -173,9 +174,12 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
     }
 
     /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
     public void dispose() {
         super.dispose();
     }

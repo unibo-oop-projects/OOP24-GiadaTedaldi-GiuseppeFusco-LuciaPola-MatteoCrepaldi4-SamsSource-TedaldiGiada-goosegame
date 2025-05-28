@@ -37,7 +37,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     private static final int MARGIN = 10;
     private static final int BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 110;
-    private static final int ICON_SIZE = 25;
+    private static final int ICON_SIZE = 35;
     private static final int FONT_SIZE = 14;
     private static final int COLUMN = 15;
     private static final int COLOR = 240;
@@ -86,7 +86,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * @return return mainPanel
+     * @return return mainPanel.
      */
     private JPanel createMenuPanel() {
         final JPanel panel = new JPanel(null) {
@@ -104,7 +104,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * @return return centerPanel
+     * @return return centerPanel.
      */
     private JPanel createCenterPanel() {
         final JPanel centerPanel = new JPanel(new GridBagLayout()); 
@@ -128,8 +128,9 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         start.addActionListener(e -> logic.startGame());
         return centerPanel;
     }
+
     /**
-     * @return return bottomPanel
+     * @return return bottomPanel.
      */
     private JPanel createBottomPanel() {
         final JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -154,8 +155,9 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         instruction.addActionListener(e -> logic.showInstructions());
         return bottomPanel;
     } 
+
     /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     public final JButton createButtonIcon(final ImageIcon image, final int w, final int h) {
@@ -179,6 +181,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         });
         return button;
     }
+
     /**
     * {@inheritDoc}
     */
@@ -186,6 +189,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public void showInstructions() {
         cardLayout.show(mainPanel, "info");
     }
+
     /**
     * {@inheritDoc}
     */
@@ -193,6 +197,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public void showMenu() {
         cardLayout.show(mainPanel, "menu");
     }
+
     /**
     * {@inheritDoc}
     */
@@ -200,6 +205,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public String getPlayerName() {
         return playerNameField.getText();
     }
+
     /**
     * {@inheritDoc}
     */
@@ -207,6 +213,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public void updatePlayerField() {
         playerNameField.setText("");
     }
+
     /**
     * {@inheritDoc}
     */
@@ -216,8 +223,11 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
     @Override
     public void dispose() {
         super.dispose();
@@ -252,8 +262,8 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * @param c The component to update
-     * @param font The font to apply
+     * @param c The component to update.
+     * @param font The font to apply.
      */
     private void scaleFontRecursively(final Component c, final Font font) {
         c.setFont(font);

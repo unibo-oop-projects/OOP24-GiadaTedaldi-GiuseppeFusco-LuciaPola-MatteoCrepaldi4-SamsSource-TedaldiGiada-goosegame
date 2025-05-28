@@ -25,9 +25,6 @@ import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
  * Extends the abstract class MinigameMenuImpl.
  */
 public class HangmanMenu extends MinigameMenuImpl {
-    private transient HangmanView view;
-    private transient HangmanModel model;
-    private transient HangmanController controller;
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(HangmanMenu.class.getName());
     /**
@@ -46,9 +43,7 @@ public class HangmanMenu extends MinigameMenuImpl {
             The player has a maximum of 5 incorrect guesses(lives):
             If the player exhausts all their lives without guessing the word correctly, they lose.
             If the player correctly identifies all the letters in the word before running out of lives, they win.
-            """, 
-           null
-
+            """
         );
         initialize();
     }
@@ -83,10 +78,10 @@ public class HangmanMenu extends MinigameMenuImpl {
      * Initialize view.
      */
     private void initialize() {
-        view = new HangmanViewImpl();
+        final HangmanView view = new HangmanViewImpl();
         view.initializeView();
-        model = new HangmanModelImpl(loadWords().toArray(new String[0]));
-        controller = new HangmanControllerImpl(view, model, this);
+        final HangmanModel model = new HangmanModelImpl(loadWords().toArray(new String[0]));
+        final HangmanController controller = new HangmanControllerImpl(view, model, this);
         view.setController(controller);
         getStartButton().addActionListener(e -> {
             controller.startGame();

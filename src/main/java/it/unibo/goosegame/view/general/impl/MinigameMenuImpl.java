@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -28,7 +27,7 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
     private static final int WINDOW_HEIGHT = 400;
     private static final int BUTTON_WIDTH = 130;
     private static final int BUTTON_HEIGHT = 110;
-    private static final int ICON_SIZE = 25;
+    private static final int ICON_SIZE = 35;
     private static final long serialVersionUID = 1L;
     private final JPanel mainPanel;
     private final Image background;
@@ -52,12 +51,12 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
         value = "ConstructorCallsOverridableMethod", 
         justification = "createMainPanel is not overridden; this usage is safe in this context.")
     public MinigameMenuImpl(final String imgPath, final String title, 
-            final String infoMsg, final ActionListener al) {
+            final String infoMsg) {
         super(title);
         background = new ImageIcon(MinigameMenuImpl.class.getResource(imgPath)).getImage();
         this.infoMsg = infoMsg;
 
-        mainPanel = createMainPanel(al);
+        mainPanel = createMainPanel();
         super.setContentPane(mainPanel);
     }
 
@@ -94,7 +93,7 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
      * @param al the Actionerlistener
      * @return mainPanel
      */
-    private JPanel createMainPanel(final ActionListener al) {
+    private JPanel createMainPanel() {
         final JPanel panel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(final Graphics g) {
@@ -106,7 +105,6 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
 
         startButton = createButtonIcon(startIcon, BUTTON_WIDTH, BUTTON_HEIGHT);
         infoButton = createButtonIcon(infoIcon, ICON_SIZE, ICON_SIZE);
-        startButton.addActionListener(al);
         infoButton.addActionListener(e -> JOptionPane.showInternalMessageDialog(null, infoMsg));
 
         final JPanel centerPanel = new JPanel(new GridBagLayout());

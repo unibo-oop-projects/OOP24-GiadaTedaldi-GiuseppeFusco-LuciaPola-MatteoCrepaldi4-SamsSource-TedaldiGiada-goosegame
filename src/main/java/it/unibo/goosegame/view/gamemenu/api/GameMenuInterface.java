@@ -18,7 +18,7 @@ public interface GameMenuInterface {
      */
     void showMenu();
      /**
-     * @return the player's name
+     * @return the player's name.
      */
     String getPlayerName();
     /**
@@ -26,7 +26,7 @@ public interface GameMenuInterface {
      */
     void updatePlayerField();
     /**
-     * @param text The text to set in the player name label
+     * @param text The text to set in the player name label.
      */
     void updatePlayerLabel(String text);
     /**
@@ -34,10 +34,10 @@ public interface GameMenuInterface {
      */
     void dispose();
     /**
-     * @param image The icon to be used on the button
-     * @param w Width of the button
-     * @param h Height of the button
-     * @return The created button
+     * @param image The icon to be used on the button.
+     * @param w Width of the button.
+     * @param h Height of the button.
+     * @return The created button.
      */
-    JButton createButtonIcon(final ImageIcon image, final int w, final int h);
+    JButton createButtonIcon(ImageIcon image, int w, int h);
 }

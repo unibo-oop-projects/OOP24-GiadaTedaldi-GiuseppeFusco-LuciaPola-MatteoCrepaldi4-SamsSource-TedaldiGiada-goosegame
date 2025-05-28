@@ -33,8 +33,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
                 --> Rock beats Scissors
                 --> Paper beats Rock
                 --> Scissors beats Paper
-            """,
-            null
+            """
         );
         initialize();
     }
