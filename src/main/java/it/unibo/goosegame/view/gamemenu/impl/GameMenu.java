@@ -155,11 +155,9 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         return bottomPanel;
     } 
     /**
-     * @param image The icon to be used on the button
-     * @param w Width of the button
-     * @param h Height of the button
-     * @return The created button
+     * {@inheritDoc }
      */
+    @Override
     public final JButton createButtonIcon(final ImageIcon image, final int w, final int h) {
         final JButton button = new JButton();
         button.setPreferredSize(new Dimension(w, h));
@@ -215,6 +213,14 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     @Override
     public void updatePlayerLabel(final String text) {
         playerNameLabel.setText(text);
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     private void scaleComponents() {

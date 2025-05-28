@@ -80,6 +80,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
         final JPanel rightPanel = createImagePanel();
         panel.add(mainPanel, BorderLayout.CENTER);
         panel.add(rightPanel, BorderLayout.EAST);
+        super.setVisible(true);
     }
     /**
      * {@inheritDoc}
@@ -152,6 +153,13 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
                 button.setEnabled(true);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    public void dispose() {
+        super.dispose();
     }
 
     private JPanel createMainPanel() {

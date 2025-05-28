@@ -12,9 +12,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
+import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
+import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
 import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 
 /**
@@ -22,6 +25,9 @@ import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
  * Extends the abstract class MinigameMenuImpl.
  */
 public class HangmanMenu extends MinigameMenuImpl {
+    private transient HangmanView view;
+    private transient HangmanModel model;
+    private transient HangmanController controller;
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(HangmanMenu.class.getName());
     /**
@@ -77,13 +83,12 @@ public class HangmanMenu extends MinigameMenuImpl {
      * Initialize view.
      */
     private void initialize() {
-        final HangmanViewImpl view = new HangmanViewImpl();
+        view = new HangmanViewImpl();
         view.initializeView();
-        final HangmanModelImpl model = new HangmanModelImpl(loadWords().toArray(new String[0]));
-        final HangmanControllerImpl controller = new HangmanControllerImpl(view, model, this);
+        model = new HangmanModelImpl(loadWords().toArray(new String[0]));
+        controller = new HangmanControllerImpl(view, model, this);
         view.setController(controller);
         getStartButton().addActionListener(e -> {
-            view.setVisible(true);
             controller.startGame();
             dispose();
         });

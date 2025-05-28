@@ -172,6 +172,14 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
         scissors.setEnabled(true);
     }
 
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
     private JButton createButtonIcon(final ImageIcon image, final int w, final int h) {
         final JButton button = new JButton();
         button.setPreferredSize(new Dimension(w, h));

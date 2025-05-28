@@ -11,7 +11,7 @@ import it.unibo.goosegame.controller.gameboard.impl.GameBoardImpl;
 import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.player.impl.PlayerImpl;
-import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
+import it.unibo.goosegame.view.gamemenu.api.GameMenuInterface;
 /**
  * The MenuLogicImpl class implements the logic behind the game menu, 
  * handling the player management (adding players, checking the maximum number of players).
@@ -23,7 +23,7 @@ public class MenuLogicImpl implements MenuLogic {
      * Reference to the GameMenu view.
      * This is assumed to be owned by this class and not modified externally after being passed in the constructor.
     */
-    private final GameMenu view;
+    private final GameMenuInterface view;
     private final List<Player> players;
     private int playerCount;
 
@@ -31,7 +31,7 @@ public class MenuLogicImpl implements MenuLogic {
      * @param view the GameMenu UI associated with this logic
      */
     @SuppressFBWarnings(value = "EI2", justification = "Direct reference to the view is intentional in MVC pattern.")
-    public MenuLogicImpl(final GameMenu view) {
+    public MenuLogicImpl(final GameMenuInterface view) {
         this.players = new ArrayList<>();
         this.view = Objects.requireNonNull(view);
     }
@@ -45,7 +45,7 @@ public class MenuLogicImpl implements MenuLogic {
             .filter(p -> p != null && p.getName() != null && !p.getName().isBlank())
             .count();
         if (validPlayers < 2) {
-            JOptionPane.showMessageDialog(view, "Inserisci almeno 2 nomi validi.");
+            JOptionPane.showMessageDialog(null, "Inserisci almeno 2 nomi validi.");
             return;
         }
         view.dispose();
@@ -60,13 +60,13 @@ public class MenuLogicImpl implements MenuLogic {
         final String playerName = view.getPlayerName();
         if (!playerName.isBlank()) {
             if (players.size() == MAX_PLAYERS) {
-               JOptionPane.showMessageDialog(view, "Maximum Players Reached.");
+               JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
             } else if (players.stream().noneMatch(p -> p.getName().equalsIgnoreCase(playerName))) {
                 players.add(new PlayerImpl(playerName, playerCount));
                 playerCount++;
                 updatePlayerList();
             } else {
-                JOptionPane.showMessageDialog(view, "Player Name Already Existing.");
+                JOptionPane.showMessageDialog(null, "Player Name Already Existing.");
             }
             view.updatePlayerField();
         }

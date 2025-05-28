@@ -49,4 +49,8 @@ public interface RockPaperScissorsView {
      * Enable all the buttons.
      */
     void enableAllButtons();
+    /**
+     * Close window.
+     */
+    void dispose();
 }
