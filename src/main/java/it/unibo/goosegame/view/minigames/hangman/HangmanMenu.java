@@ -85,6 +85,7 @@ public class HangmanMenu extends MinigameMenuImpl {
         getStartButton().addActionListener(e -> {
             view.setVisible(true);
             controller.startGame();
+            dispose();
         });
     }
 }
