@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
-import it.unibo.goosegame.view.minigames.hangman.HangmanMenu;
 import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
 /**
  * This class manages the interaction between the Hangman model and view.
@@ -18,7 +17,6 @@ public class HangmanControllerImpl implements HangmanController {
      @SuppressFBWarnings(value = "EI2", justification = "Reference to view is safe and immutable in MVC pattern")
     private final transient HangmanView view;
     private final transient HangmanModel model;
-    private final transient HangmanMenu menu;
 
     /**
      * @param view the game view
@@ -29,10 +27,9 @@ public class HangmanControllerImpl implements HangmanController {
         value = "EI2",
         justification = "The menu is intentionally shared for interaction between view and controller."
     )
-    public HangmanControllerImpl(final HangmanView view, final HangmanModel model, final HangmanMenu menu) {
+    public HangmanControllerImpl(final HangmanView view, final HangmanModel model) {
         this.model = Objects.requireNonNull(model);
         this.view = Objects.requireNonNull(view);
-        this.menu = Objects.requireNonNull(menu);
         init();
     }
 
@@ -58,7 +55,6 @@ public class HangmanControllerImpl implements HangmanController {
                                                     YOU LOSE...
                                                     The word is \t""" + model.getSelectedWord());
             }
-            menu.dispose();
             view.dispose();
         }
     }

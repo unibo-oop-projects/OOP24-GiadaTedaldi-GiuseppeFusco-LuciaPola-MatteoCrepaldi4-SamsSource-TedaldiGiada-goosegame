@@ -81,7 +81,7 @@ public class HangmanMenu extends MinigameMenuImpl {
         final HangmanView view = new HangmanViewImpl();
         view.initializeView();
         final HangmanModel model = new HangmanModelImpl(loadWords().toArray(new String[0]));
-        final HangmanController controller = new HangmanControllerImpl(view, model, this);
+        final HangmanController controller = new HangmanControllerImpl(view, model);
         view.setController(controller);
         getStartButton().addActionListener(e -> {
             controller.startGame();

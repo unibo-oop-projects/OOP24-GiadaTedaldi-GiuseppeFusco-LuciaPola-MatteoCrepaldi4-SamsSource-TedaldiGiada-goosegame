@@ -43,7 +43,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
       model = new RockPaperScissorsModelImpl();
       getStartButton().addActionListener(e -> {
             view = new RockPaperScissorsViewImpl();
-            controller = new RockPaperScissorsControllerImpl(model, view, this);
+            controller = new RockPaperScissorsControllerImpl(model, view);
             view.initializeView();
             controller.startGame();
             dispose();

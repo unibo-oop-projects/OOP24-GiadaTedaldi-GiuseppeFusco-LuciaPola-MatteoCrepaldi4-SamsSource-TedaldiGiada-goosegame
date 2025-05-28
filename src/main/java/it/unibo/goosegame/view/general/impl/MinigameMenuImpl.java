@@ -45,7 +45,6 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
      * @param imgPath the path of the background image.
      * @param title the title of the menu window.
      * @param infoMsg the information message displayed in the info section.
-     * @param al the listener to start the game.
      */
     @SuppressFBWarnings(
         value = "ConstructorCallsOverridableMethod", 
