@@ -37,7 +37,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     private static final int MARGIN = 10;
     private static final int BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 110;
-    private static final int ICON_SIZE = 25;
+    private static final int ICON_SIZE = 35;
     private static final int FONT_SIZE = 14;
     private static final int COLUMN = 15;
     private static final int COLOR = 240;
