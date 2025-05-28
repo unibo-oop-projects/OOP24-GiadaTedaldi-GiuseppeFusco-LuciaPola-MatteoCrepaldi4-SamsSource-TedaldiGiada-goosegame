@@ -109,34 +109,46 @@ public class TrisModelImpl implements TrisModel {
         }
 
         // Try to win
-        for (final Position pos: availablePos()) {
-            this.grid.put(pos, Player.PC);
-            if (checkWin()) {
-                this.currentPlayer = Player.HUMAN;
-                return;
-            }
-            this.grid.remove(pos);
+        final Position winningPos = this.getWinningMove(Player.PC);
+        if (winningPos != null) {
+            this.grid.put(winningPos, Player.PC);
+            this.currentPlayer = Player.HUMAN;
+            return;
         }
 
         // Try to block the human 
-        for (final Position pos: availablePos()) {
-            this.grid.put(pos, Player.HUMAN);
-            if (checkWin()) {
-                this.grid.remove(pos);
-                this.grid.put(pos, Player.PC);
-                this.currentPlayer = Player.HUMAN;
-                return;
-            }
-            this.grid.remove(pos);
+        final Position blockingPos = this.getWinningMove(Player.HUMAN);
+        if (blockingPos != null) {
+            this.grid.put(blockingPos, Player.PC);
+            this.currentPlayer = Player.HUMAN;
+            return;
         }
 
         // Make a random move 
         final List<Position> avPos = availablePos();
         if (!avPos.isEmpty()) {
-            final Position random = avPos.get(this.random.nextInt(avPos.size()));
-            this.grid.put(random, Player.PC);
+            final Position randomPos = avPos.get(this.random.nextInt(avPos.size()));
+            this.grid.put(randomPos, Player.PC);
             this.currentPlayer = Player.HUMAN;
         }
+    }
+
+    /**
+     * Finds a winning move for the specified player, if any.
+     * 
+     * @param player the player to check for a winning move
+     * @return the position where the player can win with the next move, or null if no winning move exists
+     */
+    private Position getWinningMove(final Player player) {
+        for (final Position pos: availablePos()) {
+            this.grid.put(pos, player);
+            final boolean haswon = this.checkWin();
+            this.grid.remove(pos);
+            if (haswon) {
+                return pos;
+            }
+        }
+        return null;
     }
 
     /**

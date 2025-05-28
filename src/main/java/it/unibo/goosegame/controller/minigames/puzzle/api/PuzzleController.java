@@ -9,10 +9,10 @@ import it.unibo.goosegame.utilities.Position;
  */
 public interface PuzzleController {
     /**
-     * Initilizes the controller by linking it to the view.
+     * Initilizes the controller by linking it to the view and starts the game.
      * This method must be called after constructing the controller and the view.
      */
-    void init();
+    void startGame();
 
     /**
      * Attempts to move the tile at the given position. 
