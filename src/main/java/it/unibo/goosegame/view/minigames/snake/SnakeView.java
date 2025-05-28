@@ -15,7 +15,7 @@ import java.awt.Graphics;
  * The SnakeView class represents the view of the snake game.
  * It extends JPanel and is responsible for rendering the game state.
  */
-public class SnakeView  extends JFrame {
+public class SnakeView extends JFrame {
     private static final long serialVersionUID = 1L;
     private static final int INIT_HEIGHT = 400;
     private static final int INIT_WIDTH = 600;
