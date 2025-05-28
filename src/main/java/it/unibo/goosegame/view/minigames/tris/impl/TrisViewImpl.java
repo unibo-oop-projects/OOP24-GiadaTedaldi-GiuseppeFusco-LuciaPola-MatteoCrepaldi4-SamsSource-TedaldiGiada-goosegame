@@ -113,7 +113,7 @@ public class TrisViewImpl extends JFrame implements TrisView {
      */
     @Override
     public void endGame(final String result) {
-        JOptionPane.showMessageDialog(this, result + "\nThe windows will now close");
+        JOptionPane.showMessageDialog(this, result);
         this.dispose();
     }
 
