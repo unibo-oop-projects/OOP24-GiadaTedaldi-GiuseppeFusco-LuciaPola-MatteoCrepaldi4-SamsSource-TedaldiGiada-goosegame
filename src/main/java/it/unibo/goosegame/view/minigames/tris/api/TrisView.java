@@ -36,11 +36,11 @@ public interface TrisView {
     void disableButtons();
 
     /**
-     * Closes the game and shows the final result message.
+     * Shows the final result message and closes the.
      * 
      * @param result the final result message to display
      */
-    void closeGame(String result);
+    void endGame(String result);
 
     /**
      * Resets the board each round.

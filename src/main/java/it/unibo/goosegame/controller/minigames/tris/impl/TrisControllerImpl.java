@@ -2,13 +2,12 @@ package it.unibo.goosegame.controller.minigames.tris.impl;
 
 import javax.swing.Timer;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
-import it.unibo.goosegame.model.minigames.tris.impl.TrisModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.tris.api.TrisView;
-import it.unibo.goosegame.view.minigames.tris.impl.TrisViewImpl;
 
 /**
  * Implementation of the {@link TrisController} interface.
@@ -26,10 +25,13 @@ public class TrisControllerImpl implements TrisController {
     /**
      * Constructs a new instance of {@link TrisControllerImpl}.
      * 
+     * @param model TrisModel
+     * @param view TrisView
      */
-    public TrisControllerImpl() {
-        this.model = new TrisModelImpl();
-        this.view = new TrisViewImpl();
+    @SuppressFBWarnings(value = "EI2", justification = "model and view are used internally and not exposed")
+    public TrisControllerImpl(final TrisModel model, final TrisView view) {
+        this.model = model;
+        this.view = view;
         this.humanWins = 0;
         this.pcWins = 0;
     }
@@ -38,7 +40,7 @@ public class TrisControllerImpl implements TrisController {
      * {@inheritDoc}
      */
     @Override
-    public void init() {
+    public void startGame() {
         this.view.setController(this);
     }
 
@@ -122,7 +124,7 @@ public class TrisControllerImpl implements TrisController {
                 finalMsg.append("IT'S A DRAW!");
             }
             this.view.disableButtons();
-            this.view.closeGame(finalMsg.toString());
+            this.view.endGame(finalMsg.toString());
         } else {
             this.view.disableButtons();
             final Timer timer = new Timer(1000, e -> {

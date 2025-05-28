@@ -16,8 +16,7 @@ public class MemoryMenu extends MinigameMenuImpl {
         super(
             "/nomeImmagine.png", 
             "Memory", 
-            "informazioni di gioco da inserire",
-            null
+            "informazioni di gioco da inserire"
         );
         //getStartButton().addActionListener(e -> new MemoryController());
 

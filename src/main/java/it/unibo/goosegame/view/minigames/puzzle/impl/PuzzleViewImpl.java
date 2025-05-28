@@ -8,6 +8,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -44,6 +45,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      */
     public PuzzleViewImpl() {
         super();
+        SwingUtilities.invokeLater(this::configUI);
     }
 
     /**
@@ -51,8 +53,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      */
     @Override
     public final void setController(final PuzzleController controller) {
-        this.controller = controller;
-        SwingUtilities.invokeLater(this::configUI);
+        this.controller = Objects.requireNonNull(controller);
     }
 
     /**
@@ -73,9 +74,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
                 final int r = i;
                 final int c = j;
                 button.addActionListener(e -> {
-                    if (this.controller != null) {
-                        this.controller.clickHandler(new Position(r, c));
-                    }
+                    this.controller.clickHandler(new Position(r, c));
                 });
                 gridPanel.add(button);
             }
@@ -173,7 +172,6 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
     public final void endGame() {
         startButton.setEnabled(false);
         this.enableButtons(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.dispose();
     }
 

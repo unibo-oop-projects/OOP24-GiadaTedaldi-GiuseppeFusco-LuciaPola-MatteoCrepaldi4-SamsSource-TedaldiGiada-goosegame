@@ -112,8 +112,8 @@ public class TrisViewImpl extends JFrame implements TrisView {
      * {@inheritDoc}
      */
     @Override
-    public void closeGame(final String result) {
-        JOptionPane.showMessageDialog(this, result + "\nThe windows will now close");
+    public void endGame(final String result) {
+        JOptionPane.showMessageDialog(this, result);
         this.dispose();
     }
 
