@@ -18,7 +18,7 @@ public class TrisMenu extends MinigameMenuImpl {
     private transient TrisView view;
 
     /**
-     * Constructor for the PuzzleMenu class.
+     * Constructor for the TrisMenu class.
      */
     public TrisMenu() {
         super("/backgroundTris.png",
@@ -48,7 +48,7 @@ public class TrisMenu extends MinigameMenuImpl {
     }
 
     /**
-     *  Inizializes view.
+     *  Inizializes view and starts the game.
      */
     private void initialize() {
        getStartButton().addActionListener(e -> {
