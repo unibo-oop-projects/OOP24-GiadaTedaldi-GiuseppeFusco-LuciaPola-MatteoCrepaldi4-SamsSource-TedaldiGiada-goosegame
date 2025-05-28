@@ -28,6 +28,7 @@ public class MemoryMenu extends MinigameMenuImpl {
     private void initialize() {
         getStartButton().addActionListener(e -> {
             new MemoryController();
+            super.dispose();
         });
     }
 }

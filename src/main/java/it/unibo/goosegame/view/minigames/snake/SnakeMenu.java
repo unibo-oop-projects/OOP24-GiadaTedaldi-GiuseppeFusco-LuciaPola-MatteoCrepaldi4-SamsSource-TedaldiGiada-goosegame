@@ -30,7 +30,7 @@ public class SnakeMenu extends MinigameMenuImpl {
     private void initialize() {
         getStartButton().addActionListener(e -> {
             new SnakeController();
-            //super.dispose();
+            super.dispose();
         });
     }
     /*
