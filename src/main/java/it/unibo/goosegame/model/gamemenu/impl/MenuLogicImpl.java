@@ -65,6 +65,8 @@ public class MenuLogicImpl implements MenuLogic {
                 players.add(new PlayerImpl(playerName, playerCount));
                 playerCount++;
                 updatePlayerList();
+            } else if (playerName.length() > 15) {
+                JOptionPane.showMessageDialog(view, "Maximum number of characters: 15");
             } else {
                 JOptionPane.showMessageDialog(view, "Player Name Already Existing.");
             }
