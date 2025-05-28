@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
 import it.unibo.goosegame.model.gamemenu.impl.MenuLogicImpl;
 import it.unibo.goosegame.view.gamemenu.GameInfo;
 import it.unibo.goosegame.view.gamemenu.api.GameMenuInterface;
@@ -46,7 +47,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     private final ImageIcon icon = new ImageIcon(getClass().getResource("/i.png"));
     private final ImageIcon startImage = new ImageIcon(GameMenu.class.getResource("/play.png"));
     private final transient Image background = new ImageIcon(getClass().getResource("/ImmagineMenu.png")).getImage();
-    private transient MenuLogicImpl logic;
+    private transient MenuLogic logic;
     private JTextField playerNameField;
     private JLabel playerNameLabel;
     private JButton start, instruction;
