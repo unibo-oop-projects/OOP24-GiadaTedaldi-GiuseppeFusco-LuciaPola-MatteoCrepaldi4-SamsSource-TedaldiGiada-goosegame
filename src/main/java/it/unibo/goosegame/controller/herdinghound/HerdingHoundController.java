@@ -1,0 +1,209 @@
+package it.unibo.goosegame.controller.herdinghound;
+
+import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
+import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
+import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
+import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
+import it.unibo.goosegame.utilities.Position;
+
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * Controller for the Herding Hound minigame.
+ * Handles user input, game logic, and updates the view and right panel.
+ */
+public class HerdingHoundController {
+    private static final int DOG_ALERT_DELAY = 1_000;
+    private static final int DOG_OTHER_DELAY_BASE = 2_000;
+    private static final int DOG_OTHER_DELAY_RANDOM = 3;
+
+    private final HerdingHoundModel model;
+    private final HerdingHoundView view;
+    private final JFrame frame;
+    private final RightPanel rightPanel;
+    private Timer dogStateTimer;
+    private Timer gameTimer;
+    private final Random rnd = new Random();
+    private boolean spacePressed;
+    private boolean gameActive;
+
+    /**
+     * Constructs the controller, sets up listeners and connects model, view, and right panel.
+     * @param model the game model
+     * @param view the game view
+     * @param frame the main JFrame
+     * @param rightPanel the right panel
+     */
+    @SuppressFBWarnings(
+    value = "EI2",
+    justification = "Controller uses externally provided references to model, view, frame, and panel."
+    + "Assumes trusted injection without copying."
+        )
+    public HerdingHoundController(
+            final HerdingHoundModel model,
+            final HerdingHoundView view,
+            final JFrame frame,
+            final RightPanel rightPanel
+    ) {
+        this.model = model;
+        this.view = view;
+        this.frame = frame;
+        this.rightPanel = rightPanel;
+        setupKeyListener();
+    }
+
+    private void setupKeyListener() {
+        view.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(final KeyEvent e) {
+                if (!gameActive || view.isCountdownActive()) {
+                    return;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE && !spacePressed && !model.isOver()) {
+                    spacePressed = true;
+                    model.nextGooseMove();
+                    view.updateView();
+                    rightPanel.updatePanel();
+                    if (model.isOver()) {
+                        endGame();
+                    }
+                }
+            }
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    spacePressed = false;
+                }
+            }
+        });
+        view.setFocusable(true);
+        view.requestFocusInWindow();
+    }
+
+    /**
+     * Starts the game logic: enables input, starts dog state and game timers.
+     */
+    public void startGame() {
+        gameActive = true;
+        scheduleNextDogState(model.getDog().getState());
+        gameTimer = new Timer(1000, (final java.awt.event.ActionEvent e) -> {
+            view.updateView();
+            rightPanel.updatePanel();
+            if (model.getGameState() != GameState.ONGOING) {
+                endGame();
+            }
+        });
+        gameTimer.setInitialDelay(0);
+        gameTimer.start();
+    }
+
+    private void scheduleNextDogState(final State currentState) {
+        if (model.isOver()) {
+            return;
+        }
+        final int delay = (currentState == State.ALERT)
+                ? DOG_ALERT_DELAY
+                : DOG_OTHER_DELAY_BASE + rnd.nextInt(DOG_OTHER_DELAY_RANDOM) * 1_000;
+        if (dogStateTimer != null) {
+            dogStateTimer.stop();
+        }
+        dogStateTimer = new Timer(delay, (final java.awt.event.ActionEvent e) -> {
+            model.nextDogState();
+            view.updateView();
+            rightPanel.updatePanel();
+            if (model.isOver()) {
+                endGame();
+            } else {
+                scheduleNextDogState(model.getDog().getState());
+            }
+        });
+        dogStateTimer.setRepeats(false);
+        dogStateTimer.start();
+    }
+
+    private void endGame() {
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
+        if (dogStateTimer != null) {
+            dogStateTimer.stop();
+        }
+        final boolean hasWon = model.getGameState() == GameState.WON;
+        view.startBlinking(frame, hasWon); // blink before showing the end screen
+        view.setFocusable(false);
+    }
+
+    // --- GETTER per la View e il RightPanel ---
+
+    /**
+     * @return the grid size of the game
+     */
+    public int getGridSize() {
+        return model.getGrid();
+    }
+
+    /**
+     * @return the current position of the goose
+     */
+    public Position getGoosePosition() {
+        return model.getGoose().getCoord();
+    }
+
+    /**
+     * @return the current state of the dog
+     */
+    public State getDogState() {
+        return model.getDog().getState();
+    }
+
+    /**
+     * @return the area visible to the dog
+     */
+    public List<Position> getDogVisibleArea() {
+        return model.getDog().getVisibleArea();
+    }
+
+    /**
+     * @return the current position of the dog
+     */
+    public Position getDogPosition() {
+        return model.getDog().getCoord();
+    }
+
+    /**
+     * @return the list of visible cells
+     */
+    public List<Position> getVisibleCells() {
+        return model.getVisible();
+    }
+
+    /**
+     * @return the list of shadowed cells
+     */
+    public List<Position> getShadows() {
+        return model.getShadows();
+    }
+
+    /**
+     * @return the list of box positions
+     */
+    public List<Position> getBoxes() {
+        return model.getBoxes();
+    }
+
+    /**
+     * @return the remaining time in the game
+     */
+    public long getRemainingTime() {
+        return model.getRemainingTime();
+    }
+}
