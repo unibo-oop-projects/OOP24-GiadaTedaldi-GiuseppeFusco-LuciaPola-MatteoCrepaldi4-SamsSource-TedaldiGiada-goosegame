@@ -156,8 +156,11 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     }
 
     /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
     @Override
     public void dispose() {
         super.dispose();
