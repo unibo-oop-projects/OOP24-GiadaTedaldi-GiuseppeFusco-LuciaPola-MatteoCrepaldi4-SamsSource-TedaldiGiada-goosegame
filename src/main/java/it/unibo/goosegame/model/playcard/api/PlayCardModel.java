@@ -1,7 +1,7 @@
 package it.unibo.goosegame.model.playcard.api;
 
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.utilities.Player;
+import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 
 /**

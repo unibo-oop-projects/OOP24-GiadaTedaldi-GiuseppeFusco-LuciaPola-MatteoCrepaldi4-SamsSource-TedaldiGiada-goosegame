@@ -200,4 +200,9 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
     public List<Position> getBoxes() {
         return box.getBoxes();
     }
+
+    @Override
+    public String getName() {
+        return "Herding Hound";
+    }
 }

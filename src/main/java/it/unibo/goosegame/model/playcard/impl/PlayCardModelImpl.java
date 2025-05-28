@@ -1,7 +1,7 @@
 package it.unibo.goosegame.model.playcard.impl;
 
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.utilities.Player;
+import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import java.util.List;
 import java.util.Random;
@@ -53,7 +53,7 @@ public final class PlayCardModelImpl implements PlayCardModel {
         return card != null
         && (card.isBonus() || gameState != GameState.LOST)
         && (!card.isRemove() || card.isBonus())
-        && !currentPlayer.getSatchel().isFull()
+       // && !currentPlayer.getSatchel().isFull()
         && (card.isBonus() || card.isThrowable());
     }
 

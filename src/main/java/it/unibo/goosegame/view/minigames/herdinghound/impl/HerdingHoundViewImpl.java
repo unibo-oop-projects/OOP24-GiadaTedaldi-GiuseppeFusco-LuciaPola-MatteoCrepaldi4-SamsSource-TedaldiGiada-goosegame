@@ -2,7 +2,7 @@ package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
 import it.unibo.goosegame.utilities.Position;
-import it.unibo.goosegame.view.general.GameEndPanel;
+//import it.unibo.goosegame.view.general.GameEndPanel;
 import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
 import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
 
@@ -12,7 +12,7 @@ import javax.swing.Timer;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -247,9 +247,9 @@ public final class HerdingHoundViewImpl extends JPanel implements HerdingHoundVi
 
     @Override
     public void showGameOverPanel(final JFrame frame, final boolean hasWon) {
-        final String message = hasWon ? "You Won!" : "You Lost!";
+        //final String message = hasWon ? "You Won!" : "You Lost!";
         frame.getContentPane().removeAll();
-        frame.getContentPane().add(new GameEndPanel(message, frame::dispose, "HerdingHound", hasWon), BorderLayout.CENTER);
+        //frame.getContentPane().add(new GameEndPanel(message, frame::dispose, "HerdingHound", hasWon), BorderLayout.CENTER);
         frame.revalidate();
         frame.repaint();
     }

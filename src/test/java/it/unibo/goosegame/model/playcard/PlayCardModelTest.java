@@ -4,7 +4,9 @@ import it.unibo.goosegame.model.playcard.api.PlayCardModel;
 import it.unibo.goosegame.model.playcard.impl.PlayCardModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.utilities.Player;
+import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.model.player.impl.PlayerImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +26,7 @@ final class PlayCardModelTest {
     @BeforeEach
     void setUp() {
         model = new PlayCardModelImpl();
-        player = new Player("TestPlayer");
+        player = new PlayerImpl("TestPlayer", 4);
     }
 
     @Test

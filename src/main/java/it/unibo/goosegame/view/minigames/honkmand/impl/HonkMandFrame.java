@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.minigames.honkmand.impl;
 
-import it.unibo.goosegame.view.general.GameMenuPanel;
+//import it.unibo.goosegame.view.general.GameMenuPanel;
 
 import javax.swing.JFrame;
 
@@ -29,19 +29,19 @@ public class HonkMandFrame extends JFrame {
         super.setLocationRelativeTo(null);
         super.setResizable(true);
 
-        final GameMenuPanel menuPanel = new GameMenuPanel("HonkMand", "Start Game", this::startGame);
-        super.add(menuPanel, BorderLayout.CENTER);
+        //final GameMenuPanel menuPanel = new GameMenuPanel("HonkMand", "Start Game", this::startGame);
+        //super.add(menuPanel, BorderLayout.CENTER);
     }
 
-    private void startGame() {
+    /*private void startGame() {
         getContentPane().removeAll();
-        final it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView view = new HonkMandViewImpl();
-        view.setFrameRef(this);
-        add((javax.swing.JPanel) view, BorderLayout.CENTER);
+        //final it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView view = new HonkMandViewImpl();
+        //view.setFrameRef(this);
+        //add((javax.swing.JPanel) view, BorderLayout.CENTER);
         revalidate();
         repaint();
         final it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel model =
          new it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl();
-        new it.unibo.goosegame.controller.honkmand.HonkMandController(model, view);
-    }
+        //new it.unibo.goosegame.controller.honkmand.HonkMandController(model, view);
+    }*/
 }
