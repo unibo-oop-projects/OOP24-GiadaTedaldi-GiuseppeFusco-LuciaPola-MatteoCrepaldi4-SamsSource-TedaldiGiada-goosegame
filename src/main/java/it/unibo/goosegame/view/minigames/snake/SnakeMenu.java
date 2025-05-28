@@ -1,11 +1,7 @@
 package it.unibo.goosegame.view.minigames.snake;
 
-import java.awt.event.ActionListener;
-
+import it.unibo.goosegame.controller.minigames.snake.SnakeController;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
-
-//import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
-//import it.unibo.goosegame.view.MinigamesMenu.AbstractMinigameMenu;
 
 /**
  * The SnakeMenu class represents the menu for the snake game.
@@ -14,31 +10,41 @@ import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 public class SnakeMenu extends MinigameMenuImpl {
 
     private static final long serialVersionUID = 1L;
+
     /**
-     * Constructor.
-     * @param imgPath the path of the image background
-     * @param title the title of the frame
-     * @param infoMsg the message to show in the instructions
-     * @param al the action listener for the start button
+     * Constructor for the SnakeMenu class.
      */
-    public SnakeMenu(final String imgPath, final String title, 
-        final String infoMsg, final ActionListener al) {
-        super(imgPath, title, infoMsg, al);
-        /*
-        SnakeModelImpl sm = new SnakeModelImpl();
-        super(imgPath, sm.getName(), infoMsg, al);
-
-        --Hypotetical main for Snake:
-
-         ActionListener al = e -> {
-            SnakeController.startGame();
-        };
-        new SnakeMenu("resources/backgroundSnake.png", "Snake Game", "Welcome to Snake Game!\\n" + 
-                        "Here's some instruction to play:\\n" + //
-                        "-Move the snake using < > ^ v buttons\\n" + //
-                        "-eat 15 apples and you win\\n" + //
-                        "-hit the walls and you lose", al);
-         */
+    public SnakeMenu() {
+        super(
+            "/backgroundSnake.png", 
+            "Snake Game", 
+            "Welcome to Snake Game\n"
+            + "Here's some instruction to play:\n"
+            + "-Move the snake using < > ^ v buttons\n"
+            + "-eat 15 apples and you win\n"
+            + "-hit the walls and you lose",
+            null
+        );
+        initialize();
     }
 
+    private void initialize() {
+        getStartButton().addActionListener(e -> {
+            new SnakeController();
+            //super.dispose();
+        });
+    }
+    /*
+     * public GameState initialize() {
+        getStartButton().addActionListener(e -> {
+            SnakeController c = new SnakeController(() -> {
+                super.dispose();
+            });
+            this.gameState = c.getGameState();
+            super.setVisible(false);
+        });
+
+        return gameState;
+    }
+    */
 }

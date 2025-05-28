@@ -1,5 +1,6 @@
 package it.unibo.goosegame.view.minigames.memory;
 
+import it.unibo.goosegame.controller.minigames.memory.MemoryController;
 //import it.unibo.goosegame.controller.minigames.memory.MemoryController;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
@@ -14,22 +15,20 @@ public class MemoryMenu extends MinigameMenuImpl {
      */
     public MemoryMenu() {
         super(
-            "/nomeImmagine.png", 
-            "Memory", 
-            "informazioni di gioco da inserire",
+            "/backgroundMemory.png", 
+            "Memory Game", 
+            "Welcome to Memory Game\n"
+            + "Here's some instruction to play:\n"
+            + "-Find the couples beyond the cards\n"
+            + "-Find them all and you win\n",
             null
         );
-        //getStartButton().addActionListener(e -> new MemoryController());
+        initialize();
+    }
 
-        /*
-         --Hypothetical Memory menu:
-        ActionListener al = e -> {
-            MemoryController.startGame();
-        };
-        new MemoryMenu("resources/memoryBackground.png", "Memory Game", "Welcome to Memory Game\n" + 
-                        Here's some instruction to play:\n" + //
-                        "-Find the couples beyond the cards\n" + //
-                        "-find them all and you win\n", al);
-         */
+    private void initialize() {
+        getStartButton().addActionListener(e -> {
+            new MemoryController();
+        });
     }
 }
