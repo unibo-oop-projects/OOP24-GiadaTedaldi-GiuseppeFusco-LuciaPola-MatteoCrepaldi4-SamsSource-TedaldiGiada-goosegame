@@ -19,29 +19,29 @@ import java.util.List;
 public class CardSatchelController {
     private final CardSatchelModel satchelModel;
     private final Player owner;
-    private CardSatchelViewImpl view;
-    private CardSatchelFrameImpl frame;
+    private final CardSatchelViewImpl view;
+    private final CardSatchelFrameImpl frame;
 
     /**
-     * Costruttore: inizializza modello, view e frame.
-     * @param owner il giocatore proprietario
+     *Initialize model, view and frames.
+     *@param owner the owner player.
      */
-    public CardSatchelController(Player owner) {
+    public CardSatchelController(final Player owner) {
         this.satchelModel = new CardSatchelModelImpl();
         this.owner = owner;
         this.view = new CardSatchelViewImpl(this);
         this.frame = new CardSatchelFrameImpl(view);
-        // Listener per chiusura tramite X
+        //Listener for closing via X
         this.frame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 closeSatchel();
             }
         });
     }
 
     /**
-     * Mostra la finestra del satchel.
+     *Shows the Satchel window.
      */
     public void showSatchel() {
         SwingUtilities.invokeLater(() -> frame.setVisible(true));
@@ -49,7 +49,7 @@ public class CardSatchelController {
     }
 
     /**
-     * Chiude la finestra del satchel.
+     * Closes the Satchel window.
      */
     public void closeSatchel() {
         if (frame != null) {
@@ -58,45 +58,54 @@ public class CardSatchelController {
     }
 
     /**
-     * Tenta di aggiungere una carta al satchel.
+     *Tries to add a card to the Satchel.
+     * @param card the card to add
+
+     *@return True if the card has been added to Satchel, false otherwise
      */
     public boolean addCard(final Card card) {
         return satchelModel.addCard(card);
     }
 
     /**
-     * Rimuove una carta dal satchel.
+     * Removes a card from Satchel.
+     * @param card the card to remove
+     * @return true if the card has been removed, false otherwise
      */
     public boolean removeCard(final Card card) {
         return satchelModel.removeCard(card);
     }
 
     /**
-     * Gioca una carta: muove il giocatore, rimuove la carta e chiude il frame.
+     * Play a card: move the player, remove the card and close the frame.
+     * @param card the card to play
+     * @return true if the card has been played, false otherwise
      */
     public boolean playCard(final Card card) {
         this.owner.move(card.getSteps(), card.isBonus());
-        boolean removed = this.removeCard(card);
-        closeSatchel(); // Chiude la finestra dopo aver giocato
+        final boolean removed = this.removeCard(card);
+        closeSatchel(); //Closes the window after playing
         return removed;
     }
 
     /**
-     * Restituisce la lista delle carte nel satchel.
+     * Returns the list of cards in the Satchel.
+     * @return the list of cards
      */
     public List<Card> getCards() {
         return satchelModel.getCards();
     }
 
     /**
-     * Svuota il satchel.
+     * Empty the Satchel.
      */
     public void clearSatchel() {
         satchelModel.clear();
     }
 
     /**
-     * Verifica se il satchel è pieno.
+     * Checks if Satchel is full.
+     * @return true if Satchel is full, false otherwise
      */
     public boolean isSatchelFull() {
         return satchelModel.isFull();

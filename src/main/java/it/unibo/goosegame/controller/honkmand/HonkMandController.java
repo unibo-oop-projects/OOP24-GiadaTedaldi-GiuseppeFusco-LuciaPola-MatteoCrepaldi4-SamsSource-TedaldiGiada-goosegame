@@ -22,22 +22,27 @@ import java.util.List;
 public class HonkMandController {
     private HonkMandModel model;
     private HonkMandView view;
-    private HonkMandFrameImpl frame;
     private Timer sequenceTimer;
     private boolean isShowingSequence;
 
+    /**
+     * Constructor for the HonkMandController.
+     */
     public HonkMandController() {
-        // Vuoto, tutto in startGame()
+        //empty, all in StartGame ()
     }
 
+    /**
+     * Starts the game by initializing the model, view, and frame.
+     */
     public void startGame() {
+        final HonkMandFrameImpl frame = new HonkMandFrameImpl();
         this.model = new HonkMandModelImpl();
         this.view = new HonkMandViewImpl();
-        this.frame = new HonkMandFrameImpl();
 
-        this.view.setFrameRef(this.frame);
-        this.frame.setupGamePanel((JPanel)this.view);
-        this.frame.setVisible(true);
+        this.view.setFrameRef(frame);
+        frame.setupGamePanel((JPanel) this.view);
+        frame.setVisible(true);
 
         // Wiring controller, model, view (game logic)
         initController();

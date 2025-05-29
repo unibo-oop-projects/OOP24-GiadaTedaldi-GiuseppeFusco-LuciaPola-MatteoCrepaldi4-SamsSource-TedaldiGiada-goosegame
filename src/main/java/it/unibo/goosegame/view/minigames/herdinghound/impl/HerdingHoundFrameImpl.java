@@ -37,7 +37,7 @@ public class HerdingHoundFrameImpl extends JFrame implements HerdingHoundFrame {
         this.leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, 0));
         leftPanel.setBackground(Color.LIGHT_GRAY);
-        add(leftPanel, BorderLayout.WEST);
+        super.add(leftPanel, BorderLayout.WEST);
     }
 
     /**
@@ -45,6 +45,7 @@ public class HerdingHoundFrameImpl extends JFrame implements HerdingHoundFrame {
      * @param view the main game view (center)
      * @param rightPanel the right panel (east)
      */
+    @Override
     public void setupGamePanels(final Component view, final Component rightPanel) {
         getContentPane().removeAll();
         add(leftPanel, BorderLayout.WEST);

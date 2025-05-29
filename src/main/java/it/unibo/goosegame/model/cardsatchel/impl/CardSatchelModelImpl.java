@@ -16,8 +16,11 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
     private static final int MAX_CARDS = 6;
     private final List<Card> cards = new ArrayList<>();
 
+    /**
+     * Default constructor.
+     */
     public CardSatchelModelImpl() {
-        
+        // No need to initialize the constructor
     }
     /**
      * Attempts to add a card to the satchel.

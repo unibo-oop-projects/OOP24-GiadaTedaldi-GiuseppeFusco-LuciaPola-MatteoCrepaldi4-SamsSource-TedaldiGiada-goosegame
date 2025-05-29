@@ -12,3 +12,4 @@ public interface HonkMandFrame {
      */
     void setupGamePanel(JPanel view);
 }
+

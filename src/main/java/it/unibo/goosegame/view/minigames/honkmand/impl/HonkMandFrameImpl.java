@@ -16,6 +16,9 @@ public class HonkMandFrameImpl extends JFrame implements HonkMandFrame {
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 600;
 
+    /**
+     * HonkMandFrameImpl constructor.
+     */
     public HonkMandFrameImpl() {
         super("HonkMand");
         super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Only closable via GameEndPanel
@@ -29,6 +32,7 @@ public class HonkMandFrameImpl extends JFrame implements HonkMandFrame {
      * Sets up the main game panel (center view).
      * @param view the main game view (center)
      */
+    @Override
     public void setupGamePanel(final JPanel view) {
         getContentPane().removeAll();
         add(view, BorderLayout.CENTER);

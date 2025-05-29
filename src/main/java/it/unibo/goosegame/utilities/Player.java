@@ -34,14 +34,23 @@ public final class Player {
         return name;
     }
 
-    public void move(final int steps, boolean foreward){
-        if (foreward){
+    /**
+     * Moves the player by the given number of steps in the specified direction.
+     * @param steps
+     * @param foreward
+     */
+    public void move(final int steps, final boolean foreward) {
+        if (foreward) {
             this.caselle += steps;
-        }else{
+        } else {
             this.caselle -= steps;
         }
     }
 
+    /**
+     * Returns the number of steps the player has moved.
+     * @return the number of steps moved
+     */
     public int getCaselle() {
         return this.caselle;
     }
@@ -50,6 +59,12 @@ public final class Player {
      * Returns the player's card satchel.
      * @return the player's satchel
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "The satchel is intentionally exposed as its management" 
+    + "is handled in a controlled manner elsewhere."
+    )
+
     public CardSatchelController getSatchel() {
         return this.satchel;
     }

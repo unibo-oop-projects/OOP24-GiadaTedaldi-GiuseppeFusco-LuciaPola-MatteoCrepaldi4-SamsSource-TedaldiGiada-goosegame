@@ -61,7 +61,7 @@ public class HerdingHoundController {
         this.rightPanel.setController(this);
 
         // Set up the frame with the view and right panel
-        this.frame.setupGamePanels((Component) this.view, (Component)this.rightPanel);
+        this.frame.setupGamePanels((Component) this.view, (Component) this.rightPanel);
         this.frame.setVisible(true);
 
         // Set up key listener

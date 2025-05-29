@@ -17,21 +17,22 @@ public class CardSatchelFrameImpl extends JFrame implements CardSatchelFrame {
     private static final int FRAME_HEIGHT = 300;
 
     /**
-     * Costruttore: riceve la view da mostrare.
-     * @param view la view del satchel
+     *Receives the view to show.
+     *@param view La View of the Satchel
      */
     public CardSatchelFrameImpl(final JPanel view) {
         super("Satchel");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
-        setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        setLocationRelativeTo(null);
-        add(view, BorderLayout.CENTER);
+        super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        super.setLayout(new BorderLayout());
+        super.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        super.setLocationRelativeTo(null);
+        super.add(view, BorderLayout.CENTER);
     }
 
     /**
-     * Chiude la finestra del satchel.
+     * Closes the Satchel window.
      */
+    @Override
     public void close() {
         setVisible(false);
         dispose();

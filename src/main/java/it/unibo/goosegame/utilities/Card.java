@@ -2,6 +2,7 @@ package it.unibo.goosegame.utilities;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -66,6 +67,7 @@ public enum Card {
     + "Discard your entire deck — every last card disappears into the shadows.",
      0, false, true);
 
+    private static final Random RANDOM = new Random();
     private final String name;
     private final String description;
     private final int steps;
@@ -106,25 +108,33 @@ public enum Card {
     public boolean isRemove() {
          return remove; }
 
-     private static final Random random= new Random();
+    /**
+     * Draws a random card from the pool of cards.
+     * @return a random malus card
+     */
      public static Card drawMalusCard() {
-        final List<Card> pool = List.of(Card.values()).stream()
-            .filter(c -> !c.isBonus())
+        final List<Card> pool = List.of(values()).stream()
+            .filter(Predicate.not(Card::isBonus))
             .collect(Collectors.toList());
         if (pool.isEmpty()) {
             return null;
         } else {
-            return pool.get(random.nextInt(pool.size()));
+            return pool.get(RANDOM.nextInt(pool.size()));
         }
     }
+
+    /**
+     * Draws a random bonus card from the pool of cards.
+     * @return a random bonus card
+     */
      public static Card drawBonusCard() {
-        final List<Card> pool = List.of(Card.values()).stream()
-            .filter(c -> c.isBonus())
+        final List<Card> pool = List.of(values()).stream()
+            .filter(Card::isBonus)
             .collect(Collectors.toList());
         if (pool.isEmpty()) {
             return null;
         } else {
-            return pool.get(random.nextInt(pool.size()));
+            return pool.get(RANDOM.nextInt(pool.size()));
         }
      }
 }

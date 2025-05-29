@@ -96,7 +96,8 @@ public final class CardPanelViewImpl extends JPanel implements CardPanelView {
      * @param buttonText the text for the button (ignored if showButton is false)
      * @param buttonAction the action to perform when the button is pressed (can be null)
      */
-    public CardPanelViewImpl(final Card card, final boolean showButton, final String buttonText, final Consumer<Card> buttonAction) {
+    public CardPanelViewImpl(final Card card, final boolean showButton, final String buttonText,
+     final Consumer<Card> buttonAction) {
         this(card, showButton, buttonText, buttonAction, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
@@ -104,6 +105,7 @@ public final class CardPanelViewImpl extends JPanel implements CardPanelView {
      * Sets the card to be displayed in this panel.
      * @param card the card to display
      */
+    @Override
     public void setCard(final Card card) {
         this.card = card;
         showDescription = false;
