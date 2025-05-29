@@ -3,7 +3,6 @@ package it.unibo.goosegame.view.cardsatchel.impl;
 import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.view.cardsatchel.api.CardSatchelView;
-import it.unibo.goosegame.view.general.CardPanelView;
 
 import javax.swing.JPanel;
 import java.awt.Color;

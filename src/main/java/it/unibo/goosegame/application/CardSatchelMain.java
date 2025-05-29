@@ -1,23 +1,19 @@
 package it.unibo.goosegame.application;
 
-import javax.swing.SwingUtilities;
+import it.unibo.goosegame.utilities.Player;
 
-/**
- * Main class to test the CardSatchel GUI.
- */
 public final class CardSatchelMain {
 
     private CardSatchelMain() {
         throw new AssertionError();
     }
 
-    /**
-     * Launches the CardSatchel test GUI.
-     * @param args the command line arguments (not used)
-     */
     public static void main(final String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new it.unibo.goosegame.view.cardsatchel.impl.CardSatchelFrame().setVisible(true);
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            // Crea un player di test
+            Player player = new Player("TestPlayer");
+            // Mostra il satchel tramite il controller
+            player.getSatchel().showSatchel();
         });
     }
 }

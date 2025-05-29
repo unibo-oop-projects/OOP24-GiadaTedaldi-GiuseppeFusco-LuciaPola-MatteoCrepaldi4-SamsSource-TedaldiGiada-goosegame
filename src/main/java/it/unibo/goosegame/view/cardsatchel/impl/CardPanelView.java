@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.general;
+package it.unibo.goosegame.view.cardsatchel.impl;
 
 import it.unibo.goosegame.utilities.Card;
 import javax.swing.JPanel;
