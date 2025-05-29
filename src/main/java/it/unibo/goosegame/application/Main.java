@@ -31,7 +31,7 @@ public final class Main {
       @Override
       public void actionPerformed(final ActionEvent e) {
         g = s.getGameState();
-        if (g == GameState.WON || g == GameState.LOST) {
+        if (g == GameState.WON || g == GameState.LOST || g == GameState.TIE) {
           System.out.println("Game State: " + g);
           s.dispose();
           checkState.stop();
