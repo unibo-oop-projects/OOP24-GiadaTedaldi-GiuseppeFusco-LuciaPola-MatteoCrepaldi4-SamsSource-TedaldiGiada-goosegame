@@ -19,9 +19,4 @@ public interface TrisController {
      */
     void makeMove(Position position);
 
-    /**
-     * Updates the view based on the current state of the game model.
-     */
-    void updateView();
-
 }
