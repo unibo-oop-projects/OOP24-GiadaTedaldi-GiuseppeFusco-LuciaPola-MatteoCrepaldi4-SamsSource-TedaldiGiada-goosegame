@@ -48,7 +48,7 @@ public class HangmanControllerImpl implements HangmanController {
 
         if (model.isOver()) {
             view.disableAllButton();
-            if (model.isWon() == 1) {
+            if (model.isWon() == true) {
                 JOptionPane.showMessageDialog(null, "YOU WIN!");
             } else {
                 JOptionPane.showMessageDialog(null, """
