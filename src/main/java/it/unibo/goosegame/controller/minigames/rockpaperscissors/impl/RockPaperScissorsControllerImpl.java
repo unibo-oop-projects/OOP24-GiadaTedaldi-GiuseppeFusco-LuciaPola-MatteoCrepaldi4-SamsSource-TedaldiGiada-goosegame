@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.api.RockPaperScissorsController;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.api.RockPaperScissorsModel;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissorsView;
 /** 
@@ -94,5 +95,16 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
     public final void startGame() {
         model.resetGame();
         view.enableAllButtons();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        if (!model.isOver()) {
+            return GameState.ONGOING;
+        }
+        return model.getGameState();
     }
 }

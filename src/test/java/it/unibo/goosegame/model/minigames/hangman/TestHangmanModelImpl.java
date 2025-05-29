@@ -71,10 +71,12 @@ class TestHangmanModelImpl {
     void testGameWin() {
         model = new HangmanModelImpl(new String[]{"A"});
         final String hidden = model.getHiddenWord();
+        boolean won;
         assertEquals("+", hidden, "The hidden word should be '+' for the word 'A'");
         model.guess('A');
         assertTrue(model.isOver(), "The game should be over after guessing the word correctly");
-        assertTrue(model.isWon(), "The game should be won after guessing the correct letter");
+        won = model.isWon() == 1;
+        assertTrue(won, "The game should be won after guessing the correct letter");
     }
 
     /**
@@ -84,12 +86,14 @@ class TestHangmanModelImpl {
      */
     @Test
     void testGameLose() {
+        boolean won;
         model = new HangmanModelImpl(new String[]{"B"});
         for (int i = 0; i < ATTEMPTS; i++) {
             model.guess('Z');
         }
         assertTrue(model.isOver(), "The game should be over after 5 incorrect guesses");
-        assertFalse(model.isWon(), "The game should not be won after 5 incorrect guesses");
+        won = model.isWon() == 1;
+        assertFalse(won, "The game should not be won after 5 incorrect guesses");
         assertTrue(model.isLost(), "The game should be lost after 5 incorrect guesses");
     }
 }

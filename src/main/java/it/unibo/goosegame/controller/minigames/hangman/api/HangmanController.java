@@ -1,5 +1,7 @@
 package it.unibo.goosegame.controller.minigames.hangman.api;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
+
 /**
  * This interface defines the contract for the Hangman game controller.
  * It allows the view to communicate user input to the controller.
@@ -13,4 +15,8 @@ public interface HangmanController {
      * This method starts the game.
      */
     void startGame();
+    /**
+     * 
+     */
+    GameState getGameState();
 }

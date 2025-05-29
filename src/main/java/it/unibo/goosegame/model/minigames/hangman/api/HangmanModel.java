@@ -24,7 +24,7 @@ public interface HangmanModel extends MinigamesModel {
     /**
     * @return true if the player won, false otherwise.
     */
-    boolean isWon();
+    int isWon();
     /**
     * @return true if the player lose, false otherwise.
     */
