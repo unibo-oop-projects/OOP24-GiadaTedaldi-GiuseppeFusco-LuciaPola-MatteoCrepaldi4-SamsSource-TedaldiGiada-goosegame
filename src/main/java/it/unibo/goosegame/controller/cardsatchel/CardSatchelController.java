@@ -3,7 +3,7 @@ package it.unibo.goosegame.controller.cardsatchel;
 import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.utilities.Player;
+import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelFrameImpl;
 import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelViewImpl;
 

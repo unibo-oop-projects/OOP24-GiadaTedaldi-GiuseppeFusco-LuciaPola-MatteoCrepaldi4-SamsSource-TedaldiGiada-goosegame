@@ -25,7 +25,11 @@ public interface MinigamesModel {
         /**
          * The game has been lost.
          */
-        LOST
+        LOST,
+        /**
+         * The game is tied.
+         */
+        TIE
     }
 
     /**
@@ -38,4 +42,16 @@ public interface MinigamesModel {
      * @return true if the game is finished, false otherwise
      */
     boolean isOver();
+
+    /**
+     * Indicates the mini game name.
+     * @return the mini game name.
+     */
+    String getName();
+
+    /**
+     * Indicates the mini game state.
+     * @return the mini game state.
+     */
+    GameState getGameState();
 }

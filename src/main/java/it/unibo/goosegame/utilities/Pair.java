@@ -1,19 +1,21 @@
 package it.unibo.goosegame.utilities;
 
 /**
- * Immutable generic pair of two elements.
+ * A generic Pair class.
+ * 
  * @param <X> the type of the first element
  * @param <Y> the type of the second element
  */
-public final class Pair<X, Y> {
+public class Pair<X, Y> {
 
     private final X x;
     private final Y y;
 
     /**
-     * Constructs a Pair with the given elements.
-     * @param x the first element
-     * @param y the second element
+     * Constructs a new Pair with the specified values.
+     * 
+     * @param x the first value
+     * @param y the second value
      */
     public Pair(final X x, final Y y) {
         super();
@@ -22,25 +24,21 @@ public final class Pair<X, Y> {
     }
 
     /**
-     * Returns the first element of the pair.
-     * @return the first element
+     * @return the first element of the pair 
      */
     public X getX() {
         return this.x;
     }
 
     /**
-     * Returns the second element of the pair.
-     * @return the second element
+     * @return the second element of the pair 
      */
     public Y getY() {
         return this.y;
     }
 
     /**
-     * Checks if this pair is equal to another object.
-     * @param obj the object to compare
-     * @return true if the pairs are equal, false otherwise
+     * {@inheritDoc}
      */
     @SuppressWarnings("rawtypes")
     @Override
@@ -73,24 +71,23 @@ public final class Pair<X, Y> {
     }
 
     /**
-     * Returns the hash code for this pair.
-     * @return the hash code
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((x == null) ? 0 : x.hashCode());
-        result = prime * result + ((y == null) ? 0 : y.hashCode());
+        result = prime * result + ((x == null) ? 0 : y.hashCode());
         return result;
     }
 
     /**
-     * Returns a string representation of the pair.
-     * @return string representation
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
         return "Pair [x=" + x + ", y=" + y + "]";
     }
+
 }

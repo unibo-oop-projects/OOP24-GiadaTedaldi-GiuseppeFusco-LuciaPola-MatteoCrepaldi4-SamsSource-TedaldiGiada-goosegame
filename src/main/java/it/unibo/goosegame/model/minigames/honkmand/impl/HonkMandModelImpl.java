@@ -163,4 +163,9 @@ public final class HonkMandModelImpl implements HonkMandModel {
     public boolean isOver() {
         return gameState == GameState.LOST || gameState == GameState.WON;
     }
+
+    @Override
+    public String getName() {
+        return "HonkMand";
+    }
 }

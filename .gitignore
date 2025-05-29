@@ -12,3 +12,6 @@ bin/
 .project
 .settings/
 .classpath
+
+# Ignore DS_Store 
+.DS_Store
