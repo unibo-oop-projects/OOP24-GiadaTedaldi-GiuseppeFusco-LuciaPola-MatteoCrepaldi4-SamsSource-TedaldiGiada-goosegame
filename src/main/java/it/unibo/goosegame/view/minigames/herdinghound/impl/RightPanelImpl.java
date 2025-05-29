@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
-import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
+import it.unibo.goosegame.controller.minigames.herdinghound.HerdingHoundController;
 import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
 
 import javax.swing.ImageIcon;

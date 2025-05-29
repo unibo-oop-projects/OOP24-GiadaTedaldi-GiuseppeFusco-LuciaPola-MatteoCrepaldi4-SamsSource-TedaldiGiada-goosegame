@@ -1,10 +1,10 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
+import it.unibo.goosegame.controller.minigames.herdinghound.HerdingHoundController;
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.general.GameEndPanel;
 import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
-import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
