@@ -2,7 +2,7 @@ package it.unibo.goosegame.application;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
+import it.unibo.goosegame.view.minigames.hangman.HangmanMenu;
 /**
  * Main.
  */
@@ -16,8 +16,8 @@ public final class Main {
    */
   public static void main(final String[] args) {
     SwingUtilities.invokeLater(() -> {
-      final GameMenu menu = new GameMenu();
-      menu.setVisible(true);
+      final HangmanMenu menu = new HangmanMenu();
+      menu.initializeView();
     });
   }
 }
