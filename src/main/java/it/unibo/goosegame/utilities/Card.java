@@ -29,36 +29,28 @@ public enum Card {
     + "Some say you're still honking in fear." 
     + "You may have escaped, but only after losing 10 spaces… and your will to honk.", 7, false, false),
     /** Example card 5. */
-    NAME5("Goose Launcher", "Ever dreamed of launching a goose into the stratosphere?" 
-    + "Well, this might be your chance! Step onto the Goose Launcher" 
-    + "— or maybe it's just a regular trampoline, who's to say" 
-    + "— and soar 4 spaces ahead.", 4, true, false),
+    NAME5("Goose Launcher", "Ever dreamt of launching a goose into space?" 
+    + "Hop on the Goose Launcher — or just a trampoline? — and leap 4 spaces ahead!", 4, true, false),
     /** Example card 6. */
-    NAME6("Wobble Ladder", "So tall it scrapes the clouds..." 
-    + "and so wobbly it makes your feathers twitch." 
-    + "Thankfully, it’s safer than it looks! Climb with courage and move 3 spaces ahead." 
-    + "Goose tested, goose approved.", 2, true, false),
+    NAME6("Wobble Ladder", "So tall it scrapes the clouds," 
+    + "so wobbly it makes your feathers twitch.", 2, true, false),
     /** Example card 7. */
-    NAME7("The Backflap Gap", "Hidden behind a suspiciously flappy piece of fence," 
-    + "this sneaky little gap is your ticket to glory." 
-    + "Wiggle through like a pro and skip 2 spaces ahead." 
-    + "Warning: tail feathers may get ruffled.", 2, true, false),
+    NAME7("The Backflap Gap", "After waddling along that endless fence," 
+    + "you spot it — freedom at last!", 2, true, false),
     /** Example card 12. */
-    NAME12("Tailwind Boost", "A sudden gust catches your tail feathers just right." 
-    + "No idea where it came from, but hey " 
-    + "— three free spaces. Don’t question wind miracles.", 3, true, false),
+    NAME12("Tailwind Boost", "A sudden gust hits your tail feathers just right." 
+    + "No idea where it came from — but hey, three free spaces. Don’t question wind miracles.", 3, true, false),
     /** Example card 13. */
-    NAME13("Panic Skip", "You hear something that may or may not be Furio." 
-    + "You bolt forward in a panic, wings flapping, heart pounding." 
-    + "Whatever it was — you're not sticking around to find out"
-    + "Move forward 4 spaces", 4, true, false),
+    NAME13("Panic Skip", "You hear something… maybe Furio?" 
+    + "You panic-flap forward, heart racing — no time to check." 
+    + "Move ahead 4 spaces.", 4, true, false),
     /** Example card 14. */
     NAME14("Speed Waddle", "You enter the zone." 
-    + "Your waddle is swift, efficient, aerodynamic." 
-    + "You are no longer a goose. You are a land torpedo."
-    + "Move forward 6 spaces", 6, true, false),
+    + "Your waddle sharpens — swift, aerodynamic." 
+    + "You’re no longer a goose. You’re a land torpedo." 
+    + "Move ahead 6 spaces.", 6, true, false),
     /** Example card 15. */
-    NAME15("Name15", "You try squeezing through a suspicious gap in the fence." 
+    NAME15("Wrong Way", "You try squeezing through a suspicious gap in the fence." 
     + "You get stuck. Wiggle, squirm, regret." 
     + "Eventually, you backtrack to find another way around" 
     + "feathers slightly ruffled, pride fully dented. You move back 3 spaces", 3, false, false),
