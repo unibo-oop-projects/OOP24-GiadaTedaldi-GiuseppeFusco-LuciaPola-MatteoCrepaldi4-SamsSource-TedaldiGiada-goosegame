@@ -7,6 +7,7 @@ import it.unibo.goosegame.model.minigames.tris.impl.TrisModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.tris.api.TrisView;
 import it.unibo.goosegame.view.minigames.tris.impl.TrisViewImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 
 /**
  * Menu for the Tris(Tic-Tac-Toe) minigame.
@@ -56,7 +57,14 @@ public class TrisMenu extends MinigameMenuImpl {
             this.view = new TrisViewImpl();
             this.controller = new TrisControllerImpl(this.model, this.view);
             this.controller.startGame();
-            super.dispose();
+            super.setVisible(false);
        });
+    }
+
+    /**
+     * @return the game result.
+     */
+    public GameState getGameState() {
+        return this.controller == null ? GameState.NOT_STARTED : this.controller.getGameState();
     }
 }

@@ -137,4 +137,12 @@ public class PuzzleControllerImpl implements PuzzleController {
             this.gameTimer.stop();
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        return this.model.getGameState();
+    }
 }

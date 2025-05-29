@@ -2,6 +2,7 @@ package it.unibo.goosegame.view.minigames.puzzle;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.controller.minigames.puzzle.impl.PuzzleControllerImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
 import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
@@ -55,5 +56,12 @@ public class PuzzleMenu extends MinigameMenuImpl {
             this.controller.startGame();
             super.dispose();
        });
+    }
+
+    /**
+     * @return the game result.
+     */
+    public GameState getGameState() {
+        return this.controller == null ? GameState.NOT_STARTED : this.controller.getGameState();
     }
 }
