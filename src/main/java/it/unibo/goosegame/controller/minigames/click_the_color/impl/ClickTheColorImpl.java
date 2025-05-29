@@ -7,12 +7,10 @@ import it.unibo.goosegame.model.minigames.click_the_color.impl.ClickTheColorMode
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
 import it.unibo.goosegame.view.minigames.click_the_color.impl.ClickTheColorViewImpl;
 
-import javax.swing.*;
-
 /**
  * Implementation of {@link ClickTheColor}.
  */
-public class ClickTheColorImpl implements ClickTheColor {
+public final class ClickTheColorImpl implements ClickTheColor {
     private final ClickTheColorView view;
     private final ClickTheColorModel model;
 
@@ -26,6 +24,10 @@ public class ClickTheColorImpl implements ClickTheColor {
         view.show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameState getResult() {
         return model.getGameState();
     }

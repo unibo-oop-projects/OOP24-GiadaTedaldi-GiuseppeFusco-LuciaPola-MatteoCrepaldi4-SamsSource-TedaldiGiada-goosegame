@@ -12,7 +12,13 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+// import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.Timer;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 /**
  * Implementation of {@link ClickTheColorView}.
