@@ -7,7 +7,6 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.goosegame.controller.gameboard.impl.GameBoardImpl;
 import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.player.impl.PlayerImpl;
@@ -19,6 +18,7 @@ import it.unibo.goosegame.view.gamemenu.api.GameMenuInterface;
 public class MenuLogicImpl implements MenuLogic {
 
     private static final int MAX_PLAYERS = 4;
+    private static final int CAR = 15;
     /**
      * Reference to the GameMenu view.
      * This is assumed to be owned by this class and not modified externally after being passed in the constructor.
@@ -49,7 +49,7 @@ public class MenuLogicImpl implements MenuLogic {
             return;
         }
         view.dispose();
-        new GameBoardImpl(players);
+        //new GameBoardImpl(players);
     }
 
     /**
@@ -61,7 +61,7 @@ public class MenuLogicImpl implements MenuLogic {
         if (!playerName.isBlank()) {
             if (players.size() == MAX_PLAYERS) {
                JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
-            } else if (playerName.length() > 15) {
+            } else if (playerName.length() > CAR) {
                JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
             } else if (players.stream().noneMatch(p -> p.getName().equalsIgnoreCase(playerName))) {
                 players.add(new PlayerImpl(playerName, playerCount));

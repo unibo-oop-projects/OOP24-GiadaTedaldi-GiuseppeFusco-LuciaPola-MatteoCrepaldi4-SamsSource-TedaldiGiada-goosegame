@@ -46,7 +46,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
             controller = new RockPaperScissorsControllerImpl(model, view);
             view.initializeView();
             controller.startGame();
-            dispose();
+            super.dispose();
       });
     }
 }

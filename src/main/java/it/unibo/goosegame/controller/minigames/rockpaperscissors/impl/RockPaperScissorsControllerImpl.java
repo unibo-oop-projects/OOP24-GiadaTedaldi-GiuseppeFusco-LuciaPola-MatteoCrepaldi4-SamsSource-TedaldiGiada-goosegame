@@ -27,7 +27,6 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
     /**
      * @param m the game model
      * @param v the game view
-     * @param menu the view of game's menu
      */
     @SuppressFBWarnings(
         value = "EI2",

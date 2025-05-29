@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
@@ -86,13 +85,7 @@ public class HangmanMenu extends MinigameMenuImpl {
         view.setController(controller);
         getStartButton().addActionListener(e -> {
             controller.startGame();
-            dispose();
+            super.dispose();
         });
     }
-    public static void main(final String[] args) {
-    SwingUtilities.invokeLater(() -> {
-      final HangmanMenu menu = new HangmanMenu();
-      menu.initializeView();
-    });
-  }
 }

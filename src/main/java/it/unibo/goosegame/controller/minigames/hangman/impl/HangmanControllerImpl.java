@@ -21,7 +21,6 @@ public class HangmanControllerImpl implements HangmanController {
     /**
      * @param view the game view
      * @param model the game model
-     * @param menu the view of game's menu.
      */
     @SuppressFBWarnings(
         value = "EI2",
@@ -70,7 +69,6 @@ public class HangmanControllerImpl implements HangmanController {
     }
 
     private void init() {
-        view.setController(this);
         view.updateImage(model.getAttempts());
         view.updateWord(model.getHiddenWord());
     }
