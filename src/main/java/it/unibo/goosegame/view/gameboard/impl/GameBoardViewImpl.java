@@ -1,88 +1,82 @@
 package it.unibo.goosegame.view.gameboard.impl;
 
+import it.unibo.goosegame.controller.cell.api.Cell;
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
-import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 
-import javax.swing.JLabel;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import javax.swing.JButton;
+import javax.swing.WindowConstants;
+import java.awt.GridLayout;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Color;
-import java.net.URL;
-import java.util.Objects;
 
 /**
  * Implementation of {@link GameBoardView}.
  */
 public final class GameBoardViewImpl implements GameBoardView {
-    private static final int TRANSPARENCY = 150;
+    private static final int BOARD_DIMENSION = 16;
+    private static final int FRAME_SIZE = 600;
 
-    private final JLabel infoLabel;
+    private final GameBoardModel model;
     private final JFrame frame;
+    private final List<Cell> boardCells;
 
     /**
-     * Constructor of the minigame view.
+     * Constructor for the gameboard view component.
      *
-     * @param model the model of the minigame
+     * @param model model component of the game
+     * @param gameCells list of all the cells of the board
      */
-    public GameBoardViewImpl(final GameBoardModel model) {
-        frame = new JFrame(model.getWindowTitle());
-        infoLabel = new JLabel("Lorem Ipsum is simply dummy text");
+    public GameBoardViewImpl(final GameBoardModel model, final List<Cell> gameCells) {
+        this.frame = new JFrame();
+        this.model = model;
+        this.boardCells = gameCells;
 
-        initializeComponents();
+        initView();
     }
 
     /**
-     * Initializes all the graphical components.
+     * Utility function used to initialise the view components.
      */
-    private void initializeComponents() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(size.width / 2, size.height / 2);
+    private void initView() {
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(FRAME_SIZE, FRAME_SIZE);
 
-        // Immagine di sfondo
-        final URL gametableImage = Objects.requireNonNull(getClass().getResource("/gameboard/tabellone_temp.png"));
-        final Icon backgroundImage = new ImageIcon(gametableImage);
+        final JPanel gameboardPanel = new JPanel(new GridLayout(BOARD_DIMENSION, BOARD_DIMENSION));
+        final JPanel buttonsPanel = new JPanel();
 
-        final JLabel backgroundLabel = new JLabel(backgroundImage);
-        backgroundLabel.setLayout(new BorderLayout()); // Per poter aggiungere componenti sopra
+        initGameboard(gameboardPanel);
 
-        // Topbar: pannello in alto per informazioni
-        final JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        topBar.setBackground(new Color(0, 0, 0, TRANSPARENCY)); // Trasparente parziale
+        buttonsPanel.add(new JButton("Bottone di prova"));
 
-        infoLabel.setForeground(Color.WHITE); // Colore testo
-        topBar.add(infoLabel);
-
-        backgroundLabel.add(topBar, BorderLayout.NORTH);
-
-        frame.setContentPane(backgroundLabel);
+        frame.add(gameboardPanel, BorderLayout.CENTER);
+        frame.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     /**
-     * {@inheritDoc}
+     * Utility function used to initialise the gameboard panel.
+     *
+     * @param container container panel for the gameboard
      */
+    private void initGameboard(final JPanel container) {
+        int counter = 0;
+
+        for (int i = 0; i < BOARD_DIMENSION; i++) {
+            for (int j = 0; j < BOARD_DIMENSION; j++) {
+                if (i == 0 || i == BOARD_DIMENSION - 1 || j == 0 || j == BOARD_DIMENSION - 1) {
+                    container.add(boardCells.get(counter).getCellPanel());
+                    counter++;
+                } else {
+                    container.add(new JPanel());
+                }
+            }
+        }
+    }
+
     @Override
     public void show() {
         frame.setVisible(true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void drawPlayer(final Player player) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void updateInformation(final String string) {
-        infoLabel.setText(string);
     }
 }

@@ -2,38 +2,25 @@ package it.unibo.goosegame.model.gameboard.impl;
 
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
 import it.unibo.goosegame.model.player.api.Player;
-import it.unibo.goosegame.model.player.impl.PlayerImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Implementation of {@link GameBoardModel}.
  */
 public class GameBoardModelImpl implements GameBoardModel {
-    private final int numberOfPlayers;
     private final List<Player> players;
+    private final int playerNum;
 
     /**
-     * Constructor for the gameboard model class.
+     * Constructor for the gameboard model element.
      *
-     * @param numPlayers number of players for this session
+     * @param playerNum number of players
      */
-    public GameBoardModelImpl(final int numPlayers) {
-        this.numberOfPlayers = numPlayers;
-        players = new ArrayList<>();
-        initPlayers();
-    }
-
-    /**
-     * Initializes the player objects in a list.
-     */
-    private void initPlayers() {
-        for (int i = 0; i < this.numberOfPlayers; i++) {
-            final Player p = new PlayerImpl("Player " + (i + 1), i);
-            players.add(p);
-        }
+    public GameBoardModelImpl(final int playerNum) {
+        this.playerNum = playerNum;
+        this.players = new ArrayList<>(playerNum);
     }
 
     /**
@@ -49,7 +36,7 @@ public class GameBoardModelImpl implements GameBoardModel {
      */
     @Override
     public int getNumberOfPlayers() {
-        return numberOfPlayers;
+        return playerNum;
     }
 
     /**
@@ -57,6 +44,6 @@ public class GameBoardModelImpl implements GameBoardModel {
      */
     @Override
     public List<Player> getPlayers() {
-        return Collections.unmodifiableList(this.players);
+        return List.of();
     }
 }
