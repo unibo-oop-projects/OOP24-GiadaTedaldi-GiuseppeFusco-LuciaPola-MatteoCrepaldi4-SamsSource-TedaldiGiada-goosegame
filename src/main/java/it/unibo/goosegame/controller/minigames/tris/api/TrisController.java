@@ -17,7 +17,7 @@ public interface TrisController {
      * 
      * @param position the position on the board where the human player wants to move
      */
-    void movesMaker(Position position);
+    void makeMove(Position position);
 
     /**
      * Updates the view based on the current state of the game model.
@@ -27,7 +27,6 @@ public interface TrisController {
     /**
      * Ends the current round by disabling user input and showing the round result.
      * If the match is over(best of 3), the final result is displayed.
-     */
     void endGame();
-
+    */
 }
