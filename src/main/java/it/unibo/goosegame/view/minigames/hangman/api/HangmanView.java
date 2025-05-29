@@ -35,4 +35,8 @@ public interface HangmanView {
      * @param controller 
      */
     void setController(HangmanController controller);
+    /**
+     * Close window.
+     */
+    void dispose();
 }

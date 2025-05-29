@@ -19,6 +19,7 @@ public class PuzzleModelImpl implements PuzzleModel {
 
     private static final int GRID_SIZE = 5;
     private boolean timeOver;
+    private boolean shuffled;
     private Map<Position, Integer> grid;
     private Optional<Position> first;
 
@@ -36,6 +37,7 @@ public class PuzzleModelImpl implements PuzzleModel {
     public final void resetGame() {
         this.first = Optional.empty();
         this.grid = new HashMap<>();
+        this.shuffled = false;
         int val = 1;
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
@@ -71,6 +73,9 @@ public class PuzzleModelImpl implements PuzzleModel {
      */
     @Override
     public boolean isOver() {
+        if (!this.shuffled) {
+            return false;
+        }
         int expected = 1;
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
@@ -126,6 +131,7 @@ public class PuzzleModelImpl implements PuzzleModel {
                 this.grid.put(new Position(i, j), it.next());
             }
         }
+        this.shuffled = true;
     }
 
     /**
@@ -142,6 +148,18 @@ public class PuzzleModelImpl implements PuzzleModel {
     @Override
     public void setTimeOver(final boolean timeOver) {
         this.timeOver = timeOver;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateGrid(final Map<Position, Integer> newGrid) {
+        if (newGrid == null) {
+            throw new IllegalArgumentException("Empty grid");
+        }
+        this.grid.clear();
+        this.grid.putAll(newGrid);
     }
 
 }

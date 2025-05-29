@@ -3,6 +3,7 @@ package it.unibo.goosegame.controller.minigames.puzzle.api;
 import java.util.Map;
 
 import it.unibo.goosegame.utilities.Position;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 
 /**
  * Interface representing the controller of a Puzzle minigame.
@@ -30,5 +31,10 @@ public interface PuzzleController {
      * @return ad unmodifiable map representing the puzzle grid 
      */
     Map<Position, Integer> getGridData();
+
+    /**
+     * @return the state of the match.
+     */
+    GameState getGameState();
 
 }

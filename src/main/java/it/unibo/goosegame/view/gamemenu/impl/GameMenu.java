@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
 import it.unibo.goosegame.model.gamemenu.impl.MenuLogicImpl;
 import it.unibo.goosegame.view.gamemenu.GameInfo;
 import it.unibo.goosegame.view.gamemenu.api.GameMenuInterface;
@@ -37,7 +38,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     private static final int MARGIN = 10;
     private static final int BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 110;
-    private static final int ICON_SIZE = 25;
+    private static final int ICON_SIZE = 35;
     private static final int FONT_SIZE = 14;
     private static final int COLUMN = 15;
     private static final int COLOR = 240;
@@ -46,7 +47,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     private final ImageIcon icon = new ImageIcon(GameMenu.class.getResource("/i.png"));
     private final ImageIcon startImage = new ImageIcon(GameMenu.class.getResource("/play.png"));
     private final transient Image background = new ImageIcon(GameMenu.class.getResource("/ImmagineMenu.png")).getImage();
-    private transient MenuLogicImpl logic;
+    private transient MenuLogic logic;
     private JTextField playerNameField;
     private JLabel playerNameLabel;
     private JButton start, instruction;
@@ -86,7 +87,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * @return return mainPanel
+     * @return return mainPanel.
      */
     private JPanel createMenuPanel() {
         final JPanel panel = new JPanel(null) {
@@ -104,7 +105,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * @return return centerPanel
+     * @return return centerPanel.
      */
     private JPanel createCenterPanel() {
         final JPanel centerPanel = new JPanel(new GridBagLayout()); 
@@ -128,8 +129,9 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         start.addActionListener(e -> logic.startGame());
         return centerPanel;
     }
+
     /**
-     * @return return bottomPanel
+     * @return return bottomPanel.
      */
     private JPanel createBottomPanel() {
         final JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -154,12 +156,11 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         instruction.addActionListener(e -> logic.showInstructions());
         return bottomPanel;
     } 
+
     /**
-     * @param image The icon to be used on the button
-     * @param w Width of the button
-     * @param h Height of the button
-     * @return The created button
+     * {@inheritDoc}
      */
+    @Override
     public final JButton createButtonIcon(final ImageIcon image, final int w, final int h) {
         final JButton button = new JButton();
         button.setPreferredSize(new Dimension(w, h));
@@ -181,6 +182,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         });
         return button;
     }
+
     /**
     * {@inheritDoc}
     */
@@ -188,6 +190,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public void showInstructions() {
         cardLayout.show(mainPanel, "info");
     }
+
     /**
     * {@inheritDoc}
     */
@@ -195,6 +198,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public void showMenu() {
         cardLayout.show(mainPanel, "menu");
     }
+
     /**
     * {@inheritDoc}
     */
@@ -202,6 +206,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public String getPlayerName() {
         return playerNameField.getText();
     }
+
     /**
     * {@inheritDoc}
     */
@@ -209,12 +214,24 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     public void updatePlayerField() {
         playerNameField.setText("");
     }
+
     /**
     * {@inheritDoc}
     */
     @Override
     public void updatePlayerLabel(final String text) {
         playerNameLabel.setText(text);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     private void scaleComponents() {
@@ -246,8 +263,8 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     }
 
     /**
-     * @param c The component to update
-     * @param font The font to apply
+     * @param c The component to update.
+     * @param font The font to apply.
      */
     private void scaleFontRecursively(final Component c, final Font font) {
         c.setFont(font);

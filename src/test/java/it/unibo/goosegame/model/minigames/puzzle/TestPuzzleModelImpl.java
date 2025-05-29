@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,17 +30,20 @@ class TestPuzzleModelImpl {
         this.model = new PuzzleModelImpl();
     }
     /**
-     * Tests that the initial grid is ordered correctly.
+     * Tests that resetGame() correctly reinitializes the grid to a solved state.
      */
     @Test
-    void testGridIsOrdered() {
+    void testResetGame() {
+        this.model.shuffle();
+        this.model.resetGame();
         int expected = 1;
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 assertEquals(expected++, this.model.getGrid().get(new Position(i, j)));
             }
         }
-        assertTrue(this.model.isOver());
+        assertEquals(GameState.ONGOING, this.model.getGameState());
+        assertFalse(this.model.isOver());
     }
 
     /**
@@ -69,6 +75,17 @@ class TestPuzzleModelImpl {
      */
     @Test
     void testGetResultWin() {
+        final Map<Position, Integer> newGrid = new HashMap<>();
+        this.model.shuffle();
+        int val = 1;
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
+                final Position addPos = new Position(i, j);
+                newGrid.put(addPos, val++);
+            }
+        }
+        this.model.updateGrid(newGrid);
+        assertTrue(this.model.isOver());
         assertEquals(GameState.WON, this.model.getGameState());
     }
 
@@ -80,21 +97,5 @@ class TestPuzzleModelImpl {
         this.model.shuffle();
         this.model.setTimeOver(true);
         assertEquals(GameState.LOST, this.model.getGameState());
-    }
-
-    /**
-     * Tests that resetGame() correctly reinitializes the grid to a solved state.
-     */
-    @Test
-    void testResetGame() {
-        this.model.shuffle();
-        this.model.resetGame();
-        int expected = 1;
-        for (int i = 0; i < GRID_SIZE; i++) {
-            for (int j = 0; j < GRID_SIZE; j++) {
-                assertEquals(expected++, this.model.getGrid().get(new Position(i, j)));
-            }
-        }
-        assertTrue(this.model.isOver());
     }
 }

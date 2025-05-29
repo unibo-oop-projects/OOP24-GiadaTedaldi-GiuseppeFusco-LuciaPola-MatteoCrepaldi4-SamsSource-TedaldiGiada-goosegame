@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 /**
  * This class implements the test for the HangmanModel class.
@@ -13,7 +14,7 @@ import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 class TestHangmanModelImpl {
     private static final int ATTEMPTS = 5;
 
-    private HangmanModelImpl model;
+    private HangmanModel model;
 
     /**
      * Set up the HangmanModel before each test.

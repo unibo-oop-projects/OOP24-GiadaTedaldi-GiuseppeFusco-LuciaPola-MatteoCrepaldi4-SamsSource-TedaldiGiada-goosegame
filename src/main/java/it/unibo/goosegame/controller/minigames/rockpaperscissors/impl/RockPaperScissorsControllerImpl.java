@@ -8,9 +8,8 @@ import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.api.RockPaperScissorsController;
-import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
-import it.unibo.goosegame.view.minigames.rockpaperscissors.RockPaperScissorsMenu;
-import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissorsViewImpl;
+import it.unibo.goosegame.model.minigames.rockpaperscissors.api.RockPaperScissorsModel;
+import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissorsView;
 /** 
  * This class handles the interaction between the Rock-Paper-Scissors
  * game model and the view. It processes user input, updates the view 
@@ -18,9 +17,8 @@ import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissor
 */
 public class RockPaperScissorsControllerImpl implements RockPaperScissorsController {
     @SuppressFBWarnings(value = "EI2", justification = "View reference is safe in MVC context and not modified internally.")
-    private final transient RockPaperScissorsViewImpl view;
-    private final transient RockPaperScissorsModelImpl model;
-    private final transient RockPaperScissorsMenu menu;
+    private final transient RockPaperScissorsView view;
+    private final transient RockPaperScissorsModel model;
 
     private final ImageIcon rockImage;
     private final ImageIcon paperImage;
@@ -29,16 +27,13 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
     /**
      * @param m the game model
      * @param v the game view
-     * @param menu the view of game's menu
      */
     @SuppressFBWarnings(
         value = "EI2",
         justification = "The menu is intentionally shared for interaction between view and controller."
     )
-    public RockPaperScissorsControllerImpl(final RockPaperScissorsModelImpl m, 
-            final RockPaperScissorsViewImpl v, final RockPaperScissorsMenu menu) {
+    public RockPaperScissorsControllerImpl(final RockPaperScissorsModel m, final RockPaperScissorsView v) {
         this.model = m;
-        this.menu = Objects.requireNonNull(menu);
         this.view = Objects.requireNonNull(v);
 
         view.addRockListener(e -> playTurn("ROCK"));
@@ -84,11 +79,10 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
 
         if (model.isOver()) {
             if ("PLAYER".equals(model.getName().toUpperCase(Locale.ROOT))) {
-                JOptionPane.showMessageDialog(view, "YUO WIN");
+                JOptionPane.showMessageDialog(null, "YUO WIN");
             } else {
-                JOptionPane.showMessageDialog(view, "GAME OVER - YOU LOSE");
+                JOptionPane.showMessageDialog(null, "GAME OVER - YOU LOSE");
             }
-            menu.dispose();
             view.dispose();
         }
     }

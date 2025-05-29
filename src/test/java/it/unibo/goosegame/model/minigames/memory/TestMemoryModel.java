@@ -90,6 +90,6 @@ class MemoryModelImplTest {
     @Test
     void testGameIsNotOverInitially() {
         assertFalse(model.isOver());
-        assertEquals(GameState.LOST, model.getGameState());
+        assertEquals(GameState.ONGOING, model.getGameState());
     }
 }

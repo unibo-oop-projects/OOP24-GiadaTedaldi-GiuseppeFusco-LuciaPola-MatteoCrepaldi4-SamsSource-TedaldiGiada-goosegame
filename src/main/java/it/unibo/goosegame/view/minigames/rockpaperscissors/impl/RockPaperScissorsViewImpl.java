@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissorsView;
 
 /**
@@ -170,6 +171,17 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
         rock.setEnabled(true);
         paper.setEnabled(true);
         scissors.setEnabled(true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     private JButton createButtonIcon(final ImageIcon image, final int w, final int h) {

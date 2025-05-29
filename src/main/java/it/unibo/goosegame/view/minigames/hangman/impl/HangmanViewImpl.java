@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import static java.util.Arrays.stream;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -80,6 +81,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
         final JPanel rightPanel = createImagePanel();
         panel.add(mainPanel, BorderLayout.CENTER);
         panel.add(rightPanel, BorderLayout.EAST);
+        super.setVisible(true);
     }
     /**
      * {@inheritDoc}
@@ -116,22 +118,22 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @Override
     public void disableButton(final char car) {
-        for (final Component comp : keyboardPanel.getComponents()) {
-            if (comp instanceof  JButton button && button.getText().equals(String.valueOf(car))) {
-                button.setEnabled(false);
-            }
-        }
+        stream(keyboardPanel.getComponents())
+            .filter(JButton.class::isInstance)
+            .map(JButton.class::cast)
+            .filter(button -> button.getText().equals(String.valueOf(car)))
+            .findFirst()
+            .ifPresent(button -> button.setEnabled(false));
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void disableAllButton() {
-        for (final Component comp : keyboardPanel.getComponents()) {
-            if (comp instanceof  JButton button) {
-                button.setEnabled(false);
-            }
-        }
+        stream(keyboardPanel.getComponents())
+            .filter(JButton.class::isInstance)
+            .map(JButton.class::cast)
+            .forEach(button -> button.setEnabled(false));
     }
 
     /**
@@ -147,11 +149,21 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @Override
     public void enableAllButton() {
-        for (final Component comp : keyboardPanel.getComponents()) {
-            if (comp instanceof  JButton button) {
-                button.setEnabled(true);
-            }
-        }
+        stream(keyboardPanel.getComponents())
+            .filter(JButton.class::isInstance)
+            .map(JButton.class::cast)
+            .forEach(button -> button.setEnabled(true));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     private JPanel createMainPanel() {
