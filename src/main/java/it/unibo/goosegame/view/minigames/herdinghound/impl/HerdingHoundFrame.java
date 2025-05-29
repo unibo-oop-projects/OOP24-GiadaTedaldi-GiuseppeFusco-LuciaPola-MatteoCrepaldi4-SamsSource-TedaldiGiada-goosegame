@@ -1,11 +1,5 @@
 package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
-import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
-import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
-import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
-import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
-import it.unibo.goosegame.view.general.GameMenuPanel;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -13,61 +7,47 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Main frame for the Herding Hound minigame.
- * Encapsulates all UI setup and game start logic.
+ * Now only responsible for layout and panel management. All initialization is done in the controller.
  */
 public class HerdingHoundFrame extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static final int GRID_SIZE = 31;
     private static final int LEFT_PANEL_WIDTH = 60;
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 600;
 
+    private final JPanel leftPanel;
+
     /**
      * HerdingHoundFrame constructor.
+     * Sets up the frame but does not add game panels.
      */
-    @SuppressFBWarnings("MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR")
     public HerdingHoundFrame() {
         super("Herding Hound");
-        super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Only closable via GameEndPanel
         super.setLayout(new BorderLayout());
         super.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         super.setLocationRelativeTo(null);
         super.setResizable(true);
 
-        final GameMenuPanel menuPanel = new GameMenuPanel("HerdingHound", "Start Game", this::startGame);
-        super.add(menuPanel, BorderLayout.CENTER);
-    }
-
-    private void startGame() {
-        final HerdingHoundModel model = new HerdingHoundModelImpl(GRID_SIZE);
-        final HerdingHoundView view = new HerdingHoundViewImpl();
-        final RightPanelImpl rightPanel = new RightPanelImpl();
-        final HerdingHoundController controller = new HerdingHoundController(model, view, this, rightPanel);
-        view.setController(controller);
-        rightPanel.setController(controller);
-
-        final JPanel leftPanel = new JPanel();
+        this.leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(LEFT_PANEL_WIDTH, 0));
         leftPanel.setBackground(Color.LIGHT_GRAY);
+        add(leftPanel, BorderLayout.WEST);
+    }
 
+    /**
+     * Sets up the main game panels (center view and right panel).
+     * @param view the main game view (center)
+     * @param rightPanel the right panel (east)
+     */
+    public void setupGamePanels(final Component view, final Component rightPanel) {
         getContentPane().removeAll();
         add(leftPanel, BorderLayout.WEST);
-        add((Component) view, BorderLayout.CENTER);
+        add(view, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
         revalidate();
         repaint();
-
-        view.requestFocusInWindow();
-
-        // Initial countdown, then the game starts
-        view.startCountdown(() -> {
-            model.startGame();
-            controller.startGame();
-            view.requestFocusInWindow();
-        });
     }
 }
