@@ -1,6 +1,5 @@
 package it.unibo.goosegame.controller.minigames.snake;
 
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
@@ -53,8 +52,7 @@ public class SnakeController {
                 view.repaint();
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
-                    JOptionPane.showMessageDialog(null, model.getGameState() == GameState.WON ? "You win!" : "You lose...");
-                    view.dispose();
+                    view.showOverMessage(model.getGameState() == GameState.WON);
                 }
             }
         });

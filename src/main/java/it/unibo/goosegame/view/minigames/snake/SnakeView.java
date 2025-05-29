@@ -1,6 +1,7 @@
 package it.unibo.goosegame.view.minigames.snake;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
@@ -66,5 +67,10 @@ public class SnakeView extends JFrame {
         super.setLocationRelativeTo(null);
         super.setVisible(true);
         super.setResizable(false); 
+    }
+
+    public void showOverMessage(final boolean win) {
+        JOptionPane.showMessageDialog(this, win ? "You win!" : "You lose...");
+        this.dispose();
     }
 }
