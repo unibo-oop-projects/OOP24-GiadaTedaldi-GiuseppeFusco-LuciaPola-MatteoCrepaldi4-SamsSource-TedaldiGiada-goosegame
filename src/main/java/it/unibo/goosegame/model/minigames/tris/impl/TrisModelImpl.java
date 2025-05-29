@@ -56,14 +56,10 @@ public class TrisModelImpl implements TrisModel {
      */
     @Override
     public GameState getGameState() {
-        if (this.checkWin()) {
-           for (final Set<Position> line : WINNING_LINES) {
-                if (line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
-                    return GameState.WON;
-                } else if (line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
-                    return GameState.LOST;
-                }
-            } 
+        if (this.hasPlayerWon(Player.HUMAN)) {
+            return GameState.WON;
+        } else if (this.hasPlayerWon(Player.PC)) {
+            return GameState.LOST;
         } else if (this.isFull()) {
             return GameState.TIE;
         }
@@ -196,21 +192,18 @@ public class TrisModelImpl implements TrisModel {
      */
     @Override
     public boolean checkWin() {
-        return WINNING_LINES.stream()
-            .anyMatch(l -> l.stream().allMatch(p -> this.grid.containsKey(p) && this.grid.get(p) == Player.HUMAN)
-                || l.stream().allMatch(p -> this.grid.containsKey(p) && this.grid.get(p) == Player.PC));
+        return this.hasPlayerWon(Player.HUMAN) || this.hasPlayerWon(Player.PC);
     }
 
     /**
-     * {@inheritDoc}
+     * Checks whether the specified player has won the game.
+     * 
+     * @param player the player to check for a  win condition
+     * @return true if the player has won, false otherwise
      */
-    @Override
-    public String getStatus() {
-        if (this.getGameState() == GameState.LOST) {
-            return "Game Over!";
-        } else {
-            return "Your turn!";
-        }
+    private boolean hasPlayerWon(final Player player) {
+        return WINNING_LINES.stream()
+            .anyMatch(l -> l.stream().allMatch(p -> player.equals(this.grid.get(p))));
     }
 
     /**

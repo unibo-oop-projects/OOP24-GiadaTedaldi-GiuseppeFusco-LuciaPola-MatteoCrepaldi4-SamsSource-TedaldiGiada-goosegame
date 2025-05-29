@@ -38,7 +38,6 @@ class TestTrisModelImpl {
     void testInit() {
         assertFalse(model.isOver());
         assertFalse(model.isFull());
-        assertEquals("Your turn!", model.getStatus());
     }
 
     /**
@@ -134,7 +133,6 @@ class TestTrisModelImpl {
         model.resetGame();
         assertFalse(model.isFull());
         assertFalse(model.isOver());
-        assertEquals("Your turn!", model.getStatus());
     }
 
     /**

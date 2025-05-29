@@ -71,10 +71,9 @@ public class TrisControllerImpl implements TrisController {
     }
 
     /**
-     * {@inheritDoc}
+     * Updates the view.
      */
-    @Override
-    public void updateView() {
+    private void updateView() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 final Position pos = new Position(i, j);
