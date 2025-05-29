@@ -4,7 +4,7 @@ import java.awt.event.KeyAdapter;
 
 import javax.swing.JFrame;
 
-import it.unibo.goosegame.controller.herdinghound.HerdingHoundController;
+import it.unibo.goosegame.controller.minigames.herdinghound.HerdingHoundController;
 
 /**
  * API for the Herding Hound minigame view.

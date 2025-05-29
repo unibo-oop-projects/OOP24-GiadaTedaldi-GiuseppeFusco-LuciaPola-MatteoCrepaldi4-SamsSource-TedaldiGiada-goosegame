@@ -1,75 +1,111 @@
 package it.unibo.goosegame.controller.cardsatchel;
 
 import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
+import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
-import java.util.List;
+import it.unibo.goosegame.model.player.api.Player;
+import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelFrameImpl;
+import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelViewImpl;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.swing.SwingUtilities;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
 
 /**
  * Controller for managing the player's card satchel (bag).
- * Acts as an interface between the model and the rest of the game logic/UI.
+ * Gestisce modello, view e frame secondo MVC.
  */
 public class CardSatchelController {
     private final CardSatchelModel satchelModel;
+    private final Player owner;
+    private final CardSatchelViewImpl view;
+    private final CardSatchelFrameImpl frame;
 
     /**
-     * Constructs a controller with the given CardSatchelModel.
-     * @param satchelModel the model to control
+     *Initialize model, view and frames.
+     *@param owner the owner player.
      */
-    @SuppressFBWarnings(
-    value = "EI2",
-    justification = "The controller must operate on the same externally provided model to maintain state consistency."
-)
-    public CardSatchelController(final CardSatchelModel satchelModel) {
-        this.satchelModel = satchelModel;
+    public CardSatchelController(final Player owner) {
+        this.satchelModel = new CardSatchelModelImpl();
+        this.owner = owner;
+        this.view = new CardSatchelViewImpl(this);
+        this.frame = new CardSatchelFrameImpl(view);
+        //Listener for closing via X
+        this.frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                closeSatchel();
+            }
+        });
     }
 
     /**
-     * Attempts to add a card to the satchel.
+     *Shows the Satchel window.
+     */
+    public void showSatchel() {
+        SwingUtilities.invokeLater(() -> frame.setVisible(true));
+        view.updateCards(getCards());
+    }
+
+    /**
+     * Closes the Satchel window.
+     */
+    public void closeSatchel() {
+        if (frame != null) {
+            frame.close();
+        }
+    }
+
+    /**
+     *Tries to add a card to the Satchel.
      * @param card the card to add
-     * @return true if added, false otherwise
+
+     *@return True if the card has been added to Satchel, false otherwise
      */
     public boolean addCard(final Card card) {
         return satchelModel.addCard(card);
     }
 
     /**
-     * Removes a card from the satchel.
+     * Removes a card from Satchel.
      * @param card the card to remove
-     * @return true if removed, false otherwise
+     * @return true if the card has been removed, false otherwise
      */
     public boolean removeCard(final Card card) {
         return satchelModel.removeCard(card);
     }
 
     /**
-     * Plays a card: removes it from the satchel.
+     * Play a card: move the player, remove the card and close the frame.
      * @param card the card to play
-     * @return true if the card was present and removed, false otherwise
+     * @return true if the card has been played, false otherwise
      */
     public boolean playCard(final Card card) {
-        return this.removeCard(card);
+        this.owner.move(card.getSteps(), card.isBonus());
+        final boolean removed = this.removeCard(card);
+        closeSatchel(); //Closes the window after playing
+        return removed;
     }
 
     /**
-     * Returns an unmodifiable list of cards in the satchel.
-     * @return list of cards
+     * Returns the list of cards in the Satchel.
+     * @return the list of cards
      */
     public List<Card> getCards() {
         return satchelModel.getCards();
     }
 
     /**
-     * Removes all cards from the satchel.
+     * Empty the Satchel.
      */
     public void clearSatchel() {
         satchelModel.clear();
     }
 
     /**
-     * Checks if the satchel is full.
-     * @return true if full
+     * Checks if Satchel is full.
+     * @return true if Satchel is full, false otherwise
      */
     public boolean isSatchelFull() {
         return satchelModel.isFull();
