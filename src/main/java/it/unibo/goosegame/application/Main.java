@@ -16,18 +16,22 @@ import it.unibo.goosegame.view.minigames.memory.MemoryMenu;
 public final class Main {
 
   private static Timer checkState;
-  private static GameState g = GameState.NOT_STARTED;
 
   private Main() {
     throw new UnsupportedOperationException("Utility class");
   }
 
-  public static void check(MemoryMenu s) {
+  /**
+   * Checks the game state of the given Menu instance.
+   * @param s the Menu instance to check
+   */
+  public static void check(final MemoryMenu s) {
     checkState = new Timer(100, new ActionListener() {
+      private GameState g = GameState.NOT_STARTED;
       @Override
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(final ActionEvent e) {
         g = s.getGameState();
-        if(g == GameState.WON || g == GameState.LOST) {
+        if (g == GameState.WON || g == GameState.LOST) {
           System.out.println("Game State: " + g);
           s.dispose();
           checkState.stop();
@@ -47,7 +51,7 @@ public final class Main {
       final GameMenu menu = new GameMenu();
       menu.setVisible(true);
     });*/
-    MemoryMenu m = new MemoryMenu();
+    final MemoryMenu m = new MemoryMenu();
     m.initializeView();
     check(m);
     //SnakeMenu s = new SnakeMenu();
