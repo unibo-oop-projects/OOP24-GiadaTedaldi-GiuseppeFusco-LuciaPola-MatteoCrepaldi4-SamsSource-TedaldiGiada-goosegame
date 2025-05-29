@@ -107,7 +107,7 @@ public enum Card {
          return remove; }
 
      private static final Random random= new Random();
-     public Card drawMalusCard() {
+     public static Card drawMalusCard() {
         final List<Card> pool = List.of(Card.values()).stream()
             .filter(c -> !c.isBonus())
             .collect(Collectors.toList());
@@ -117,7 +117,7 @@ public enum Card {
             return pool.get(random.nextInt(pool.size()));
         }
     }
-     public Card drawBonusCard() {
+     public static Card drawBonusCard() {
         final List<Card> pool = List.of(Card.values()).stream()
             .filter(c -> c.isBonus())
             .collect(Collectors.toList());

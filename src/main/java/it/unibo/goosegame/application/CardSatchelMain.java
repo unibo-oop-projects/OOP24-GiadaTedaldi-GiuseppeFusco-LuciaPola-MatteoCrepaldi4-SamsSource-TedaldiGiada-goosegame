@@ -1,5 +1,6 @@
 package it.unibo.goosegame.application;
 
+import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.utilities.Player;
 
 public final class CardSatchelMain {
@@ -13,6 +14,7 @@ public final class CardSatchelMain {
             // Crea un player di test
             Player player = new Player("TestPlayer");
             // Mostra il satchel tramite il controller
+            player.getSatchel().addCard(Card.drawBonusCard());
             player.getSatchel().showSatchel();
         });
     }
