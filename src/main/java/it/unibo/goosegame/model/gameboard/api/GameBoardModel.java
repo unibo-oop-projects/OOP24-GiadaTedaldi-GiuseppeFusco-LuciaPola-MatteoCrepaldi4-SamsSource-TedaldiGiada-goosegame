@@ -1,9 +1,5 @@
 package it.unibo.goosegame.model.gameboard.api;
 
-import it.unibo.goosegame.model.player.api.Player;
-
-import java.util.List;
-
 /**
  * Model for the Game board.
  */
@@ -16,16 +12,7 @@ public interface GameBoardModel {
     String getWindowTitle();
 
     /**
-     * Getter method for the number of players.
-     *
-     * @return the number of players
+     * Method used to trigger the dice throw.
      */
-    int getNumberOfPlayers();
-
-    /**
-     * Getter method for the player list.
-     *
-     * @return list of the players
-     */
-    List<Player> getPlayers();
+    void throwDices();
 }

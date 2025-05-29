@@ -49,7 +49,11 @@ public final class GameBoardViewImpl implements GameBoardView {
 
         initGameboard(gameboardPanel);
 
-        buttonsPanel.add(new JButton("Bottone di prova"));
+        final JButton diceButton = new JButton("Throw dices");
+        diceButton.addActionListener(e -> {
+            model.throwDices();
+        });
+        buttonsPanel.add(diceButton);
 
         frame.add(gameboardPanel, BorderLayout.CENTER);
         frame.add(buttonsPanel, BorderLayout.SOUTH);
@@ -61,18 +65,32 @@ public final class GameBoardViewImpl implements GameBoardView {
      * @param container container panel for the gameboard
      */
     private void initGameboard(final JPanel container) {
-        int counter = 0;
 
         for (int i = 0; i < BOARD_DIMENSION; i++) {
             for (int j = 0; j < BOARD_DIMENSION; j++) {
                 if (i == 0 || i == BOARD_DIMENSION - 1 || j == 0 || j == BOARD_DIMENSION - 1) {
-                    container.add(boardCells.get(counter).getCellPanel());
-                    counter++;
+                    container.add(boardCells.get(gridToLinear(i, j)).getCellPanel());
                 } else {
                     container.add(new JPanel());
                 }
             }
         }
+    }
+
+    private int gridToLinear(final int row, final int col) {
+        if (row == 0) {
+            return col; // Lato alto
+        }
+
+        if (col == BOARD_DIMENSION - 1) {
+            return BOARD_DIMENSION - 1 + row; // Lato destro
+        }
+
+        if (row == BOARD_DIMENSION - 1) {
+            return 2 * BOARD_DIMENSION - 2 + BOARD_DIMENSION - 1 - col; // Lato basso
+        }
+
+        return 3 * BOARD_DIMENSION - 3 + BOARD_DIMENSION - 1 - row; // Lato sinistro
     }
 
     @Override
