@@ -1,17 +1,18 @@
-package it.unibo.goosegame.controller.herdinghound;
+package it.unibo.goosegame.controller.minigames.herdinghound;
 
 import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
 import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
+import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
-import it.unibo.goosegame.view.minigames.herdinghound.api.RightPanel;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundFrameImpl;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Position;
 
-import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -20,16 +21,18 @@ import java.util.Random;
 /**
  * Controller for the Herding Hound minigame.
  * Handles user input, game logic, and updates the view and right panel.
+ * Now responsible for initializing and showing the game frame, model, and view.
  */
 public class HerdingHoundController {
     private static final int DOG_ALERT_DELAY = 1_000;
     private static final int DOG_OTHER_DELAY_BASE = 2_000;
     private static final int DOG_OTHER_DELAY_RANDOM = 3;
+    private static final int GRID_SIZE = 31;
 
-    private final HerdingHoundModel model;
-    private final HerdingHoundView view;
-    private final JFrame frame;
-    private final RightPanel rightPanel;
+    private HerdingHoundModel model;
+    private HerdingHoundView view;
+    private HerdingHoundFrameImpl frame;
+    private RightPanelImpl rightPanel;
     private Timer dogStateTimer;
     private Timer gameTimer;
     private final Random rnd = new Random();
@@ -37,28 +40,39 @@ public class HerdingHoundController {
     private boolean gameActive;
 
     /**
-     * Constructs the controller, sets up listeners and connects model, view, and right panel.
-     * @param model the game model
-     * @param view the game view
-     * @param frame the main JFrame
-     * @param rightPanel the right panel
+     * Default constructor. Use startGame() to initialize and show the game.
      */
-    @SuppressFBWarnings(
-    value = "EI2",
-    justification = "Controller uses externally provided references to model, view, frame, and panel."
-    + "Assumes trusted injection without copying."
-        )
-    public HerdingHoundController(
-            final HerdingHoundModel model,
-            final HerdingHoundView view,
-            final JFrame frame,
-            final RightPanel rightPanel
-    ) {
-        this.model = model;
-        this.view = view;
-        this.frame = frame;
-        this.rightPanel = rightPanel;
+    public HerdingHoundController() {
+        // No initialization here; everything is done in startGame()
+    }
+
+    /**
+     * Initializes and shows the game. Call this to start the Herding Hound minigame.
+     */
+    public void startGame() {
+        // Initialize model, view, right panel, and frame
+        this.model = new HerdingHoundModelImpl(GRID_SIZE);
+        this.view = new HerdingHoundViewImpl();
+        this.rightPanel = new RightPanelImpl();
+        this.frame = new HerdingHoundFrameImpl();
+
+        // Wire up controller to view and right panel
+        this.view.setController(this);
+        this.rightPanel.setController(this);
+
+        // Set up the frame with the view and right panel
+        this.frame.setupGamePanels((Component) this.view, (Component) this.rightPanel);
+        this.frame.setVisible(true);
+
+        // Set up key listener
         setupKeyListener();
+
+        // Start the countdown, then start the game logic
+        this.view.startCountdown(() -> {
+            model.startGame();
+            startGameLogic();
+            view.requestFocusInWindow();
+        });
     }
 
     private void setupKeyListener() {
@@ -89,10 +103,7 @@ public class HerdingHoundController {
         view.requestFocusInWindow();
     }
 
-    /**
-     * Starts the game logic: enables input, starts dog state and game timers.
-     */
-    public void startGame() {
+    private void startGameLogic() {
         gameActive = true;
         scheduleNextDogState(model.getDog().getState());
         gameTimer = new Timer(1000, (final java.awt.event.ActionEvent e) -> {
