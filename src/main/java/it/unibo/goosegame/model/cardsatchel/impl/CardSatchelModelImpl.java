@@ -16,6 +16,9 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
     private static final int MAX_CARDS = 6;
     private final List<Card> cards = new ArrayList<>();
 
+    public CardSatchelModelImpl() {
+        
+    }
     /**
      * Attempts to add a card to the satchel.
      * @param card the card to add
@@ -26,8 +29,7 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
         if (cards.size() >= MAX_CARDS) {
             return false;
         }
-        // If malus and not throwable, cannot add
-        if (!card.isBonus() && !card.isThrowable()) {
+        if (!card.isBonus()) {
             return false;
         }
         cards.add(card);

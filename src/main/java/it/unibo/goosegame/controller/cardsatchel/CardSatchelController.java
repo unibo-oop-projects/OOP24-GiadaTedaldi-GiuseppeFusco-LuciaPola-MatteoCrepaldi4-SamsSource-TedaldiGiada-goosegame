@@ -1,10 +1,11 @@
 package it.unibo.goosegame.controller.cardsatchel;
 
 import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
+import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
-import java.util.List;
+import it.unibo.goosegame.utilities.Player;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.List;
 
 /**
  * Controller for managing the player's card satchel (bag).
@@ -12,17 +13,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public class CardSatchelController {
     private final CardSatchelModel satchelModel;
+    private final Player owner;
 
     /**
      * Constructs a controller with the given CardSatchelModel.
      * @param satchelModel the model to control
      */
-    @SuppressFBWarnings(
-    value = "EI2",
-    justification = "The controller must operate on the same externally provided model to maintain state consistency."
-)
-    public CardSatchelController(final CardSatchelModel satchelModel) {
-        this.satchelModel = satchelModel;
+    public CardSatchelController(Player owner) {
+        this.satchelModel = new CardSatchelModelImpl();
+        this.owner = owner;
     }
 
     /**
@@ -49,6 +48,7 @@ public class CardSatchelController {
      * @return true if the card was present and removed, false otherwise
      */
     public boolean playCard(final Card card) {
+        this.owner.move(card.getSteps(), card.isBonus());
         return this.removeCard(card);
     }
 
