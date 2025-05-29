@@ -4,7 +4,7 @@ import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
 import it.unibo.goosegame.utilities.Player;
-import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelFrame;
+import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelFrameImpl;
 import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelViewImpl;
 
 import javax.swing.SwingUtilities;
@@ -20,7 +20,7 @@ public class CardSatchelController {
     private final CardSatchelModel satchelModel;
     private final Player owner;
     private CardSatchelViewImpl view;
-    private CardSatchelFrame frame;
+    private CardSatchelFrameImpl frame;
 
     /**
      * Costruttore: inizializza modello, view e frame.
@@ -30,7 +30,7 @@ public class CardSatchelController {
         this.satchelModel = new CardSatchelModelImpl();
         this.owner = owner;
         this.view = new CardSatchelViewImpl(this);
-        this.frame = new CardSatchelFrame(view);
+        this.frame = new CardSatchelFrameImpl(view);
         // Listener per chiusura tramite X
         this.frame.addWindowListener(new WindowAdapter() {
             @Override

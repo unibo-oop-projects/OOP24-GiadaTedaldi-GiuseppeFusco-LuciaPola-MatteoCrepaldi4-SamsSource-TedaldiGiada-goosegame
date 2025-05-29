@@ -1,13 +1,17 @@
 package it.unibo.goosegame.view.cardsatchel.impl;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import it.unibo.goosegame.view.cardsatchel.api.CardSatchelFrame;
+
 import java.awt.BorderLayout;
 
 /**
  * JFrame per mostrare il satchel delle carte del giocatore.
  * Non contiene logica di test, solo la view vera e propria.
  */
-public class CardSatchelFrame extends JFrame {
+public class CardSatchelFrameImpl extends JFrame implements CardSatchelFrame {
     private static final long serialVersionUID = 1L;
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 300;
@@ -16,7 +20,7 @@ public class CardSatchelFrame extends JFrame {
      * Costruttore: riceve la view da mostrare.
      * @param view la view del satchel
      */
-    public CardSatchelFrame(final CardSatchelViewImpl view) {
+    public CardSatchelFrameImpl(final JPanel view) {
         super("Satchel");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());

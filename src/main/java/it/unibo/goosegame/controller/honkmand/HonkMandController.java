@@ -4,7 +4,7 @@ import it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel;
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
 import it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView;
 import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandViewImpl;
-import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandFrame;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandFrameImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
 
@@ -22,7 +22,7 @@ import java.util.List;
 public class HonkMandController {
     private HonkMandModel model;
     private HonkMandView view;
-    private HonkMandFrame frame;
+    private HonkMandFrameImpl frame;
     private Timer sequenceTimer;
     private boolean isShowingSequence;
 
@@ -33,7 +33,7 @@ public class HonkMandController {
     public void startGame() {
         this.model = new HonkMandModelImpl();
         this.view = new HonkMandViewImpl();
-        this.frame = new HonkMandFrame();
+        this.frame = new HonkMandFrameImpl();
 
         this.view.setFrameRef(this.frame);
         this.frame.setupGamePanel((JPanel)this.view);

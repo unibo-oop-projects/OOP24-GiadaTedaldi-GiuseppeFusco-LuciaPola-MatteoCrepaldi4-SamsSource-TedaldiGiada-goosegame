@@ -4,7 +4,7 @@ import it.unibo.goosegame.model.minigames.herdinghound.api.Dog.State;
 import it.unibo.goosegame.model.minigames.herdinghound.api.HerdingHoundModel;
 import it.unibo.goosegame.model.minigames.herdinghound.impl.HerdingHoundModelImpl;
 import it.unibo.goosegame.view.minigames.herdinghound.api.HerdingHoundView;
-import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundFrame;
+import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundFrameImpl;
 import it.unibo.goosegame.view.minigames.herdinghound.impl.HerdingHoundViewImpl;
 import it.unibo.goosegame.view.minigames.herdinghound.impl.RightPanelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
@@ -31,7 +31,7 @@ public class HerdingHoundController {
 
     private HerdingHoundModel model;
     private HerdingHoundView view;
-    private HerdingHoundFrame frame;
+    private HerdingHoundFrameImpl frame;
     private RightPanelImpl rightPanel;
     private Timer dogStateTimer;
     private Timer gameTimer;
@@ -54,7 +54,7 @@ public class HerdingHoundController {
         this.model = new HerdingHoundModelImpl(GRID_SIZE);
         this.view = new HerdingHoundViewImpl();
         this.rightPanel = new RightPanelImpl();
-        this.frame = new HerdingHoundFrame();
+        this.frame = new HerdingHoundFrameImpl();
 
         // Wire up controller to view and right panel
         this.view.setController(this);

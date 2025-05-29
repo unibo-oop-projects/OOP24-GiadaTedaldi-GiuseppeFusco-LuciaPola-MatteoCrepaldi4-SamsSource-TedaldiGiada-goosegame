@@ -22,7 +22,7 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
     private static final int CARD_HEIGHT = 180;
     private static final Color SATCHEL_BROWN = new Color(139, 69, 19);
 
-    private final CardPanelView[] cardPanels;
+    private final CardPanelViewImpl[] cardPanels;
     private final transient CardSatchelController controller;
 
     /**
@@ -38,7 +38,7 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
         this.controller = controller;
         setBackground(SATCHEL_BROWN); // brown satchel
         setLayout(new GridLayout(1, MAX_CARDS, 10, 10));
-        cardPanels = new CardPanelView[MAX_CARDS];
+        cardPanels = new CardPanelViewImpl[MAX_CARDS];
         final List<Card> cards = this.controller.getCards();
         for (int i = 0; i < MAX_CARDS; i++) {
             final Card card = i < cards.size() ? cards.get(i) : null;
@@ -61,12 +61,12 @@ public final class CardSatchelViewImpl extends JPanel implements CardSatchelView
         repaint();
     }
 
-    private CardPanelView createCardPanel(final Card card) {
+    private CardPanelViewImpl createCardPanel(final Card card) {
         final Consumer<Card> playAction = c -> {
             controller.playCard(c);
             // Update the view after playing the card
             updateCards(controller.getCards());
         };
-        return new CardPanelView(card, true, "Play", playAction, CARD_WIDTH, CARD_HEIGHT);
+        return new CardPanelViewImpl(card, true, "Play", playAction, CARD_WIDTH, CARD_HEIGHT);
     }
 }
