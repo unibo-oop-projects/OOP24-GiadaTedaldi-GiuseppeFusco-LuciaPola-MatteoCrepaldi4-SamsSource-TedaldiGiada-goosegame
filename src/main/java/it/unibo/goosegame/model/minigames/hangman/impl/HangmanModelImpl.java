@@ -128,8 +128,8 @@ public class HangmanModelImpl implements HangmanModel {
     * {@inheritDoc}
     */
     @Override
-    public int isWon() {
-        return won;
+    public boolean isWon() {
+        return won == 1;
     }
     /**
     * {@inheritDoc}
