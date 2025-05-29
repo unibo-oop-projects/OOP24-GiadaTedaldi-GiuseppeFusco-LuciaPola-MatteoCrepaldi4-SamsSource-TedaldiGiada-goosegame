@@ -1,14 +1,15 @@
 package it.unibo.goosegame.controller.honkmand;
 
 import it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel;
+import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
+import it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandViewImpl;
+import it.unibo.goosegame.view.minigames.honkmand.impl.HonkMandFrame;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.utilities.Colors;
-import it.unibo.goosegame.view.minigames.honkmand.api.HonkMandView;
 
+import javax.swing.JPanel;
 import javax.swing.Timer;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -16,39 +17,38 @@ import java.util.List;
 /**
  * Controller for the HonkMand (Simon Game) minigame.
  * Handles user input, game logic, and updates the view.
+ * Now responsible for initializing and showing the game frame, model, and view.
  */
 public class HonkMandController {
-    /**
-     * References to model and view are intentionally stored as mutable references provided externally.
-     * This controller does not assume responsibility for external modifications to these objects.
-     */
-    private final HonkMandModel model;
-    private final HonkMandView view;
+    private HonkMandModel model;
+    private HonkMandView view;
+    private HonkMandFrame frame;
     private Timer sequenceTimer;
     private boolean isShowingSequence;
 
-    /**
-     * Constructor. Connects model and view and initializes listeners.
-     * @param model the game logic model
-     * @param view the game view
-     */
-    @SuppressFBWarnings(value = "EI2",
-     justification = "Controller does not modify external view/model and assumes trusted injection")
-    public HonkMandController(final HonkMandModel model, final HonkMandView view) {
-        this.model = model;
-        this.view = view;
+    public HonkMandController() {
+        // Vuoto, tutto in startGame()
+    }
+
+    public void startGame() {
+        this.model = new HonkMandModelImpl();
+        this.view = new HonkMandViewImpl();
+        this.frame = new HonkMandFrame();
+
+        this.view.setFrameRef(this.frame);
+        this.frame.setupGamePanel((JPanel)this.view);
+        this.frame.setVisible(true);
+
+        // Wiring controller, model, view (game logic)
         initController();
     }
 
-    /**
-     * Initializes the view and button listeners.
-     */
     private void initController() {
         view.updateScore(model.getScore());
         view.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                startGame();
+                startNewGame();
             }
         });
 
@@ -59,10 +59,7 @@ public class HonkMandController {
         view.addColorButtonListener(Colors.BLUE, e -> handleButtonClick(Colors.BLUE));
     }
 
-    /**
-     * Starts a new game and shows the sequence.
-     */
-    private void startGame() {
+    private void startNewGame() {
         model.startGame();
         view.setGameActive(true);
         view.updateLevel(model.getLevel());
@@ -71,22 +68,18 @@ public class HonkMandController {
 
         // Use a Timer to play the sequence after a short delay
         final Timer timer = new Timer(it.unibo.goosegame.utilities.HonkMandConstants.SEQUENCE_START_DELAY, e -> {
-            ((Timer) e.getSource()).stop(); // Stop the timer
+            ((Timer) e.getSource()).stop();
             playSequence();
         });
         timer.setRepeats(false);
         timer.start();
     }
 
-    /**
-     * Plays the color sequence with animation.
-     */
     private void playSequence() {
-        isShowingSequence = true; // <--- Set flag true at start
+        isShowingSequence = true;
         view.setButtonsEnabled(false);
         final List<Colors> sequence = model.getSequence();
 
-        // Use a Timer to simulate the delay between button lights
         if (sequenceTimer != null && sequenceTimer.isRunning()) {
             sequenceTimer.stop();
         }
@@ -103,10 +96,9 @@ public class HonkMandController {
                     index[0]++;
                 } else {
                     sequenceTimer.stop();
-                    // Add a short delay before enabling the buttons
                     final Timer enableButtonsTimer = new Timer(
                         it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_ENABLE_DELAY, event -> {
-                        isShowingSequence = false; // <--- Set flag false when done
+                        isShowingSequence = false;
                         view.setButtonsEnabled(true);
                         view.showMessage(it.unibo.goosegame.utilities.HonkMandMessages.YOUR_TURN, false);
                         ((Timer) event.getSource()).stop();
@@ -122,15 +114,10 @@ public class HonkMandController {
         sequenceTimer.start();
     }
 
-    /**
-     * Handles the click on a color button.
-     * @param colorId the selected color
-     */
     private void handleButtonClick(final Colors colorId) {
         if (isShowingSequence) {
-            return; // Ignore clicks during sequence display
+            return;
         }
-        // Use the new state management
         if (model.getGameState() != GameState.ONGOING) {
             return;
         }
@@ -177,10 +164,6 @@ public class HonkMandController {
         }
     }
 
-    /**
-     * Performs a victory celebration animation.
-     * @param onEnd callback to execute at the end of the animation
-     */
     private void celebrateVictory(final Runnable onEnd) {
         final Colors[] colors = Colors.values();
         final int total = colors.length;
@@ -191,13 +174,10 @@ public class HonkMandController {
         celebrationTimer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                // Turn off the previous button (if not the first round)
                 if (index[0] > 0) {
                     final Colors prevColor = colors[index[0] - 1];
-                    // Restore the original color
                     view.lightUpButton(prevColor, 0);
                 }
-                // If the sequence is finished, stop the timer
                 if (index[0] >= total) {
                     ((Timer) e.getSource()).stop();
                     if (onEnd != null) {
@@ -205,7 +185,6 @@ public class HonkMandController {
                     }
                     return;
                 }
-                // Light up the current button
                 view.lightUpButton(colors[index[0]],
                     it.unibo.goosegame.utilities.HonkMandConstants.BUTTON_CLICK_LIGHT_DURATION);
                 index[0]++;
