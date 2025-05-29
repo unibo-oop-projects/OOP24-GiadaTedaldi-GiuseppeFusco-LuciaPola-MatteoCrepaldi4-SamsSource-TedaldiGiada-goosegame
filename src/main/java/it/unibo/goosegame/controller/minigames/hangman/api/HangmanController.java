@@ -16,7 +16,7 @@ public interface HangmanController {
      */
     void startGame();
     /**
-     * 
+     * @return the current state of the game.
      */
     GameState getGameState();
 }

@@ -38,7 +38,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
     }
 
     /**
-     * 
+     * @return the current state of the game.
      */
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
