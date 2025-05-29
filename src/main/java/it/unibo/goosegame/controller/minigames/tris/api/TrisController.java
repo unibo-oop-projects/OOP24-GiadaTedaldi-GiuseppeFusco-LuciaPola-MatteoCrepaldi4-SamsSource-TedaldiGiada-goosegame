@@ -24,9 +24,4 @@ public interface TrisController {
      */
     void updateView();
 
-    /**
-     * Ends the current round by disabling user input and showing the round result.
-     * If the match is over(best of 3), the final result is displayed.
-    void endGame();
-    */
 }
