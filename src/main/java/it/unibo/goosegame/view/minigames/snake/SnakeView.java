@@ -69,6 +69,13 @@ public class SnakeView extends JFrame {
         super.setResizable(false); 
     }
 
+    /**
+     *
+     * This method is responsible for updating the view when the game state changes.
+     * It repaints the panel to reflect the current state of the game.
+     *
+     * @param win indicates whether the player has won or lost the game
+     */
     public void showOverMessage(final boolean win) {
         JOptionPane.showMessageDialog(this, win ? "You win!" : "You lose...");
         this.dispose();

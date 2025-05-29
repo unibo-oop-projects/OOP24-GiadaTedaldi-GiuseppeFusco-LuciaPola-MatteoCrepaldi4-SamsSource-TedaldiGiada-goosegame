@@ -57,7 +57,7 @@ public class MemoryViewImpl implements MemoryView  {
      */
     public MemoryViewImpl(final MemoryModel model) {
         this.model = model;
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.frame.setTitle(model.getName());
         this.frame.setLayout(new GridLayout(SIZE, SIZE));
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();

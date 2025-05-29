@@ -98,7 +98,7 @@ public class MemoryModelImpl implements MemoryModel {
      */
     @Override 
     public GameState getGameState() {
-        return shown.size() == values.size() ? GameState.WON : GameState.LOST;
+        return shown.size() == values.size() ? GameState.WON : GameState.ONGOING;
     }
 
     /**

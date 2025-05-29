@@ -18,5 +18,4 @@ public interface TrisController {
      * @param position the position on the board where the human player wants to move
      */
     void makeMove(Position position);
-    
 }

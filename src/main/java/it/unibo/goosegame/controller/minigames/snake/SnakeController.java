@@ -21,6 +21,7 @@ public class SnakeController {
     private final SnakeModel model;
     private final SnakeView view;
     private final Timer timer;
+    private GameState gameState = GameState.NOT_STARTED;
 
     /**
      * Constructor for SnakeController.
@@ -53,9 +54,19 @@ public class SnakeController {
                 if (model.isOver() || model.checkWin()) {
                     timer.stop();
                     view.showOverMessage(model.getGameState() == GameState.WON);
+                    gameState = model.getGameState();
                 }
             }
         });
         timer.start();
+    }
+
+    /**
+     * Gets the current game state of the snake game from controller.
+     * 
+     * @return the current game state
+     */
+    public GameState getGameState() {
+        return this.gameState;
     }
 }
