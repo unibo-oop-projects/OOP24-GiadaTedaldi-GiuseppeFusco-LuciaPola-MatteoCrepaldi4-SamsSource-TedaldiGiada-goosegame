@@ -1,8 +1,11 @@
 package it.unibo.goosegame.view.minigames.rockpaperscissors;
 
+import it.unibo.goosegame.controller.minigames.rockpaperscissors.api.RockPaperScissorsController;
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
+import it.unibo.goosegame.model.minigames.rockpaperscissors.api.RockPaperScissorsModel;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
+import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissorsView;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissorsViewImpl;
 
 /**
@@ -10,9 +13,9 @@ import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissor
  */
 public class RockPaperScissorsMenu extends MinigameMenuImpl {
     private static final long serialVersionUID = 1L;
-    private transient RockPaperScissorsControllerImpl controller;
-    private transient RockPaperScissorsModelImpl model;
-    private transient RockPaperScissorsViewImpl view;
+    private transient RockPaperScissorsController controller;
+    private transient RockPaperScissorsModel model;
+    private transient RockPaperScissorsView view;
     /**
      * Constructor for the RockPaperScissorsMenu class.
      */
@@ -37,12 +40,13 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
      *  Inizialize view.
      */
     private void initialize() {
-       model = new RockPaperScissorsModelImpl();
-       getStartButton().addActionListener(e -> {
+      model = new RockPaperScissorsModelImpl();
+      getStartButton().addActionListener(e -> {
             view = new RockPaperScissorsViewImpl();
-            controller = new RockPaperScissorsControllerImpl(model, view, this);
+            controller = new RockPaperScissorsControllerImpl(model, view);
             view.initializeView();
             controller.startGame();
-       });
+            dispose();
+      });
     }
 }

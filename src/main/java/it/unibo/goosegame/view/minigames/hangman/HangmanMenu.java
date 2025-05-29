@@ -12,9 +12,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
+import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
+import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
 import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 
 /**
@@ -75,14 +78,14 @@ public class HangmanMenu extends MinigameMenuImpl {
      * Initialize view.
      */
     private void initialize() {
-        final HangmanViewImpl view = new HangmanViewImpl();
+        final HangmanView view = new HangmanViewImpl();
         view.initializeView();
-        final HangmanModelImpl model = new HangmanModelImpl(loadWords().toArray(new String[0]));
-        final HangmanControllerImpl controller = new HangmanControllerImpl(view, model, this);
+        final HangmanModel model = new HangmanModelImpl(loadWords().toArray(new String[0]));
+        final HangmanController controller = new HangmanControllerImpl(view, model);
         view.setController(controller);
         getStartButton().addActionListener(e -> {
-            view.setVisible(true);
             controller.startGame();
+            dispose();
         });
     }
 }

@@ -27,7 +27,7 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
     private static final int WINDOW_HEIGHT = 400;
     private static final int BUTTON_WIDTH = 130;
     private static final int BUTTON_HEIGHT = 110;
-    private static final int ICON_SIZE = 25;
+    private static final int ICON_SIZE = 35;
     private static final long serialVersionUID = 1L;
     private final JPanel mainPanel;
     private final Image background;
@@ -91,7 +91,7 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
     /**
      * @return mainPanel
      */
-    private JPanel createMainPanel(/*final ActionListener al*/) {
+    private JPanel createMainPanel() {
         final JPanel panel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(final Graphics g) {

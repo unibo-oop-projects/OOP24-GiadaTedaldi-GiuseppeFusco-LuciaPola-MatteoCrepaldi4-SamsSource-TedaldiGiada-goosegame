@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.goosegame.model.minigames.rockpaperscissors.api.RockPaperScissorsModel;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
 /**
  * This class contains unit tests for the RockPaperScissorsModel class.
@@ -14,7 +15,7 @@ class TestRockPaperScissorsModelImpl {
     private static final String ROCK = "ROCK";
     private static final String PAPER = "PAPER";
     private static final String SCISSORS = "SCISSORS"; 
-    private RockPaperScissorsModelImpl model;
+    private RockPaperScissorsModel model;
 
     /**
      * Set up the test environment before each test method is run.
