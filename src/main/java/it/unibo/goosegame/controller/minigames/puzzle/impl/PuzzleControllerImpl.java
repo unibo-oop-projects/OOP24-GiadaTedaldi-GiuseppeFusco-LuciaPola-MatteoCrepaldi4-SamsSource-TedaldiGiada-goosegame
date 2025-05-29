@@ -63,18 +63,17 @@ public class PuzzleControllerImpl implements PuzzleController {
      * {@inheritDoc}
      */
     @Override
-    public void timeOver() {
-        this.model.setTimeOver(true);
-        this.checkGameOver();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void shufflePuzzle() {
         this.model.shuffle();
         this.startTimer();
+    }
+
+    /**
+     * Called when the game timer reaches zero.
+     */
+    private void timeOver() {
+        this.model.setTimeOver(true);
+        this.checkGameOver();
     }
 
     /**
@@ -98,6 +97,7 @@ public class PuzzleControllerImpl implements PuzzleController {
         });
         this.gameTimer.start();
     }
+
     /**
      * Updates the timer label on the view with the current time left.
      */
