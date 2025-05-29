@@ -7,27 +7,16 @@ import it.unibo.goosegame.utilities.Position;
  */
 public interface TrisController {
     /**
-     * Initilizes the controller by linking it to the view.
+     * Initilizes the controller by linking it to the view and starts the game.
      * This method must be called after constructing the controller and the view.
      */
-    void init();
+    void startGame();
 
     /**
      * Handles a moves made by the human player at the specified position.
      * 
      * @param position the position on the board where the human player wants to move
      */
-    void movesMaker(Position position);
-
-    /**
-     * Updates the view based on the current state of the game model.
-     */
-    void updateView();
-
-    /**
-     * Ends the current round by disabling user input and showing the round result.
-     * If the match is over(best of 3), the final result is displayed.
-     */
-    void endGame();
-
+    void makeMove(Position position);
+    
 }

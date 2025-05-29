@@ -81,6 +81,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
         final JPanel rightPanel = createImagePanel();
         panel.add(mainPanel, BorderLayout.CENTER);
         panel.add(rightPanel, BorderLayout.EAST);
+        super.setVisible(true);
     }
     /**
      * {@inheritDoc}
@@ -152,6 +153,17 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
             .filter(JButton.class::isInstance)
             .map(JButton.class::cast)
             .forEach(button -> button.setEnabled(true));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(
+        value = "EI2", 
+        justification = "Safe usage within UI context; no subclass is expected to override this behavior.")
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     private JPanel createMainPanel() {

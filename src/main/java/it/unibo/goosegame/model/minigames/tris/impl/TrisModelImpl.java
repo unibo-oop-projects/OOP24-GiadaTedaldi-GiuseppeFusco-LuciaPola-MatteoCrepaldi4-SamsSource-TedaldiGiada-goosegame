@@ -56,14 +56,10 @@ public class TrisModelImpl implements TrisModel {
      */
     @Override
     public GameState getGameState() {
-        if (this.checkWin()) {
-           for (final Set<Position> line : WINNING_LINES) {
-                if (line.stream().allMatch(p -> this.grid.get(p) == Player.HUMAN)) {
-                    return GameState.WON;
-                } else if (line.stream().allMatch(p -> this.grid.get(p) == Player.PC)) {
-                    return GameState.LOST;
-                }
-            } 
+        if (this.hasPlayerWon(Player.HUMAN)) {
+            return GameState.WON;
+        } else if (this.hasPlayerWon(Player.PC)) {
+            return GameState.LOST;
         } else if (this.isFull()) {
             return GameState.TIE;
         }
@@ -109,34 +105,46 @@ public class TrisModelImpl implements TrisModel {
         }
 
         // Try to win
-        for (final Position pos: availablePos()) {
-            this.grid.put(pos, Player.PC);
-            if (checkWin()) {
-                this.currentPlayer = Player.HUMAN;
-                return;
-            }
-            this.grid.remove(pos);
+        final Position winningPos = this.getWinningMove(Player.PC);
+        if (winningPos != null) {
+            this.grid.put(winningPos, Player.PC);
+            this.currentPlayer = Player.HUMAN;
+            return;
         }
 
         // Try to block the human 
-        for (final Position pos: availablePos()) {
-            this.grid.put(pos, Player.HUMAN);
-            if (checkWin()) {
-                this.grid.remove(pos);
-                this.grid.put(pos, Player.PC);
-                this.currentPlayer = Player.HUMAN;
-                return;
-            }
-            this.grid.remove(pos);
+        final Position blockingPos = this.getWinningMove(Player.HUMAN);
+        if (blockingPos != null) {
+            this.grid.put(blockingPos, Player.PC);
+            this.currentPlayer = Player.HUMAN;
+            return;
         }
 
         // Make a random move 
         final List<Position> avPos = availablePos();
         if (!avPos.isEmpty()) {
-            final Position random = avPos.get(this.random.nextInt(avPos.size()));
-            this.grid.put(random, Player.PC);
+            final Position randomPos = avPos.get(this.random.nextInt(avPos.size()));
+            this.grid.put(randomPos, Player.PC);
             this.currentPlayer = Player.HUMAN;
         }
+    }
+
+    /**
+     * Finds a winning move for the specified player, if any.
+     * 
+     * @param player the player to check for a winning move
+     * @return the position where the player can win with the next move, or null if no winning move exists
+     */
+    private Position getWinningMove(final Player player) {
+        for (final Position pos: availablePos()) {
+            this.grid.put(pos, player);
+            final boolean haswon = this.checkWin();
+            this.grid.remove(pos);
+            if (haswon) {
+                return pos;
+            }
+        }
+        return null;
     }
 
     /**
@@ -184,21 +192,18 @@ public class TrisModelImpl implements TrisModel {
      */
     @Override
     public boolean checkWin() {
-        return WINNING_LINES.stream()
-            .anyMatch(l -> l.stream().allMatch(p -> this.grid.containsKey(p) && this.grid.get(p) == Player.HUMAN)
-                || l.stream().allMatch(p -> this.grid.containsKey(p) && this.grid.get(p) == Player.PC));
+        return this.hasPlayerWon(Player.HUMAN) || this.hasPlayerWon(Player.PC);
     }
 
     /**
-     * {@inheritDoc}
+     * Checks whether the specified player has won the game.
+     * 
+     * @param player the player to check for a  win condition
+     * @return true if the player has won, false otherwise
      */
-    @Override
-    public String getStatus() {
-        if (this.getGameState() == GameState.LOST) {
-            return "Game Over!";
-        } else {
-            return "Your turn!";
-        }
+    private boolean hasPlayerWon(final Player player) {
+        return WINNING_LINES.stream()
+            .anyMatch(l -> l.stream().allMatch(p -> player.equals(this.grid.get(p))));
     }
 
     /**

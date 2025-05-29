@@ -4,16 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.Timer;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
-import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.utilities.Position;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
-import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
+
 
 /**
  * Implementation of the {@link PuzzleController} interface.
@@ -29,10 +30,13 @@ public class PuzzleControllerImpl implements PuzzleController {
     /**
      * Constructs a new instance of {@link PuzzleControllerImpl}.
      * 
+     * @param model PuzzleModel
+     * @param view PuzzleView
      */
-    public PuzzleControllerImpl() {
-        this.model = new PuzzleModelImpl();
-        this.view = new PuzzleViewImpl();
+    @SuppressFBWarnings(value = "EI2", justification = "model and view are used internally and not exposed")
+    public PuzzleControllerImpl(final PuzzleModel model, final PuzzleView view) {
+        this.model = Objects.requireNonNull(model);
+        this.view = Objects.requireNonNull(view);
         this.timeLeft = INIT_TIME;
     }
 
@@ -40,7 +44,7 @@ public class PuzzleControllerImpl implements PuzzleController {
      * {@inheritDoc}
      */
     @Override
-    public void init() {
+    public void startGame() {
         this.view.setController(this);
     }
 
@@ -59,20 +63,22 @@ public class PuzzleControllerImpl implements PuzzleController {
      * {@inheritDoc}
      */
     @Override
-    public void timeOver() {
-        this.model.setTimeOver(true);
-        this.checkGameOver();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void shufflePuzzle() {
         this.model.shuffle();
         this.startTimer();
     }
 
+    /**
+     * Called when the game timer reaches zero.
+     */
+    private void timeOver() {
+        this.model.setTimeOver(true);
+        this.checkGameOver();
+    }
+
+    /**
+     * Sarts the game timer.
+     */
     private void startTimer() {
         this.updateViewTimer();
         if (this.gameTimer != null && this.gameTimer.isRunning()) {
@@ -91,6 +97,7 @@ public class PuzzleControllerImpl implements PuzzleController {
         });
         this.gameTimer.start();
     }
+
     /**
      * Updates the timer label on the view with the current time left.
      */
@@ -116,8 +123,8 @@ public class PuzzleControllerImpl implements PuzzleController {
     private void checkGameOver() {
         final GameState state = this.model.getGameState();
         if (state == GameState.WON || state == GameState.LOST) {
-            this.view.showResultMessage(state == GameState.WON);
             this.stopTimer();
+            this.view.showResultMessage(state == GameState.WON);
             this.view.endGame();
         }
     }

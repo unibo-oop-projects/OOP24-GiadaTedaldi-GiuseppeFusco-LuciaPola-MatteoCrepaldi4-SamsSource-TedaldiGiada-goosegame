@@ -91,6 +91,8 @@ public class PuzzleModelImpl implements PuzzleModel {
         if (this.first.isEmpty()) {
             this.first = Optional.of(pos);
             return false;
+        } else if (this.first.get().equals(pos)) {
+            return false;
         } else {
             swapCell(this.first.get(), pos);
             this.first = Optional.empty();

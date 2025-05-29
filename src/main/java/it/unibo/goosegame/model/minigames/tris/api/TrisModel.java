@@ -58,13 +58,6 @@ public interface TrisModel extends MinigamesModel {
     boolean isPc(Position position);
 
     /**
-     * Returns a string representing the current status of the game.
-     * 
-     * @return a message indicating whether the game is ongoing or over
-     */
-    String getStatus();
-
-    /**
      * Returns the internal grid representing the current state of the game.
      * The grid maps positions to the player occupying them.
      * 

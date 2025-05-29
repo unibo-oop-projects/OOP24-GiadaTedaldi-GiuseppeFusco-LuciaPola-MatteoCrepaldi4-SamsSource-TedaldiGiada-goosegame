@@ -61,7 +61,7 @@ public class TrisViewImpl extends JFrame implements TrisView {
                 buttons[r][c].setFocusPainted(false);
                 buttons[r][c].addActionListener(e -> {
                     if (this.controller != null) {
-                        this.controller.movesMaker(new Position(r, c));
+                        this.controller.makeMove(new Position(r, c));
                     }
                 });
                 gridPanel.add(buttons[r][c]);
@@ -112,8 +112,8 @@ public class TrisViewImpl extends JFrame implements TrisView {
      * {@inheritDoc}
      */
     @Override
-    public void closeGame(final String result) {
-        JOptionPane.showMessageDialog(this, result + "\nThe windows will now close");
+    public void endGame(final String result) {
+        JOptionPane.showMessageDialog(this, result);
         this.dispose();
     }
 
