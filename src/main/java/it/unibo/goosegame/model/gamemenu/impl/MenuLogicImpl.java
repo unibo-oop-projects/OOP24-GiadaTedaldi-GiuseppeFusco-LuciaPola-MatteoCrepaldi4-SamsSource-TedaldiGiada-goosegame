@@ -49,7 +49,7 @@ public class MenuLogicImpl implements MenuLogic {
             return;
         }
         view.dispose();
-        new GameBoardImpl(playerCount);
+        new GameBoardImpl(players);
     }
 
     /**
