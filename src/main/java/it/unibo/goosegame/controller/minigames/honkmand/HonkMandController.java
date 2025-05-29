@@ -1,4 +1,4 @@
-package it.unibo.goosegame.controller.honkmand;
+package it.unibo.goosegame.controller.minigames.honkmand;
 
 import it.unibo.goosegame.model.minigames.honkmand.api.HonkMandModel;
 import it.unibo.goosegame.model.minigames.honkmand.impl.HonkMandModelImpl;
