@@ -6,6 +6,8 @@ import it.unibo.goosegame.model.player.api.Player;
 import java.awt.Color;
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Implementation of {@link Player}.
  */
@@ -19,8 +21,8 @@ public final class PlayerImpl implements Player {
 
     private final String name;            // Name of the player, could be hardcoded or dynamic
     private final Color color;            // Color of the player's in game icon
-    private int position;    
-    private final CardSatchelController stachel;       // Real time position of the player
+    private int position;                 // Real time position of the player
+    private final CardSatchelController stachel;
 
     /**
      * Constructor for the {@link PlayerImpl} class.
@@ -84,6 +86,11 @@ public final class PlayerImpl implements Player {
         return List.of(COLORS);
     }
 
+    /**
+     * Returns the player's satchel.
+     * The returned object is mutable and modifications will affect the player directly.
+     */
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     @Override
     public CardSatchelController getSatchel() {
         return this.stachel;
