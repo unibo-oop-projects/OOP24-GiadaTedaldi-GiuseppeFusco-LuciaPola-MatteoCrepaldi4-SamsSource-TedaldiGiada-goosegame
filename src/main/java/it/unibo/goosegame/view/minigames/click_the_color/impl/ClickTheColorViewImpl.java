@@ -1,5 +1,6 @@
 package it.unibo.goosegame.view.minigames.click_the_color.impl;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.click_the_color.api.ClickTheColorModel;
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
 
@@ -11,11 +12,13 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+// import javax.swing.*;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.Timer;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 /**
  * Implementation of {@link ClickTheColorView}.
@@ -79,6 +82,9 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
 
     private void stopGame() {
         this.gameTimer.stop();
+
+        JOptionPane.showMessageDialog(frame, model.getGameState() == GameState.WON ? "You won!" : "You lost!");
+
         this.frame.dispose();
     }
 

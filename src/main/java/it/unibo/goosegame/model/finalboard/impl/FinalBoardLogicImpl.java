@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import it.unibo.goosegame.controller.gameboard.api.GameBoard;
 import it.unibo.goosegame.model.finalboard.api.FinalBoardLogic;
-import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
 import it.unibo.goosegame.model.player.api.Player;
 
 /**
@@ -15,16 +15,16 @@ import it.unibo.goosegame.model.player.api.Player;
  */
 public class FinalBoardLogicImpl implements FinalBoardLogic {
 
-    private final GameBoardModel gameBoardModel;
+    private final GameBoard gameBoard;
 
     /**
      * Constructor for FinalBoardLogicImpl.
      * Initializes the final board logic.
      * 
-     * @param gameBoardModel the game board model containing the players
+     * @param gameBoard the game board model containing the players
      */
-    public FinalBoardLogicImpl(final GameBoardModel gameBoardModel) {
-        this.gameBoardModel = gameBoardModel;
+    public FinalBoardLogicImpl(final GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     /**
@@ -32,7 +32,7 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
      */
     @Override
     public Map<String, Integer> getFinalBoard() {
-        return gameBoardModel.getPlayers().stream()
+        return gameBoard.getPlayers().stream()
         .sorted(Comparator.comparingInt(Player::getPosition).reversed())
         .collect(Collectors.toMap(
             Player::getName,

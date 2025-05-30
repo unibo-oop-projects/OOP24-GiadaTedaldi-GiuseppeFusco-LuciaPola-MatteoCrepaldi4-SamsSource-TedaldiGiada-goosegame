@@ -1,5 +1,6 @@
 package it.unibo.goosegame.view.minigames.three_cups_game.impl;
 
+import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.model.minigames.three_cups_game.api.ThreeCupsGameModel;
 import it.unibo.goosegame.view.minigames.three_cups_game.api.ThreeCupsGameView;
 
@@ -85,7 +86,7 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
      * Utility method used to stop the game cycle.
      */
     private void finishGame() {
-        JOptionPane.showMessageDialog(frame, "Game finished");
+        JOptionPane.showMessageDialog(frame, model.getGameState() == MinigamesModel.GameState.WON ? "You won!" : "You lost!");
 
         this.gameTimer.stop();
         this.frame.dispose();
@@ -162,7 +163,6 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
             @Override
             public void mouseClicked(final MouseEvent e) {
                 model.clicked(imageLabels.indexOf(imageContainer));
-                // System.out.println(imageLabels.indexOf(imageContainer));
             }
         });
         return imageContainer;

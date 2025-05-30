@@ -12,8 +12,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Implementation of {@link Player}.
  */
 public final class PlayerImpl implements Player {
-    private static final int CELLS_NUM = 63;
-
     /**
      * Array containing all the possible player colors.
      */
@@ -35,26 +33,6 @@ public final class PlayerImpl implements Player {
         this.color = COLORS[colorIndex];
         this.position = 0;
         this.stachel = new CardSatchelController(this);
-    }
-
-    /**
-     *  {@inheritDoc}
-     */
-    @Override
-    public void move(final int steps, final boolean isForward) {
-        if (isForward) {
-            if (position + steps <= CELLS_NUM) {
-                position += steps;
-            } else {
-                position = CELLS_NUM - (steps - (CELLS_NUM - position));
-            }
-        } else {
-            if (position - steps < 0) {
-                position = 0;   // Making sure the player can't go out of bounds
-            } else {
-                position -= steps;
-            }
-        }
     }
 
     /**

@@ -10,14 +10,6 @@ import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
  */
 public interface Player {
     /**
-     * Updates the player position.
-     *
-     * @param steps number of steps the player has to take
-     * @param isForward wether the steps are forward or backwards
-     */
-    void move(int steps, boolean isForward);
-
-    /**
      * Moves the player to the specified cell index.
      *
      * @param cellIndex index of the cell
