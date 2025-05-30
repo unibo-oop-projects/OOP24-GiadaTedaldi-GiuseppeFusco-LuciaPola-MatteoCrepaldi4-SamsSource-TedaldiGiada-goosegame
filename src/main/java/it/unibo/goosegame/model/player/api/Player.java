@@ -3,6 +3,8 @@ package it.unibo.goosegame.model.player.api;
 import java.awt.Color;
 import java.util.List;
 
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
+
 /**
  * Class that stores information about players.
  */
@@ -49,4 +51,11 @@ public interface Player {
      * @return list of colors
      */
     List<Color> getColorsList();
+
+    /**
+     * Getter for the player's satchel.
+     *
+     * @return the player's satchel
+     */
+    CardSatchelController getSatchel();
 }

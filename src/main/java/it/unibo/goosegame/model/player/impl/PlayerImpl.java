@@ -1,5 +1,6 @@
 package it.unibo.goosegame.model.player.impl;
 
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.model.player.api.Player;
 
 import java.awt.Color;
@@ -18,7 +19,8 @@ public final class PlayerImpl implements Player {
 
     private final String name;            // Name of the player, could be hardcoded or dynamic
     private final Color color;            // Color of the player's in game icon
-    private int position;           // Real time position of the player
+    private int position;    
+    private final CardSatchelController stachel;       // Real time position of the player
 
     /**
      * Constructor for the {@link PlayerImpl} class.
@@ -30,6 +32,7 @@ public final class PlayerImpl implements Player {
         this.name = name;
         this.color = COLORS[colorIndex];
         this.position = 0;
+        this.stachel = new CardSatchelController(this);
     }
 
     /**
@@ -79,5 +82,10 @@ public final class PlayerImpl implements Player {
     @Override
     public List<Color> getColorsList() {
         return List.of(COLORS);
+    }
+
+    @Override
+    public CardSatchelController getSatchel() {
+        return this.stachel;
     }
 }

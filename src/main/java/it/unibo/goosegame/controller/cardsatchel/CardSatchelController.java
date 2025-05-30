@@ -110,4 +110,12 @@ public class CardSatchelController {
     public boolean isSatchelFull() {
         return satchelModel.isFull();
     }
+
+    /**
+     * Returns the owner player.
+     * @return the owner player
+     */
+    public Player getPlayer() {
+        return this.owner;
+    }
 }
