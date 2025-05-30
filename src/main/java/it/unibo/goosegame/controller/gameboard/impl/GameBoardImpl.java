@@ -43,6 +43,10 @@ public class GameBoardImpl implements GameBoard {
         this.view.show();
     }
 
+    /**
+     * Method used to initialise the game cells.
+     * It creates a list of {@link Cell} objects and adds the players to the first cell.
+     */
     private void initGameCells() {
         for (int i = 0; i < CELLS_NUM; i++) {
             gameCells.add(new CellImpl());
@@ -59,5 +63,13 @@ public class GameBoardImpl implements GameBoard {
     @Override
     public List<Player> getPlayers() {
         return players;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void move(final Player player, final int steps, final boolean isForward) {
+        model.move(player, steps, isForward);
     }
 }
