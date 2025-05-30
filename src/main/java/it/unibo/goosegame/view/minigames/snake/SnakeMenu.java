@@ -1,5 +1,6 @@
 package it.unibo.goosegame.view.minigames.snake;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.controller.minigames.snake.SnakeController;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
@@ -10,6 +11,7 @@ import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 public class SnakeMenu extends MinigameMenuImpl {
 
     private static final long serialVersionUID = 1L;
+    private transient SnakeController controller;
 
     /**
      * Constructor for the SnakeMenu class.
@@ -29,21 +31,17 @@ public class SnakeMenu extends MinigameMenuImpl {
 
     private void initialize() {
         getStartButton().addActionListener(e -> {
-            new SnakeController();
-            super.dispose();
-        });
-    }
-    /*
-     * public GameState initialize() {
-        getStartButton().addActionListener(e -> {
-            SnakeController c = new SnakeController(() -> {
-                super.dispose();
-            });
-            this.gameState = c.getGameState();
+            controller = new SnakeController();
             super.setVisible(false);
         });
-
-        return gameState;
     }
-    */
+
+    /**
+     * Gets the current game state of the snake game.
+     * 
+     * @return the current game state, or NOT_STARTED if the controller is null
+     */
+    public GameState getGameState() {
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
+    }
 }

@@ -1,6 +1,8 @@
-package it.unibo.goosegame.view.general;
+package it.unibo.goosegame.view.cardsatchel.impl;
 
 import it.unibo.goosegame.utilities.Card;
+import it.unibo.goosegame.view.cardsatchel.api.CardPanelView;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -23,7 +25,7 @@ import java.util.function.Consumer;
  * A reusable panel for displaying a card, its image, name, and description, with click-to-toggle description.
  * Optionally, a button can be shown (e.g., Play) with a callback.
  */
-public final class CardPanelView extends JPanel {
+public final class CardPanelViewImpl extends JPanel implements CardPanelView {
     private static final long serialVersionUID = 1L;
     private static final int DEFAULT_WIDTH = 120;
     private static final int DEFAULT_HEIGHT = 180;
@@ -52,7 +54,7 @@ public final class CardPanelView extends JPanel {
      * @param width preferred width
      * @param height preferred height
      */
-    public CardPanelView(final Card card, final boolean showButton, final String buttonText,
+    public CardPanelViewImpl(final Card card, final boolean showButton, final String buttonText,
      final Consumer<Card> buttonAction, final int width, final int height) {
         this.card = card;
         this.width = width;
@@ -76,7 +78,7 @@ public final class CardPanelView extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                if (CardPanelView.this.card != null) {
+                if (CardPanelViewImpl.this.card != null) {
                     showDescription = !showDescription;
                     if (actionButton != null) {
                         actionButton.setVisible(showDescription);
@@ -94,7 +96,8 @@ public final class CardPanelView extends JPanel {
      * @param buttonText the text for the button (ignored if showButton is false)
      * @param buttonAction the action to perform when the button is pressed (can be null)
      */
-    public CardPanelView(final Card card, final boolean showButton, final String buttonText, final Consumer<Card> buttonAction) {
+    public CardPanelViewImpl(final Card card, final boolean showButton, final String buttonText,
+     final Consumer<Card> buttonAction) {
         this(card, showButton, buttonText, buttonAction, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
@@ -102,6 +105,7 @@ public final class CardPanelView extends JPanel {
      * Sets the card to be displayed in this panel.
      * @param card the card to display
      */
+    @Override
     public void setCard(final Card card) {
         this.card = card;
         showDescription = false;

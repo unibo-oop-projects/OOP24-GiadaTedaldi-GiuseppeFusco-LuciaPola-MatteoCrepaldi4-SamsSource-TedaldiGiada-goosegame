@@ -58,7 +58,8 @@ public interface HerdingHoundModel extends MinigamesModel {
     /**
      * Returns the current game state.
      * @return the current game state
-     */ 
+     */
+    @Override
     GameState getGameState();
 
     /**

@@ -165,4 +165,21 @@ public class TrisControllerImpl implements TrisController {
         return this.humanWins == MAX_WINS || this.pcWins == MAX_WINS || this.rounds == MAX_ROUNDS;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        if (this.isMatchOver()) {
+            if (this.humanWins > this.pcWins) {
+                return GameState.WON;
+            } else if (this.pcWins > this.humanWins) {
+                return GameState.LOST;
+            } else if (this.humanWins == this.pcWins) {
+                return GameState.TIE;
+            }
+        }
+        return GameState.ONGOING;
+    }
+
 }

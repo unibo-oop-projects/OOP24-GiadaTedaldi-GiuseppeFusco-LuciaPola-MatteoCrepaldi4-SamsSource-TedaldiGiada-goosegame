@@ -69,7 +69,7 @@ public interface TrisModel extends MinigamesModel {
      * Updates the game grid with a new grid.
      * It is used for the test.
      * 
-     * @param newGrid
+     * @param newGrid the new grid replacing the current grid
      */
     void updateGrid(Map<Position, Player> newGrid);
 

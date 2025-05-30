@@ -1,6 +1,7 @@
 package it.unibo.goosegame.controller.minigames.tris.api;
 
 import it.unibo.goosegame.utilities.Position;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 
 /**
  * Interface representing the controller of a Tris(Tic-Tac-Toe) minigame.
@@ -18,5 +19,9 @@ public interface TrisController {
      * @param position the position on the board where the human player wants to move
      */
     void makeMove(Position position);
-    
+
+    /**
+     * @return the state of the match.
+     */
+    GameState getGameState();
 }

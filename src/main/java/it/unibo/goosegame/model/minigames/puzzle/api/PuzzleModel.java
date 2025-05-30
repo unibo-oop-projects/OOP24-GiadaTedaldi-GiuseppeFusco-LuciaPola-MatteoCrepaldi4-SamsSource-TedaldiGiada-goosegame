@@ -39,5 +39,12 @@ public interface PuzzleModel extends MinigamesModel {
      * @return a map representing the puzzle grid
      */
     Map<Position, Integer> getGrid();
+    /**
+     * Updates the game grid with a new grid.
+     * It is used for the test.
+     * 
+     * @param newGrid the new grid replacing the current grid
+     */
+    void updateGrid(Map<Position, Integer> newGrid);
 
 }

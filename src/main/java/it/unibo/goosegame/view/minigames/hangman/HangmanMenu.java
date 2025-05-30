@@ -11,10 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
@@ -28,6 +28,7 @@ import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 public class HangmanMenu extends MinigameMenuImpl {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(HangmanMenu.class.getName());
+    private transient HangmanController controller;
     /**
     * The HangmanMenu class represents the menu for the game.
     */
@@ -79,20 +80,21 @@ public class HangmanMenu extends MinigameMenuImpl {
      * Initialize view.
      */
     private void initialize() {
-        final HangmanView view = new HangmanViewImpl();
-        view.initializeView();
         final HangmanModel model = new HangmanModelImpl(loadWords().toArray(new String[0]));
-        final HangmanController controller = new HangmanControllerImpl(view, model);
-        view.setController(controller);
         getStartButton().addActionListener(e -> {
+            final HangmanView view = new HangmanViewImpl();
+            view.initializeView();
+            controller = new HangmanControllerImpl(view, model);
+            view.setController(controller);
             controller.startGame();
-            dispose();
+            super.setVisible(false);
         });
     }
-    public static void main(final String[] args) {
-    SwingUtilities.invokeLater(() -> {
-      final HangmanMenu menu = new HangmanMenu();
-      menu.initializeView();
-    });
-  }
+
+    /**
+     * @return the current state of the game.
+     */
+    public GameState getGameState() {
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
+    }
 }

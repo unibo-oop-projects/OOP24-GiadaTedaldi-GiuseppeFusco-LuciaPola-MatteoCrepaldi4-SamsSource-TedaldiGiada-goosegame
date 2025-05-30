@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
 /**
@@ -21,7 +22,6 @@ public class HangmanControllerImpl implements HangmanController {
     /**
      * @param view the game view
      * @param model the game model
-     * @param menu the view of game's menu.
      */
     @SuppressFBWarnings(
         value = "EI2",
@@ -69,8 +69,15 @@ public class HangmanControllerImpl implements HangmanController {
         view.updateWord(model.getHiddenWord());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+     @Override
+    public GameState getGameState() {
+        return this.model.getGameState();
+    }
+
     private void init() {
-        view.setController(this);
         view.updateImage(model.getAttempts());
         view.updateWord(model.getHiddenWord());
     }
