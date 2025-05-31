@@ -3,18 +3,12 @@ package it.unibo.goosegame.model.player.api;
 import java.awt.Color;
 import java.util.List;
 
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
+
 /**
  * Class that stores information about players.
  */
 public interface Player {
-    /**
-     * Updates the player position.
-     *
-     * @param steps number of steps the player has to take
-     * @param isForward wether the steps are forward or backwards
-     */
-    void move(int steps, boolean isForward);
-
     /**
      * Moves the player to the specified cell index.
      *
@@ -49,4 +43,11 @@ public interface Player {
      * @return list of colors
      */
     List<Color> getColorsList();
+
+    /**
+     * Getter for the player's satchel.
+     *
+     * @return the player's satchel
+     */
+    CardSatchelController getSatchel();
 }

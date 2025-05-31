@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
@@ -27,6 +28,7 @@ import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 public class HangmanMenu extends MinigameMenuImpl {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger(HangmanMenu.class.getName());
+    private transient HangmanController controller;
     /**
     * The HangmanMenu class represents the menu for the game.
     */
@@ -82,10 +84,17 @@ public class HangmanMenu extends MinigameMenuImpl {
         getStartButton().addActionListener(e -> {
             final HangmanView view = new HangmanViewImpl();
             view.initializeView();
-            final HangmanController controller = new HangmanControllerImpl(view, model);
+            controller = new HangmanControllerImpl(view, model);
             view.setController(controller);
             controller.startGame();
-            super.dispose();
+            super.setVisible(false);
         });
+    }
+
+    /**
+     * @return the current state of the game.
+     */
+    public GameState getGameState() {
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 }

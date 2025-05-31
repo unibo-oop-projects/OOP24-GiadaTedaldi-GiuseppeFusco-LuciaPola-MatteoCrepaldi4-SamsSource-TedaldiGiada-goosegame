@@ -3,12 +3,11 @@ package it.unibo.goosegame.application;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
-//import it.unibo.goosegame.view.gamemenu.impl.GameMenu;
-import it.unibo.goosegame.view.minigames.memory.MemoryMenu;
+import it.unibo.goosegame.view.minigames.honkmand.HonkMandMenu;
+//import it.unibo.goosegame.view.minigames.memory.MemoryMenu;
 //import it.unibo.goosegame.view.minigames.snake.SnakeMenu;
 /**
  * Main.
@@ -25,7 +24,7 @@ public final class Main {
    * Checks the game state of the given Menu instance.
    * @param s the Menu instance to check
    */
-  public static void check(final MemoryMenu s) {
+  public static void check(final HonkMandMenu s) {
     checkState = new Timer(100, new ActionListener() {
       private GameState g = GameState.NOT_STARTED;
       @Override
@@ -51,7 +50,7 @@ public final class Main {
       final GameMenu menu = new GameMenu();
       menu.setVisible(true);
     });*/
-    final MemoryMenu m = new MemoryMenu();
+    final HonkMandMenu m = new HonkMandMenu();
     m.initializeView();
     check(m);
     //SnakeMenu s = new SnakeMenu();

@@ -1,16 +1,17 @@
 package it.unibo.goosegame.model.player.impl;
 
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.model.player.api.Player;
 
 import java.awt.Color;
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Implementation of {@link Player}.
  */
 public final class PlayerImpl implements Player {
-    private static final int CELLS_NUM = 63;
-
     /**
      * Array containing all the possible player colors.
      */
@@ -18,7 +19,8 @@ public final class PlayerImpl implements Player {
 
     private final String name;            // Name of the player, could be hardcoded or dynamic
     private final Color color;            // Color of the player's in game icon
-    private int position;           // Real time position of the player
+    private int position;                 // Real time position of the player
+    private final CardSatchelController stachel;
 
     /**
      * Constructor for the {@link PlayerImpl} class.
@@ -30,26 +32,7 @@ public final class PlayerImpl implements Player {
         this.name = name;
         this.color = COLORS[colorIndex];
         this.position = 0;
-    }
-
-    /**
-     *  {@inheritDoc}
-     */
-    @Override
-    public void move(final int steps, final boolean isForward) {
-        if (isForward) {
-            if (position + steps <= CELLS_NUM) {
-                position += steps;
-            } else {
-                position = CELLS_NUM - (steps - (CELLS_NUM - position));
-            }
-        } else {
-            if (position - steps < 0) {
-                position = 0;   // Making sure the player can't go out of bounds
-            } else {
-                position -= steps;
-            }
-        }
+        this.stachel = new CardSatchelController(this);
     }
 
     /**
@@ -79,5 +62,15 @@ public final class PlayerImpl implements Player {
     @Override
     public List<Color> getColorsList() {
         return List.of(COLORS);
+    }
+
+    /**
+     * Returns the player's satchel.
+     * The returned object is mutable and modifications will affect the player directly.
+     */
+    @SuppressFBWarnings("EI_EXPOSE_REP")
+    @Override
+    public CardSatchelController getSatchel() {
+        return this.stachel;
     }
 }

@@ -153,6 +153,14 @@ public class HerdingHoundController {
         view.setFocusable(false);
     }
 
+    /**
+     * Returns the state of the game.
+     * @return GameState
+     */
+    public GameState getGameState() {
+        return this.model.getGameState();
+    }
+
     // --- GETTER per la View e il RightPanel ---
 
     /**

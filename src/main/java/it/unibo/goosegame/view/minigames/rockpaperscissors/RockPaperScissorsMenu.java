@@ -2,6 +2,7 @@ package it.unibo.goosegame.view.minigames.rockpaperscissors;
 
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.api.RockPaperScissorsController;
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.api.RockPaperScissorsModel;
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
@@ -37,6 +38,13 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
     }
 
     /**
+     * @return the current state of the game.
+     */
+    public GameState getGameState() {
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
+    }
+
+    /**
      *  Inizialize view.
      */
     private void initialize() {
@@ -46,7 +54,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
             controller = new RockPaperScissorsControllerImpl(model, view);
             view.initializeView();
             controller.startGame();
-            super.dispose();
+            super.setVisible(false);
       });
     }
 }

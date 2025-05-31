@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.goosegame.controller.gameboard.impl.GameBoardImpl;
 import it.unibo.goosegame.model.gamemenu.api.MenuLogic;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.player.impl.PlayerImpl;
@@ -49,7 +50,7 @@ public class MenuLogicImpl implements MenuLogic {
             return;
         }
         view.dispose();
-        //new GameBoardImpl(players);
+        new GameBoardImpl(players);
     }
 
     /**

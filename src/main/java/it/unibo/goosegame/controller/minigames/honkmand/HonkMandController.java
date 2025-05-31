@@ -198,4 +198,12 @@ public class HonkMandController {
         celebrationTimer.setRepeats(true);
         celebrationTimer.start();
     }
+
+    /**
+     * Returns the state of the game.
+     * @return GameState
+     */
+    public GameState getGameState() {
+        return this.model.getGameState();
+    }
 }

@@ -1,6 +1,7 @@
 package it.unibo.goosegame.controller.minigames.click_the_color.impl;
 
 import it.unibo.goosegame.controller.minigames.click_the_color.api.ClickTheColor;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.click_the_color.api.ClickTheColorModel;
 import it.unibo.goosegame.model.minigames.click_the_color.impl.ClickTheColorModelImpl;
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
@@ -9,14 +10,25 @@ import it.unibo.goosegame.view.minigames.click_the_color.impl.ClickTheColorViewI
 /**
  * Implementation of {@link ClickTheColor}.
  */
-public class ClickTheColorImpl implements ClickTheColor {
+public final class ClickTheColorImpl implements ClickTheColor {
+    private final ClickTheColorView view;
+    private final ClickTheColorModel model;
+
     /**
      * Constructor method for the Click The Color controller class.
      */
     public ClickTheColorImpl() {
-        final ClickTheColorModel model = new ClickTheColorModelImpl();
-        final ClickTheColorView view = new ClickTheColorViewImpl(model);
+        this.model = new ClickTheColorModelImpl();
+        this.view = new ClickTheColorViewImpl(model);
 
         view.show();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getResult() {
+        return model.getGameState();
     }
 }

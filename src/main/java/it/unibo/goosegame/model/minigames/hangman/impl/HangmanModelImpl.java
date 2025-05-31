@@ -22,8 +22,8 @@ public class HangmanModelImpl implements HangmanModel {
     private  char[] hiddenWord;
     private String selectedWord;
     private int attempts;
-    private boolean  gameOver;
-    private boolean  won;
+    private int  gameOver;
+    private int  won;
     /**
      * @param words
      */
@@ -68,10 +68,11 @@ public class HangmanModelImpl implements HangmanModel {
             attempts--;
         }
         if (new String(hiddenWord).equals(selectedWord)) {
-            gameOver = true;
-            won = true;
+            gameOver = 1;
+            won = 1;
         } else if (attempts <= 0) {
-            gameOver = true;
+            won = 0;
+            gameOver = 1;
         }
         return correctGuess;
     }
@@ -86,15 +87,28 @@ public class HangmanModelImpl implements HangmanModel {
         for (int i = 0; i < selectedWord.length(); i++) {
             hiddenWord[i] = "AEIOU".indexOf(selectedWord.charAt(i)) >= 0 ? '+' : '-';
         }
-        gameOver = false;
-        won =  false;
+        gameOver = -1;
+        won =  -1;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public GameState getGameState() {
-        return won ? GameState.WON : GameState.LOST;
+        switch (won) {
+            case -1 -> {
+                return GameState.NOT_STARTED;
+            }
+            case 0 -> {
+                return GameState.LOST;
+            }
+            case 1 -> {
+                return GameState.WON;
+            }
+            default -> {
+                return GameState.ONGOING;
+            }
+        }
     }
     /**
     * {@inheritDoc}
@@ -108,20 +122,20 @@ public class HangmanModelImpl implements HangmanModel {
     */
     @Override
     public boolean isOver() {
-        return gameOver;
+        return gameOver == 1;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public boolean isWon() {
-        return won;
+        return won == 1;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public boolean isLost() {
-        return !won && gameOver;
+       return won == 0 && gameOver == 1;
     }
 }
