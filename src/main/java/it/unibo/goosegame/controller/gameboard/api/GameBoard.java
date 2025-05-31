@@ -14,4 +14,6 @@ public interface GameBoard {
      * @return the list of players
      */
     List<Player> getPlayers();
+
+    void move(Player player, int steps, boolean isForward);
 }

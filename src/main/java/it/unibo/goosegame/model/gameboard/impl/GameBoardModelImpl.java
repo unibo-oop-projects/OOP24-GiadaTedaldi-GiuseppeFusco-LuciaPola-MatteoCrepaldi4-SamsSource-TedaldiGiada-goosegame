@@ -66,6 +66,18 @@ public final class GameBoardModelImpl implements GameBoardModel {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void move(Player player, int steps, boolean isForward) {
+        Cell currentCell = searchPlayer(player);
+        int newPosition = calcMovement(steps, isForward);
+        Cell newCell = cells.get(newPosition);
+
+        currentCell.movePlayer(newCell, player);
+    }
+
+    /**
      * Searches for the cell containing the specified player.
      *
      * @param player the player to search for
