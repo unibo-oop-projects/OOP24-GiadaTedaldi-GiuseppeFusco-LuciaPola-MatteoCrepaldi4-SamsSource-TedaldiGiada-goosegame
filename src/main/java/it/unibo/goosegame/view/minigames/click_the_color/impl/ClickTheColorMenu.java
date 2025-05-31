@@ -21,8 +21,7 @@ public class ClickTheColorMenu extends MinigameMenuImpl {
             "Click the color",
             "Click the Color is a fast-paced game where you must click the correct colored "
                     + "button before time runs out. Match the color shown to earn points—miss or wait too long, "
-                    + "and you will lose points",
-            null
+                    + "and you will lose points"
         );
 
         init();

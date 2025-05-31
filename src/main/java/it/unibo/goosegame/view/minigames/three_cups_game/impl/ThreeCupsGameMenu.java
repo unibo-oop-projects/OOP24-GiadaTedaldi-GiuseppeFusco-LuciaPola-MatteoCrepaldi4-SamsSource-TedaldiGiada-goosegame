@@ -21,8 +21,7 @@ public class ThreeCupsGameMenu extends MinigameMenuImpl {
             "Three Cups Game",
             "Three Cups Game is a fun and simple minigame where three cups are "
                     + "placed on a table. One of them hides a reward underneath. Your goal is "
-                    + "to guess which cup it’s under—choose correctly to earn points!",
-            null
+                    + "to guess which cup it’s under—choose correctly to earn points!"
         );
 
         init();
