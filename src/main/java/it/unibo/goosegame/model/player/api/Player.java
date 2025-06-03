@@ -1,7 +1,6 @@
 package it.unibo.goosegame.model.player.api;
 
 import java.awt.Color;
-import java.util.List;
 
 import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 
