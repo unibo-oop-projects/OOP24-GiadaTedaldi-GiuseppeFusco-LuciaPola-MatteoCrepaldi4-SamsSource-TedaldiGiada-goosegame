@@ -38,10 +38,7 @@ public class HerdingHoundMenu extends MinigameMenuImpl {
         });
     }
 
-    /**
-     * Returns the state of the game.
-     * @return GameState
-     */
+    @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }

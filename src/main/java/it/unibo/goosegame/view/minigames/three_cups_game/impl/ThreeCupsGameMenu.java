@@ -1,6 +1,7 @@
 package it.unibo.goosegame.view.minigames.three_cups_game.impl;
 
 import it.unibo.goosegame.controller.minigames.three_cups_game.impl.ThreeCupsGameImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
 import java.io.Serial;
@@ -34,5 +35,11 @@ public class ThreeCupsGameMenu extends MinigameMenuImpl {
         getStartButton().addActionListener(e -> {
            new ThreeCupsGameImpl();
         });
+    }
+
+    @Override
+    public GameState getGameState() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getGameState'");
     }
 }

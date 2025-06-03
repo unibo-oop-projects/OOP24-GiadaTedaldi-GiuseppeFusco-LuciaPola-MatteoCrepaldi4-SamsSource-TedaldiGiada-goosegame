@@ -61,9 +61,7 @@ public class TrisMenu extends MinigameMenuImpl {
        });
     }
 
-    /**
-     * @return the game result.
-     */
+    @Override
     public GameState getGameState() {
         return this.controller == null ? GameState.NOT_STARTED : this.controller.getGameState();
     }

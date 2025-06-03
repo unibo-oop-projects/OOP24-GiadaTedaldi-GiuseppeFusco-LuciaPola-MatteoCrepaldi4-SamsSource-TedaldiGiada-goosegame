@@ -1,6 +1,7 @@
 package it.unibo.goosegame.view.minigames.click_the_color.impl;
 
 import it.unibo.goosegame.controller.minigames.click_the_color.impl.ClickTheColorImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
 import java.io.Serial;
@@ -34,5 +35,11 @@ public class ClickTheColorMenu extends MinigameMenuImpl {
         getStartButton().addActionListener(e -> {
             new ClickTheColorImpl();
         });
+    }
+
+    @Override
+    public GameState getGameState() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getGameState'");
     }
 }

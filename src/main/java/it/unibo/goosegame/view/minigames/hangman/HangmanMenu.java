@@ -91,9 +91,7 @@ public class HangmanMenu extends MinigameMenuImpl {
         });
     }
 
-    /**
-     * @return the current state of the game.
-     */
+    @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
