@@ -24,7 +24,7 @@ public class CardSatchelController {
 
     /**
      *Initialize model, view and frames.
-     *@param owner the owner player.
+     *@param board reference to GameBoard to interact with the game
      */
     public CardSatchelController(final GameBoard board) {
         this.satchelModel = new CardSatchelModelImpl();
