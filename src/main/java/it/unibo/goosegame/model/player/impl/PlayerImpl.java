@@ -57,6 +57,10 @@ public final class PlayerImpl implements Player {
         return color;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setIndex(final int index) {
         this.position = index;
     }
