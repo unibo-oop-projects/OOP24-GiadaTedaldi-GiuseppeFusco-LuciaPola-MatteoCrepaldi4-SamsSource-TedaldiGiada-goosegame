@@ -10,13 +10,6 @@ import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
  */
 public interface Player {
     /**
-     * Moves the player to the specified cell index.
-     *
-     * @param cellIndex index of the cell
-     */
-    void goTo(int cellIndex);
-
-    /**
      * Getter method for the player's name.
      *
      * @return the player's name
@@ -38,11 +31,11 @@ public interface Player {
     Color getColor();
 
     /**
-     * Getter for the list of colors that can be assigned to players.
+     * Method used to update the index of the cell the player is in.
      *
-     * @return list of colors
+     * @param index the new index of the cell
      */
-    List<Color> getColorsList();
+    void setIndex(int index);
 
     /**
      * Getter for the player's satchel.
@@ -50,4 +43,11 @@ public interface Player {
      * @return the player's satchel
      */
     CardSatchelController getSatchel();
+
+    /**
+     * Method used to set the player's satchel.
+     *
+     * @param satchel the new satchel for the player
+     */
+    void setSatchel(CardSatchelController satchel);
 }

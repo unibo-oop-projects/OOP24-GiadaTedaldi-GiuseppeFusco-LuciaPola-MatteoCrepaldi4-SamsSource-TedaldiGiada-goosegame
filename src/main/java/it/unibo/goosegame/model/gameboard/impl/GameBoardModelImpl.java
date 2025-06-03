@@ -74,6 +74,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
         int newPosition = calcMovement(steps, isForward);
         Cell newCell = cells.get(newPosition);
 
+        player.setIndex(newPosition);
         currentCell.movePlayer(newCell, player);
     }
 

@@ -1,5 +1,6 @@
 package it.unibo.goosegame.controller.gameboard.impl;
 
+import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.controller.cell.api.Cell;
 import it.unibo.goosegame.controller.cell.impl.CellImpl;
 import it.unibo.goosegame.controller.gameboard.api.GameBoard;
@@ -28,7 +29,7 @@ public class GameBoardImpl implements GameBoard {
 
     /**
      * GameBoard constructor method.
-     * @param players the list of the registered playes
+     * @param players the list of the registered players
      */
     public GameBoardImpl(final List<Player> players) {
         this.gameCells = new ArrayList<>();
@@ -36,6 +37,10 @@ public class GameBoardImpl implements GameBoard {
         this.turnManager = new TurnManagerImpl(players);
 
         initGameCells();
+
+        for(Player p : players) {
+            p.setSatchel(new CardSatchelController(this)); // Initialize player positions to the first cell
+        }
 
         this.model = new GameBoardModelImpl(turnManager, gameCells);
         this.view = new GameBoardViewImpl(model, gameCells);
