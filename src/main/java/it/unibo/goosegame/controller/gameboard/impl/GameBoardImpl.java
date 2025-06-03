@@ -69,7 +69,7 @@ public class GameBoardImpl implements GameBoard {
      * {@inheritDoc}
      */
     @Override
-    public void move(final Player player, final int steps, final boolean isForward) {
-        model.move(player, steps, isForward);
+    public void move(final int steps, final boolean isForward) {
+        model.move(turnManager.getCurrentPlayer(), steps, isForward);
     }
 }
