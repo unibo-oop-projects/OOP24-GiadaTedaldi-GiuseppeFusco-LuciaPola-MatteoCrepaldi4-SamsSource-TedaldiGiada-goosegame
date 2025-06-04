@@ -46,5 +46,15 @@ public interface Cell {
      */
     boolean containsPlayer(Player p);
 
-    GameState triggerMinigame();
+    /**
+     * Utility function to trigger the minigame start.
+     */
+    void triggerMinigame();
+
+    /**
+     * Utility function to check the game state.
+     *
+     * @return the current game state
+     */
+    GameState checkGameState();
 }

@@ -11,6 +11,7 @@ import it.unibo.goosegame.view.general.api.MinigameMenu;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,8 @@ public class CellImpl implements Cell {
     private final CellView view;
     private final Optional<MinigameMenu> minigameMenu;
     private final List<Player> players;
+    private Timer timer;
+    private GameState gameState;
 
     /**
      * Constructor for non minigame cells.
@@ -105,11 +108,40 @@ public class CellImpl implements Cell {
      * {@inheritDoc}
      */
     @Override
-    public GameState triggerMinigame() {
+    public void triggerMinigame() {
+        if (this.minigameMenu.isEmpty()) {
+            return;
+        }
+
+        MinigameMenu menu = this.minigameMenu.get();
+        gameState = menu.getGameState();
+
+
+        this.timer = new Timer(100, e -> {
+            if (gameState == GameState.WON || gameState == GameState.LOST || gameState == GameState.TIE) {
+                stop();
+            } else {
+                gameState = menu.getGameState();
+            }
+        });
+
+        menu.initializeView();
+        timer.start();
+    }
+
+    public GameState checkGameState() {
         if (this.minigameMenu.isEmpty()) {
             return GameState.NOT_STARTED;
         }
 
-        return GameState.ONGOING;
+        if (gameState == GameState.WON || gameState == GameState.LOST || gameState == GameState.TIE) {
+            minigameMenu.get().dispose();
+        }
+
+        return gameState;
+    }
+
+    private void stop() {
+        this.timer.stop();
     }
 }
