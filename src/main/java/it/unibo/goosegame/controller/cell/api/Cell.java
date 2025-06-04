@@ -1,5 +1,6 @@
 package it.unibo.goosegame.controller.cell.api;
 
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.player.api.Player;
 
 import javax.swing.JPanel;
@@ -44,4 +45,6 @@ public interface Cell {
      * @return true if the cell contains the player, false otherwise
      */
     boolean containsPlayer(Player p);
+
+    GameState triggerMinigame();
 }

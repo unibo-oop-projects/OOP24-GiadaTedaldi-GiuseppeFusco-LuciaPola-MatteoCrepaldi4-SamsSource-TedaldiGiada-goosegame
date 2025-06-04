@@ -3,6 +3,7 @@ package it.unibo.goosegame.controller.cell.impl;
 import it.unibo.goosegame.controller.cell.api.Cell;
 import it.unibo.goosegame.model.cell.api.CellModel;
 import it.unibo.goosegame.model.cell.impl.CellModelImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cell.api.CellView;
 import it.unibo.goosegame.view.cell.impl.CellViewImpl;
@@ -43,7 +44,11 @@ public class CellImpl implements Cell {
         this.view = new CellViewImpl(model);
         this.players = new ArrayList<>();
 
-        this.minigameMenu = Optional.of(minigameMenu);
+        if (minigameMenu == null) {
+            this.minigameMenu = Optional.empty();
+        } else {
+            this.minigameMenu = Optional.of(minigameMenu);
+        }
     }
 
     private void updateCellView() {
@@ -83,6 +88,8 @@ public class CellImpl implements Cell {
         this.players.remove(player);
         cell.addPlayer(player);
 
+        System.out.println(cell.isMinigameCell());
+
         SwingUtilities.invokeLater(this::updateCellView);
     }
 
@@ -92,5 +99,17 @@ public class CellImpl implements Cell {
     @Override
     public boolean containsPlayer(final Player p) {
         return this.players.contains(p);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState triggerMinigame() {
+        if (this.minigameMenu.isEmpty()) {
+            return GameState.NOT_STARTED;
+        }
+
+        return GameState.ONGOING;
     }
 }
