@@ -36,6 +36,9 @@ public class SnakeMenu extends MinigameMenuImpl {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();

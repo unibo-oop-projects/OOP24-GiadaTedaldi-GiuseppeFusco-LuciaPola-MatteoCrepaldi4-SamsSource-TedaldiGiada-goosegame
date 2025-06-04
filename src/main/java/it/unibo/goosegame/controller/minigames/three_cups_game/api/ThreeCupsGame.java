@@ -7,7 +7,9 @@ import it.unibo.goosegame.model.general.MinigamesModel.GameState;
  */
 public interface ThreeCupsGame {
     /**
-     * Used to get the game result.
+     * Returns the current game state of the minigame.
+     *
+     * @return the current game state
      */
     GameState getGameState();
 }

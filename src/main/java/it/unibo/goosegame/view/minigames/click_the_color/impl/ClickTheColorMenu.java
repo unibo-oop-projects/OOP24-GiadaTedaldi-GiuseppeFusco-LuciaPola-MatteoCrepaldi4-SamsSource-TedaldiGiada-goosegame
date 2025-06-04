@@ -34,11 +34,14 @@ public class ClickTheColorMenu extends MinigameMenuImpl {
      */
     private void init() {
         getStartButton().addActionListener(e -> {
-            new ClickTheColorImpl(this);
+            this.controller = new ClickTheColorImpl(this);
             this.setVisible(false);
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();

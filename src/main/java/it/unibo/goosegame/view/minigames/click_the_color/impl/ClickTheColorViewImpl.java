@@ -52,8 +52,9 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
      * Constructor for the graphical interface.
      *
      * @param model model object for the game logic
+     * @param menu  menu used to start the minigame
      */
-    public ClickTheColorViewImpl(final ClickTheColorModel model, MinigameMenu menu) {
+    public ClickTheColorViewImpl(final ClickTheColorModel model, final MinigameMenu menu) {
         this.model = model;
         this.menu = menu;
         this.frame = new JFrame(model.getName());

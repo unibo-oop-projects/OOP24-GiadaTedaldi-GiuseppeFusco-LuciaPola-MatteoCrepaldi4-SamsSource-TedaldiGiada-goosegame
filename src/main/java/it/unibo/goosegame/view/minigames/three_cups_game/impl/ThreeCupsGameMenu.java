@@ -34,11 +34,14 @@ public class ThreeCupsGameMenu extends MinigameMenuImpl {
      */
     private void init() {
         getStartButton().addActionListener(e -> {
-           new ThreeCupsGameImpl(this);
+           this.controller = new ThreeCupsGameImpl(this);
            this.setVisible(false);
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();

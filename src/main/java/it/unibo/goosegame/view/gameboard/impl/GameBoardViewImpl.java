@@ -41,7 +41,7 @@ public final class GameBoardViewImpl implements GameBoardView {
         this.nextTurnButton = new JButton("Next turn");
         this.diceButton = new JButton("Throw dices");
         this.openSatchelButton = new JButton("Open satchel");
-        this.boardCells = gameCells;
+        this.boardCells = List.copyOf(gameCells);
 
         initView();
     }

@@ -16,9 +16,11 @@ public final class ClickTheColorImpl implements ClickTheColor {
     private final ClickTheColorModel model;
 
     /**
-     * Constructor method for the Click The Color controller class.
+     * Constructor for the click the color minigame.
+     *
+     * @param menu the menu used to start the minigame
      */
-    public ClickTheColorImpl(MinigameMenu menu) {
+    public ClickTheColorImpl(final MinigameMenu menu) {
         this.model = new ClickTheColorModelImpl();
         this.view = new ClickTheColorViewImpl(model, menu);
 

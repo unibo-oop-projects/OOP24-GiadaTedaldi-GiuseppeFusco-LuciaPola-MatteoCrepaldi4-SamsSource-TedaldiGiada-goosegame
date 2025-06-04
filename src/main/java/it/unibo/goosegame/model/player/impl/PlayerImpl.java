@@ -57,6 +57,12 @@ public final class PlayerImpl implements Player {
         return color;
     }
 
+    /**
+     * Sets the player's position on the game board.
+     *
+     * @param index new position of the player
+     */
+    @Override
     public void setIndex(final int index) {
         this.position = index;
     }
@@ -71,8 +77,11 @@ public final class PlayerImpl implements Player {
         return this.satchel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setSatchel(CardSatchelController satchel) {
+    public void setSatchel(final CardSatchelController satchel) {
         this.satchel = satchel;
     }
 }

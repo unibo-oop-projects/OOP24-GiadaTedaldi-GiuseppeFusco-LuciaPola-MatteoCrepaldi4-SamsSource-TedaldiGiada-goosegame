@@ -58,6 +58,9 @@ public class PuzzleMenu extends MinigameMenuImpl {
        });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState getGameState() {
         return this.controller == null ? GameState.NOT_STARTED : this.controller.getGameState();

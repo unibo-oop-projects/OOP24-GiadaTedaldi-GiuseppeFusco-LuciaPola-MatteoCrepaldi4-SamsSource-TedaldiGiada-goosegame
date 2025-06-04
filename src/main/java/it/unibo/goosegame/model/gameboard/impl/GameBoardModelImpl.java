@@ -31,7 +31,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     public GameBoardModelImpl(final TurnManager turnManager, final List<Cell> cells) {
         this.turnManager = turnManager;
-        this.cells = cells;
+        this.cells = List.copyOf(cells);
         this.dice = new DoubleDiceImpl();
         this.hasPlayerMoved = false;
     }
@@ -68,7 +68,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
                 final int result = dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
-                Cell newCell = cells.get(calcMovement(result, true));
+                final Cell newCell = cells.get(calcMovement(result, true));
                 searchPlayer(turnManager.getCurrentPlayer()).movePlayer(
                         newCell,
                         turnManager.getCurrentPlayer()
@@ -97,6 +97,11 @@ public final class GameBoardModelImpl implements GameBoardModel {
         timer.stop();
 
         // ADD THE CARD LOGIC HERE
+        //JOptionPane.showMessageDialog(null, "Game State: " + gameState);
+        /*
+         * Samuele D'Ambrosio: richiama qui il metodo per aggiungere la carta al mazzo del giocatore e utilizza la variabile gameState
+         * per determinare se il giocatore ha vinto o perso il minigioco.
+         */
     }
 
     /**
@@ -117,10 +122,10 @@ public final class GameBoardModelImpl implements GameBoardModel {
      * {@inheritDoc}
      */
     @Override
-    public void move(Player player, int steps, boolean isForward) {
-        Cell currentCell = searchPlayer(player);
-        int newPosition = calcMovement(steps, isForward);
-        Cell newCell = cells.get(newPosition);
+    public void move(final Player player, final int steps, final boolean isForward) {
+        final Cell currentCell = searchPlayer(player);
+        final int newPosition = calcMovement(steps, isForward);
+        final Cell newCell = cells.get(newPosition);
 
         player.setIndex(newPosition);
         currentCell.movePlayer(newCell, player);

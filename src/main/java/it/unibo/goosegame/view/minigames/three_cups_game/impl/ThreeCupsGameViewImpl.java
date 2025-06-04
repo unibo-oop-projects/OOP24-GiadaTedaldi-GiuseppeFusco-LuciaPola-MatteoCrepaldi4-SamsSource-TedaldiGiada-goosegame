@@ -44,6 +44,7 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
      * Builds the interface.
      *
      * @param model the model of the Three Cups Game minigame
+     * @param menu  the menu used to start the minigame
      */
     public ThreeCupsGameViewImpl(final ThreeCupsGameModel model, final MinigameMenu menu) {
         this.frame = new JFrame();

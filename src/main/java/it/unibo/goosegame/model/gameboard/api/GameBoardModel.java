@@ -18,6 +18,9 @@ public interface GameBoardModel {
      */
     void throwDices();
 
+    /**
+     * Method used to change the turn to the next player.
+     */
     void nextTurn();
 
     /**

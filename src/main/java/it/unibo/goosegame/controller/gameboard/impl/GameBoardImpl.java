@@ -30,9 +30,15 @@ import java.util.List;
  * Classed use to represent the gameboard.
  */
 public class GameBoardImpl implements GameBoard {
+    private static final int CASE_9 = 9;
+    private static final int CASE_7 = 7;
+    private static final int CASE_6 = 6;
+    private static final int CASE_5 = 5;
+    private static final int GAME_CELL_NUM = 6;
     private static final int CELLS_NUM = 60;
 
     private final GameBoardModel model;
+    private final GameBoardView view;
     private final List<Cell> gameCells;
     private final List<Player> players;
     private final TurnManager turnManager;
@@ -43,17 +49,17 @@ public class GameBoardImpl implements GameBoard {
      */
     public GameBoardImpl(final List<Player> players) {
         this.gameCells = new ArrayList<>();
-        this.players = players;
+        this.players = List.copyOf(players);
         this.turnManager = new TurnManagerImpl(players);
 
         initGameCells();
 
-        for(Player p : players) {
+        for (final Player p : players) {
             p.setSatchel(new CardSatchelController(this)); // Initialize player positions to the first cell
         }
 
         this.model = new GameBoardModelImpl(turnManager, gameCells);
-        GameBoardView view = new GameBoardViewImpl(model, gameCells);
+        this.view = new GameBoardViewImpl(model, gameCells);
 
         view.show();
     }
@@ -64,7 +70,7 @@ public class GameBoardImpl implements GameBoard {
      */
     private void initGameCells() {
         for (int i = 0; i < CELLS_NUM; i++) {
-            if (i % 6 == 0 && i != 0) {
+            if (i % GAME_CELL_NUM == 0 && i != 0) {
                 gameCells.add(new CellImpl(getMinigame(i)));
             } else {
                gameCells.add(new CellImpl());
@@ -76,17 +82,23 @@ public class GameBoardImpl implements GameBoard {
         }
     }
 
-    MinigameMenu getMinigame(int index) {
-        return switch (index / 6) {
+    /**
+     * Utility function to get the minigame based on the index.
+     *
+     * @param index the index of the cell
+     * @return the corresponding minigame menu
+     */
+    private MinigameMenu getMinigame(final int index) {
+        return switch (index / GAME_CELL_NUM) {
             case 1 -> new MemoryMenu();
             case 2 -> new PuzzleMenu();
             case 3 -> new HonkMandMenu();
             case 4 -> new HangmanMenu();
-            case 5 -> new ClickTheColorMenu();
-            case 6 -> new HerdingHoundMenu();
-            case 7 -> new TrisMenu();
+            case CASE_5 -> new ClickTheColorMenu();
+            case CASE_6 -> new HerdingHoundMenu();
+            case CASE_7 -> new TrisMenu();
             case 8 -> new RockPaperScissorsMenu();
-            case 9 -> new ThreeCupsGameMenu();
+            case CASE_9 -> new ThreeCupsGameMenu();
             case 10 -> new SnakeMenu();
             default -> null;
         };
@@ -97,7 +109,7 @@ public class GameBoardImpl implements GameBoard {
      */
     @Override
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 
     /**

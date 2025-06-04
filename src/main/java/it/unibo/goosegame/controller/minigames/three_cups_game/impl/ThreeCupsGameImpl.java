@@ -13,17 +13,23 @@ import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameViewI
  */
 public class ThreeCupsGameImpl implements ThreeCupsGame {
     private final ThreeCupsGameModel model;
+    private final ThreeCupsGameView view;
 
     /**
-     * Construct for the Three Cups Game minigame.
+     * Constructor for the Three Cups Game minigame.
+     *
+     * @param menu the menu used to start the minigame
      */
-    public ThreeCupsGameImpl(MinigameMenu menu) {
+    public ThreeCupsGameImpl(final MinigameMenu menu) {
         this.model = new ThreeCupsGameModelImpl();
-        ThreeCupsGameView view = new ThreeCupsGameViewImpl(model, menu);
+        this.view = new ThreeCupsGameViewImpl(model, menu);
 
         view.show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MinigamesModel.GameState getGameState() {
         return model.getGameState();

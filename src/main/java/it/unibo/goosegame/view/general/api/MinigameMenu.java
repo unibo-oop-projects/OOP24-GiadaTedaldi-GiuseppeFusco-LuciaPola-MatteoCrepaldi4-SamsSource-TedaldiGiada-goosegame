@@ -18,7 +18,7 @@ public interface MinigameMenu {
     /**
      * @return the result of the game.
      */
-    abstract GameState getGameState();
+    GameState getGameState();
     /**
      * Closes the menu when called.
      */
