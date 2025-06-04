@@ -3,6 +3,7 @@ package it.unibo.goosegame.model.gameboard.impl;
 import it.unibo.goosegame.controller.cell.api.Cell;
 import it.unibo.goosegame.model.gameboard.api.DoubleDice;
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
+import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.turnmanager.api.TurnManager;
 
@@ -17,6 +18,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
     private final TurnManager turnManager;
     private final DoubleDice dice;
     private final List<Cell> cells;
+    private boolean hasPlayerMoved;
 
     /**
      * Constructor for the gameboard model element.
@@ -28,6 +30,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
         this.turnManager = turnManager;
         this.cells = cells;
         this.dice = new DoubleDiceImpl();
+        this.hasPlayerMoved = false;
     }
 
     /**
@@ -43,6 +46,11 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     @Override
     public void throwDices() {
+        if (this.hasPlayerMoved) {
+            JOptionPane.showMessageDialog(null, turnManager.getCurrentPlayer().getName() + " has already moved this turn.");
+            return;
+        }
+
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() {
@@ -55,14 +63,32 @@ public final class GameBoardModelImpl implements GameBoardModel {
                 final int result = dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
+                Cell newCell = cells.get(calcMovement(result, true));
                 searchPlayer(turnManager.getCurrentPlayer()).movePlayer(
-                        cells.get(calcMovement(result, true)),
+                        newCell,
                         turnManager.getCurrentPlayer()
                 );
 
-                turnManager.nextTurn();
+                MinigamesModel.GameState AAAAA = newCell.triggerMinigame();
+                System.out.println("Minigame state: " + AAAAA);
+
+                hasPlayerMoved = true;
             }
         }.execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void nextTurn() {
+        if (this.hasPlayerMoved) {
+            JOptionPane.showMessageDialog(null, turnManager.getCurrentPlayer().getName() + " ended their turn.");
+            this.turnManager.nextTurn();
+            this.hasPlayerMoved = false;
+        } else {
+            JOptionPane.showMessageDialog(null, "You must move before ending your turn.");
+        }
     }
 
     /**
@@ -76,6 +102,14 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
         player.setIndex(newPosition);
         currentCell.movePlayer(newCell, player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getCurrentPlayer() {
+        return turnManager.getCurrentPlayer();
     }
 
     /**

@@ -11,6 +11,17 @@ import it.unibo.goosegame.model.turnmanager.api.TurnManager;
 import it.unibo.goosegame.model.turnmanager.impl.TurnManagerImpl;
 import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 import it.unibo.goosegame.view.gameboard.impl.GameBoardViewImpl;
+import it.unibo.goosegame.view.general.api.MinigameMenu;
+import it.unibo.goosegame.view.minigames.click_the_color.impl.ClickTheColorMenu;
+import it.unibo.goosegame.view.minigames.hangman.HangmanMenu;
+import it.unibo.goosegame.view.minigames.herdinghound.HerdingHoundMenu;
+import it.unibo.goosegame.view.minigames.honkmand.HonkMandMenu;
+import it.unibo.goosegame.view.minigames.memory.MemoryMenu;
+import it.unibo.goosegame.view.minigames.puzzle.PuzzleMenu;
+import it.unibo.goosegame.view.minigames.rockpaperscissors.RockPaperScissorsMenu;
+import it.unibo.goosegame.view.minigames.snake.SnakeMenu;
+import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameMenu;
+import it.unibo.goosegame.view.minigames.tris.TrisMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +33,6 @@ public class GameBoardImpl implements GameBoard {
     private static final int CELLS_NUM = 60;
 
     private final GameBoardModel model;
-    private final GameBoardView view;
     private final List<Cell> gameCells;
     private final List<Player> players;
     private final TurnManager turnManager;
@@ -43,9 +53,9 @@ public class GameBoardImpl implements GameBoard {
         }
 
         this.model = new GameBoardModelImpl(turnManager, gameCells);
-        this.view = new GameBoardViewImpl(model, gameCells);
+        GameBoardView view = new GameBoardViewImpl(model, gameCells);
 
-        this.view.show();
+        view.show();
     }
 
     /**
@@ -54,12 +64,32 @@ public class GameBoardImpl implements GameBoard {
      */
     private void initGameCells() {
         for (int i = 0; i < CELLS_NUM; i++) {
-            gameCells.add(new CellImpl());
+            if (i % 6 == 0 && i != 0) {
+                gameCells.add(new CellImpl(getMinigame(i)));
+            } else {
+               gameCells.add(new CellImpl());
+            }
         }
 
         for (final Player player : players) {
             gameCells.getFirst().addPlayer(player);
         }
+    }
+
+    MinigameMenu getMinigame(int index) {
+        return switch (index / 6) {
+            case 1 -> new MemoryMenu();
+            case 2 -> new PuzzleMenu();
+            case 3 -> new HonkMandMenu();
+            case 4 -> new HangmanMenu();
+            case 5 -> new ClickTheColorMenu();
+            case 6 -> new HerdingHoundMenu();
+            case 7 -> new TrisMenu();
+            case 8 -> new RockPaperScissorsMenu();
+            case 9 -> new ThreeCupsGameMenu();
+            case 10 -> new SnakeMenu();
+            default -> null;
+        };
     }
 
     /**
