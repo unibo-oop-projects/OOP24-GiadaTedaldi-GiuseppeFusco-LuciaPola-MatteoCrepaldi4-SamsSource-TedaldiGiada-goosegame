@@ -4,6 +4,7 @@ import it.unibo.goosegame.controller.minigames.click_the_color.api.ClickTheColor
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.click_the_color.api.ClickTheColorModel;
 import it.unibo.goosegame.model.minigames.click_the_color.impl.ClickTheColorModelImpl;
+import it.unibo.goosegame.view.general.api.MinigameMenu;
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
 import it.unibo.goosegame.view.minigames.click_the_color.impl.ClickTheColorViewImpl;
 
@@ -17,9 +18,9 @@ public final class ClickTheColorImpl implements ClickTheColor {
     /**
      * Constructor method for the Click The Color controller class.
      */
-    public ClickTheColorImpl() {
+    public ClickTheColorImpl(MinigameMenu menu) {
         this.model = new ClickTheColorModelImpl();
-        this.view = new ClickTheColorViewImpl(model);
+        this.view = new ClickTheColorViewImpl(model, menu);
 
         view.show();
     }
@@ -28,7 +29,9 @@ public final class ClickTheColorImpl implements ClickTheColor {
      * {@inheritDoc}
      */
     @Override
-    public GameState getResult() {
+    public GameState getGameState() {
         return model.getGameState();
     }
+
+
 }

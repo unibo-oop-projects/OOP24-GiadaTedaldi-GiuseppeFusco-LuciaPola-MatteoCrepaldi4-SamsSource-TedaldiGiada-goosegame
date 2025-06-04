@@ -12,6 +12,7 @@ import java.io.Serial;
 public class ClickTheColorMenu extends MinigameMenuImpl {
     @Serial
     private static final long serialVersionUID = 1L;
+    private transient ClickTheColorImpl controller;
 
     /**
      * Constructor for the click the color menu.
@@ -33,13 +34,13 @@ public class ClickTheColorMenu extends MinigameMenuImpl {
      */
     private void init() {
         getStartButton().addActionListener(e -> {
-            new ClickTheColorImpl();
+            new ClickTheColorImpl(this);
+            this.setVisible(false);
         });
     }
 
     @Override
     public GameState getGameState() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGameState'");
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 }
