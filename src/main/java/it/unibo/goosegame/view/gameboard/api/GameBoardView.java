@@ -11,7 +11,7 @@ public interface GameBoardView {
     void show();
 
     /**
-     * Used to signal the view to dispose the graphical interface
+     * Used to signal the view to dispose the graphical interface.
      */
     void disposeFrame();
 }

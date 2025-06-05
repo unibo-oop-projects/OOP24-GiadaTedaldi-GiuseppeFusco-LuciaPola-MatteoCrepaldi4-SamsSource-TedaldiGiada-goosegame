@@ -74,18 +74,19 @@ public class CellImpl implements Cell {
     }
 
     /**
-     * Utility method to refresh the cell view
+     * Utility method to refresh the cell view.
      */
     private void updateCellView() {
         this.view.update(players);
     }
 
     /**
-     * Utility method to refresh the minigame menu
+     * Utility method to refresh the minigame menu.
+     * 
      * @param menu the old minigame menu
      * @return the new minigame menu
      */
-    private Optional<MinigameMenu> refresh(MinigameMenu menu) {
+    private Optional<MinigameMenu> refresh(final MinigameMenu menu) {
         return Optional.ofNullable(menuMap.get(menu.getClass()));
     }
 

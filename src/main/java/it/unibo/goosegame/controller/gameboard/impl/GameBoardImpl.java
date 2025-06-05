@@ -24,9 +24,9 @@ import it.unibo.goosegame.view.minigames.snake.SnakeMenu;
 import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameMenu;
 import it.unibo.goosegame.view.minigames.tris.TrisMenu;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Timer;
 
 /**
  * Classed use to represent the gameboard.
@@ -81,7 +81,7 @@ public class GameBoardImpl implements GameBoard {
     }
 
     /**
-     * Method used to show the final board and end the game
+     * Method used to show the final board and end the game.
      */
     private void showFinalBoard() {
         gameTimer.stop();
@@ -95,7 +95,7 @@ public class GameBoardImpl implements GameBoard {
      */
     private void initGameCells() {
         for (int i = 0; i < CELLS_NUM; i++) {
-            if (i % GAME_CELL_NUM == 0 && i != 0) {
+            if (i % GAME_CELL_NUM == 0 && i != 0 || i == CASE_10) {
                 gameCells.add(new CellImpl(getMinigame(i)));
             } else {
                gameCells.add(new CellImpl());

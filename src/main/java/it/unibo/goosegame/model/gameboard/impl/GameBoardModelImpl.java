@@ -68,7 +68,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
             @Override
             protected void done() {
-                final int result = dice.getResult();
+                final int result = 58;//dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
                 move(turnManager.getCurrentPlayer(), result, true);
@@ -164,6 +164,10 @@ public final class GameBoardModelImpl implements GameBoardModel {
         return turnManager.getCurrentPlayer();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isOver() {
         return isGameOver;
     }
