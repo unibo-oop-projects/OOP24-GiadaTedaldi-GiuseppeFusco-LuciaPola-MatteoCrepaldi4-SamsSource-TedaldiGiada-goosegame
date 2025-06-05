@@ -22,6 +22,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
     private boolean hasPlayerMoved;
     private GameState gameState;
     private Timer timer;
+    private Boolean isGameOver;
 
     /**
      * Constructor for the gameboard model element.
@@ -34,6 +35,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
         this.cells = List.copyOf(cells);
         this.dice = new DoubleDiceImpl();
         this.hasPlayerMoved = false;
+        this.isGameOver = false;
     }
 
     /**
@@ -65,15 +67,12 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
             @Override
             protected void done() {
-                final int result = dice.getResult();
+                final int result = 16; // dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
-                final Cell newCell = cells.get(calcMovement(result, true));
-                searchPlayer(turnManager.getCurrentPlayer()).movePlayer(
-                        newCell,
-                        turnManager.getCurrentPlayer()
-                );
+                move(turnManager.getCurrentPlayer(), result, true);
 
+                final Cell newCell = cells.get(turnManager.getCurrentPlayer().getPosition());
                 newCell.triggerMinigame();
 
                  timer = new Timer(100, e -> {
@@ -99,8 +98,8 @@ public final class GameBoardModelImpl implements GameBoardModel {
         // ADD THE CARD LOGIC HERE
         //JOptionPane.showMessageDialog(null, "Game State: " + gameState);
         /*
-         * Samuele D'Ambrosio: richiama qui il metodo per aggiungere la carta al mazzo del giocatore e utilizza la variabile gameState
-         * per determinare se il giocatore ha vinto o perso il minigioco.
+         * Samuele D'Ambrosio: richiama qui il metodo per aggiungere la carta al mazzo del giocatore
+         * e utilizza la variabile gameState per determinare se il giocatore ha vinto o perso il minigioco.
          */
     }
 
@@ -129,6 +128,10 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
         player.setIndex(newPosition);
         currentCell.movePlayer(newCell, player);
+
+        if (player.getPosition() == cells.size()) {
+            this.isGameOver = true;
+        }
     }
 
     /**
@@ -137,6 +140,10 @@ public final class GameBoardModelImpl implements GameBoardModel {
     @Override
     public Player getCurrentPlayer() {
         return turnManager.getCurrentPlayer();
+    }
+
+    public boolean isOver() {
+        return isGameOver;
     }
 
     /**
@@ -163,11 +170,16 @@ public final class GameBoardModelImpl implements GameBoardModel {
      * @return the new position of the player on the board
      */
     private int calcMovement(final int steps, final boolean isForward) {
-        final int cellsNum = cells.size();
         final int position = cells.indexOf(searchPlayer(turnManager.getCurrentPlayer()));
+        final int cellCount = cells.size();
+        final int currentPosition = this.turnManager.getCurrentPlayer().getPosition();
 
         if (isForward) {
-            return Math.min(position + steps, cellsNum - 1);
+            if (currentPosition + steps > cellCount) {
+                return cellCount - (steps - (cellCount - currentPosition));
+            } else {
+                return position + steps;
+            }
         }
 
         return Math.max(position - steps, 0);
