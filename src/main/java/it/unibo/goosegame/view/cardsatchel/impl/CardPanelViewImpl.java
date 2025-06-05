@@ -194,7 +194,7 @@ public final class CardPanelViewImpl extends JPanel implements CardPanelView {
                 }
             } else {
                 // Draw image if present
-                final String imgPath = "/img/cards" + card.getName() + "_image.png";
+                final String imgPath = "/img/cards/" + card.getName() + "_image.png";
                 final java.net.URL imgURL = getClass().getResource(imgPath);
                 if (imgURL != null) {
                     final ImageIcon icon = new ImageIcon(imgURL);
