@@ -9,6 +9,7 @@ import it.unibo.goosegame.model.gameboard.impl.GameBoardModelImpl;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.turnmanager.api.TurnManager;
 import it.unibo.goosegame.model.turnmanager.impl.TurnManagerImpl;
+import it.unibo.goosegame.view.finalboard.FinalBoardGui;
 import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 import it.unibo.goosegame.view.gameboard.impl.GameBoardViewImpl;
 import it.unibo.goosegame.view.general.api.MinigameMenu;
@@ -79,6 +80,7 @@ public class GameBoardImpl implements GameBoard {
     private void showFinalBoard() {
         gameTimer.stop();
         view.disposeFrame();
+        new FinalBoardGui(this);
     }
 
     /**

@@ -67,7 +67,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
             @Override
             protected void done() {
-                final int result = 16; // dice.getResult();
+                final int result = 59; // dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
                 move(turnManager.getCurrentPlayer(), result, true);
@@ -129,7 +129,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
         player.setIndex(newPosition);
         currentCell.movePlayer(newCell, player);
 
-        if (player.getPosition() == cells.size()) {
+        if (player.getPosition() == cells.size() - 1) {
             this.isGameOver = true;
         }
     }
@@ -171,7 +171,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     private int calcMovement(final int steps, final boolean isForward) {
         final int position = cells.indexOf(searchPlayer(turnManager.getCurrentPlayer()));
-        final int cellCount = cells.size();
+        final int cellCount = cells.size() - 1;
         final int currentPosition = this.turnManager.getCurrentPlayer().getPosition();
 
         if (isForward) {

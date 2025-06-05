@@ -146,6 +146,6 @@ public final class GameBoardViewImpl implements GameBoardView {
 
     @Override
     public void disposeFrame() {
-        this.dispose();
+        this.frame.dispose();
     }
 }
