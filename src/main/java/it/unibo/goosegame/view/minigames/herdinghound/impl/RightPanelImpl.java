@@ -37,9 +37,9 @@ public final class RightPanelImpl extends JPanel implements RightPanel {
     public RightPanelImpl() {
         setPreferredSize(new Dimension(PANEL_WIDTH, 0));
         setBackground(Color.LIGHT_GRAY);
-        this.awakeImage = loadImage("/img/dog_awake.png");
-        this.alertImage = loadImage("/img/dog_alert.png");
-        this.asleepImage = loadImage("/img/dog_asleep.png");
+        this.awakeImage = loadImage("/img/minigames/herdinghound/dog_awake.png");
+        this.alertImage = loadImage("/img/minigames/herdinghound/dog_alert.png");
+        this.asleepImage = loadImage("/img/minigames/herdinghound/dog_asleep.png");
     }
 
     /**

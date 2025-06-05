@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.tris;
+package it.unibo.goosegame.view.minigames.tris.impl;
 
 import it.unibo.goosegame.controller.minigames.tris.api.TrisController;
 import it.unibo.goosegame.controller.minigames.tris.impl.TrisControllerImpl;
@@ -6,7 +6,6 @@ import it.unibo.goosegame.model.minigames.tris.api.TrisModel;
 import it.unibo.goosegame.model.minigames.tris.impl.TrisModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.tris.api.TrisView;
-import it.unibo.goosegame.view.minigames.tris.impl.TrisViewImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 
 /**
@@ -22,7 +21,7 @@ public class TrisMenu extends MinigameMenuImpl {
      * Constructor for the TrisMenu class.
      */
     public TrisMenu() {
-        super("/backgroundTris.png",
+        super("/img/minigames/background/backgroundTris.png",
             "Tris",
             """ 
             The Trsi(Tic-Tac-Toe) game is played on a 3x3 grid.

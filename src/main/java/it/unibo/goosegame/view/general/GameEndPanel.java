@@ -75,7 +75,7 @@ public final class GameEndPanel extends JPanel {
             return null;
         }
         final String outcome = hasWon ? "won" : "lost";
-        final String path = "/img/" + gameName + "_" + outcome + ".png";
+        final String path = "/img/minigames/endpanel/" + gameName + "_" + outcome + ".png";
         final URL resource = getClass().getResource(path);
         if (resource != null) {
             return new ImageIcon(resource).getImage();

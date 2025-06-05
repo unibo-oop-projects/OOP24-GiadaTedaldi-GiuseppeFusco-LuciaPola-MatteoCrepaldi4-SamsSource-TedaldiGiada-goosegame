@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.rockpaperscissors;
+package it.unibo.goosegame.view.minigames.rockpaperscissors.impl;
 
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.api.RockPaperScissorsController;
 import it.unibo.goosegame.controller.minigames.rockpaperscissors.impl.RockPaperScissorsControllerImpl;
@@ -7,7 +7,6 @@ import it.unibo.goosegame.model.minigames.rockpaperscissors.api.RockPaperScissor
 import it.unibo.goosegame.model.minigames.rockpaperscissors.impl.RockPaperScissorsModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.rockpaperscissors.api.RockPaperScissorsView;
-import it.unibo.goosegame.view.minigames.rockpaperscissors.impl.RockPaperScissorsViewImpl;
 
 /**
  * The RockPaperScissorsMenu class represents the menu for the game.
@@ -21,7 +20,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
      * Constructor for the RockPaperScissorsMenu class.
      */
     public RockPaperScissorsMenu() {
-        super("/RPS.png",
+        super("/img/minigames/background/RPS.png",
             "RockPaperScissors",
             """ 
             The game involves choosing one of the possible moves (rock, paper, or scissors) 

@@ -44,9 +44,9 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     private static final int COLOR = 240;
     private static final long serialVersionUID = 1L;
 
-    private final ImageIcon icon = new ImageIcon(GameMenu.class.getResource("/i.png"));
-    private final ImageIcon startImage = new ImageIcon(GameMenu.class.getResource("/play.png"));
-    private final transient Image background = new ImageIcon(GameMenu.class.getResource("/ImmagineMenu.png")).getImage();
+    private final ImageIcon icon = new ImageIcon(GameMenu.class.getResource("/img/startendmenu/i.png"));
+    private final ImageIcon startImage = new ImageIcon(GameMenu.class.getResource("/img/startendmenu/play.png"));
+    private final transient Image background = new ImageIcon(GameMenu.class.getResource("/img/startendmenu/ImmagineMenu.png")).getImage();
     private transient MenuLogic logic;
     private JTextField playerNameField;
     private JLabel playerNameLabel;

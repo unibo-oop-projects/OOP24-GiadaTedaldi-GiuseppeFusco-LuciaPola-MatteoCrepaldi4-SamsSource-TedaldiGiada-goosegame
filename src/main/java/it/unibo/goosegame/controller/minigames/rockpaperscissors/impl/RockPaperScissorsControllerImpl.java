@@ -41,9 +41,9 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
         view.addPaperListener(e -> playTurn("PAPER"));
         view.addScissorsListener(e -> playTurn("SCISSORS"));
 
-        rockImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/rock.png"));
-        paperImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/paper.png"));
-        scissorsImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/scissors.png"));
+        rockImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/rock.png"));
+        paperImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/paper.png"));
+        scissorsImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/scissors.png"));
     }
 
     /**

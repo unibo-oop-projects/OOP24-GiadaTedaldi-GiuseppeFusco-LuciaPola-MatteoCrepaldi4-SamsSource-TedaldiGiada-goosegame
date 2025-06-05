@@ -18,7 +18,7 @@ public class SnakeMenu extends MinigameMenuImpl {
      */
     public SnakeMenu() {
         super(
-            "/backgroundSnake.png", 
+            "/img/minigames/background/backgroundSnake.png", 
             "Snake Game", 
             "Welcome to Snake Game\n"
             + "Here's some instruction to play:\n"
