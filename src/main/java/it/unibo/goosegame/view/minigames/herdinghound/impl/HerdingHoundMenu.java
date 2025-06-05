@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.herdinghound;
+package it.unibo.goosegame.view.minigames.herdinghound.impl;
 
 import it.unibo.goosegame.controller.minigames.herdinghound.HerdingHoundController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
@@ -15,7 +15,7 @@ public class HerdingHoundMenu extends MinigameMenuImpl {
      * Constructor for the HerdingHound class.
      */
     public HerdingHoundMenu() {
-        super("/img/HerdingHound_menu.png", "Herding Hound", 
+        super("/img/minigames/background/HerdingHound_menu.png", "Herding Hound", 
         """ 
         In Herding Hound, you play as a goose
         trying to escape by moving along the border of a grid.

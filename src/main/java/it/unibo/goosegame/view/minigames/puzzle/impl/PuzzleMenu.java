@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.puzzle;
+package it.unibo.goosegame.view.minigames.puzzle.impl;
 
 import it.unibo.goosegame.controller.minigames.puzzle.api.PuzzleController;
 import it.unibo.goosegame.controller.minigames.puzzle.impl.PuzzleControllerImpl;
@@ -7,7 +7,6 @@ import it.unibo.goosegame.model.minigames.puzzle.api.PuzzleModel;
 import it.unibo.goosegame.model.minigames.puzzle.impl.PuzzleModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
-import it.unibo.goosegame.view.minigames.puzzle.impl.PuzzleViewImpl;
 
 /**
  * Menu for the Puzzle minigame.
@@ -22,7 +21,7 @@ public class PuzzleMenu extends MinigameMenuImpl {
      * Constructor for the PuzzleMenu class.
      */
     public PuzzleMenu() {
-        super("/backgroundPuzzle.png",
+        super("/img/minigames/background/backgroundPuzzle.png",
             "Puzzle",
             """ 
             The Puzzle game consists of a 5x5 grid of tiles displaying an image, 

@@ -32,8 +32,8 @@ public abstract class MinigameMenuImpl extends JFrame implements MinigameMenu {
     private final JPanel mainPanel;
     private final Image background;
 
-    private final ImageIcon startIcon = new ImageIcon(MinigameMenuImpl.class.getResource("/play.png"));
-    private final ImageIcon infoIcon = new ImageIcon(MinigameMenuImpl.class.getResource("/i.png"));
+    private final ImageIcon startIcon = new ImageIcon(MinigameMenuImpl.class.getResource("/img/startendmenu/play.png"));
+    private final ImageIcon infoIcon = new ImageIcon(MinigameMenuImpl.class.getResource("/img/startendmenu/i.png"));
     private final String infoMsg;
 
     private JButton startButton;

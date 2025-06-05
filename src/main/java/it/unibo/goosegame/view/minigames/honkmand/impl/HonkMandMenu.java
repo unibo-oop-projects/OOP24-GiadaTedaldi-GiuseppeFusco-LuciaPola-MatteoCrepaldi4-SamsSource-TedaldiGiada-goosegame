@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.honkmand;
+package it.unibo.goosegame.view.minigames.honkmand.impl;
 
 import it.unibo.goosegame.controller.minigames.honkmand.HonkMandController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
@@ -16,7 +16,7 @@ public class HonkMandMenu extends MinigameMenuImpl {
      * Constructor for the HonkMandMenu class.
      */
     public HonkMandMenu() {
-        super("/img/HonkMand_menu.png", "HonkMand", 
+        super("/img/minigames/background/HonkMand_menu.png", "HonkMand", 
         """
         Welcome to HonkMand, a fast-paced memory game with colors!
         At the start of each round, the game shows you a brand new sequence of colors

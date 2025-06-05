@@ -70,7 +70,7 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public void initializeView() {
-        currentPlayerIcon = new ImageIcon(RockPaperScissorsViewImpl.class.getResource("/scelta.png"));
+        currentPlayerIcon = new ImageIcon(RockPaperScissorsViewImpl.class.getResource("/img/minigames/rpc/scelta.png"));
         currentComputerIcon = currentPlayerIcon;
 
         playerChoice = createButtonIcon(currentPlayerIcon, IMAGE_SIZE, IMAGE_SIZE);

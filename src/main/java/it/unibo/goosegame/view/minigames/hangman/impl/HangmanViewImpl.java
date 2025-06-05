@@ -100,7 +100,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
             image = true;
             imageLabel.setVisible(true);
         }
-        final java.net.URL imgURL = HangmanViewImpl.class.getResource("/hangman" + attempts + ".png");
+        final java.net.URL imgURL = HangmanViewImpl.class.getResource("/img/minigames/hangman/hangman" + attempts + ".png");
         if (imgURL != null) {
             final ImageIcon original = new ImageIcon(imgURL);
             final int w = imageLabel.getWidth();

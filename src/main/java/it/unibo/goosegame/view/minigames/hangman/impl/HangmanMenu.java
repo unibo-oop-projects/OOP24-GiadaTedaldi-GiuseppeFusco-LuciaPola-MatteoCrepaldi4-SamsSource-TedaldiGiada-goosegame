@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.hangman;
+package it.unibo.goosegame.view.minigames.hangman.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,6 @@ import it.unibo.goosegame.model.minigames.hangman.api.HangmanModel;
 import it.unibo.goosegame.model.minigames.hangman.impl.HangmanModelImpl;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 import it.unibo.goosegame.view.minigames.hangman.api.HangmanView;
-import it.unibo.goosegame.view.minigames.hangman.impl.HangmanViewImpl;
 
 /**
  * Class representing the Hangman game menu.
@@ -34,7 +33,7 @@ public class HangmanMenu extends MinigameMenuImpl {
     */
     public HangmanMenu() { 
         super(
-            "/hangmanImage.png", 
+            "/img/minigames/background/hangmanImage.png", 
             "Hangman", 
             """
             The game involves guessing a randomly selected word. 
@@ -56,7 +55,7 @@ public class HangmanMenu extends MinigameMenuImpl {
      */
     private List<String> loadWords() {
         final List<String> lines = new ArrayList<>();
-        try (InputStream inputStream = HangmanViewImpl.class.getClassLoader().getResourceAsStream("parole.txt")) {
+        try (InputStream inputStream = HangmanViewImpl.class.getClassLoader().getResourceAsStream("text/parole.txt")) {
             if (inputStream == null) {
                 JOptionPane.showMessageDialog(null, "Unable to find the words file.", "Error", JOptionPane.ERROR_MESSAGE);
                 return lines;

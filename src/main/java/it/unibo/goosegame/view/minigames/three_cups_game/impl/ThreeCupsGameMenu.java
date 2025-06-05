@@ -19,7 +19,7 @@ public class ThreeCupsGameMenu extends MinigameMenuImpl {
      */
     public ThreeCupsGameMenu() {
         super(
-            "/backgroundTCG.png",
+            "/img/minigames/background/backgroundTCG.png",
             "Three Cups Game",
             "Three Cups Game is a fun and simple minigame where three cups are "
                     + "placed on a table. One of them hides a reward underneath. Your goal is "

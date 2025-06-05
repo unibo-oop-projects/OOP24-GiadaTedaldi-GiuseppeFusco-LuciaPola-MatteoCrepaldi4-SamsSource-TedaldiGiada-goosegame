@@ -54,11 +54,11 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
         this.imageLabels = new ArrayList<>();
 
         this.cupImage = new ImageIcon(Objects.requireNonNull(
-                getClass().getResource("/minigames/three_cups_game/cup.png"))
+                getClass().getResource("/img/minigames/three_cups_game/cup.png"))
         );
 
         this.marbleImage = new ImageIcon(Objects.requireNonNull(
-           getClass().getResource("/minigames/three_cups_game/marble.png")
+           getClass().getResource("/img/minigames/three_cups_game/marble.png")
         ));
 
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

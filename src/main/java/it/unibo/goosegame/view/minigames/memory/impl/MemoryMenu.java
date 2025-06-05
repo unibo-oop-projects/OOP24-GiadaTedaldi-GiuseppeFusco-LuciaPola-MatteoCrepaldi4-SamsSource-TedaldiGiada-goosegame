@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.memory;
+package it.unibo.goosegame.view.minigames.memory.impl;
 
 import it.unibo.goosegame.controller.minigames.memory.MemoryController;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
@@ -18,7 +18,7 @@ public class MemoryMenu extends MinigameMenuImpl {
      */
     public MemoryMenu() {
         super(
-            "/backgroundMemory.png", 
+            "/img/minigames/background/backgroundMemory.png", 
             "Memory Game", 
             "Welcome to Memory Game\n"
             + "Here's some instruction to play:\n"
