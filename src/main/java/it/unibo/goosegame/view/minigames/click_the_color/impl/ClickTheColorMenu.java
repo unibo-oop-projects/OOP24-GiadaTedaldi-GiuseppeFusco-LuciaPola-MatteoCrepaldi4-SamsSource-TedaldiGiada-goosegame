@@ -19,7 +19,7 @@ public class ClickTheColorMenu extends MinigameMenuImpl {
      */
     public ClickTheColorMenu() {
         super(
-            "/img/minigames/background/backgroundCTC.png",
+            "/img/background/backgroundCTC.png",
             "Click the color",
             "Click the Color is a fast-paced game where you must click the correct colored "
                     + "button before time runs out. Match the color shown to earn points—miss or wait too long, "
