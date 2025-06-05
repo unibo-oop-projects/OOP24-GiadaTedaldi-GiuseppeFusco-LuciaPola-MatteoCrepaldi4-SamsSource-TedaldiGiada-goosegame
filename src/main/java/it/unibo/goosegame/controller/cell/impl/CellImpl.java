@@ -144,8 +144,7 @@ public class CellImpl implements Cell {
         }
 
         final MinigameMenu menu = this.minigameMenu.get();
-        gameState = menu.getGameState();
-
+        gameState = GameState.NOT_STARTED;
 
         this.timer = new Timer(100, e -> {
             if (gameState == GameState.WON || gameState == GameState.LOST || gameState == GameState.TIE) {

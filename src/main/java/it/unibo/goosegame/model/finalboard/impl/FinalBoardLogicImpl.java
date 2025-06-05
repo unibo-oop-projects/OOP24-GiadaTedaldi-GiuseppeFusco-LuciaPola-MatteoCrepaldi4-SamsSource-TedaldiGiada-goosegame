@@ -3,6 +3,7 @@ package it.unibo.goosegame.model.finalboard.impl;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import it.unibo.goosegame.controller.gameboard.api.GameBoard;
@@ -16,6 +17,7 @@ import it.unibo.goosegame.model.player.api.Player;
 public class FinalBoardLogicImpl implements FinalBoardLogic {
 
     private final GameBoard gameBoard;
+    private final AtomicInteger rank = new AtomicInteger(1);
 
     /**
      * Constructor for FinalBoardLogicImpl.
@@ -36,7 +38,7 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
         .sorted(Comparator.comparingInt(Player::getPosition).reversed())
         .collect(Collectors.toMap(
             Player::getName,
-            Player::getPosition,
+            p -> rank.getAndIncrement(),
             (a, b) -> a,
             LinkedHashMap::new
         ));
