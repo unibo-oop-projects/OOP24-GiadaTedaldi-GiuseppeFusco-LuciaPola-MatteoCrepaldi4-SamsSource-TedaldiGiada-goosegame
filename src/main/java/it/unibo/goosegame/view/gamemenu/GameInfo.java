@@ -65,22 +65,24 @@ public class GameInfo extends JPanel {
         infoArea = new JTextArea(""" 
         RULES OF THE GOOSE GAME
 
-        1.  During their turn, the player must roll two dice (by pressing two buttons).
+        1.  During their turn, the player must roll two dices (by pressing the "throw dices" button).
             The number of spaces moved forward will depend on the sum of the dice.
 
-        2.  Depending on the cell where the player lands, one of three events may occur:
+        2.  Depending on the cell where the player lands, one of two events may occur:
                 STATIONARY: The player remains on the same cell.
 
-                MALUS: The player receives a penalty:
-                    - Moves back by n cells
-                    - Skips n turns
-                    - Returns to the starting cell
+                MINIGAME: The player must complete a minigame. If they win, they recive a bonus card
+                that allows them to move forward a certain number of spaces. The player can decide whenever
+                playing that card, because it's going to be saved into a "satchel" (that you can always show whenever 
+                is your turn by pressing the "show satchel" button). If they lose, they will recive a penalty card that 
+                forces them to move backward a certain number of spaces.
 
-                MINIGAME: The player must complete a minigame. If they win, they may receive one of two types of "Bonus Cards":
-                    - SKIP MALUS: Allows the player to avoid the next malus
-                    - ADVANCE SPACES: Allows the player to move forward by n cells
+        3. After the player has completed their turn, they must press the "next turn" button to pass the turn to
+           the next player. If the player has a card in their satchel, they can choose to play it before passing the turn.
+           If they don't play it, it will remain in their satchel for future turns.
 
-        3. The first player to reach the last square with the exact number of moves WINS.
+        4. The first player to reach the last square with the exact number of moves WINS. In other way, if you don't get the
+        exact number of moves, you reach the last square but you will have to move backward the remaining spaces.
         """);
         infoArea.setWrapStyleWord(true);
         infoArea.setLineWrap(true);
