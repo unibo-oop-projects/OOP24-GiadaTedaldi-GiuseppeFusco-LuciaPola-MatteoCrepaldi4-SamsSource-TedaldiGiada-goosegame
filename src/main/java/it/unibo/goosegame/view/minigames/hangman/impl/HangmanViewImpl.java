@@ -35,7 +35,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     private static final int FONT_SIZE = 34;
     private static final int DIMENSION = 200;
     private static final int COLOR_WHITE = 255;
-    private static final int WINDOW_WIDTH = 600;
+    private static final int WINDOW_WIDTH = 650;
     private static final int WINDOW_HEIGHT = 400;
     private static final int BUTTONW = 55;
     private static final int BUTTONH = 25;
@@ -218,7 +218,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     }
 
     private JPanel createKeyboardPanel() {
-        final JPanel keyPanel  = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        final JPanel keyPanel  = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
         for (char letter = 'A'; letter <= 'Z'; letter++) {
             final JButton button = new JButton(String.valueOf(letter));
             button.setBackground(new Color(COLOR_WHITE, COLOR_WHITE, 180));

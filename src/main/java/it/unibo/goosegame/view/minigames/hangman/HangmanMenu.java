@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import it.unibo.goosegame.controller.minigames.hangman.api.HangmanController;
 import it.unibo.goosegame.controller.minigames.hangman.impl.HangmanControllerImpl;
@@ -98,4 +99,11 @@ public class HangmanMenu extends MinigameMenuImpl {
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
+
+    public static void main(final String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      final HangmanMenu menu = new HangmanMenu();
+      menu.initializeView();
+    });
+  }
 }
