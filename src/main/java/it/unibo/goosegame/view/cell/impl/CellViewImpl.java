@@ -1,6 +1,5 @@
 package it.unibo.goosegame.view.cell.impl;
 
-//import it.unibo.goosegame.model.cell.api.CellModel;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cell.api.CellView;
 
@@ -16,15 +15,13 @@ import java.util.List;
  * Implementation of {@link CellView}.
  */
 public class CellViewImpl implements CellView {
-    //private final CellModel model;
     private final JPanel cellLabel;
 
     /**
      * Constructor for the cell graphical element.
      *
      */
-    public CellViewImpl(/*final CellModel model*/) {
-        //this.model = model;
+    public CellViewImpl() {
         this.cellLabel = new JPanel(new GridLayout(2, 2));
 
         cellInit();
