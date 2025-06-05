@@ -6,12 +6,23 @@ import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cell.api.CellView;
 import it.unibo.goosegame.view.cell.impl.CellViewImpl;
 import it.unibo.goosegame.view.general.api.MinigameMenu;
+import it.unibo.goosegame.view.minigames.click_the_color.impl.ClickTheColorMenu;
+import it.unibo.goosegame.view.minigames.hangman.HangmanMenu;
+import it.unibo.goosegame.view.minigames.herdinghound.HerdingHoundMenu;
+import it.unibo.goosegame.view.minigames.honkmand.HonkMandMenu;
+import it.unibo.goosegame.view.minigames.memory.MemoryMenu;
+import it.unibo.goosegame.view.minigames.puzzle.PuzzleMenu;
+import it.unibo.goosegame.view.minigames.rockpaperscissors.RockPaperScissorsMenu;
+import it.unibo.goosegame.view.minigames.snake.SnakeMenu;
+import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameMenu;
+import it.unibo.goosegame.view.minigames.tris.TrisMenu;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -19,10 +30,23 @@ import java.util.Optional;
  */
 public class CellImpl implements Cell {
     private final CellView view;
-    private final Optional<MinigameMenu> minigameMenu;
+    private Optional<MinigameMenu> minigameMenu;
     private final List<Player> players;
     private Timer timer;
     private GameState gameState;
+
+    private final Map<Class<? extends MinigameMenu>, MinigameMenu> menuMap = Map.of(
+            ClickTheColorMenu.class, new ClickTheColorMenu(),
+            HangmanMenu.class, new HangmanMenu(),
+            HerdingHoundMenu.class, new HerdingHoundMenu(),
+            HonkMandMenu.class, new HonkMandMenu(),
+            MemoryMenu.class, new MemoryMenu(),
+            PuzzleMenu.class, new PuzzleMenu(),
+            RockPaperScissorsMenu.class, new RockPaperScissorsMenu(),
+            SnakeMenu.class, new SnakeMenu(),
+            ThreeCupsGameMenu.class, new ThreeCupsGameMenu(),
+            TrisMenu.class, new TrisMenu()
+    );
 
     /**
      * Constructor for non minigame cells.
@@ -49,8 +73,20 @@ public class CellImpl implements Cell {
         }
     }
 
+    /**
+     * Utility method to refresh the cell view
+     */
     private void updateCellView() {
         this.view.update(players);
+    }
+
+    /**
+     * Utility method to refresh the minigame menu
+     * @param menu the old minigame menu
+     * @return the new minigame menu
+     */
+    private Optional<MinigameMenu> refresh(MinigameMenu menu) {
+        return Optional.ofNullable(menuMap.get(menu.getClass()));
     }
 
     /**
@@ -133,6 +169,7 @@ public class CellImpl implements Cell {
 
         if (gameState == GameState.WON || gameState == GameState.LOST || gameState == GameState.TIE) {
             minigameMenu.get().dispose();
+            this.minigameMenu = refresh(minigameMenu.get());
         }
 
         return gameState;
