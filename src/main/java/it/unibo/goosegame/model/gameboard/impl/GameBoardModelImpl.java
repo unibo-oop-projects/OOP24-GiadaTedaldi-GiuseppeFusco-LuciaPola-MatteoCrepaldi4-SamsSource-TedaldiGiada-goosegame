@@ -105,7 +105,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
                 final Card drawnCard = Card.drawMalusCard();
                 JOptionPane.showMessageDialog(null, drawnCard.getDescription(),
                  drawnCard.getName(), JOptionPane.INFORMATION_MESSAGE);
-                if (drawnCard.isRemove()){
+                if (drawnCard.isRemove()) {
                     this.turnManager.getCurrentPlayer().getSatchel().clearSatchel();
                 } else {
                     this.move(getCurrentPlayer(), drawnCard.getSteps(), drawnCard.isBonus());
