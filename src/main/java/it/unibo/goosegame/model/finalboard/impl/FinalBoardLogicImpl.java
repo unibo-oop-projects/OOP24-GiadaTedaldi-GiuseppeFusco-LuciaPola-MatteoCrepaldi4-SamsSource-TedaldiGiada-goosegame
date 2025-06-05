@@ -33,7 +33,7 @@ public class FinalBoardLogicImpl implements FinalBoardLogic {
     @Override
     public Map<String, Integer> getFinalBoard() {
         return gameBoard.getPlayers().stream()
-        .sorted(Comparator.comparingInt(Player::getPosition))
+        .sorted(Comparator.comparingInt(Player::getPosition).reversed())
         .collect(Collectors.toMap(
             Player::getName,
             Player::getPosition,
