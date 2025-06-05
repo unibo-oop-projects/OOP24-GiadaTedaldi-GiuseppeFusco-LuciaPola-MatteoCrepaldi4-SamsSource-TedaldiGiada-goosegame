@@ -1,6 +1,7 @@
 package it.unibo.goosegame.view.minigames.three_cups_game.impl;
 
 import it.unibo.goosegame.controller.minigames.three_cups_game.impl.ThreeCupsGameImpl;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.view.general.impl.MinigameMenuImpl;
 
 import java.io.Serial;
@@ -11,6 +12,7 @@ import java.io.Serial;
 public class ThreeCupsGameMenu extends MinigameMenuImpl {
     @Serial
     private static final long serialVersionUID = 1L;
+    private transient ThreeCupsGameImpl controller;
 
     /**
      * Constructor for the menu.
@@ -32,7 +34,16 @@ public class ThreeCupsGameMenu extends MinigameMenuImpl {
      */
     private void init() {
         getStartButton().addActionListener(e -> {
-           new ThreeCupsGameImpl();
+           this.controller = new ThreeCupsGameImpl(this);
+           this.setVisible(false);
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 }

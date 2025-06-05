@@ -144,7 +144,7 @@ public final class ThreeCupsGameModelImpl implements ThreeCupsGameModel {
      */
     @Override
     public GameState getGameState() {
-        if (playedRounds >= ROUNDS) {
+        if (isOver()) {
             if (score < MIN_VICTORIES) {
                 return GameState.LOST;
             } else {

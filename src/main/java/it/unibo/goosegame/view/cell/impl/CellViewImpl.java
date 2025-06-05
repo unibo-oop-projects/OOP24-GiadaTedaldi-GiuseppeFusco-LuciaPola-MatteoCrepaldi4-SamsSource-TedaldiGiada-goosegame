@@ -1,6 +1,6 @@
 package it.unibo.goosegame.view.cell.impl;
 
-import it.unibo.goosegame.model.cell.api.CellModel;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cell.api.CellView;
 
@@ -16,16 +16,13 @@ import java.util.List;
  * Implementation of {@link CellView}.
  */
 public class CellViewImpl implements CellView {
-    private final CellModel model;
     private final JPanel cellLabel;
 
     /**
      * Constructor for the cell graphical element.
      *
-     * @param model model element of the cell
      */
-    public CellViewImpl(final CellModel model) {
-        this.model = model;
+    public CellViewImpl() {
         this.cellLabel = new JPanel(new GridLayout(2, 2));
 
         cellInit();
@@ -40,7 +37,10 @@ public class CellViewImpl implements CellView {
 
     /**
      * {@inheritDoc}
+     *
+     * The Panel needs to be exposed, since it's needed from the main board
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     @Override
     public JPanel getCellPanel() {
         return cellLabel;

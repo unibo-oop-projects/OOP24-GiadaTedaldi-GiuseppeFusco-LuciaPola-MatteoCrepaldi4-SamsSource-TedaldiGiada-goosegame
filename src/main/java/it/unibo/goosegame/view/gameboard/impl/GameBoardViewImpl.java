@@ -6,8 +6,9 @@ import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -21,6 +22,10 @@ public final class GameBoardViewImpl implements GameBoardView {
 
     private final GameBoardModel model;
     private final JFrame frame;
+    private final JLabel currentPlayerLabel;
+    private final JButton nextTurnButton;
+    private final JButton diceButton;
+    private final JButton openSatchelButton;
     private final List<Cell> boardCells;
 
     /**
@@ -32,7 +37,11 @@ public final class GameBoardViewImpl implements GameBoardView {
     public GameBoardViewImpl(final GameBoardModel model, final List<Cell> gameCells) {
         this.frame = new JFrame();
         this.model = model;
-        this.boardCells = gameCells;
+        this.currentPlayerLabel = new JLabel();
+        this.nextTurnButton = new JButton("Next turn");
+        this.diceButton = new JButton("Throw dices");
+        this.openSatchelButton = new JButton("Show satchel");
+        this.boardCells = List.copyOf(gameCells);
 
         initView();
     }
@@ -41,22 +50,59 @@ public final class GameBoardViewImpl implements GameBoardView {
      * Utility function used to initialise the view components.
      */
     private void initView() {
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setSize(FRAME_SIZE, FRAME_SIZE);
 
         final JPanel gameboardPanel = new JPanel(new GridLayout(BOARD_DIMENSION, BOARD_DIMENSION));
         final JPanel buttonsPanel = new JPanel();
+        final JPanel infoPanel = new JPanel(new BorderLayout());
 
         initGameboard(gameboardPanel);
 
-        final JButton diceButton = new JButton("Throw dices");
         diceButton.addActionListener(e -> {
-            model.throwDices();
+            clickedDiceButton();
         });
+
+        nextTurnButton.addActionListener(e -> {
+            clickedNextTurnButton();
+        });
+        nextTurnButton.setEnabled(false);
+
+        openSatchelButton.addActionListener(e -> {
+            model.getCurrentPlayer().getSatchel().showSatchel();
+        });
+
+        currentPlayerLabel.setText("Current player: " + model.getCurrentPlayer().getName());
+
+        buttonsPanel.add(nextTurnButton);
         buttonsPanel.add(diceButton);
+        buttonsPanel.add(openSatchelButton);
+
+        infoPanel.add(buttonsPanel, BorderLayout.CENTER);
+        infoPanel.add(currentPlayerLabel, BorderLayout.EAST);
 
         frame.add(gameboardPanel, BorderLayout.CENTER);
-        frame.add(buttonsPanel, BorderLayout.SOUTH);
+        frame.add(infoPanel, BorderLayout.SOUTH);
+    }
+
+    /**
+     * Method called when the dice button is clicked.
+     */
+    private void clickedDiceButton() {
+        model.throwDices();
+        diceButton.setEnabled(false);
+        nextTurnButton.setEnabled(true);
+    }
+
+    /**
+     * Method called when the next turn button is clicked.
+     * It updates the current player label and enables the dice button.
+     */
+    private void clickedNextTurnButton() {
+        model.nextTurn();
+        currentPlayerLabel.setText("Current player: " + model.getCurrentPlayer().getName());
+        nextTurnButton.setEnabled(false);
+        diceButton.setEnabled(true);
     }
 
     /**
@@ -96,5 +142,10 @@ public final class GameBoardViewImpl implements GameBoardView {
     @Override
     public void show() {
         frame.setVisible(true);
+    }
+
+    @Override
+    public void disposeFrame() {
+        this.frame.dispose();
     }
 }

@@ -1,8 +1,10 @@
 package it.unibo.goosegame.controller.minigames.three_cups_game.impl;
 
 import it.unibo.goosegame.controller.minigames.three_cups_game.api.ThreeCupsGame;
+import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.model.minigames.three_cups_game.api.ThreeCupsGameModel;
 import it.unibo.goosegame.model.minigames.three_cups_game.impl.ThreeCupsGameModelImpl;
+import it.unibo.goosegame.view.general.api.MinigameMenu;
 import it.unibo.goosegame.view.minigames.three_cups_game.api.ThreeCupsGameView;
 import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameViewImpl;
 
@@ -10,13 +12,26 @@ import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameViewI
  * Implementation of {@link ThreeCupsGame}.
  */
 public class ThreeCupsGameImpl implements ThreeCupsGame {
+    private final ThreeCupsGameModel model;
+    private final ThreeCupsGameView view;
+
     /**
-     * Construct for the Three Cups Game minigame.
+     * Constructor for the Three Cups Game minigame.
+     *
+     * @param menu the menu used to start the minigame
      */
-    public ThreeCupsGameImpl() {
-        final ThreeCupsGameModel model = new ThreeCupsGameModelImpl();
-        final ThreeCupsGameView view = new ThreeCupsGameViewImpl(model);
+    public ThreeCupsGameImpl(final MinigameMenu menu) {
+        this.model = new ThreeCupsGameModelImpl();
+        this.view = new ThreeCupsGameViewImpl(model, menu);
 
         view.show();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MinigamesModel.GameState getGameState() {
+        return model.getGameState();
     }
 }

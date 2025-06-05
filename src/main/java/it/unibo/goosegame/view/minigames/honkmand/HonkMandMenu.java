@@ -16,15 +16,18 @@ public class HonkMandMenu extends MinigameMenuImpl {
      * Constructor for the HonkMandMenu class.
      */
     public HonkMandMenu() {
-        super("/img/HonkMand_menu.png", "HonkMand", "Welcome to HonkMand, a fast-paced memory game with colors!" 
-        + "At the start of each round, the game shows you a brand new sequence of colors" 
-        + "— one step longer than the previous round." 
-        + "Watch closely to the buttons as they light up in order." 
-        + "When it's your turn, repeat the sequence exactly by clicking the buttons." 
-        + "Each round gets harder, with longer and newly shuffled sequences." 
-        + "If you make a mistake — it’s GAME OVER!" 
-        + "How many buttons can you handle?" 
-        + "Stay sharp and keep up! 🦢🎶");
+        super("/img/HonkMand_menu.png", "HonkMand", 
+        """
+        Welcome to HonkMand, a fast-paced memory game with colors!
+        At the start of each round, the game shows you a brand new sequence of colors
+        one step longer than the previous round.
+        Watch closely to the buttons as they light up in order.
+        When it's your turn, repeat the sequence exactly by clicking the buttons. 
+        Each round gets harder, with longer and newly shuffled sequences.
+        If you make a mistake — it’s GAME OVER!
+        How many buttons can you handle?
+        Stay sharp and keep up!
+        """);
         initialize();
     }
 
@@ -37,9 +40,9 @@ public class HonkMandMenu extends MinigameMenuImpl {
     }
 
     /**
-     * Returns the state of the game.
-     * @return GameState
+     * {@inheritDoc}
      */
+    @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }

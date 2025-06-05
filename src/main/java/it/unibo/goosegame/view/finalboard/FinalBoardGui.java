@@ -5,9 +5,9 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,7 +39,11 @@ public class FinalBoardGui {
     public FinalBoardGui(final GameBoard gameBoard) {
         this.logic = new FinalBoardLogicImpl(gameBoard);
         final JFrame frame = new JFrame("Final Board");
-        final Image backgroundImage = new ImageIcon("resources/FinalBoard.png").getImage();
+
+        final Image backgroundImage = new ImageIcon(Objects.requireNonNull(
+                FinalBoardGui.class.getResource("/FinalBoard.png"))
+        ).getImage();
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         final JPanel imagePanel = new JPanel() {
@@ -66,9 +70,6 @@ public class FinalBoardGui {
         table.setRowHeight(TABLE_ROW_HEIGHT);
         final JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(SCROLL_PANE_WIDTH, SCROLL_PANE_HEIGHT));
-        final JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(e -> frame.dispose());
-        imagePanel.add(exitButton, BorderLayout.SOUTH);
         frame.add(imagePanel, BorderLayout.CENTER);
         frame.add(scrollPane, BorderLayout.SOUTH);
         frame.setVisible(true);

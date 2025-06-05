@@ -22,7 +22,7 @@ public class CardSatchelFrameImpl extends JFrame implements CardSatchelFrame {
      */
     public CardSatchelFrameImpl(final JPanel view) {
         super("Satchel");
-        super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        super.setDefaultCloseOperation(HIDE_ON_CLOSE);
         super.setLayout(new BorderLayout());
         super.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         super.setLocationRelativeTo(null);
@@ -35,6 +35,5 @@ public class CardSatchelFrameImpl extends JFrame implements CardSatchelFrame {
     @Override
     public void close() {
         setVisible(false);
-        dispose();
     }
 }
