@@ -116,7 +116,7 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
      */
     private void initializeComponents() {
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize(FRAME_SIZE, FRAME_SIZE);
 
