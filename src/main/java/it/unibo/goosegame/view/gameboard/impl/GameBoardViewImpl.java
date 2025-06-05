@@ -7,7 +7,6 @@ import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
