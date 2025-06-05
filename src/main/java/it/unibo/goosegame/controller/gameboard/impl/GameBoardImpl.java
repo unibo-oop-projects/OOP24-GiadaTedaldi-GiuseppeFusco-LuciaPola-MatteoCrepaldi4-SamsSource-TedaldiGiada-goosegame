@@ -82,6 +82,7 @@ public class GameBoardImpl implements GameBoard {
 
     /**
      * Method used to show the final board and end the game.
+     * Method used to show the final board and end the game.
      */
     private void showFinalBoard() {
         gameTimer.stop();
