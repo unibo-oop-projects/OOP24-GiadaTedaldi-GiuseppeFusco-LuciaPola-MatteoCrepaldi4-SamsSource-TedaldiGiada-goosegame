@@ -68,7 +68,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
             @Override
             protected void done() {
-                final int result = 58;//dice.getResult();
+                final int result = dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
                 move(turnManager.getCurrentPlayer(), result, true);
