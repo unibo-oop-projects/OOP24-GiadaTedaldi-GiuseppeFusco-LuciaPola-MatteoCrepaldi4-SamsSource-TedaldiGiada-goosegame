@@ -46,7 +46,9 @@ public class GameMenu extends JFrame implements GameMenuInterface {
 
     private final ImageIcon icon = new ImageIcon(GameMenu.class.getResource("/img/startendmenu/i.png"));
     private final ImageIcon startImage = new ImageIcon(GameMenu.class.getResource("/img/startendmenu/play.png"));
-    private final transient Image background = new ImageIcon(GameMenu.class.getResource("/img/startendmenu/ImmagineMenu.png")).getImage();
+    private final transient Image background = new ImageIcon(
+        GameMenu.class.getResource("/img/startendmenu/ImmagineMenu.png"))
+    .getImage();
     private transient MenuLogic logic;
     private JTextField playerNameField;
     private JLabel playerNameLabel;
