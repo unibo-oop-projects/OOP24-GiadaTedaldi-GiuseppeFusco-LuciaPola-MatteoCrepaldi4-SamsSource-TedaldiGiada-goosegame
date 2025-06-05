@@ -98,11 +98,13 @@ public final class GameBoardModelImpl implements GameBoardModel {
         timer.stop();
         if (gameState == GameState.WON) {
             final Card drawnCard = Card.drawBonusCard();
-            JOptionPane.showMessageDialog(null, drawnCard.getDescription());
+            JOptionPane.showMessageDialog(null, drawnCard.getDescription(),
+             drawnCard.getName(), JOptionPane.INFORMATION_MESSAGE);
             this.turnManager.getCurrentPlayer().getSatchel().addCard(drawnCard);
         } else if (gameState == GameState.LOST) {
                 final Card drawnCard = Card.drawMalusCard();
-                JOptionPane.showMessageDialog(null, drawnCard.getDescription());
+                JOptionPane.showMessageDialog(null, drawnCard.getDescription(),
+                 drawnCard.getName(), JOptionPane.INFORMATION_MESSAGE);
                 if (drawnCard.isRemove()){
                     this.turnManager.getCurrentPlayer().getSatchel().clearSatchel();
                 } else {
