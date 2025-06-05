@@ -27,19 +27,19 @@ public enum Card {
     + "You ran. He ran faster." 
     + "You flapped. He lunged." 
     + "Some say you're still honking in fear." 
-    + "You may have escaped, but only after losing 10 spaces… and your will to honk.", 7, false, false),
+    + "You may have escaped, but only after losing 5 spaces… and your will to honk. You move back 5 spaces", 5, false, false),
     /** Example card 5. */
     NAME5("Goose Launcher", "Ever dreamt of launching a goose into space?" 
     + "Hop on the Goose Launcher — or just a trampoline? — and leap 4 spaces ahead!", 4, true, false),
     /** Example card 6. */
     NAME6("Wobble Ladder", "So tall it scrapes the clouds," 
-    + "so wobbly it makes your feathers twitch.", 2, true, false),
+    + "so wobbly it makes your feathers twitch. Move ahead 2 spaces", 2, true, false),
     /** Example card 7. */
     NAME7("The Backflap Gap", "After waddling along that endless fence," 
-    + "you spot it — freedom at last!", 2, true, false),
+    + "you spot it — freedom at last! Move ahead 2 spaces", 2, true, false),
     /** Example card 12. */
     NAME12("Tailwind Boost", "A sudden gust hits your tail feathers just right." 
-    + "No idea where it came from — but hey, three free spaces. Don’t question wind miracles.", 3, true, false),
+    + "No idea where it came from — but hey, three free spaces. Don’t question wind miracles. Move ahead 3 spaces", 3, true, false),
     /** Example card 13. */
     NAME13("Panic Skip", "You hear something… maybe Furio?" 
     + "You panic-flap forward, heart racing — no time to check." 
@@ -48,7 +48,7 @@ public enum Card {
     NAME14("Speed Waddle", "You enter the zone." 
     + "Your waddle sharpens — swift, aerodynamic." 
     + "You’re no longer a goose. You’re a land torpedo." 
-    + "Move ahead 6 spaces.", 6, true, false),
+    + "Move ahead 5 spaces.", 5, true, false),
     /** Example card 15. */
     NAME15("Wrong Way", "You try squeezing through a suspicious gap in the fence." 
     + "You get stuck. Wiggle, squirm, regret." 

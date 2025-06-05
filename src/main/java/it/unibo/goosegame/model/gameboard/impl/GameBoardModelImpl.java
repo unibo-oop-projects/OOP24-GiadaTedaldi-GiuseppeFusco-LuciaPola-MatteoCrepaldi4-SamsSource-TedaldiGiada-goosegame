@@ -6,6 +6,7 @@ import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.turnmanager.api.TurnManager;
+import it.unibo.goosegame.utilities.Card;
 
 import java.util.List;
 import javax.swing.SwingWorker;
@@ -95,13 +96,19 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     private void stopTimer() {
         timer.stop();
-
-        // ADD THE CARD LOGIC HERE
-        //JOptionPane.showMessageDialog(null, "Game State: " + gameState);
-        /*
-         * Samuele D'Ambrosio: richiama qui il metodo per aggiungere la carta al mazzo del giocatore e utilizza la variabile gameState
-         * per determinare se il giocatore ha vinto o perso il minigioco.
-         */
+        if (gameState == GameState.WON) {
+            final Card drawnCard = Card.drawBonusCard();
+            JOptionPane.showMessageDialog(null, drawnCard.getDescription());
+            this.turnManager.getCurrentPlayer().getSatchel().addCard(drawnCard);
+        } else if (gameState == GameState.LOST) {
+                final Card drawnCard = Card.drawMalusCard();
+                JOptionPane.showMessageDialog(null, drawnCard.getDescription());
+                if (drawnCard.isRemove()){
+                    this.turnManager.getCurrentPlayer().getSatchel().clearSatchel();
+                } else {
+                    this.move(getCurrentPlayer(), drawnCard.getSteps(), drawnCard.isBonus());
+                }
+            }
     }
 
     /**
