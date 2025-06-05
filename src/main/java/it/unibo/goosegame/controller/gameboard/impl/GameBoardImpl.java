@@ -32,10 +32,16 @@ import java.util.List;
  * Classed use to represent the gameboard.
  */
 public class GameBoardImpl implements GameBoard {
-    private static final int CASE_9 = 9;
-    private static final int CASE_7 = 7;
-    private static final int CASE_6 = 6;
-    private static final int CASE_5 = 5;
+    private static final int CASE_1 = 6;
+    private static final int CASE_2 = 12;
+    private static final int CASE_3 = 18;
+    private static final int CASE_4 = 24;
+    private static final int CASE_5 = 30;
+    private static final int CASE_6 = 36;
+    private static final int CASE_7 = 42;
+    private static final int CASE_8 = 48;
+    private static final int CASE_9 = 54;
+    private static final int CASE_10 = 58;
     private static final int GAME_CELL_NUM = 6;
     private static final int CELLS_NUM = 60;
 
@@ -108,17 +114,17 @@ public class GameBoardImpl implements GameBoard {
      * @return the corresponding minigame menu
      */
     private MinigameMenu getMinigame(final int index) {
-        return switch (index / GAME_CELL_NUM) {
-            case 1 -> new MemoryMenu();
-            case 2 -> new PuzzleMenu();
-            case 3 -> new HonkMandMenu();
-            case 4 -> new HangmanMenu();
+        return switch (index) {
+            case CASE_1 -> new MemoryMenu();
+            case CASE_2 -> new PuzzleMenu();
+            case CASE_3 -> new HonkMandMenu();
+            case CASE_4 -> new HangmanMenu();
             case CASE_5 -> new ClickTheColorMenu();
             case CASE_6 -> new HerdingHoundMenu();
             case CASE_7 -> new TrisMenu();
-            case 8 -> new RockPaperScissorsMenu();
+            case CASE_8 -> new RockPaperScissorsMenu();
             case CASE_9 -> new ThreeCupsGameMenu();
-            case 10 -> new SnakeMenu();
+            case CASE_10 -> new SnakeMenu();
             default -> null;
         };
     }

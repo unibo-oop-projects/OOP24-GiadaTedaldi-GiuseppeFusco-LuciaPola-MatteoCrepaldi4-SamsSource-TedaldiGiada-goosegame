@@ -36,13 +36,12 @@ public final class GameBoardViewImpl implements GameBoardView {
      * @param gameCells list of all the cells of the board
      */
     public GameBoardViewImpl(final GameBoardModel model, final List<Cell> gameCells) {
-        final ImageIcon satchelIcon = new ImageIcon("src/main/resources/img/satchel.png");
         this.frame = new JFrame();
         this.model = model;
         this.currentPlayerLabel = new JLabel();
         this.nextTurnButton = new JButton("Next turn");
         this.diceButton = new JButton("Throw dices");
-        this.openSatchelButton = new JButton(satchelIcon);
+        this.openSatchelButton = new JButton("Show satchel");
         this.boardCells = List.copyOf(gameCells);
 
         initView();

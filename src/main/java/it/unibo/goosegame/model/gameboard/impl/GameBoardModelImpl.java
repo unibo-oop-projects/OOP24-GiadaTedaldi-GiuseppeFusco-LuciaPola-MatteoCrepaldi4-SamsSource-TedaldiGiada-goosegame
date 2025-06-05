@@ -68,7 +68,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
             @Override
             protected void done() {
-                final int result = 59; // dice.getResult();
+                final int result = dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
                 move(turnManager.getCurrentPlayer(), result, true);
@@ -95,21 +95,34 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     private void stopTimer() {
         timer.stop();
+
         if (gameState == GameState.WON) {
             final Card drawnCard = Card.drawBonusCard();
-            JOptionPane.showMessageDialog(null, drawnCard.getDescription(),
-             drawnCard.getName(), JOptionPane.INFORMATION_MESSAGE);
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    drawnCard.getDescription(),
+                    drawnCard.getName(),
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
             this.turnManager.getCurrentPlayer().getSatchel().addCard(drawnCard);
         } else if (gameState == GameState.LOST) {
                 final Card drawnCard = Card.drawMalusCard();
-                JOptionPane.showMessageDialog(null, drawnCard.getDescription(),
-                 drawnCard.getName(), JOptionPane.INFORMATION_MESSAGE);
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        drawnCard.getDescription(),
+                        drawnCard.getName(),
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
                 if (drawnCard.isRemove()) {
                     this.turnManager.getCurrentPlayer().getSatchel().clearSatchel();
                 } else {
                     this.move(getCurrentPlayer(), drawnCard.getSteps(), drawnCard.isBonus());
                 }
-            }
+        }
     }
 
     /**
