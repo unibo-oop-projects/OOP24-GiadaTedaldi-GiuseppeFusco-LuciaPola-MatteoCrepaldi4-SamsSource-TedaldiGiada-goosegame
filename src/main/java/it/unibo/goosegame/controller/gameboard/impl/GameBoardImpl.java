@@ -9,6 +9,7 @@ import it.unibo.goosegame.model.gameboard.impl.GameBoardModelImpl;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.turnmanager.api.TurnManager;
 import it.unibo.goosegame.model.turnmanager.impl.TurnManagerImpl;
+import it.unibo.goosegame.view.finalboard.FinalBoardGui;
 import it.unibo.goosegame.view.gameboard.api.GameBoardView;
 import it.unibo.goosegame.view.gameboard.impl.GameBoardViewImpl;
 import it.unibo.goosegame.view.general.api.MinigameMenu;
@@ -23,6 +24,7 @@ import it.unibo.goosegame.view.minigames.snake.SnakeMenu;
 import it.unibo.goosegame.view.minigames.three_cups_game.impl.ThreeCupsGameMenu;
 import it.unibo.goosegame.view.minigames.tris.TrisMenu;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class GameBoardImpl implements GameBoard {
     private final List<Cell> gameCells;
     private final List<Player> players;
     private final TurnManager turnManager;
+    private final Timer gameTimer;
 
     /**
      * GameBoard constructor method.
@@ -61,7 +64,23 @@ public class GameBoardImpl implements GameBoard {
         this.model = new GameBoardModelImpl(turnManager, gameCells);
         this.view = new GameBoardViewImpl(model, gameCells);
 
+        this.gameTimer = new Timer(100, e -> {
+            if (model.isOver()) {
+                showFinalBoard();
+            }
+        });
+
+        gameTimer.start();
         view.show();
+    }
+
+    /**
+     * Method used to show the final board and end the game
+     */
+    private void showFinalBoard() {
+        gameTimer.stop();
+        view.disposeFrame();
+        new FinalBoardGui(this);
     }
 
     /**

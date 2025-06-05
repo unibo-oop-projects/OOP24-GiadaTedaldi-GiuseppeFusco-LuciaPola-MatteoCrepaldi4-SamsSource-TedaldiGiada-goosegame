@@ -37,4 +37,10 @@ public interface GameBoardModel {
      * @return the current player
      */
     Player getCurrentPlayer();
+
+    /**
+     * Utility method used to check if the game is over.
+     * @return true if it's over, false otherwise
+     */
+    boolean isOver();
 }

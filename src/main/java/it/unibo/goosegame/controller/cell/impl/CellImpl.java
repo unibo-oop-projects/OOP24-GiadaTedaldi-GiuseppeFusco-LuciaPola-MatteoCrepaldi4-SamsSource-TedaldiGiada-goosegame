@@ -1,8 +1,6 @@
 package it.unibo.goosegame.controller.cell.impl;
 
 import it.unibo.goosegame.controller.cell.api.Cell;
-//import it.unibo.goosegame.model.cell.api.CellModel;
-//import it.unibo.goosegame.model.cell.impl.CellModelImpl;
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cell.api.CellView;
@@ -20,7 +18,6 @@ import java.util.Optional;
  * Implementation of {@link Cell}.
  */
 public class CellImpl implements Cell {
-    //private final CellModel model;
     private final CellView view;
     private final Optional<MinigameMenu> minigameMenu;
     private final List<Player> players;
@@ -31,7 +28,6 @@ public class CellImpl implements Cell {
      * Constructor for non minigame cells.
      */
     public CellImpl() {
-        //this.model = new CellModelImpl();
         this.view = new CellViewImpl();
         this.minigameMenu = Optional.empty();
         this.players = new ArrayList<>();
@@ -43,7 +39,6 @@ public class CellImpl implements Cell {
      * @param minigameMenu menu used to trigger the minigame
      */
     public CellImpl(final MinigameMenu minigameMenu) {
-        //this.model = new CellModelImpl();
         this.view = new CellViewImpl();
         this.players = new ArrayList<>();
 
@@ -90,8 +85,6 @@ public class CellImpl implements Cell {
     public void movePlayer(final Cell cell, final Player player) {
         this.players.remove(player);
         cell.addPlayer(player);
-
-        //System.out.println(cell.isMinigameCell());
 
         SwingUtilities.invokeLater(this::updateCellView);
     }

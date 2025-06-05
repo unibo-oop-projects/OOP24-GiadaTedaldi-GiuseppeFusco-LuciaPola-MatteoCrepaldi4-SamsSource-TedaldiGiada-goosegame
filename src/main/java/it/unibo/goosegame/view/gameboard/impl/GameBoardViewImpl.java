@@ -145,4 +145,9 @@ public final class GameBoardViewImpl implements GameBoardView {
     public void show() {
         frame.setVisible(true);
     }
+
+    @Override
+    public void disposeFrame() {
+        this.frame.dispose();
+    }
 }
