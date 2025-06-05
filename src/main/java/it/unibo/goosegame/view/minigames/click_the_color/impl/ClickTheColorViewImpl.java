@@ -2,6 +2,7 @@ package it.unibo.goosegame.view.minigames.click_the_color.impl;
 
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.click_the_color.api.ClickTheColorModel;
+import it.unibo.goosegame.view.general.api.MinigameMenu;
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
 
 import java.awt.Color;
@@ -40,19 +41,22 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
             Color.decode("#0000ff"),
     };
 
-    private final JFrame frame;                   //  Main frame of the application
-    private final JLabel infoLabel;               //  Label needed to store and update the game information
-    private final List<JButton> buttons;          //  List containing the four buttons, needed to make the game work
-    private final ClickTheColorModel model;       //  Model of the game, needed to make the application respond to game logic
-    private final Timer gameTimer;                //  Timer responsible for the updates to the graphical interface
+    private final JFrame frame;                     //  Main frame of the application
+    private final JLabel infoLabel;                 //  Label needed to store and update the game information
+    private final List<JButton> buttons;            //  List containing the four buttons, needed to make the game work
+    private final ClickTheColorModel model;         //  Model of the game, needed to make the application respond to game logic
+    private final Timer gameTimer;                  //  Timer responsible for the updates to the graphical interface
+    private final MinigameMenu menu;                //  Menu of the game, needed to make the application respond to user input
 
     /**
      * Constructor for the graphical interface.
      *
      * @param model model object for the game logic
+     * @param menu  menu used to start the minigame
      */
-    public ClickTheColorViewImpl(final ClickTheColorModel model) {
+    public ClickTheColorViewImpl(final ClickTheColorModel model, final MinigameMenu menu) {
         this.model = model;
+        this.menu = menu;
         this.frame = new JFrame(model.getName());
         this.infoLabel = new JLabel("Click the color");
         this.buttons = new ArrayList<>();
@@ -86,6 +90,7 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
         JOptionPane.showMessageDialog(frame, model.getGameState() == GameState.WON ? "You won!" : "You lost!");
 
         this.frame.dispose();
+        this.menu.dispose();
     }
 
     /**

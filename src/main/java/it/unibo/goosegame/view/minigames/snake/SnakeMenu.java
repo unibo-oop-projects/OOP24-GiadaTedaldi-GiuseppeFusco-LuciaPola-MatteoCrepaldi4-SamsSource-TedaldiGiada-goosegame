@@ -37,10 +37,9 @@ public class SnakeMenu extends MinigameMenuImpl {
     }
 
     /**
-     * Gets the current game state of the snake game.
-     * 
-     * @return the current game state, or NOT_STARTED if the controller is null
+     * {@inheritDoc}
      */
+    @Override
     public GameState getGameState() {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }

@@ -1,9 +1,9 @@
 package it.unibo.goosegame.controller.cardsatchel;
 
+import it.unibo.goosegame.controller.gameboard.api.GameBoard;
 import it.unibo.goosegame.model.cardsatchel.api.CardSatchelModel;
 import it.unibo.goosegame.model.cardsatchel.impl.CardSatchelModelImpl;
 import it.unibo.goosegame.utilities.Card;
-import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelFrameImpl;
 import it.unibo.goosegame.view.cardsatchel.impl.CardSatchelViewImpl;
 
@@ -18,17 +18,17 @@ import java.util.List;
  */
 public class CardSatchelController {
     private final CardSatchelModel satchelModel;
-    private final Player owner;
+    private final GameBoard board;
     private final CardSatchelViewImpl view;
     private final CardSatchelFrameImpl frame;
 
     /**
      *Initialize model, view and frames.
-     *@param owner the owner player.
+     *@param board reference to GameBoard to interact with the game
      */
-    public CardSatchelController(final Player owner) {
+    public CardSatchelController(final GameBoard board) {
         this.satchelModel = new CardSatchelModelImpl();
-        this.owner = owner;
+        this.board = board;
         this.view = new CardSatchelViewImpl(this);
         this.frame = new CardSatchelFrameImpl(view);
         //Listener for closing via X
@@ -82,7 +82,7 @@ public class CardSatchelController {
      * @return true if the card has been played, false otherwise
      */
     public boolean playCard(final Card card) {
-        this.owner.move(card.getSteps(), card.isBonus());
+        this.board.move(card.getSteps(), card.isBonus());
         final boolean removed = this.removeCard(card);
         closeSatchel(); //Closes the window after playing
         return removed;
@@ -109,13 +109,5 @@ public class CardSatchelController {
      */
     public boolean isSatchelFull() {
         return satchelModel.isFull();
-    }
-
-    /**
-     * Returns the owner player.
-     * @return the owner player
-     */
-    public Player getPlayer() {
-        return this.owner;
     }
 }

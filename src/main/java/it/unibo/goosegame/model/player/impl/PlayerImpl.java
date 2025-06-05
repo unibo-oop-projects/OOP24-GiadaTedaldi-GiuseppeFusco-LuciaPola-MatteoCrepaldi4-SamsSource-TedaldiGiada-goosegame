@@ -4,7 +4,6 @@ import it.unibo.goosegame.controller.cardsatchel.CardSatchelController;
 import it.unibo.goosegame.model.player.api.Player;
 
 import java.awt.Color;
-import java.util.List;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -20,7 +19,7 @@ public final class PlayerImpl implements Player {
     private final String name;            // Name of the player, could be hardcoded or dynamic
     private final Color color;            // Color of the player's in game icon
     private int position;                 // Real time position of the player
-    private final CardSatchelController stachel;
+    private CardSatchelController satchel;
 
     /**
      * Constructor for the {@link PlayerImpl} class.
@@ -32,36 +31,40 @@ public final class PlayerImpl implements Player {
         this.name = name;
         this.color = COLORS[colorIndex];
         this.position = 0;
-        this.stachel = new CardSatchelController(this);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void goTo(final int cellIndex) {
-        this.position = cellIndex;
-    }
-
-    // === GETTERS ===
-    @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getPosition() {
         return position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Sets the player's position on the game board.
+     *
+     * @param index new position of the player
+     */
     @Override
-    public List<Color> getColorsList() {
-        return List.of(COLORS);
+    public void setIndex(final int index) {
+        this.position = index;
     }
 
     /**
@@ -71,6 +74,14 @@ public final class PlayerImpl implements Player {
     @SuppressFBWarnings("EI_EXPOSE_REP")
     @Override
     public CardSatchelController getSatchel() {
-        return this.stachel;
+        return this.satchel;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSatchel(final CardSatchelController satchel) {
+        this.satchel = satchel;
     }
 }

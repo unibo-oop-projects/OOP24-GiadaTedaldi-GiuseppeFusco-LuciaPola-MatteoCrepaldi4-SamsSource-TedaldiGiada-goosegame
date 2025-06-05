@@ -3,12 +3,14 @@ package it.unibo.goosegame.model.gameboard.impl;
 import it.unibo.goosegame.controller.cell.api.Cell;
 import it.unibo.goosegame.model.gameboard.api.DoubleDice;
 import it.unibo.goosegame.model.gameboard.api.GameBoardModel;
+import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.model.turnmanager.api.TurnManager;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import javax.swing.Timer;
+import javax.swing.JOptionPane;
 
 /**
  * Implementation of {@link GameBoardModel}.
@@ -17,6 +19,9 @@ public final class GameBoardModelImpl implements GameBoardModel {
     private final TurnManager turnManager;
     private final DoubleDice dice;
     private final List<Cell> cells;
+    private boolean hasPlayerMoved;
+    private GameState gameState;
+    private Timer timer;
 
     /**
      * Constructor for the gameboard model element.
@@ -26,8 +31,9 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     public GameBoardModelImpl(final TurnManager turnManager, final List<Cell> cells) {
         this.turnManager = turnManager;
-        this.cells = cells;
+        this.cells = List.copyOf(cells);
         this.dice = new DoubleDiceImpl();
+        this.hasPlayerMoved = false;
     }
 
     /**
@@ -43,6 +49,13 @@ public final class GameBoardModelImpl implements GameBoardModel {
      */
     @Override
     public void throwDices() {
+        if (this.hasPlayerMoved) {
+            JOptionPane.showMessageDialog(null, turnManager.getCurrentPlayer().getName() + " has already moved this turn.");
+            return;
+        }
+
+        gameState = GameState.NOT_STARTED;
+
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() {
@@ -55,26 +68,75 @@ public final class GameBoardModelImpl implements GameBoardModel {
                 final int result = dice.getResult();
                 JOptionPane.showMessageDialog(null, result);
 
+                final Cell newCell = cells.get(calcMovement(result, true));
                 searchPlayer(turnManager.getCurrentPlayer()).movePlayer(
-                        cells.get(calcMovement(result, true)),
+                        newCell,
                         turnManager.getCurrentPlayer()
                 );
 
-                turnManager.nextTurn();
+                newCell.triggerMinigame();
+
+                 timer = new Timer(100, e -> {
+                    gameState = newCell.checkGameState();
+
+                    if (gameState == GameState.WON || gameState == GameState.LOST || gameState == GameState.TIE) {
+                        stopTimer();
+                    }
+                 });
+
+                 timer.start();
+                 hasPlayerMoved = true;
             }
         }.execute();
+    }
+
+    /**
+     *  Utility method to stop the timer and handle the end of the minigame.
+     */
+    private void stopTimer() {
+        timer.stop();
+
+        // ADD THE CARD LOGIC HERE
+        //JOptionPane.showMessageDialog(null, "Game State: " + gameState);
+        /*
+         * Samuele D'Ambrosio: richiama qui il metodo per aggiungere la carta al mazzo del giocatore e utilizza la variabile gameState
+         * per determinare se il giocatore ha vinto o perso il minigioco.
+         */
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void move(Player player, int steps, boolean isForward) {
-        Cell currentCell = searchPlayer(player);
-        int newPosition = calcMovement(steps, isForward);
-        Cell newCell = cells.get(newPosition);
+    public void nextTurn() {
+        if (this.hasPlayerMoved) {
+            JOptionPane.showMessageDialog(null, turnManager.getCurrentPlayer().getName() + " ended their turn.");
+            this.turnManager.nextTurn();
+            this.hasPlayerMoved = false;
+        } else {
+            JOptionPane.showMessageDialog(null, "You must move before ending your turn.");
+        }
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void move(final Player player, final int steps, final boolean isForward) {
+        final Cell currentCell = searchPlayer(player);
+        final int newPosition = calcMovement(steps, isForward);
+        final Cell newCell = cells.get(newPosition);
+
+        player.setIndex(newPosition);
         currentCell.movePlayer(newCell, player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getCurrentPlayer() {
+        return turnManager.getCurrentPlayer();
     }
 
     /**

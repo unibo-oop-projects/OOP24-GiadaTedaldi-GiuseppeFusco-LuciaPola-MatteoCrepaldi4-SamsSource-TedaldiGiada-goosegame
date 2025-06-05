@@ -15,5 +15,10 @@ public interface GameBoard {
      */
     List<Player> getPlayers();
 
-    void move(Player player, int steps, boolean isForward);
+    /**
+     * Function used to move a player on the gameboard.
+     * @param steps
+     * @param isForward
+     */
+    void move(int steps, boolean isForward);
 }

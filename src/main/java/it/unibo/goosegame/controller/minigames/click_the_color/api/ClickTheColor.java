@@ -11,5 +11,7 @@ public interface ClickTheColor {
      *
      * @return whether the game has been won or lost
      */
-    GameState getResult();
+    GameState getGameState();
+
+
 }
