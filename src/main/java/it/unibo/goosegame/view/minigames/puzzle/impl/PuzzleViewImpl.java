@@ -141,7 +141,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      * @return an Icon representing the tile image
      */
     private Icon loadAndScale(final int tileVal, final int cellWidth, final int cellHeight) {
-        final String path = "/puzzle25_tiles/tile25_" + tileVal + ".png";
+        final String path = "/img/minigames/puzzle/tile25_" + tileVal + ".png";
         final URL imageUrl = PuzzleViewImpl.class.getResource(path);
         if (imageUrl == null) {
             this.logger.warning("Immagine non trovata: " + path);

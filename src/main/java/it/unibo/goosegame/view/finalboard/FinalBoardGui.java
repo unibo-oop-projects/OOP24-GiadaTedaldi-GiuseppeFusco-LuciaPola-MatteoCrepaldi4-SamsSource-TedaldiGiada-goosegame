@@ -40,7 +40,7 @@ public class FinalBoardGui {
         final JFrame frame = new JFrame("Final Board");
 
         final Image backgroundImage = new ImageIcon(Objects.requireNonNull(
-                FinalBoardGui.class.getResource("/FinalBoard.png"))
+                FinalBoardGui.class.getResource("/img/startendmenu/FinalBoard.png"))
         ).getImage();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

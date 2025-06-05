@@ -53,8 +53,8 @@ public class GameInfo extends JPanel {
     @SuppressFBWarnings(value =  "EI2", justification = "Direct reference to the view is intentional in MVC pattern")
     public GameInfo(final GameMenuInterface menu) {
         this.menuView = Objects.requireNonNull(menu);
-        this.background = new ImageIcon(GameInfo.class.getResource("/ImmagineMenu.png")).getImage();
-        this.imageButton = new ImageIcon(GameInfo.class.getResource("/torna.png"));
+        this.background = new ImageIcon(GameInfo.class.getResource("/img/startendmenu/ImmagineMenu.png")).getImage();
+        this.imageButton = new ImageIcon(GameInfo.class.getResource("/img/startendmenu/torna.png"));
         super.setLayout(new BorderLayout());
     }
 
