@@ -1,5 +1,6 @@
 package it.unibo.goosegame.view.cell.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.goosegame.model.player.api.Player;
 import it.unibo.goosegame.view.cell.api.CellView;
 
@@ -36,7 +37,10 @@ public class CellViewImpl implements CellView {
 
     /**
      * {@inheritDoc}
+     *
+     * The Panel needs to be exposed, since it's needed from the main board
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     @Override
     public JPanel getCellPanel() {
         return cellLabel;

@@ -79,7 +79,9 @@ public final class PlayerImpl implements Player {
 
     /**
      * {@inheritDoc}
+     * The setSatchel method accepts and assigns a mutable reference.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     @Override
     public void setSatchel(final CardSatchelController satchel) {
         this.satchel = satchel;
