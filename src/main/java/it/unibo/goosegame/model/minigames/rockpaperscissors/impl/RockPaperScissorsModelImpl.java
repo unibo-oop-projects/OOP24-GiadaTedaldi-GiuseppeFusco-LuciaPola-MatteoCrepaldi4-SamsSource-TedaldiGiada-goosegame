@@ -35,14 +35,14 @@ public class RockPaperScissorsModelImpl implements RockPaperScissorsModel {
         final String computerChoice = getRandomComputerChoice();
         final int result = determineWinner(playerChoice, computerChoice);
         if (result == 1) {
-            playerScore++;
+            this.playerScore++;
         }
         if (result == -1) {
-            computerScore++;
+            this.computerScore++;
         }
         if (playerScore == MAX_WIN || computerScore == MAX_WIN) {
-            over = true;
-            winner = (playerScore == MAX_WIN) ? "PLAYER" : "COMPUTER";
+            this.over = true;
+            this.winner = (playerScore == MAX_WIN) ? "PLAYER" : "COMPUTER";
         }
         return computerChoice;
     }
@@ -66,10 +66,10 @@ public class RockPaperScissorsModelImpl implements RockPaperScissorsModel {
     */
     @Override
     public void resetGame() {
-        playerScore = 0;
-        computerScore = 0;
-        over = false;
-        winner = "";
+        this.playerScore = 0;
+        this.computerScore = 0;
+        this.over = false;
+        this.winner = "";
     }
 
     /**
@@ -80,34 +80,34 @@ public class RockPaperScissorsModelImpl implements RockPaperScissorsModel {
         if (!over) {
             throw new IllegalStateException("Game is not over yet.");
         }
-        return "PLAYER".equals(winner) ? GameState.WON : GameState.LOST;
+        return "PLAYER".equals(this.winner) ? GameState.WON : GameState.LOST;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public String getName() {
-        return winner;
+        return this.winner;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public boolean isOver() {
-        return over;
+        return this.over;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public int getPlayerScore() {
-        return playerScore;
+        return this.playerScore;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public int getComputerScore() {
-        return computerScore;
+        return this.computerScore;
     }
 }

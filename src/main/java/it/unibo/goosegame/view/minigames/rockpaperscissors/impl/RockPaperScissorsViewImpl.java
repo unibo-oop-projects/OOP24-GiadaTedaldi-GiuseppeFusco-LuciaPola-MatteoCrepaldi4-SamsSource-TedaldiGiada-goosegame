@@ -54,9 +54,9 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     public RockPaperScissorsViewImpl() {
         super("Rock Paper Scissors");
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(new Color(RGB_WHITE, RGB_WHITE, 180));
+        this.mainPanel = new JPanel();
+        this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
+        this.mainPanel.setBackground(new Color(RGB_WHITE, RGB_WHITE, 180));
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
@@ -70,32 +70,32 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public void initializeView() {
-        currentPlayerIcon = new ImageIcon(RockPaperScissorsViewImpl.class.getResource("/img/minigames/rpc/scelta.png"));
-        currentComputerIcon = currentPlayerIcon;
+        this.currentPlayerIcon = new ImageIcon(RockPaperScissorsViewImpl.class.getResource("/img/minigames/rpc/scelta.png"));
+        this.currentComputerIcon = currentPlayerIcon;
 
-        playerChoice = createButtonIcon(currentPlayerIcon, IMAGE_SIZE, IMAGE_SIZE);
-        playerChoice.setContentAreaFilled(false);
-        playerChoice.setBorderPainted(false);
-        playerChoice.setFocusPainted(false);
+        this.playerChoice = createButtonIcon(this.currentPlayerIcon, IMAGE_SIZE, IMAGE_SIZE);
+        this.playerChoice.setContentAreaFilled(false);
+        this.playerChoice.setBorderPainted(false);
+        this.playerChoice.setFocusPainted(false);
 
-        computerChoice = createButtonIcon(currentComputerIcon, IMAGE_SIZE, IMAGE_SIZE);
-        computerChoice.setContentAreaFilled(false);
-        computerChoice.setBorderPainted(false);
-        computerChoice.setFocusPainted(false);
+        this.computerChoice = createButtonIcon(this.currentComputerIcon, IMAGE_SIZE, IMAGE_SIZE);
+        this.computerChoice.setContentAreaFilled(false);
+        this.computerChoice.setBorderPainted(false);
+        this.computerChoice.setFocusPainted(false);
 
-        mainPanel.add(createTopPanel());
-        mainPanel.add(createScorePanel());
-        mainPanel.add(createChoicePanel());
-        mainPanel.add(createResultPanel());
+        this.mainPanel.add(createTopPanel());
+        this.mainPanel.add(createScorePanel());
+        this.mainPanel.add(createChoicePanel());
+        this.mainPanel.add(createResultPanel());
 
-        setContentPane(mainPanel);
+        this.setContentPane(mainPanel);
 
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
-        scaleComponents();
+        this.scaleComponents();
     }
 
     /**
@@ -103,7 +103,7 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public final void updatePlayerScore(final int score) {
-        playerLabel.setText("PLAYER: " + score);
+        this.playerLabel.setText("PLAYER: " + score);
     }
 
     /**
@@ -111,7 +111,7 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public final void updateComputerScore(final int score) {
-        computerLabel.setText("COMPUTER: " + score);
+        this.computerLabel.setText("COMPUTER: " + score);
     }
 
     /**
@@ -119,8 +119,8 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public final void updateComputerChoice(final ImageIcon icon) {
-        currentComputerIcon = icon == null ? null : new ImageIcon(icon.getImage());
-        scaleComponents();
+        this.currentComputerIcon = icon == null ? null : new ImageIcon(icon.getImage());
+        this.scaleComponents();
     }
 
     /**
@@ -128,8 +128,8 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public final void updatePlayerChoice(final ImageIcon icon) {
-        currentPlayerIcon = icon == null ? null : new ImageIcon(icon.getImage());
-        scaleComponents();
+        this.currentPlayerIcon = icon == null ? null : new ImageIcon(icon.getImage());
+        this.scaleComponents();
     }
 
     /**
@@ -137,7 +137,7 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public final void updateResult(final String string) {
-        result.setText(string);
+        this.result.setText(string);
     }
 
     /**
@@ -145,7 +145,7 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public void addRockListener(final ActionListener l) {
-        rock.addActionListener(l);
+        this.rock.addActionListener(l);
     }
 
     /**
@@ -153,7 +153,7 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public void addPaperListener(final ActionListener l) {
-        paper.addActionListener(l);
+        this.paper.addActionListener(l);
     }
 
     /**
@@ -161,16 +161,16 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
      */
     @Override
     public void addScissorsListener(final ActionListener l) {
-        scissors.addActionListener(l);
+        this.scissors.addActionListener(l);
     }
     /**
      * Enabled all the buttons.
      */
     @Override
     public void enableAllButtons() {
-        rock.setEnabled(true);
-        paper.setEnabled(true);
-        scissors.setEnabled(true);
+        this.rock.setEnabled(true);
+        this.paper.setEnabled(true);
+        this.scissors.setEnabled(true);
     }
 
     /**
@@ -199,8 +199,8 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
     private JPanel createScorePanel() {
         final JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         namePanel.setOpaque(false);
-        playerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, FONT_SIZE));
-        computerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, FONT_SIZE));
+        this.playerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, FONT_SIZE));
+        this.computerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, FONT_SIZE));
         namePanel.add(playerLabel);
         namePanel.add(computerLabel);
         return namePanel;
@@ -209,27 +209,27 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
     private JPanel createTopPanel() {
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         topPanel.setOpaque(false);
-        text.setFont(new Font(FONT_STYLE, Font.PLAIN, FONT_SIZE));
-        topPanel.add(text);
-        topPanel.add(rock);
-        topPanel.add(paper);
-        topPanel.add(scissors);
+        this.text.setFont(new Font(FONT_STYLE, Font.PLAIN, FONT_SIZE));
+        topPanel.add(this.text);
+        topPanel.add(this.rock);
+        topPanel.add(this.paper);
+        topPanel.add(this.scissors);
         return topPanel;
     }
 
     private JPanel createResultPanel() {
         final JPanel resultPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         resultPanel.setOpaque(false);
-        result.setFont(new Font(FONT_STYLE, Font.PLAIN, FONT_SIZE));
-        resultPanel.add(result);
+        this.result.setFont(new Font(FONT_STYLE, Font.PLAIN, FONT_SIZE));
+        resultPanel.add(this.result);
         return resultPanel;
     }
 
     private JPanel createChoicePanel() {
         final JPanel choicePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         choicePanel.setOpaque(false);
-        choicePanel.add(playerChoice);
-        choicePanel.add(computerChoice);
+        choicePanel.add(this.playerChoice);
+        choicePanel.add(this.computerChoice);
         return choicePanel;
     }
 
@@ -243,32 +243,32 @@ public class RockPaperScissorsViewImpl extends JFrame implements RockPaperScisso
         final int btnH = Math.max(15, (int) (BTNH * scale));
         final int imageSize = Math.max(20, (int) (IMAGE_SIZE * scale));
 
-        text.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
-        playerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, fontSize));
-        computerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, fontSize));
-        result.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
+        this.text.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
+        this.playerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, fontSize));
+        this.computerLabel.setFont(new Font(FONT_STYLE, Font.BOLD, fontSize));
+        this.result.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
 
-        rock.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
-        paper.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
-        scissors.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
+        this.rock.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
+        this.paper.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
+        this.scissors.setFont(new Font(FONT_STYLE, Font.PLAIN, fontSize));
 
-        rock.setPreferredSize(new Dimension(btnW, btnH / 2));
-        paper.setPreferredSize(new Dimension(btnW, btnH / 2));
-        scissors.setPreferredSize(new Dimension(btnW, btnH / 2));
+        this.rock.setPreferredSize(new Dimension(btnW, btnH / 2));
+        this.paper.setPreferredSize(new Dimension(btnW, btnH / 2));
+        this.scissors.setPreferredSize(new Dimension(btnW, btnH / 2));
 
-        playerChoice.setPreferredSize(new Dimension(imageSize, imageSize));
-        computerChoice.setPreferredSize(new Dimension(imageSize, imageSize));
+        this.playerChoice.setPreferredSize(new Dimension(imageSize, imageSize));
+        this.computerChoice.setPreferredSize(new Dimension(imageSize, imageSize));
 
-        if (currentPlayerIcon != null) {
-            final Image scaled = currentPlayerIcon.getImage().getScaledInstance(imageSize, imageSize, Image.SCALE_SMOOTH);
-            playerChoice.setIcon(new ImageIcon(scaled));
+        if (this.currentPlayerIcon != null) {
+            final Image scaled = this.currentPlayerIcon.getImage().getScaledInstance(imageSize, imageSize, Image.SCALE_SMOOTH);
+            this.playerChoice.setIcon(new ImageIcon(scaled));
         }
-        if (currentComputerIcon != null) {
-            final Image scaled = currentComputerIcon.getImage().getScaledInstance(imageSize, imageSize, Image.SCALE_SMOOTH);
-            computerChoice.setIcon(new ImageIcon(scaled));
+        if (this.currentComputerIcon != null) {
+            final Image scaled = this.currentComputerIcon.getImage().getScaledInstance(imageSize, imageSize, Image.SCALE_SMOOTH);
+            this.computerChoice.setIcon(new ImageIcon(scaled));
         }
 
-        revalidate();
-        repaint();
+        this.revalidate();
+        this.repaint();
     }
 }

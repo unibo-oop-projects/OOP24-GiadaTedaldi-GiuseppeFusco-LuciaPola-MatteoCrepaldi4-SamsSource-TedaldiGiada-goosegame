@@ -38,24 +38,24 @@ public class HangmanControllerImpl implements HangmanController {
      */
     @Override
     public void onLetterPressed(final char letter) {
-        if (model.isOver()) {
+        if (this.model.isOver()) {
             return;
         }
 
-        model.guess(letter);
-        view.updateWord(model.getHiddenWord());
-        view.updateImage(model.getAttempts());
+        this.model.guess(letter);
+        this.view.updateWord(model.getHiddenWord());
+        this.view.updateImage(model.getAttempts());
 
-        if (model.isOver()) {
-            view.disableAllButton();
-            if (model.isWon()) {
+        if (this.model.isOver()) {
+            this.view.disableAllButton();
+            if (this.model.isWon()) {
                 JOptionPane.showMessageDialog(null, "YOU WIN!");
             } else {
                 JOptionPane.showMessageDialog(null, """
                                                     YOU LOSE...
                                                     The word is \t""" + model.getSelectedWord());
             }
-            view.dispose();
+            this.view.dispose();
         }
     }
     /**
@@ -63,10 +63,10 @@ public class HangmanControllerImpl implements HangmanController {
      */
      @Override
     public final void startGame() {
-        model.resetGame();
-        view.enableAllButton();
-        view.updateImage(model.getAttempts());
-        view.updateWord(model.getHiddenWord());
+        this.model.resetGame();
+        this.view.enableAllButton();
+        this.view.updateImage(this.model.getAttempts());
+        this.view.updateWord(this.model.getHiddenWord());
     }
 
     /**
@@ -78,7 +78,7 @@ public class HangmanControllerImpl implements HangmanController {
     }
 
     private void init() {
-        view.updateImage(model.getAttempts());
-        view.updateWord(model.getHiddenWord());
+        this.view.updateImage(this.model.getAttempts());
+        this.view.updateWord(this.model.getHiddenWord());
     }
 }

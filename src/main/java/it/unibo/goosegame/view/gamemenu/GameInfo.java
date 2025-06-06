@@ -62,7 +62,7 @@ public class GameInfo extends JPanel {
      * Initializes and sets up the components of the GameInfo view.
      */
     public void initializeView() {
-        infoArea = new JTextArea(""" 
+        this.infoArea = new JTextArea(""" 
         RULES OF THE GOOSE GAME
 
         1.  During their turn, the player must roll two dices (by pressing the "throw dices" button).
@@ -84,33 +84,33 @@ public class GameInfo extends JPanel {
         4. The first player to reach the last square with the exact number of moves WINS. In other way, if you don't get the
         exact number of moves, you reach the last square but you will have to move backward the remaining spaces.
         """);
-        infoArea.setWrapStyleWord(true);
-        infoArea.setLineWrap(true);
-        infoArea.setEditable(false);
-        infoArea.setCaretPosition(0);
-        infoArea.setBackground(new Color(COLOR, COLOR, COLOR, COLOR_WHITE));
-        infoArea.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
-        infoArea.setFont(new Font("Verdana", Font.BOLD, FONT_SIZE));
+        this.infoArea.setWrapStyleWord(true);
+        this.infoArea.setLineWrap(true);
+        this.infoArea.setEditable(false);
+        this.infoArea.setCaretPosition(0);
+        this.infoArea.setBackground(new Color(COLOR, COLOR, COLOR, COLOR_WHITE));
+        this.infoArea.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
+        this.infoArea.setFont(new Font("Verdana", Font.BOLD, FONT_SIZE));
 
         final JScrollPane scrollPane = new JScrollPane(infoArea);
         scrollPane.setBackground(new Color(COLOR, COLOR, COLOR, 90));
 
-        textPanel = new JPanel(new BorderLayout());
-        textPanel.setOpaque(false);
-        textPanel.setBorder(BorderFactory.createEmptyBorder(MARGIN_TOP, MARGIN_LEFT, MARGIN_BOTTOM, MARGIN_RIGHT));
-        textPanel.add(scrollPane, BorderLayout.CENTER);
+        this.textPanel = new JPanel(new BorderLayout());
+        this.textPanel.setOpaque(false);
+        this.textPanel.setBorder(BorderFactory.createEmptyBorder(MARGIN_TOP, MARGIN_LEFT, MARGIN_BOTTOM, MARGIN_RIGHT));
+        this.textPanel.add(scrollPane, BorderLayout.CENTER);
 
         final JPanel bottomPanel = new JPanel();
-        backButton = menuView.createButtonIcon(imageButton, BUTTON_SIZE, BUTTON_SIZE);
-        backButton.addActionListener((ActionEvent e) -> {
-            menuView.showMenu();
+        this.backButton = this.menuView.createButtonIcon(this.imageButton, BUTTON_SIZE, BUTTON_SIZE);
+        this.backButton.addActionListener((ActionEvent e) -> {
+            this.menuView.showMenu();
         });
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, BOTTOM_MARGIN, 10));
         bottomPanel.setOpaque(false);
         bottomPanel.add(backButton, BorderLayout.WEST);
 
-        add(textPanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
+        this.add(this.textPanel, BorderLayout.CENTER);
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -136,18 +136,18 @@ public class GameInfo extends JPanel {
         final double newButtonSize = BUTTON_SIZE * scale;
 
         if (scale < 1) {
-            infoArea.setFont(new Font("Verdana", 
+            this.infoArea.setFont(new Font("Verdana", 
                 Font.BOLD, (int) (FONT_SIZE * scale)));
         }
-        textPanel.setBorder(BorderFactory.createEmptyBorder((int) (MARGIN_TOP * scale), 
+        this.textPanel.setBorder(BorderFactory.createEmptyBorder((int) (MARGIN_TOP * scale), 
             (int) (MARGIN_LEFT * scale), (int) (MARGIN_BOTTOM * scale), (int) (MARGIN_RIGHT * scale)));
         final Dimension d = new Dimension((int) newButtonSize, (int) newButtonSize);
-        backButton.setPreferredSize(d);
+        this.backButton.setPreferredSize(d);
         final Image scaledImage = imageButton.getImage().getScaledInstance((int) newButtonSize, 
             (int) newButtonSize, Image.SCALE_SMOOTH);
-        backButton.setIcon(new ImageIcon(scaledImage));
+        this.backButton.setIcon(new ImageIcon(scaledImage));
 
-        revalidate();
-        repaint();
+        this.revalidate();
+        this.repaint();
     }
 }

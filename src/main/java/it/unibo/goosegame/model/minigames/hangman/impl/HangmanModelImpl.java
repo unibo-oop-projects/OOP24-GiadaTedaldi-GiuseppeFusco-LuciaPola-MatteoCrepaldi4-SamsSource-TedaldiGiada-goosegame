@@ -29,28 +29,28 @@ public class HangmanModelImpl implements HangmanModel {
      */
     public HangmanModelImpl(final String[] words) {
         this.words = Arrays.copyOf(words, words.length);
-        resetGame();
+        this.resetGame();
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public String getHiddenWord() {
-        return new String(hiddenWord);
+        return new String(this.hiddenWord);
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public int getAttempts() {
-        return attempts;
+        return this.attempts;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public String getSelectedWord() {
-        return selectedWord;
+        return this.selectedWord;
     }
     /**
     * {@inheritDoc}
@@ -58,21 +58,21 @@ public class HangmanModelImpl implements HangmanModel {
     @Override
     public boolean guess(final char letter) {
         boolean correctGuess = false;
-        for (int i = 0; i < selectedWord.length(); i++) {
-            if (selectedWord.charAt(i) == letter) {
-                hiddenWord[i] = letter;
+        for (int i = 0; i < this.selectedWord.length(); i++) {
+            if (this.selectedWord.charAt(i) == letter) {
+                this.hiddenWord[i] = letter;
                 correctGuess = true;
             }
         } 
         if (!correctGuess) {
-            attempts--;
+            this.attempts--;
         }
-        if (new String(hiddenWord).equals(selectedWord)) {
-            gameOver = 1;
-            won = 1;
-        } else if (attempts <= 0) {
-            won = 0;
-            gameOver = 1;
+        if (new String(this.hiddenWord).equals(this.selectedWord)) {
+            this.gameOver = 1;
+            this.won = 1;
+        } else if (this.attempts <= 0) {
+            this.won = 0;
+            this.gameOver = 1;
         }
         return correctGuess;
     }
@@ -81,21 +81,21 @@ public class HangmanModelImpl implements HangmanModel {
     */
     @Override
     public final void resetGame() {
-        attempts = MAX_ATTEMPTS;
-        selectedWord = words[ThreadLocalRandom.current().nextInt(words.length)].toUpperCase(Locale.ROOT);
-        hiddenWord = new char[selectedWord.length()];
-        for (int i = 0; i < selectedWord.length(); i++) {
-            hiddenWord[i] = "AEIOU".indexOf(selectedWord.charAt(i)) >= 0 ? '+' : '-';
+        this.attempts = MAX_ATTEMPTS;
+        this.selectedWord = this.words[ThreadLocalRandom.current().nextInt(words.length)].toUpperCase(Locale.ROOT);
+        this.hiddenWord = new char[this.selectedWord.length()];
+        for (int i = 0; i < this.selectedWord.length(); i++) {
+            this.hiddenWord[i] = "AEIOU".indexOf(this.selectedWord.charAt(i)) >= 0 ? '+' : '-';
         }
-        gameOver = -1;
-        won =  -1;
+        this.gameOver = -1;
+        this.won =  -1;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public GameState getGameState() {
-        switch (won) {
+        switch (this.won) {
             case -1 -> {
                 return GameState.NOT_STARTED;
             }
@@ -122,20 +122,20 @@ public class HangmanModelImpl implements HangmanModel {
     */
     @Override
     public boolean isOver() {
-        return gameOver == 1;
+        return this.gameOver == 1;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public boolean isWon() {
-        return won == 1;
+        return this.won == 1;
     }
     /**
     * {@inheritDoc}
     */
     @Override
     public boolean isLost() {
-       return won == 0 && gameOver == 1;
+       return this.won == 0 && this.gameOver == 1;
     }
 }

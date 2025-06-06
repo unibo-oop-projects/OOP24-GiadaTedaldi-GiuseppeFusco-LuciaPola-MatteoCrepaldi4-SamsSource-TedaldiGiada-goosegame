@@ -23,7 +23,7 @@ class TestRockPaperScissorsModelImpl {
      */
     @BeforeEach
     public void setUp() {
-        model = new RockPaperScissorsModelImpl();
+        this.model = new RockPaperScissorsModelImpl();
     }
 
     /**
@@ -32,9 +32,9 @@ class TestRockPaperScissorsModelImpl {
      */
     @Test
     void testInitialScoresAsZero() {
-        assertEquals(0, model.getPlayerScore());
-        assertEquals(0, model.getComputerScore());
-        assertFalse(model.isOver());
+        assertEquals(0, this.model.getPlayerScore());
+        assertEquals(0, this.model.getComputerScore());
+        assertFalse(this.model.isOver());
     }
 
     /**
@@ -46,9 +46,9 @@ class TestRockPaperScissorsModelImpl {
      */
     @Test
     void testDetermineWinnerLogic() {
-        assertEquals(1, model.determineWinner(ROCK, SCISSORS));
-        assertEquals(-1, model.determineWinner(PAPER, SCISSORS));
-        assertEquals(0, model.determineWinner(PAPER, PAPER));
+        assertEquals(1, this.model.determineWinner(ROCK, SCISSORS));
+        assertEquals(-1, this.model.determineWinner(PAPER, SCISSORS));
+        assertEquals(0, this.model.determineWinner(PAPER, PAPER));
     }
 
      /**
@@ -57,14 +57,14 @@ class TestRockPaperScissorsModelImpl {
      */
     @Test
     void testPlayRoundIncrementsScore() {
-        final int originalPlayerScore = model.getPlayerScore();
-        final int originalComputerScore = model.getComputerScore();
+        final int originalPlayerScore = this.model.getPlayerScore();
+        final int originalComputerScore = this.model.getComputerScore();
 
         boolean scoreChanged = false;
         for (int i = 0; i < 10; i++) {
-            model.playRound(ROCK);
-            if (model.getPlayerScore() != originalPlayerScore 
-                || model.getComputerScore() != originalComputerScore) {
+            this.model.playRound(ROCK);
+            if (this.model.getPlayerScore() != originalPlayerScore 
+                || this.model.getComputerScore() != originalComputerScore) {
                     scoreChanged = true;
             }
         }
@@ -77,12 +77,12 @@ class TestRockPaperScissorsModelImpl {
      */
     @Test
     void testResetGameWorks() {
-        model.playRound(ROCK);
-        model.playRound(PAPER);
-        model.playRound(SCISSORS);
-        model.resetGame();
-        assertEquals(0, model.getComputerScore());
-        assertEquals(0, model.getPlayerScore());
-        assertFalse(model.isOver());
+        this.model.playRound(ROCK);
+        this.model.playRound(PAPER);
+        this.model.playRound(SCISSORS);
+        this.model.resetGame();
+        assertEquals(0, this.model.getComputerScore());
+        assertEquals(0, this.model.getPlayerScore());
+        assertFalse(this.model.isOver());
     }
 }
