@@ -12,7 +12,6 @@ public class SnakeMenu extends MinigameMenuImpl {
 
     private static final long serialVersionUID = 1L;
     private transient SnakeController controller;
-    private GameState gameState;
 
     /**
      * Constructor for the SnakeMenu class.
@@ -27,7 +26,6 @@ public class SnakeMenu extends MinigameMenuImpl {
             + "-eat 15 apples and you win\n"
             + "-hit the walls and you lose"
         );
-        this.gameState = GameState.NOT_STARTED;
         initialize();
     }
 
@@ -43,7 +41,6 @@ public class SnakeMenu extends MinigameMenuImpl {
      */
     @Override
     public GameState getGameState() {
-        this.gameState = controller == null ? GameState.NOT_STARTED : controller.getGameState();
-        return this.gameState;
+        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 }
