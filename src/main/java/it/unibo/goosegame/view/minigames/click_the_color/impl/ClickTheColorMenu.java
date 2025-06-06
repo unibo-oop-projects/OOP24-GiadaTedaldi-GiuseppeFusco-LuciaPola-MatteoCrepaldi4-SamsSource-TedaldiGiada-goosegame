@@ -34,7 +34,7 @@ public class ClickTheColorMenu extends MinigameMenuImpl {
      */
     private void init() {
         getStartButton().addActionListener(e -> {
-            this.controller = new ClickTheColorImpl(this);
+            this.controller = new ClickTheColorImpl();
             this.setVisible(false);
         });
     }

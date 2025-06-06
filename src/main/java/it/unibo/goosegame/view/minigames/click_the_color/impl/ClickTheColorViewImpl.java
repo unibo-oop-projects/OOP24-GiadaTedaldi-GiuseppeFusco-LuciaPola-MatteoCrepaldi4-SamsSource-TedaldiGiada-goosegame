@@ -2,7 +2,6 @@ package it.unibo.goosegame.view.minigames.click_the_color.impl;
 
 import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.click_the_color.api.ClickTheColorModel;
-import it.unibo.goosegame.view.general.api.MinigameMenu;
 import it.unibo.goosegame.view.minigames.click_the_color.api.ClickTheColorView;
 
 import java.awt.Color;
@@ -13,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-// import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -46,17 +44,14 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
     private final List<JButton> buttons;            //  List containing the four buttons, needed to make the game work
     private final ClickTheColorModel model;         //  Model of the game, needed to make the application respond to game logic
     private final Timer gameTimer;                  //  Timer responsible for the updates to the graphical interface
-    private final MinigameMenu menu;                //  Menu of the game, needed to make the application respond to user input
 
     /**
      * Constructor for the graphical interface.
      *
      * @param model model object for the game logic
-     * @param menu  menu used to start the minigame
      */
-    public ClickTheColorViewImpl(final ClickTheColorModel model, final MinigameMenu menu) {
+    public ClickTheColorViewImpl(final ClickTheColorModel model) {
         this.model = model;
-        this.menu = menu;
         this.frame = new JFrame(model.getName());
         this.infoLabel = new JLabel("Click the color");
         this.buttons = new ArrayList<>();
@@ -90,7 +85,6 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
         JOptionPane.showMessageDialog(frame, model.getGameState() == GameState.WON ? "You won!" : "You lost!");
 
         this.frame.dispose();
-        this.menu.dispose();
     }
 
     /**
