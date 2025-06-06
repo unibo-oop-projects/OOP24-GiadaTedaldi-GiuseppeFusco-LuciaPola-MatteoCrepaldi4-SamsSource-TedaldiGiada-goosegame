@@ -109,7 +109,7 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
      * Utility function to group all the GUI building code.
      */
     private void initializeComponents() {
-
+        frame.setTitle("Click The Color");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize(FRAME_SIZE, FRAME_SIZE);

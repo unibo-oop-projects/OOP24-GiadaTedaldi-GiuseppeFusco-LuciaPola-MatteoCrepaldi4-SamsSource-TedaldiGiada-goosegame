@@ -125,6 +125,7 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
      */
     private void initInterface() {
         // Initializing frame parameters
+        frame.setTitle("Three Cups Game");
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setSize(frameSize, frameSize / 2);
         frame.setLayout(new BorderLayout());

@@ -52,6 +52,7 @@ public final class GameBoardViewImpl implements GameBoardView {
     private void initView() {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setSize(FRAME_SIZE, FRAME_SIZE);
+        frame.setLocationRelativeTo(null);
 
         final JPanel gameboardPanel = new JPanel(new GridLayout(BOARD_DIMENSION, BOARD_DIMENSION));
         final JPanel buttonsPanel = new JPanel();

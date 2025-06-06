@@ -60,6 +60,7 @@ public class PuzzleViewImpl extends JFrame implements PuzzleView {
      * Configurates the window properties.
      */
     private void configUI() {
+        this.setTitle("Puzzle");
         this.setSize(WIDTH, HEIGHT);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         final JPanel gridPanel = new JPanel(new GridLayout(GRID_SIZE, GRID_SIZE, 0, 0));
