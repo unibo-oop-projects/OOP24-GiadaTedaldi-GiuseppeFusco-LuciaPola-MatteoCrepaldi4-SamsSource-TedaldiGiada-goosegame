@@ -2,7 +2,6 @@ package it.unibo.goosegame.view.minigames.three_cups_game.impl;
 
 import it.unibo.goosegame.model.general.MinigamesModel;
 import it.unibo.goosegame.model.minigames.three_cups_game.api.ThreeCupsGameModel;
-import it.unibo.goosegame.view.general.api.MinigameMenu;
 import it.unibo.goosegame.view.minigames.three_cups_game.api.ThreeCupsGameView;
 
 import javax.swing.JLabel;
@@ -38,19 +37,16 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
     private final JLabel infoLabel;
     private final ThreeCupsGameModel model;
     private final Timer gameTimer;
-    private final MinigameMenu menu;
 
     /**
      * Builds the interface.
      *
      * @param model the model of the Three Cups Game minigame
-     * @param menu  the menu used to start the minigame
      */
-    public ThreeCupsGameViewImpl(final ThreeCupsGameModel model, final MinigameMenu menu) {
+    public ThreeCupsGameViewImpl(final ThreeCupsGameModel model) {
         this.frame = new JFrame();
-        this.infoLabel = new JLabel("Prova");
+        this.infoLabel = new JLabel("Three Cups Game");
         this.model = model;
-        this.menu = menu;
         this.imageLabels = new ArrayList<>();
 
         this.cupImage = new ImageIcon(Objects.requireNonNull(
@@ -93,7 +89,6 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
         JOptionPane.showMessageDialog(frame, model.getGameState() == MinigamesModel.GameState.WON ? "You won!" : "You lost!");
 
         this.gameTimer.stop();
-        this.menu.dispose();
         this.frame.dispose();
     }
 
@@ -105,7 +100,7 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
 
         statusMessage.append(
                 String.format(
-                        "Round number: %d, victories: %d / %d",
+                        "Played rounds: %d, victories: %d / %d",
                         model.getRoundNumber(),
                         model.getVictories(),
                         model.getMaxRounds()
