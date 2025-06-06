@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Implementation of {@link Cell}.
@@ -35,17 +36,17 @@ public class CellImpl implements Cell {
     private Timer timer;
     private GameState gameState;
 
-    private final Map<Class<? extends MinigameMenu>, MinigameMenu> menuMap = Map.of(
-            ClickTheColorMenu.class, new ClickTheColorMenu(),
-            HangmanMenu.class, new HangmanMenu(),
-            HerdingHoundMenu.class, new HerdingHoundMenu(),
-            HonkMandMenu.class, new HonkMandMenu(),
-            MemoryMenu.class, new MemoryMenu(),
-            PuzzleMenu.class, new PuzzleMenu(),
-            RockPaperScissorsMenu.class, new RockPaperScissorsMenu(),
-            SnakeMenu.class, new SnakeMenu(),
-            ThreeCupsGameMenu.class, new ThreeCupsGameMenu(),
-            TrisMenu.class, new TrisMenu()
+    private final Map<Class<? extends MinigameMenu>, Supplier<MinigameMenu>> menuMap = Map.of(
+            ClickTheColorMenu.class, ClickTheColorMenu::new,
+            HangmanMenu.class, HangmanMenu::new,
+            HerdingHoundMenu.class, HerdingHoundMenu::new,
+            HonkMandMenu.class, HonkMandMenu::new,
+            MemoryMenu.class, MemoryMenu::new,
+            PuzzleMenu.class, PuzzleMenu::new,
+            RockPaperScissorsMenu.class, RockPaperScissorsMenu::new,
+            SnakeMenu.class, SnakeMenu::new,
+            ThreeCupsGameMenu.class, ThreeCupsGameMenu::new,
+            TrisMenu.class, TrisMenu::new
     );
 
     /**
@@ -87,7 +88,8 @@ public class CellImpl implements Cell {
      * @return the new minigame menu
      */
     private Optional<MinigameMenu> refresh(final MinigameMenu menu) {
-        return Optional.ofNullable(menuMap.get(menu.getClass()));
+        final Supplier<MinigameMenu> factory = menuMap.get(menu.getClass());
+        return factory == null ? Optional.empty() : Optional.of(factory.get());
     }
 
     /**

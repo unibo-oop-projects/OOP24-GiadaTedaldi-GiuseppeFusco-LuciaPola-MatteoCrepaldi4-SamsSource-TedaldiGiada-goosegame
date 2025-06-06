@@ -24,7 +24,7 @@ public enum Card {
     Franco Letame has anger issues… and more.
     You interrupted his “session” with a loud honk in the garden. Enraged,
     he charges after you — but after 4 spaces of furious pursuit, he trips over his own trousers and faceplants into the dirt.
-    You still move back 4 spaces… but at least he’s out of the game for now.
+    You still move back 4 spaces… but at least he's out of the game for now.
     """,
      4, false, false),
     /** Example card 3. */
@@ -63,7 +63,7 @@ public enum Card {
     NAME12("Tailwind Boost", 
     """
     A sudden gust hits your tail feathers just right.
-    No idea where it came from — but hey, three free spaces. Don’t question wind miracles. Move ahead 3 spaces.
+    No idea where it came from — but hey, three free spaces. Don't question wind miracles. Move ahead 3 spaces.
     """,
      3, true, false),
     /** Example card 13. */
@@ -78,7 +78,7 @@ public enum Card {
     NAME14("Speed Waddle", """
     You enter the zone.
     Your waddle sharpens — swift, aerodynamic.
-    You’re no longer a goose. You’re a land torpedo.
+    You're no longer a goose. You're a land torpedo.
     Move ahead 5 spaces.
     """,
      5, true, false),
