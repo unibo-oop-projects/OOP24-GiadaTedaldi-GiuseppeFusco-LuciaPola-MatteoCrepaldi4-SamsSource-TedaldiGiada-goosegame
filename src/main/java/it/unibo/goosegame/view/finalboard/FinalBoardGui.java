@@ -89,6 +89,15 @@ public class FinalBoardGui {
         frame.setVisible(true);
     }
 
+    /**
+     * Creates a JButton with a scaled icon and an action to open a new GameMenu.
+     * 
+     * @param image the ImageIcon to use for the button's icon
+     * @param width the desire width (in pixels) for the button icon
+     * @param height the desire heigth (in pixels) for the button icon
+     * @param frame the frame where the button will be disposed 
+     * @return a JButton configured with the specified icon, size and action listener
+     */
     private JButton createButton(final ImageIcon image, final int width, final int height, final JFrame frame) {
         final JButton button = new JButton();
         button.setPreferredSize(new Dimension(width, height));
