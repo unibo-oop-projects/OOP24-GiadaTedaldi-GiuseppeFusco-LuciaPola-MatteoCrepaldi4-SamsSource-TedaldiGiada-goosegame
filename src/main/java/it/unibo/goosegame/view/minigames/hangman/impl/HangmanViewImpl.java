@@ -57,10 +57,10 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     )
     public HangmanViewImpl() {
         super("Hangman");
-        currentAttempts = MAX_ATTEMPTS;
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setOpaque(false);
+        this.currentAttempts = MAX_ATTEMPTS;
+        this.panel = new JPanel();
+        this.panel.setLayout(new BorderLayout());
+        this.panel.setOpaque(false);
         super.setContentPane(panel);
         super.addComponentListener(new ComponentAdapter() {
             @Override
@@ -79,8 +79,8 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
     public void initializeView() {
         final JPanel mainPanel = createMainPanel();
         final JPanel rightPanel = createImagePanel();
-        panel.add(mainPanel, BorderLayout.CENTER);
-        panel.add(rightPanel, BorderLayout.EAST);
+        this.panel.add(mainPanel, BorderLayout.CENTER);
+        this.panel.add(rightPanel, BorderLayout.EAST);
         super.setVisible(true);
     }
     /**
@@ -88,29 +88,29 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @Override
     public void updateWord(final String word) {
-        wordLabel.setText(word);
+        this.wordLabel.setText(word);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void updateImage(final int attempts) {
-        currentAttempts = attempts;
-        if (attempts < MAX_ATTEMPTS && !image) {
-            image = true;
-            imageLabel.setVisible(true);
+        this.currentAttempts = attempts;
+        if (attempts < MAX_ATTEMPTS && !this.image) {
+            this.image = true;
+            this.imageLabel.setVisible(true);
         }
         final java.net.URL imgURL = HangmanViewImpl.class.getResource("/img/minigames/hangman/hangman" + attempts + ".png");
         if (imgURL != null) {
             final ImageIcon original = new ImageIcon(imgURL);
-            final int w = imageLabel.getWidth();
-            final int h = imageLabel.getHeight();
+            final int w = this.imageLabel.getWidth();
+            final int h = this.imageLabel.getHeight();
             if (w > 0 && h > 0) {
                 final Image scaled = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(scaled));
+                this.imageLabel.setIcon(new ImageIcon(scaled));
             }
         } else {
-            imageLabel.setIcon(null);
+            this.imageLabel.setIcon(null);
         }
     }
     /**
@@ -118,7 +118,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @Override
     public void disableButton(final char car) {
-        stream(keyboardPanel.getComponents())
+        stream(this.keyboardPanel.getComponents())
             .filter(JButton.class::isInstance)
             .map(JButton.class::cast)
             .filter(button -> button.getText().equals(String.valueOf(car)))
@@ -130,7 +130,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @Override
     public void disableAllButton() {
-        stream(keyboardPanel.getComponents())
+        stream(this.keyboardPanel.getComponents())
             .filter(JButton.class::isInstance)
             .map(JButton.class::cast)
             .forEach(button -> button.setEnabled(false));
@@ -149,7 +149,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
      */
     @Override
     public void enableAllButton() {
-        stream(keyboardPanel.getComponents())
+        stream(this.keyboardPanel.getComponents())
             .filter(JButton.class::isInstance)
             .map(JButton.class::cast)
             .forEach(button -> button.setEnabled(true));
@@ -171,35 +171,35 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setOpaque(false);
 
-        wordLabel = new JLabel("", SwingConstants.CENTER);
-        wordLabel.setFont(new Font("Verdana", Font.BOLD, FONT_SIZE));
-        wordLabel.setForeground(Color.ORANGE);
-        wordLabel.setAlignmentX(CENTER_ALIGNMENT);
+        this.wordLabel = new JLabel("", SwingConstants.CENTER);
+        this.wordLabel.setFont(new Font("Verdana", Font.BOLD, FONT_SIZE));
+        this.wordLabel.setForeground(Color.ORANGE);
+        this.wordLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         final Component gap = Box.createVerticalStrut(15);
 
-        keyboardPanel = createKeyboardPanel();
+        this.keyboardPanel = createKeyboardPanel();
 
         mainPanel.add(Box.createVerticalGlue());
-        mainPanel.add(wordLabel);
+        mainPanel.add(this.wordLabel);
         mainPanel.add(gap);
-        mainPanel.add(keyboardPanel);
+        mainPanel.add(this.keyboardPanel);
         mainPanel.add(Box.createVerticalGlue());
 
         return mainPanel;
     }
 
     private JPanel createImagePanel() {
-        imageLabel = new JLabel();
-        imageLabel.addComponentListener(new ComponentAdapter() {
+        this.imageLabel = new JLabel();
+        this.imageLabel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 updateImage(currentAttempts);
             }
         });
-        imageLabel.setVisible(false);
-        imageLabel.setPreferredSize(new Dimension(DIMENSION, DIMENSION));
-        imageLabel.setAlignmentX(CENTER_ALIGNMENT);
+        this.imageLabel.setVisible(false);
+        this.imageLabel.setPreferredSize(new Dimension(DIMENSION, DIMENSION));
+        this.imageLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         final JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new GridBagLayout());
@@ -213,7 +213,7 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
 
-        rightPanel.add(imageLabel, gbc);
+        rightPanel.add(this.imageLabel, gbc);
         return rightPanel;
     }
 
@@ -225,9 +225,9 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
             button.setForeground(Color.ORANGE);
             final char selectedLetter = letter;
             button.addActionListener(e -> {
-                if (controller != null) {
-                    controller.onLetterPressed(selectedLetter);
-                    disableButton(selectedLetter);
+                if (this.controller != null) {
+                    this.controller.onLetterPressed(selectedLetter);
+                    this.disableButton(selectedLetter);
                 }
             });
             keyPanel.add(button);
@@ -242,26 +242,26 @@ public class HangmanViewImpl extends JFrame implements HangmanView {
 
         final int fontSize = (int) (FONT_SIZE * scale);
         final int fontKeyboard = (int) (12 * scale);
-        wordLabel.setFont(new Font("Verdana", Font.BOLD, fontSize));
+        this.wordLabel.setFont(new Font("Verdana", Font.BOLD, fontSize));
 
         final int imageW = Math.max(100, (int) (DIMENSION * scale));
         final int imageH = Math.max(100, (int) (DIMENSION * scale));
-        imageLabel.setPreferredSize(new Dimension(imageW, imageH));
-        imageLabel.revalidate();
-        updateImage(currentAttempts);
+        this.imageLabel.setPreferredSize(new Dimension(imageW, imageH));
+        this.imageLabel.revalidate();
+        this.updateImage(this.currentAttempts);
 
         final int btw = (int) (BUTTONW * scale);
         final int bth = (int) (BUTTONH * scale);
 
-        for (final Component c : keyboardPanel.getComponents()) {
+        for (final Component c : this.keyboardPanel.getComponents()) {
             if (c instanceof JButton button) {
                 button.setPreferredSize(new Dimension(btw, bth));
                 button.setFont(new Font("Verdana", Font.BOLD, fontKeyboard));
             }
         }
-        keyboardPanel.revalidate();
-        keyboardPanel.repaint();
-        revalidate();
-        repaint();
+        this.keyboardPanel.revalidate();
+        this.keyboardPanel.repaint();
+        this.revalidate();
+        this.repaint();
     }
 }

@@ -37,13 +37,13 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
         this.model = m;
         this.view = Objects.requireNonNull(v);
 
-        view.addRockListener(e -> playTurn("ROCK"));
-        view.addPaperListener(e -> playTurn("PAPER"));
-        view.addScissorsListener(e -> playTurn("SCISSORS"));
+        this.view.addRockListener(e -> playTurn("ROCK"));
+        this.view.addPaperListener(e -> playTurn("PAPER"));
+        this.view.addScissorsListener(e -> playTurn("SCISSORS"));
 
-        rockImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/rock.png"));
-        paperImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/paper.png"));
-        scissorsImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/scissors.png"));
+        this.rockImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/rock.png"));
+        this.paperImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/paper.png"));
+        this.scissorsImage = new ImageIcon(RockPaperScissorsControllerImpl.class.getResource("/img/minigames/rpc/scissors.png"));
     }
 
     /**
@@ -51,40 +51,40 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
      */
     @Override
     public void playTurn(final String playerChoice) {
-        final String computerChoice = model.playRound(playerChoice);
+        final String computerChoice = this.model.playRound(playerChoice);
 
         switch (computerChoice) {
-            case "ROCK" -> view.updateComputerChoice(rockImage);
-            case "PAPER" -> view.updateComputerChoice(paperImage);
-            case "SCISSORS" -> view.updateComputerChoice(scissorsImage);
+            case "ROCK" -> this.view.updateComputerChoice(this.rockImage);
+            case "PAPER" -> this.view.updateComputerChoice(this.paperImage);
+            case "SCISSORS" -> this.view.updateComputerChoice(this.scissorsImage);
             default -> throw new IllegalArgumentException("Inavlid choice: " + computerChoice);
         }
 
         switch (playerChoice) {
-            case "ROCK" -> view.updatePlayerChoice(rockImage);
-            case "PAPER" -> view.updatePlayerChoice(paperImage);
-            case "SCISSORS" -> view.updatePlayerChoice(scissorsImage);
+            case "ROCK" -> this.view.updatePlayerChoice(this.rockImage);
+            case "PAPER" -> this.view.updatePlayerChoice(this.paperImage);
+            case "SCISSORS" -> this.view.updatePlayerChoice(this.scissorsImage);
             default -> throw new IllegalArgumentException("Invalid choice: " + playerChoice);
         }
 
-        view.updatePlayerScore(model.getPlayerScore());
-        view.updateComputerScore(model.getComputerScore());
-        view.updateResult("");
+        this.view.updatePlayerScore(this.model.getPlayerScore());
+        this.view.updateComputerScore(this.model.getComputerScore());
+        this.view.updateResult("");
 
-        final int roundResult = model.determineWinner(playerChoice, computerChoice);
+        final int roundResult = this.model.determineWinner(playerChoice, computerChoice);
         switch (roundResult) {
-            case 1 -> view.updateResult("You win this round!");
-            case -1 -> view.updateResult("Computer win this round!");
-            default -> view.updateResult("It's a tie!");
+            case 1 -> this.view.updateResult("You win this round!");
+            case -1 -> this.view.updateResult("Computer win this round!");
+            default -> this.view.updateResult("It's a tie!");
         }
 
         if (model.isOver()) {
-            if ("PLAYER".equals(model.getName().toUpperCase(Locale.ROOT))) {
+            if ("PLAYER".equals(this.model.getName().toUpperCase(Locale.ROOT))) {
                 JOptionPane.showMessageDialog(null, "YUO WIN");
             } else {
                 JOptionPane.showMessageDialog(null, "GAME OVER - YOU LOSE");
             }
-            view.dispose();
+            this.view.dispose();
         }
     }
 
@@ -93,8 +93,8 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
      */
     @Override
     public final void startGame() {
-        model.resetGame();
-        view.enableAllButtons();
+        this.model.resetGame();
+        this.view.enableAllButtons();
     }
 
     /**
@@ -102,9 +102,9 @@ public class RockPaperScissorsControllerImpl implements RockPaperScissorsControl
      */
     @Override
     public GameState getGameState() {
-        if (!model.isOver()) {
+        if (!this.model.isOver()) {
             return GameState.ONGOING;
         }
-        return model.getGameState();
+        return this.model.getGameState();
     }
 }

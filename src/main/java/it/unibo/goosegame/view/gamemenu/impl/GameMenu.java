@@ -66,7 +66,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         super.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         super.setResizable(true);
         super.setLocationRelativeTo(null);
-        initializeView();
+        this.initializeView();
 
         super.addComponentListener(new ComponentAdapter() {
             @Override
@@ -77,15 +77,15 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         super.setContentPane(mainPanel);
     }
     private void initializeView() {
-        logic = new MenuLogicImpl(this);
-        cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
-        menuPanel = createMenuPanel();
+        this.logic = new MenuLogicImpl(this);
+        this.cardLayout = new CardLayout();
+        this.mainPanel = new JPanel(cardLayout);
+        this.menuPanel = createMenuPanel();
         final GameInfo infoPanel = new GameInfo(this);
         infoPanel.initializeView();
 
-        mainPanel.add(menuPanel, "menu");
-        mainPanel.add(infoPanel, "info");
+        this.mainPanel.add(this.menuPanel, "menu");
+        this.mainPanel.add(infoPanel, "info");
     }
 
     /**
@@ -114,11 +114,11 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         centerPanel.setOpaque(false);
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
-        start = createButtonIcon(startImage, BUTTON_WIDTH, BUTTON_HEIGHT);
+        this.start = createButtonIcon(this.startImage, BUTTON_WIDTH, BUTTON_HEIGHT);
         final JButton addPlayer = new JButton("Add Player");
-        playerNameField = new JTextField(COLUMN);
+        this.playerNameField = new JTextField(COLUMN);
         final JPanel panelPlayer = new JPanel(new FlowLayout());
-        panelPlayer.add(playerNameField);
+        panelPlayer.add(this.playerNameField);
         panelPlayer.add(addPlayer);
         panelPlayer.setOpaque(false);
         gbc.gridx = 0;
@@ -127,8 +127,8 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         gbc.gridx = 0;
         gbc.gridy = 1;
         centerPanel.add(start, gbc);
-        addPlayer.addActionListener(e -> logic.addPlayer());
-        start.addActionListener(e -> logic.startGame());
+        addPlayer.addActionListener(e -> this.logic.addPlayer());
+        this.start.addActionListener(e -> this.logic.startGame());
         return centerPanel;
     }
 
@@ -139,23 +139,23 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         final JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setOpaque(false);
 
-        instruction = createButtonIcon(icon, ICON_SIZE, ICON_SIZE);
+        this.instruction = createButtonIcon(icon, ICON_SIZE, ICON_SIZE);
         final JPanel bottomLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
         bottomLeft.add(instruction);
         bottomLeft.setOpaque(false);
 
-        playerNameLabel = new JLabel(" PLAYERS: ");
-        playerNameLabel.setOpaque(true);
-        playerNameLabel.setBackground(new Color(COLOR, COLOR, COLOR, 100));
+        this.playerNameLabel = new JLabel(" PLAYERS: ");
+        this.playerNameLabel.setOpaque(true);
+        this.playerNameLabel.setBackground(new Color(COLOR, COLOR, COLOR, 100));
 
         final JPanel bottomRight = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        bottomRight.add(playerNameLabel);
+        bottomRight.add(this.playerNameLabel);
         bottomRight.setOpaque(false);
 
         bottomPanel.add(bottomLeft, BorderLayout.PAGE_END);
         bottomPanel.add(bottomRight, BorderLayout.NORTH);
 
-        instruction.addActionListener(e -> logic.showInstructions());
+        this.instruction.addActionListener(e -> this.logic.showInstructions());
         return bottomPanel;
     } 
 
@@ -190,7 +190,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     */
     @Override
     public void showInstructions() {
-        cardLayout.show(mainPanel, "info");
+        this.cardLayout.show(this.mainPanel, "info");
     }
 
     /**
@@ -198,7 +198,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     */
     @Override
     public void showMenu() {
-        cardLayout.show(mainPanel, "menu");
+        this.cardLayout.show(this.mainPanel, "menu");
     }
 
     /**
@@ -206,7 +206,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     */
     @Override
     public String getPlayerName() {
-        return playerNameField.getText();
+        return this.playerNameField.getText();
     }
 
     /**
@@ -214,7 +214,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     */
     @Override
     public void updatePlayerField() {
-        playerNameField.setText("");
+        this.playerNameField.setText("");
     }
 
     /**
@@ -222,7 +222,7 @@ public class GameMenu extends JFrame implements GameMenuInterface {
     */
     @Override
     public void updatePlayerLabel(final String text) {
-        playerNameLabel.setText(text);
+        this.playerNameLabel.setText(text);
     }
 
     /**
@@ -244,24 +244,24 @@ public class GameMenu extends JFrame implements GameMenuInterface {
         final int fontSize = (int) (FONT_SIZE * scale);
         final Font scaledFont = new Font("Dialog", Font.BOLD, fontSize);
 
-        playerNameField.setFont(scaledFont);
-        playerNameLabel.setFont(scaledFont);
+        this.playerNameField.setFont(scaledFont);
+        this.playerNameLabel.setFont(scaledFont);
 
-        scaleFontRecursively(menuPanel, scaledFont);
+        this.scaleFontRecursively(menuPanel, scaledFont);
 
         final int btnW = (int) (BUTTON_WIDTH * scale);
         final int btnH = (int) (BUTTON_HEIGHT * scale);
-        start.setPreferredSize(new Dimension(btnW, btnH));
+        this.start.setPreferredSize(new Dimension(btnW, btnH));
         final Image scaledImage = startImage.getImage().getScaledInstance(btnW, btnH, Image.SCALE_SMOOTH);
-        start.setIcon(new ImageIcon(scaledImage));
+        this.start.setIcon(new ImageIcon(scaledImage));
 
         final int iconSize = (int) (ICON_SIZE * scale);
-        instruction.setPreferredSize(new Dimension(iconSize, iconSize));
+        this.instruction.setPreferredSize(new Dimension(iconSize, iconSize));
         final Image scaledIcon = icon.getImage().getScaledInstance(iconSize, iconSize, Image.SCALE_SMOOTH);
-        instruction.setIcon(new ImageIcon(scaledIcon));
+        this.instruction.setIcon(new ImageIcon(scaledIcon));
 
-        menuPanel.revalidate();
-        menuPanel.repaint();
+        this.menuPanel.revalidate();
+        this.menuPanel.repaint();
     }
 
     /**

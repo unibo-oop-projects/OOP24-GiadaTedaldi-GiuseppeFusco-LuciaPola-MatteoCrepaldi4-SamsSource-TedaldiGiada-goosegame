@@ -33,7 +33,7 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
                 --> Scissors beats Paper
             """
         );
-        initialize();
+        this.initialize();
     }
 
     /**
@@ -41,19 +41,19 @@ public class RockPaperScissorsMenu extends MinigameMenuImpl {
      */
     @Override
     public GameState getGameState() {
-        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
+        return this.controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 
     /**
      *  Inizialize view.
      */
     private void initialize() {
-      model = new RockPaperScissorsModelImpl();
-      getStartButton().addActionListener(e -> {
-            view = new RockPaperScissorsViewImpl();
-            controller = new RockPaperScissorsControllerImpl(model, view);
-            view.initializeView();
-            controller.startGame();
+        this.model = new RockPaperScissorsModelImpl();
+        this.getStartButton().addActionListener(e -> {
+            this.view = new RockPaperScissorsViewImpl();
+            this.controller = new RockPaperScissorsControllerImpl(this.model, this.view);
+            this.view.initializeView();
+            this.controller.startGame();
             super.setVisible(false);
       });
     }

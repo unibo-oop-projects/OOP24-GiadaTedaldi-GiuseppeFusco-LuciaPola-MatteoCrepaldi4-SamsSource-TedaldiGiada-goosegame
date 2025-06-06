@@ -46,7 +46,7 @@ public class HangmanMenu extends MinigameMenuImpl {
             If the player correctly identifies all the letters in the word before running out of lives, they win.
             """
         );
-        initialize();
+        this.initialize();
     }
 
     /**
@@ -83,9 +83,9 @@ public class HangmanMenu extends MinigameMenuImpl {
         getStartButton().addActionListener(e -> {
             final HangmanView view = new HangmanViewImpl();
             view.initializeView();
-            controller = new HangmanControllerImpl(view, model);
+            this.controller = new HangmanControllerImpl(view, model);
             view.setController(controller);
-            controller.startGame();
+            this.controller.startGame();
             super.setVisible(false);
         });
     }
@@ -95,6 +95,6 @@ public class HangmanMenu extends MinigameMenuImpl {
      */
     @Override
     public GameState getGameState() {
-        return controller == null ? GameState.NOT_STARTED : controller.getGameState();
+        return this.controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 }

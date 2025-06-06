@@ -42,14 +42,14 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public void startGame() {
-        final long validPlayers = players.stream()
+        final long validPlayers = this.players.stream()
             .filter(p -> p != null && p.getName() != null && !p.getName().isBlank())
             .count();
         if (validPlayers < 2) {
             JOptionPane.showMessageDialog(null, "Please enter at least two valid names");
             return;
         }
-        view.dispose();
+        this.view.dispose();
         new GameBoardImpl(players);
     }
 
@@ -60,18 +60,18 @@ public class MenuLogicImpl implements MenuLogic {
     public void addPlayer() {
         final String playerName = view.getPlayerName();
         if (!playerName.isBlank()) {
-            if (players.size() == MAX_PLAYERS) {
+            if (this.players.size() == MAX_PLAYERS) {
                JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
             } else if (playerName.length() > CAR) {
                JOptionPane.showMessageDialog(null, "Maximum Players Reached.");
             } else if (players.stream().noneMatch(p -> p.getName().equalsIgnoreCase(playerName))) {
-                players.add(new PlayerImpl(playerName, playerCount));
-                playerCount++;
-                updatePlayerList();
+                this.players.add(new PlayerImpl(playerName, playerCount));
+                this.playerCount++;
+                this.updatePlayerList();
             } else {
                 JOptionPane.showMessageDialog(null, "Player Name Already Existing.");
             }
-            view.updatePlayerField();
+            this.view.updatePlayerField();
         }
     }
 
@@ -80,7 +80,7 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public void showInstructions() {
-        view.showInstructions();
+        this.view.showInstructions();
     }
 
    /**
@@ -88,7 +88,7 @@ public class MenuLogicImpl implements MenuLogic {
     */
     @Override
     public int getPlayersCount() {
-        return playerCount;
+        return this.playerCount;
     }
 
     /**
@@ -97,14 +97,14 @@ public class MenuLogicImpl implements MenuLogic {
      */
     private void updatePlayerList() {
         final StringBuilder playerListText = new StringBuilder("PLAYERS: ");
-        for (int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < this.players.size(); i++) {
             playerListText
                 .append(' ')
                 .append(i + 1)
                 .append(") ")
-                .append(players.get(i).getName());
+                .append(this.players.get(i).getName());
         }
         playerListText.append(' ');
-        view.updatePlayerLabel(playerListText.toString());
+        this.view.updatePlayerLabel(playerListText.toString());
     }
 }

@@ -22,7 +22,7 @@ class TestHangmanModelImpl {
      */
     @BeforeEach
     public void setUp() {
-        model = new HangmanModelImpl(new String[]{"APPLE"});
+        this.model = new HangmanModelImpl(new String[]{"APPLE"});
     }
 
     /**
@@ -33,11 +33,11 @@ class TestHangmanModelImpl {
      */
     @Test
     void testInitialState() {
-        final String hiddenWord = model.getHiddenWord();
+        final String hiddenWord = this.model.getHiddenWord();
         assertEquals(ATTEMPTS, hiddenWord.length());
         assertTrue(hiddenWord.contains("+"));
         assertTrue(hiddenWord.contains("-"));
-        assertEquals(ATTEMPTS, model.getAttempts(), "The hidden word length should be 5");
+        assertEquals(ATTEMPTS, this.model.getAttempts(), "The hidden word length should be 5");
     }
 
     /**
@@ -46,9 +46,9 @@ class TestHangmanModelImpl {
      */
     @Test
     void testCorrectGuessRevealsLetter() {
-        final boolean result = model.guess('P');
+        final boolean result = this.model.guess('P');
         assertTrue(result);
-        assertEquals("+PP-+", model.getHiddenWord());
+        assertEquals("+PP-+", this.model.getHiddenWord());
     }
 
     /**
@@ -57,10 +57,10 @@ class TestHangmanModelImpl {
      */
     @Test
     void testIncorrectGuessRevealsLetter() {
-        final int before = model.getAttempts();
-        final boolean result = model.guess('Z');
+        final int before = this.model.getAttempts();
+        final boolean result = this.model.guess('Z');
         assertFalse(result);
-        assertEquals(before - 1, model.getAttempts(), "Attempts should decrease by 1 after an incorrect guess");
+        assertEquals(before - 1, this.model.getAttempts(), "Attempts should decrease by 1 after an incorrect guess");
     }
 
     /**
@@ -69,10 +69,10 @@ class TestHangmanModelImpl {
      */
     @Test
     void testGameWin() {
-        model = new HangmanModelImpl(new String[]{"A"});
-        final String hidden = model.getHiddenWord();
+        this.model = new HangmanModelImpl(new String[]{"A"});
+        final String hidden = this.model.getHiddenWord();
         assertEquals("+", hidden, "The hidden word should be '+' for the word 'A'");
-        model.guess('A');
+        this.model.guess('A');
         assertTrue(model.isOver(), "The game should be over after guessing the word correctly");
         assertTrue(model.isWon(), "The game should be won after guessing the correct letter");
     }
@@ -84,12 +84,12 @@ class TestHangmanModelImpl {
      */
     @Test
     void testGameLose() {
-        model = new HangmanModelImpl(new String[]{"B"});
+        this.model = new HangmanModelImpl(new String[]{"B"});
         for (int i = 0; i < ATTEMPTS; i++) {
-            model.guess('Z');
+            this.model.guess('Z');
         }
-        assertTrue(model.isOver(), "The game should be over after 5 incorrect guesses");
-        assertFalse(model.isWon(), "The game should not be won after 5 incorrect guesses");
-        assertTrue(model.isLost(), "The game should be lost after 5 incorrect guesses");
+        assertTrue(this.model.isOver(), "The game should be over after 5 incorrect guesses");
+        assertFalse(this.model.isWon(), "The game should not be won after 5 incorrect guesses");
+        assertTrue(this.model.isLost(), "The game should be lost after 5 incorrect guesses");
     }
 }
