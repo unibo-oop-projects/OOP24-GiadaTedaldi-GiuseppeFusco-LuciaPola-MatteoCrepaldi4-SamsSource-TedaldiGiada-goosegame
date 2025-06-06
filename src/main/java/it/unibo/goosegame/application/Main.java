@@ -21,7 +21,7 @@ public final class Main {
    */
   public static void main(final String[] args) {
     try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
     } catch (final ClassNotFoundException | InstantiationException 
              | IllegalAccessException | UnsupportedLookAndFeelException e) {
       JOptionPane.showMessageDialog(null, 
@@ -29,6 +29,7 @@ public final class Main {
           "Error", 
           JOptionPane.ERROR_MESSAGE);
     }
+
     SwingUtilities.invokeLater(() -> {
       final GameMenu menu = new GameMenu();
       menu.setVisible(true);
