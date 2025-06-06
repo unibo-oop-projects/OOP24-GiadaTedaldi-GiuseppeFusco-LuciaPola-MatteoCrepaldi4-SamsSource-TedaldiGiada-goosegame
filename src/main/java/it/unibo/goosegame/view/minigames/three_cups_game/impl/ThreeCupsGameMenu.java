@@ -34,7 +34,7 @@ public class ThreeCupsGameMenu extends MinigameMenuImpl {
      */
     private void init() {
         getStartButton().addActionListener(e -> {
-           this.controller = new ThreeCupsGameImpl(this);
+           this.controller = new ThreeCupsGameImpl();
            this.setVisible(false);
         });
     }

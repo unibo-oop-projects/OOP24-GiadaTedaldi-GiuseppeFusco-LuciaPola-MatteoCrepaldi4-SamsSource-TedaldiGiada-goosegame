@@ -46,19 +46,19 @@ public final class ThreeCupsGameModelImpl implements ThreeCupsGameModel {
      */
     @Override
     public void clicked(final int index) {
-        userChoice = index;
-
-        if (!roundOver) {
-            roundOver = true;
+        if (roundOver) {
+            roundOver = false;
             return;
         }
+
+        nextRound();
+        userChoice = index;
 
         if (rightChoice == userChoice) {
             score++;
         }
 
-        roundOver = false;
-        nextRound();
+        roundOver = true;
     }
 
     /**
@@ -66,7 +66,7 @@ public final class ThreeCupsGameModelImpl implements ThreeCupsGameModel {
      */
     @Override
     public int getRoundNumber() {
-        return playedRounds + 1;
+        return playedRounds;
     }
 
     /**
