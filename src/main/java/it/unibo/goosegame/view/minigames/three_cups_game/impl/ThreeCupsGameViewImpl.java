@@ -130,6 +130,7 @@ public final class ThreeCupsGameViewImpl implements ThreeCupsGameView {
         frame.setSize(frameSize, frameSize / 2);
         frame.setLayout(new BorderLayout());
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
 
         // Adding the info panel on the frame's top
         final JPanel infoPanel = new JPanel();

@@ -113,6 +113,7 @@ public class ClickTheColorViewImpl implements ClickTheColorView {
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize(FRAME_SIZE, FRAME_SIZE);
+        frame.setLocationRelativeTo(null);
 
         infoLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
 
