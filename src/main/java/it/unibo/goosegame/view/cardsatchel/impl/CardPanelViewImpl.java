@@ -36,6 +36,7 @@ public final class CardPanelViewImpl extends JPanel implements CardPanelView {
     private static final int BORDER_ARC = 16;
     private static final int NAME_FONT_DIV = 12;
     private static final int DESC_FONT_DIV = 16;
+    private static final int FONT_SIZE = 7;
     private static final Color CARD_COLOR = new Color(210, 180, 140);
     private static final Color BORDER_COLOR = new Color(101, 67, 33);
 
@@ -63,6 +64,7 @@ public final class CardPanelViewImpl extends JPanel implements CardPanelView {
         setLayout(null);
         if (showButton) {
             actionButton = new JButton(buttonText);
+            actionButton.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
             actionButton.setVisible(false);
             actionButton.setFocusable(false);
             actionButton.setMargin(new Insets(2, 8, 2, 8));

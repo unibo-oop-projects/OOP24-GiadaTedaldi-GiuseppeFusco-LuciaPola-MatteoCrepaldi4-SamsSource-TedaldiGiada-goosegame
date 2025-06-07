@@ -101,8 +101,8 @@ public final class GameBoardModelImpl implements GameBoardModel {
 
             JOptionPane.showMessageDialog(
                     null,
-                    drawnCard.getDescription(),
-                    drawnCard.getName(),
+                    drawnCard.getDescription() + " Put it into the satchel",
+                    "You drew a bonus card: " + drawnCard.getName(),
                     JOptionPane.INFORMATION_MESSAGE
             );
 
@@ -113,7 +113,7 @@ public final class GameBoardModelImpl implements GameBoardModel {
                 JOptionPane.showMessageDialog(
                         null,
                         drawnCard.getDescription(),
-                        drawnCard.getName(),
+                        "You drew a malus card: " + drawnCard.getName(),
                         JOptionPane.INFORMATION_MESSAGE
                 );
 
