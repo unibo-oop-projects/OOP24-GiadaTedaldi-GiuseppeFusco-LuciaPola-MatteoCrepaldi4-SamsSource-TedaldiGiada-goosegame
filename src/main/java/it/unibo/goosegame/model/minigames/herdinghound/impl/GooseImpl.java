@@ -29,7 +29,7 @@ public final class GooseImpl implements Goose {
      */
     @Override
     public Position getCoord() {
-        return position;
+        return this.position;
     }
 
     /**
@@ -37,8 +37,8 @@ public final class GooseImpl implements Goose {
      */
     @Override
     public void move(final int dx, final int dy) {
-        final int newX = position.x() + dx;
-        final int newY = position.y() + dy;
+        final int newX = this.position.x() + dx;
+        final int newY = this.position.y() + dy;
         this.position = new Position(newX, newY);
     }
 

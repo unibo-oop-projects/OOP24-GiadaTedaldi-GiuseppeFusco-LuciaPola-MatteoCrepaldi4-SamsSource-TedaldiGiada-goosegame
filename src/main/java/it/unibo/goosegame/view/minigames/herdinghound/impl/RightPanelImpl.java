@@ -20,7 +20,6 @@ import java.net.URL;
 
 /**
  * Side panel for the HerdingHound minigame, displaying the timer and dog state image.
- * <p>
  * Shows a countdown timer and a visual representation of the dog's current state (awake, alert, asleep).
  */
 public final class RightPanelImpl extends JPanel implements RightPanel {

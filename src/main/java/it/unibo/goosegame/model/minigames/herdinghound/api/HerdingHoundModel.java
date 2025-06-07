@@ -40,7 +40,7 @@ public interface HerdingHoundModel extends MinigamesModel {
     List<Position> getShadows();
 
     /**
-     * Performs the next automatic move of the goose (for demo/test).
+     * Performs the next automatic move of the goose.
      */
     void nextGooseMove();
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Controller for managing the player's card satchel (bag).
- * Gestisce modello, view e frame secondo MVC.
+ * Manages model, view e frame for MVC.
  */
 public class CardSatchelController {
     private final CardSatchelModel satchelModel;
@@ -31,7 +31,6 @@ public class CardSatchelController {
         this.board = board;
         this.view = new CardSatchelViewImpl(this);
         this.frame = new CardSatchelFrameImpl(view);
-        //Listener for closing via X
         this.frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
@@ -44,27 +43,26 @@ public class CardSatchelController {
      *Shows the Satchel window.
      */
     public void showSatchel() {
-        SwingUtilities.invokeLater(() -> frame.setVisible(true));
-        view.updateCards(getCards());
+        SwingUtilities.invokeLater(() -> this.frame.setVisible(true));
+        this.view.updateCards(this.getCards());
     }
 
     /**
      * Closes the Satchel window.
      */
     public void closeSatchel() {
-        if (frame != null) {
-            frame.close();
+        if (this.frame != null) {
+            this.frame.close();
         }
     }
 
     /**
      *Tries to add a card to the Satchel.
      * @param card the card to add
-
-     *@return True if the card has been added to Satchel, false otherwise
+     * @return True if the card has been added to Satchel, false otherwise
      */
     public boolean addCard(final Card card) {
-        return satchelModel.addCard(card);
+        return this.satchelModel.addCard(card);
     }
 
     /**
@@ -73,7 +71,7 @@ public class CardSatchelController {
      * @return true if the card has been removed, false otherwise
      */
     public boolean removeCard(final Card card) {
-        return satchelModel.removeCard(card);
+        return this.satchelModel.removeCard(card);
     }
 
     /**
@@ -84,7 +82,7 @@ public class CardSatchelController {
     public boolean playCard(final Card card) {
         this.board.move(card.getSteps(), card.isBonus());
         final boolean removed = this.removeCard(card);
-        closeSatchel(); //Closes the window after playing
+        closeSatchel();
         return removed;
     }
 
@@ -93,14 +91,14 @@ public class CardSatchelController {
      * @return the list of cards
      */
     public List<Card> getCards() {
-        return satchelModel.getCards();
+        return this.satchelModel.getCards();
     }
 
     /**
      * Empty the Satchel.
      */
     public void clearSatchel() {
-        satchelModel.clear();
+        this.satchelModel.clear();
     }
 
     /**
@@ -108,6 +106,6 @@ public class CardSatchelController {
      * @return true if Satchel is full, false otherwise
      */
     public boolean isSatchelFull() {
-        return satchelModel.isFull();
+        return this.satchelModel.isFull();
     }
 }

@@ -47,14 +47,14 @@ public final class DogImpl implements Dog {
         final int px = position.x();
         final int py = position.y();
 
-        if (gx == 0 && py < gridSize - 1) {
-            direction = Direction.LEFT;
-        } else if (gy == gridSize - 1 && px < gridSize - 1) {
-            direction = Direction.DOWN;
-        } else if (gx == gridSize - 1 && py > 0) {
-            direction = Direction.RIGHT;
+        if (gx == 0 && py < this.gridSize - 1) {
+            this.direction = Direction.LEFT;
+        } else if (gy == this.gridSize - 1 && px < this.gridSize - 1) {
+            this.direction = Direction.DOWN;
+        } else if (gx == this.gridSize - 1 && py > 0) {
+            this.direction = Direction.RIGHT;
         } else {
-            direction = Direction.UP;
+            this.direction = Direction.UP;
         }
 
         updateVisibleArea();
@@ -65,10 +65,10 @@ public final class DogImpl implements Dog {
      */
     @Override
     public void refreshState() {
-        switch (state) {
-            case ASLEEP -> state = State.ALERT;
-            case ALERT -> state = State.AWAKE;
-            case AWAKE -> state = State.ASLEEP;
+        switch (this.state) {
+            case ASLEEP -> this.state = State.ALERT;
+            case ALERT -> this.state = State.AWAKE;
+            case AWAKE -> this.state = State.ASLEEP;
         }
     }
 
@@ -86,7 +86,7 @@ public final class DogImpl implements Dog {
      */
     @Override
     public Direction getDirection() {
-        return direction;
+        return this.direction;
     }
 
     /**
@@ -94,33 +94,33 @@ public final class DogImpl implements Dog {
      */
     @Override
     public Position getCoord() {
-        return new Position(position.x(), position.y());
+        return new Position(this.position.x(), this.position.y());
     }
 
     private void updateVisibleArea() {
-        visibleArea.clear();
-        if (state != State.AWAKE) {
+        this.visibleArea.clear();
+        if (this.state != State.AWAKE) {
             return;
         }
 
-        final int x = position.x();
-        final int y = position.y();
+        final int x = this.position.x();
+        final int y = this.position.y();
 
-        switch (direction) {
+        switch (this.direction) {
             case UP -> {
                 for (int dy = FIRST_STEP; y - dy >= 0; dy++) {
                     for (int dx = x - dy; dx <= x + dy; dx++) {
-                        if (dx >= 0 && dx < gridSize) {
-                            visibleArea.add(new Position(dx, y - dy));
+                        if (dx >= 0 && dx < this.gridSize) {
+                            this.visibleArea.add(new Position(dx, y - dy));
                         }
                     }
                 }
             }
             case DOWN -> {
-                for (int dy = FIRST_STEP; y + dy < gridSize; dy++) {
+                for (int dy = FIRST_STEP; y + dy < this.gridSize; dy++) {
                     for (int dx = x - dy; dx <= x + dy; dx++) {
-                        if (dx >= 0 && dx < gridSize) {
-                            visibleArea.add(new Position(dx, y + dy));
+                        if (dx >= 0 && dx < this.gridSize) {
+                            this.visibleArea.add(new Position(dx, y + dy));
                         }
                     }
                 }
@@ -128,17 +128,17 @@ public final class DogImpl implements Dog {
             case LEFT -> {
                 for (int dx = FIRST_STEP; x - dx >= 0; dx++) {
                     for (int dy = y - dx; dy <= y + dx; dy++) {
-                        if (dy >= 0 && dy < gridSize) {
-                            visibleArea.add(new Position(x - dx, dy));
+                        if (dy >= 0 && dy < this.gridSize) {
+                            this.visibleArea.add(new Position(x - dx, dy));
                         }
                     }
                 }
             }
             case RIGHT -> {
-                for (int dx = FIRST_STEP; x + dx < gridSize; dx++) {
+                for (int dx = FIRST_STEP; x + dx < this.gridSize; dx++) {
                     for (int dy = y - dx; dy <= y + dx; dy++) {
-                        if (dy >= 0 && dy < gridSize) {
-                            visibleArea.add(new Position(x + dx, dy));
+                        if (dy >= 0 && dy < this.gridSize) {
+                            this.visibleArea.add(new Position(x + dx, dy));
                         }
                     }
                 }
@@ -152,7 +152,7 @@ public final class DogImpl implements Dog {
      */
     @Override
     public List<Position> getVisibleArea() {
-        return new ArrayList<>(visibleArea);
+        return new ArrayList<>(this.visibleArea);
     }
 
     /**
@@ -160,7 +160,7 @@ public final class DogImpl implements Dog {
      */
     @Override
     public void reset() {
-        this.position = new Position(gridSize / CENTER_DIVISOR, gridSize / CENTER_DIVISOR);
+        this.position = new Position(this.gridSize / CENTER_DIVISOR, this.gridSize / CENTER_DIVISOR);
         this.direction = INITIAL_DIRECTION;
         this.state = INITIAL_STATE;
         this.visibleArea.clear();

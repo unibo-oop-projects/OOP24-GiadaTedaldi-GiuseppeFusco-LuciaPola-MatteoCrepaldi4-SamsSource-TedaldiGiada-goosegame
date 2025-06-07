@@ -50,33 +50,29 @@ public class HerdingHoundController {
      * Initializes and shows the game. Call this to start the Herding Hound minigame.
      */
     public void startGame() {
-        // Initialize model, view, right panel, and frame
+
         this.model = new HerdingHoundModelImpl(GRID_SIZE);
         this.view = new HerdingHoundViewImpl();
         this.rightPanel = new RightPanelImpl();
         this.frame = new HerdingHoundFrameImpl();
 
-        // Wire up controller to view and right panel
         this.view.setController(this);
         this.rightPanel.setController(this);
 
-        // Set up the frame with the view and right panel
         this.frame.setupGamePanels((Component) this.view, (Component) this.rightPanel);
         this.frame.setVisible(true);
 
-        // Set up key listener
         setupKeyListener();
 
-        // Start the countdown, then start the game logic
         this.view.startCountdown(() -> {
-            model.startGame();
+            this.model.startGame();
             startGameLogic();
-            view.requestFocusInWindow();
+            this.view.requestFocusInWindow();
         });
     }
 
     private void setupKeyListener() {
-        view.addKeyListener(new KeyAdapter() {
+        this.view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
                 if (!gameActive || view.isCountdownActive()) {
@@ -89,6 +85,7 @@ public class HerdingHoundController {
                     rightPanel.updatePanel();
                     if (model.isOver()) {
                         endGame();
+
                     }
                 }
             }
@@ -104,53 +101,53 @@ public class HerdingHoundController {
     }
 
     private void startGameLogic() {
-        gameActive = true;
-        scheduleNextDogState(model.getDog().getState());
-        gameTimer = new Timer(1000, (final java.awt.event.ActionEvent e) -> {
-            view.updateView();
-            rightPanel.updatePanel();
-            if (model.getGameState() != GameState.ONGOING) {
-                endGame();
+        this.gameActive = true;
+        this.scheduleNextDogState(this.model.getDog().getState());
+        this.gameTimer = new Timer(1000, (final java.awt.event.ActionEvent e) -> {
+            this.view.updateView();
+            this.rightPanel.updatePanel();
+            if (this.model.getGameState() != GameState.ONGOING) {
+                this.endGame();
             }
         });
-        gameTimer.setInitialDelay(0);
-        gameTimer.start();
+        this.gameTimer.setInitialDelay(0);
+        this.gameTimer.start();
     }
 
     private void scheduleNextDogState(final State currentState) {
-        if (model.isOver()) {
+        if (this.model.isOver()) {
             return;
         }
         final int delay = (currentState == State.ALERT)
                 ? DOG_ALERT_DELAY
                 : DOG_OTHER_DELAY_BASE + rnd.nextInt(DOG_OTHER_DELAY_RANDOM) * 1_000;
-        if (dogStateTimer != null) {
-            dogStateTimer.stop();
+        if (this.dogStateTimer != null) {
+            this.dogStateTimer.stop();
         }
-        dogStateTimer = new Timer(delay, (final java.awt.event.ActionEvent e) -> {
-            model.nextDogState();
-            view.updateView();
-            rightPanel.updatePanel();
-            if (model.isOver()) {
-                endGame();
+        this.dogStateTimer = new Timer(delay, (final java.awt.event.ActionEvent e) -> {
+            this.model.nextDogState();
+            this.view.updateView();
+            this.rightPanel.updatePanel();
+            if (this.model.isOver()) {
+                this.endGame();
             } else {
-                scheduleNextDogState(model.getDog().getState());
+                this.scheduleNextDogState(this.model.getDog().getState());
             }
         });
-        dogStateTimer.setRepeats(false);
-        dogStateTimer.start();
+        this.dogStateTimer.setRepeats(false);
+        this.dogStateTimer.start();
     }
 
     private void endGame() {
-        if (gameTimer != null) {
-            gameTimer.stop();
+        if (this.gameTimer != null) {
+            this.gameTimer.stop();
         }
-        if (dogStateTimer != null) {
-            dogStateTimer.stop();
+        if (this.dogStateTimer != null) {
+            this.dogStateTimer.stop();
         }
-        final boolean hasWon = model.getGameState() == GameState.WON;
-        view.startBlinking(frame, hasWon); // blink before showing the end screen
-        view.setFocusable(false);
+        final boolean hasWon = this.model.getGameState() == GameState.WON;
+        this.view.startBlinking(this.frame, hasWon); // blink before showing the end screen
+        this.view.setFocusable(false);
     }
 
     /**
@@ -161,68 +158,66 @@ public class HerdingHoundController {
         return this.model.getGameState();
     }
 
-    // --- GETTER per la View e il RightPanel ---
-
     /**
      * @return the grid size of the game
      */
     public int getGridSize() {
-        return model.getGrid();
+        return this.model.getGrid();
     }
 
     /**
      * @return the current position of the goose
      */
     public Position getGoosePosition() {
-        return model.getGoose().getCoord();
+        return this.model.getGoose().getCoord();
     }
 
     /**
      * @return the current state of the dog
      */
     public State getDogState() {
-        return model.getDog().getState();
+        return this.model.getDog().getState();
     }
 
     /**
      * @return the area visible to the dog
      */
     public List<Position> getDogVisibleArea() {
-        return model.getDog().getVisibleArea();
+        return this.model.getDog().getVisibleArea();
     }
 
     /**
      * @return the current position of the dog
      */
     public Position getDogPosition() {
-        return model.getDog().getCoord();
+        return this.model.getDog().getCoord();
     }
 
     /**
      * @return the list of visible cells
      */
     public List<Position> getVisibleCells() {
-        return model.getVisible();
+        return this.model.getVisible();
     }
 
     /**
      * @return the list of shadowed cells
      */
     public List<Position> getShadows() {
-        return model.getShadows();
+        return this.model.getShadows();
     }
 
     /**
      * @return the list of box positions
      */
     public List<Position> getBoxes() {
-        return model.getBoxes();
+        return this.model.getBoxes();
     }
 
     /**
      * @return the remaining time in the game
      */
     public long getRemainingTime() {
-        return model.getRemainingTime();
+        return this.model.getRemainingTime();
     }
 }

@@ -28,7 +28,7 @@ public class HerdingHoundFrameImpl extends JFrame implements HerdingHoundFrame {
      */
     public HerdingHoundFrameImpl() {
         super("Herding Hound");
-        super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // Only closable via GameEndPanel
+        super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         super.setLayout(new BorderLayout());
         super.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         super.setLocationRelativeTo(null);

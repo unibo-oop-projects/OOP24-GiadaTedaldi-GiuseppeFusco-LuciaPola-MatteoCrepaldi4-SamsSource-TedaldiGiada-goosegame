@@ -47,10 +47,3 @@ public class HonkMandMenu extends MinigameMenuImpl {
         return controller == null ? GameState.NOT_STARTED : controller.getGameState();
     }
 }
-
-    /*
-    public static void main(final String[] args) {
-    SwingUtilities.invokeLater(() -> {
-    final HonkMandMenu menu = new HonkMandMenu();
-    menu.initializeView();
-    }); */

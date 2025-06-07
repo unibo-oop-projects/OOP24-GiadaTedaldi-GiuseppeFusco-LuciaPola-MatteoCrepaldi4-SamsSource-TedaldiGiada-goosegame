@@ -53,46 +53,46 @@ public final class BoxImpl implements Box {
      */
     @Override
     public void generateBoxes() {
-        allBoxes.clear();
-        shadows.clear();
+        this.allBoxes.clear();
+        this.shadows.clear();
 
         // Block all cells above the upper box line (x < boxDistance)
-        for (int x = 0; x < boxDistance; x++) {
-            for (int y = boxDistance; y < gridSize - boxDistance; y++) {
+        for (int x = 0; x < this.boxDistance; x++) {
+            for (int y = this.boxDistance; y < this.gridSize - this.boxDistance; y++) {
                 // Skip start and end positions
-                if (!(x == 0 && y == boxDistance || x == 0 && y == gridSize - boxDistance - 1)) {
-                    allBoxes.add(new Position(x, y));
+                if (!(x == 0 && y == this.boxDistance || x == 0 && y == this.gridSize - this.boxDistance - 1)) {
+                    this.allBoxes.add(new Position(x, y));
                 }
             }
         }
 
-        for (int y = boxDistance; y < gridSize - boxDistance; y++) {
-            tryAddBox(new Position(boxDistance, y));
+        for (int y = this.boxDistance; y < this.gridSize - this.boxDistance; y++) {
+            tryAddBox(new Position(this.boxDistance, y));
         }
 
-        for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
-            tryAddBox(new Position(x, gridSize - boxDistance - 1));
+        for (int x = this.boxDistance + 1; x < this.gridSize - this.boxDistance; x++) {
+            tryAddBox(new Position(x, this.gridSize - this.boxDistance - 1));
         }
 
-        for (int y = gridSize - boxDistance - 1; y >= boxDistance; y--) {
-            tryAddBox(new Position(gridSize - boxDistance - 1, y));
+        for (int y = this.gridSize - this.boxDistance - 1; y >= this.boxDistance; y--) {
+            tryAddBox(new Position(this.gridSize - this.boxDistance - 1, y));
         }
 
-        for (int x = boxDistance + 1; x < gridSize - boxDistance; x++) {
-            tryAddBox(new Position(x, boxDistance));
+        for (int x = this.boxDistance + 1; x < this.gridSize - this.boxDistance; x++) {
+            tryAddBox(new Position(x, this.boxDistance));
         }
     }
 
     private void tryAddBox(final Position box) {
-        if (random.nextDouble() < BOX_PROBABILITY) {
-            allBoxes.add(box);
+        if (this.random.nextDouble() < BOX_PROBABILITY) {
+            this.allBoxes.add(box);
             generateShadows(box);
         }
     }
 
     private void generateShadows(final Position box) {
-        final int lightX = pointLux.x();
-        final int lightY = pointLux.y();
+        final int lightX = this.pointLux.x();
+        final int lightY = this.pointLux.y();
         final int dx = box.x() - lightX;
         final int dy = box.y() - lightY;
         final int stepX = Integer.compare(dx, 0);
@@ -110,13 +110,13 @@ public final class BoxImpl implements Box {
         int shadowX = box.x() + stepX;
         int shadowY = box.y() + stepY;
 
-        while (isInBounds(shadowX, shadowY) && shadowLength > 0) {
+        while (this.isInBounds(shadowX, shadowY) && shadowLength > 0) {
             for (int i = -shadowWidth; i <= shadowWidth; i++) {
                 final int newShadowX = shadowX + i * stepY;
                 final int newShadowY = shadowY + i * stepX;
 
-                if (isInBounds(newShadowX, newShadowY)) {
-                    shadows.add(new Position(newShadowX, newShadowY));
+                if (this.isInBounds(newShadowX, newShadowY)) {
+                    this.shadows.add(new Position(newShadowX, newShadowY));
                 }
             }
             shadowX += stepX;
@@ -126,11 +126,11 @@ public final class BoxImpl implements Box {
     }
 
     private boolean isInBounds(final int x, final int y) {
-        final boolean isOnBorder = x <= boxDistance || x >= gridSize - boxDistance - 1
-            || y <= boxDistance || y >= gridSize - boxDistance - 1;
+        final boolean isOnBorder = x <= this.boxDistance || x >= this.gridSize - this.boxDistance - 1
+            || y <= this.boxDistance || y >= this.gridSize - this.boxDistance - 1;
         return isOnBorder
-            && x >= 0 && x < gridSize
-            && y >= 0 && y < gridSize;
+            && x >= 0 && x < this.gridSize
+            && y >= 0 && y < this.gridSize;
     }
 
     /**
@@ -139,6 +139,6 @@ public final class BoxImpl implements Box {
      */
     @Override
     public List<Position> getShadows() {
-        return new ArrayList<>(shadows);
+        return new ArrayList<>(this.shadows);
     }
 }

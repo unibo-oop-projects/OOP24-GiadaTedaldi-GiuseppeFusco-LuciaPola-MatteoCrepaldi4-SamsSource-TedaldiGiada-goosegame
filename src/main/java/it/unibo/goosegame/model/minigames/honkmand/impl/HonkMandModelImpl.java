@@ -8,7 +8,6 @@ import java.util.Random;
 
 /**
  * Model class for the HonkMand minigame (a Simon-like memory game).
- * <p>
  * This class manages the game logic, including the sequence generation, player input checking,
  * level progression, score tracking, and game state transitions (playing, win, lose).
  * It implements the {@link HonkMandModel} interface for integration with the general minigame framework.
@@ -31,12 +30,12 @@ public final class HonkMandModelImpl implements HonkMandModel {
      * Constructs a HonkMandModel object and initializes the game state.
      */
     public HonkMandModelImpl() {
-        sequence = new ArrayList<>();
-        playerSequence = new ArrayList<>();
-        level = 0;
-        score = 0;
-        random = new Random();
-        gameState = GameState.NOT_STARTED;
+        this.sequence = new ArrayList<>();
+        this.playerSequence = new ArrayList<>();
+        this.level = 0;
+        this.score = 0;
+        this.random = new Random();
+        this.gameState = GameState.NOT_STARTED;
     }
 
     /**
@@ -44,12 +43,12 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public void startGame() {
-        sequence.clear();
-        playerSequence.clear();
-        level = 0;
-        score = 0;
-        gameState = GameState.ONGOING;
-        nextRound();
+        this.sequence.clear();
+        this.playerSequence.clear();
+        this.level = 0;
+        this.score = 0;
+        this.gameState = GameState.ONGOING;
+        this.nextRound();
     }
 
     /**
@@ -57,24 +56,24 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public void nextRound() {
-        level++;
-        playerSequence.clear();
+        this.level++;
+        this.playerSequence.clear();
 
-        if (level > MAX_LEVEL) {
-            gameState = GameState.WON;
+        if (this.level > MAX_LEVEL) {
+            this.gameState = GameState.WON;
             return;
         }
-        generateNewSequence();
+        this.generateNewSequence();
     }
 
     /**
      * Generates a new random sequence for the current level.
      */
     private void generateNewSequence() {
-        sequence.clear();
-        for (int i = 0; i < level; i++) {
+        this.sequence.clear();
+        for (int i = 0; i < this.level; i++) {
             final int index = random.nextInt(Colors.values().length);
-            sequence.add(Colors.values()[index]);
+            this.sequence.add(Colors.values()[index]);
         }
     }
 
@@ -85,29 +84,29 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public HonkMandModel.InputResult checkPlayerInput(final Colors colorId) {
-        if (gameState != GameState.ONGOING) {
+        if (this.gameState != GameState.ONGOING) {
             return InputResult.GAME_OVER;
         }
-        playerSequence.add(colorId);
+        this.playerSequence.add(colorId);
         final int currentIndex = playerSequence.size() - 1;
 
         // Fix: check bounds before accessing sequence
-        if (currentIndex >= sequence.size()) {
+        if (currentIndex >= this.sequence.size()) {
             gameState = GameState.LOST;
             return InputResult.GAME_OVER;
         }
-        if (playerSequence.get(currentIndex).equals(sequence.get(currentIndex))) {
-            if (playerSequence.size() == sequence.size()) {
+        if (this.playerSequence.get(currentIndex).equals(this.sequence.get(currentIndex))) {
+            if (this.playerSequence.size() == this.sequence.size()) {
                 score++;
-                if (level == MAX_LEVEL) {
-                    gameState = GameState.WON;
+                if (this.level == MAX_LEVEL) {
+                    this.gameState = GameState.WON;
                     return InputResult.GAME_WIN;
                 }
                 return InputResult.NEXT_ROUND;
             }
             return InputResult.CORRECT;
         } else {
-            gameState = GameState.LOST;
+            this.gameState = GameState.LOST;
             return InputResult.GAME_OVER;
         }
     }
@@ -118,7 +117,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public List<Colors> getSequence() {
-        return List.copyOf(sequence); // Defensive copy to avoid exposing internal state
+        return List.copyOf(this.sequence);
     }
 
     /**
@@ -127,7 +126,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public int getLevel() {
-        return level;
+        return this.level;
     }
 
     /**
@@ -136,7 +135,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public int getScore() {
-        return score;
+        return this.score;
     }
 
     /**
@@ -145,7 +144,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public GameState getGameState() {
-        return gameState;
+        return this.gameState;
     }
 
     /**
@@ -153,7 +152,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public void resetGame() {
-        startGame();
+        this.startGame();
     }
 
     /**
@@ -161,7 +160,7 @@ public final class HonkMandModelImpl implements HonkMandModel {
      */
     @Override
     public boolean isOver() {
-        return gameState == GameState.LOST || gameState == GameState.WON;
+        return this.gameState == GameState.LOST || this.gameState == GameState.WON;
     }
 
     @Override

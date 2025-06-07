@@ -43,17 +43,17 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public void nextGooseMove() {
-        final Position pos = goose.getCoord();
+        final Position pos = this.goose.getCoord();
         final int x = pos.x();
         final int y = pos.y();
-        if (y == START_Y && x < gridSize - 1) {
-            goose.move(1, 0);
-        } else if (x == gridSize - 1 && y < gridSize - 1) {
-            goose.move(0, 1);
-        } else if (y == gridSize - 1 && x > START_X) {
-            goose.move(-1, 0);
+        if (y == START_Y && x < this.gridSize - 1) {
+            this.goose.move(1, 0);
+        } else if (x == this.gridSize - 1 && y < this.gridSize - 1) {
+            this.goose.move(0, 1);
+        } else if (y == this.gridSize - 1 && x > START_X) {
+            this.goose.move(-1, 0);
         }
-        dog.refreshDirection(goose);
+        this.dog.refreshDirection(this.goose);
     }
 
     /**
@@ -106,10 +106,10 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public void resetGame() {
-        goose.reset();
-        dog.reset();
-        box.generateBoxes();
-        dog.refreshDirection(goose);
+        this.goose.reset();
+        this.dog.reset();
+        this.box.generateBoxes();
+        this.dog.refreshDirection(goose);
         this.started = false;
     }
 
@@ -128,10 +128,10 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public long getRemainingTime() {
-        if (!started) {
+        if (!this.started) {
             return TIME_LIMIT_MS;
         }
-        final long elapsed = System.currentTimeMillis() - startTime;
+        final long elapsed = System.currentTimeMillis() - this.startTime;
         return Math.max(0, TIME_LIMIT_MS - elapsed);
     }
 
@@ -141,12 +141,12 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public GameState getGameState() {
-        if (getRemainingTime() == 0) {
+        if (this.getRemainingTime() == 0) {
             return GameState.LOST;
         }
-        if (hasWon()) {
+        if (this.hasWon()) {
             return GameState.WON;
-        } else if (hasLost()) {
+        } else if (this.hasLost()) {
             return GameState.LOST;
         } else {
             return GameState.ONGOING;
@@ -159,16 +159,16 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public boolean isOver() {
-        return hasWon() || hasLost() || getRemainingTime() == 0;
+        return this.hasWon() || this.hasLost() || this.getRemainingTime() == 0;
     }
 
     private boolean hasWon() {
         final Position winPos = new Position(START_X, gridSize - 1);
-        return goose.getCoord().equals(winPos);
+        return this.goose.getCoord().equals(winPos);
     }
 
     private boolean hasLost() {
-        return dog.getState() == Dog.State.AWAKE && getVisible().contains(goose.getCoord());
+        return this.dog.getState() == Dog.State.AWAKE && this.getVisible().contains(this.goose.getCoord());
     }
 
     /**
@@ -177,7 +177,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public List<Position> getVisible() {
-        return dog.getVisibleArea().stream()
+        return this.dog.getVisibleArea().stream()
             .filter(pos -> !box.getShadows().contains(pos))
             .filter(pos -> !box.getBoxes().contains(pos))
             .collect(Collectors.toList());
@@ -188,8 +188,8 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public void nextDogState() {
-        dog.refreshState();
-        dog.refreshDirection(goose);
+        this.dog.refreshState();
+        this.dog.refreshDirection(this.goose);
     }
 
     /**
@@ -198,7 +198,7 @@ public final class HerdingHoundModelImpl implements HerdingHoundModel {
      */
     @Override
     public List<Position> getBoxes() {
-        return box.getBoxes();
+        return this.box.getBoxes();
     }
 
     @Override

@@ -29,7 +29,7 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
      */
     @Override
     public boolean addCard(final Card card) {
-        if (cards.size() >= MAX_CARDS) {
+        if (this.cards.size() >= MAX_CARDS) {
             return false;
         }
         if (!card.isBonus()) {
@@ -46,7 +46,7 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
      */
     @Override
     public boolean removeCard(final Card card) {
-        return cards.remove(card);
+        return this.cards.remove(card);
     }
 
     /**
@@ -64,7 +64,7 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
      */
     @Override
     public boolean isFull() {
-        return cards.size() >= MAX_CARDS;
+        return this.cards.size() >= MAX_CARDS;
     }
 
     /**
@@ -72,6 +72,6 @@ public final class CardSatchelModelImpl implements CardSatchelModel {
      */
     @Override
     public void clear() {
-        cards.clear();
+        this.cards.clear();
     }
 }

@@ -66,7 +66,7 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
      * Reference to the main frame. This is intentionally stored as a mutable reference.
      * The class does not assume responsibility for external modifications to the frame.
      */
-    private JFrame frameRef; // Reference to the main frame
+    private JFrame frameRef;
 
     /**
      * Constructs a HonkMandView and initializes the UI components.
@@ -75,7 +75,6 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
         setLayout(new BorderLayout());
         setBackground(new Color(BG_COLOR_R, BG_COLOR_G, BG_COLOR_B));
 
-        // Side gray panels
         final JPanel leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(SIDE_PANEL_WIDTH, 0));
         leftPanel.setBackground(Color.LIGHT_GRAY);
@@ -85,16 +84,13 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
 
-        // Modern fonts
         final Font mainFont = new Font("Segoe UI", Font.BOLD, 22);
         final Font labelFont = new Font("Segoe UI", Font.PLAIN, 18);
 
-        // Central message
         messageLabel = new JLabel("", SwingConstants.CENTER);
         messageLabel.setFont(mainFont);
         messageLabel.setPreferredSize(new Dimension(MESSAGE_LABEL_WIDTH, MESSAGE_LABEL_HEIGHT));
 
-        // Info panel
         final JPanel infoPanel = new JPanel(new GridLayout(1, 2, 20, 0));
         infoPanel.setOpaque(false);
         levelLabel = new JLabel(HonkMandMessages.LEVEL_LABEL + "0");
@@ -104,13 +100,11 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
         infoPanel.add(levelLabel);
         infoPanel.add(scoreLabel);
 
-        // Start/restart button
         startButton = new JButton(HonkMandMessages.START_BUTTON);
         startButton.setFont(labelFont);
         startButton.setFocusPainted(false);
         startButton.setPreferredSize(new Dimension(START_BUTTON_WIDTH, START_BUTTON_HEIGHT));
 
-        // Colored buttons panel (GridBagLayout for adaptability)
         final JPanel colorPanel = new JPanel(new GridBagLayout());
         colorPanel.setOpaque(false);
         buttons = new EnumMap<>(Colors.class);
@@ -300,9 +294,7 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
             this.baseColor = color;
         }
 
-        // Instance initializer block: executed after superclass constructor, before this constructor
         {
-            // Safe: RoundButton is private and final, so no subclassing issues.
             setOpaque(false);
             setFocusPainted(false);
             setBorderPainted(false);
@@ -320,7 +312,6 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
 
         @Override
         public Insets getInsets() {
-            // Internal margin to avoid glow clipping
             return new Insets(ROUND_BUTTON_INSETS, ROUND_BUTTON_INSETS, ROUND_BUTTON_INSETS, ROUND_BUTTON_INSETS);
         }
 
@@ -338,7 +329,7 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
                 g2.drawOval(x - ROUND_BUTTON_GLOW_OFFSET, y - ROUND_BUTTON_GLOW_OFFSET,
                     size + ROUND_BUTTON_GLOW_STROKE, size + ROUND_BUTTON_GLOW_STROKE);
             }
-            // Cambia colore se disabilitato
+
             if (!isEnabled()) {
                 g2.setColor(baseColor.darker().darker());
             } else {
@@ -350,7 +341,6 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
 
         @Override
         public Dimension getPreferredSize() {
-            // Preference: large square, but adapts
             return new Dimension(ROUND_BUTTON_PREFERRED_SIZE, ROUND_BUTTON_PREFERRED_SIZE);
         }
 
@@ -359,7 +349,6 @@ public final class HonkMandViewImpl extends JPanel implements HonkMandView {
             return new Dimension(ROUND_BUTTON_MIN_SIZE, ROUND_BUTTON_MIN_SIZE);
         }
 
-        // Physically block mouse events if disabled
         @Override
         protected void processMouseEvent(final MouseEvent e) {
             if (!isEnabled()) {

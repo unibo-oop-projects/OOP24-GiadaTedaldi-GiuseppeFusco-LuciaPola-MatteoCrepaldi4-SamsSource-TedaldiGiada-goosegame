@@ -8,8 +8,8 @@ import it.unibo.goosegame.view.cardsatchel.api.CardSatchelFrame;
 import java.awt.BorderLayout;
 
 /**
- * JFrame per mostrare il satchel delle carte del giocatore.
- * Non contiene logica di test, solo la view vera e propria.
+ * Jframe to show the Satchel of the player's cards.
+ * It does not contain test logic, only the real view
  */
 public class CardSatchelFrameImpl extends JFrame implements CardSatchelFrame {
     private static final long serialVersionUID = 1L;
