@@ -62,17 +62,4 @@ public class TurnManagerImpl implements TurnManager {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void skipNextTurn(final Player player, final int turns) {
-        if (!this.skipTurns.containsKey(player)) {
-            throw new IllegalArgumentException("Giocatore " + player.getName() + " non in lista");
-        }
-        if (turns <= 0) {
-            throw new IllegalArgumentException("Number of turns to skip must be positive");
-        }
-        this.skipTurns.compute(player, (p, count) -> count + turns);
-    }
 }

@@ -56,61 +56,15 @@ class TestTurnManagerImpl {
     }
 
     /**
-     * Tests the normal turn order rotation without any skipped turns.
+     * Tests the normal turn order rotation.
      */
     @Test
-    void testNextTurnNoSkips() {
+    void testNextTurn() {
         final TurnManager tm = new TurnManagerImpl(players);
         assertEquals(p1, tm.getCurrentPlayer());
         assertEquals(p2, tm.nextTurn());
         assertEquals(p3, tm.nextTurn());
         assertEquals(p1, tm.nextTurn());
-    }
-
-    /**
-     * Tests that a player skipping 1 turn is correctly skipped in the turn rotation.
-     */
-    @Test
-    void testSkipNextTurn() {
-        final TurnManager tm = new TurnManagerImpl(players);
-        tm.skipNextTurn(p2, 1);
-        assertEquals(p3, tm.nextTurn());
-        assertEquals(p1, tm.nextTurn());
-        assertEquals(p2, tm.nextTurn());
-    }
-
-    /**
-     * Tests that a player skipping multiple turns is correctly skipped multiple times.
-     */
-    @Test
-    void testSkipNextTurnMultipleSkips() {
-        final TurnManager tm = new TurnManagerImpl(players);
-        tm.skipNextTurn(p2, 2);
-        assertEquals(p3, tm.nextTurn());
-        assertEquals(p1, tm.nextTurn());
-        assertEquals(p3, tm.nextTurn());
-        assertEquals(p1, tm.nextTurn());
-        assertEquals(p2, tm.nextTurn());
-    }
-
-    /**
-     * Tests that skipNextTurn throws an exception when called with a player not in the current player list.
-     */
-    @Test
-    void testSkipNextTurnInvalidPlayers() {
-        final TurnManager tm = new TurnManagerImpl(players);
-        final Player unknown = new PlayerImpl("Unknown", 0);
-        assertThrows(IllegalArgumentException.class, () -> tm.skipNextTurn(unknown, 1));
-    }
-
-    /**
-     * Tests that skipNextTurn throws an exception when the number of turns to skip is zero or negative.
-     */
-    @Test
-    void testSkipNextTurnInvalidTurns() {
-        final TurnManager tm = new TurnManagerImpl(players);
-        assertThrows(IllegalArgumentException.class, () -> tm.skipNextTurn(p1, 0));
-        assertThrows(IllegalArgumentException.class, () -> tm.skipNextTurn(p1, -1));
     }
 
 }
