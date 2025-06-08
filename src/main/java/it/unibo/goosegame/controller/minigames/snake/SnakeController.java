@@ -6,7 +6,8 @@ import it.unibo.goosegame.model.general.MinigamesModel.GameState;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Direction;
-import it.unibo.goosegame.view.minigames.snake.SnakeView;
+import it.unibo.goosegame.view.minigames.snake.api.SnakeView;
+import it.unibo.goosegame.view.minigames.snake.impl.SnakeViewImpl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +30,7 @@ public class SnakeController {
      */
     public SnakeController() {
         model = new SnakeModelImpl();
-        view = new SnakeView(model);
+        view = new SnakeViewImpl(model);
 
         view.addKeyListener(new KeyAdapter() {
             @Override

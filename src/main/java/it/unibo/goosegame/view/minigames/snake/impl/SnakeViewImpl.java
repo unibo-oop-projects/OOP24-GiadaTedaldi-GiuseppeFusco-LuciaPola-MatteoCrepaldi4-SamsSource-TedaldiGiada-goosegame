@@ -1,4 +1,4 @@
-package it.unibo.goosegame.view.minigames.snake;
+package it.unibo.goosegame.view.minigames.snake.impl;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import it.unibo.goosegame.model.minigames.snake.api.SnakeModel;
 import it.unibo.goosegame.model.minigames.snake.impl.SnakeModelImpl;
 import it.unibo.goosegame.utilities.Position;
+import it.unibo.goosegame.view.minigames.snake.api.SnakeView;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +17,7 @@ import java.awt.Graphics;
  * The SnakeView class represents the view of the snake game.
  * It extends JPanel and is responsible for rendering the game state.
  */
-public class SnakeView extends JFrame {
+public class SnakeViewImpl extends JFrame implements SnakeView {
     private static final long serialVersionUID = 1L;
     private static final int INIT_HEIGHT = 400;
     private static final int INIT_WIDTH = 600;
@@ -28,11 +29,11 @@ public class SnakeView extends JFrame {
      * Initializes the SnakeView with a SnakeModel and sets the background color.
      * @param model the SnakeModel to be used for the view
      */
-    public SnakeView(final SnakeModel model) {
+    public SnakeViewImpl(final SnakeModel model) {
         this.panelGame = new JPanel() {
 
             /**
-            * @inheritDoc
+            * {@inheritDoc}
             * This method is responsible for painting the components of the snake game.
             * It draws the snake and the food on the panel.
             */
@@ -70,12 +71,9 @@ public class SnakeView extends JFrame {
     }
 
     /**
-     *
-     * This method is responsible for updating the view when the game state changes.
-     * It repaints the panel to reflect the current state of the game.
-     *
-     * @param win indicates whether the player has won or lost the game
+     * {@inheritDoc}
      */
+    @Override
     public void showOverMessage(final boolean win) {
         JOptionPane.showMessageDialog(this, win ? "You win!" : "You lose...");
         this.dispose();
