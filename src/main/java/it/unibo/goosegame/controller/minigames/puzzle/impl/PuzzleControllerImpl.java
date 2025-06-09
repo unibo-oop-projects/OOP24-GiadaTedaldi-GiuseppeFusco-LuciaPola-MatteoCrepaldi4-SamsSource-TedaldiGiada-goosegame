@@ -118,7 +118,7 @@ public class PuzzleControllerImpl implements PuzzleController {
     }
 
     /**
-     * Checks whether the game has reached a conclusion (either win or loss),
+     * Checks whether the game has reached a conclusion (either win or loss).
      */
     private void checkGameOver() {
         final GameState state = this.model.getGameState();

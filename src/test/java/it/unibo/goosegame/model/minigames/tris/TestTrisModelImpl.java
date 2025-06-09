@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
  */
 class TestTrisModelImpl {
 
+    private static final int GRID_SIZE = 3;
     private TrisModel model;
 
     /**
@@ -61,8 +62,8 @@ class TestTrisModelImpl {
         model.makePcMove();
 
         boolean pcMoved = false;
-        for (int i = 0; i < 3 && !pcMoved; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < GRID_SIZE && !pcMoved; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
                 final Position p = new Position(i, j);
                 if (model.isPc(p)) {
                     pcMoved = true;
