@@ -24,7 +24,7 @@ public class TrisMenu extends MinigameMenuImpl {
         super("/img/minigames/background/backgroundTris.png",
             "Tris",
             """ 
-            The Trsi(Tic-Tac-Toe) game is played on a 3x3 grid.
+            The Tris(Tic-Tac-Toe) game is played on a 3x3 grid.
             In this mode, you play against the computer in a best-of-three match: 
             the first to win two rounds wins the game.
 
