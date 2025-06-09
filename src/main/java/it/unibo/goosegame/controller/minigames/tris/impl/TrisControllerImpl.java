@@ -14,6 +14,7 @@ import it.unibo.goosegame.view.minigames.tris.api.TrisView;
  * It manages the communication between the model and the view of a Tris(Tic-Tac-Toe) minigame.
  */
 public class TrisControllerImpl implements TrisController {
+    private static final int GRID_SIZE = 3;
     private static final int MAX_CHAR = 50;
     private static final int TIMER_DELAY = 1000;
     private static final int MAX_ROUNDS = 3;
@@ -74,8 +75,8 @@ public class TrisControllerImpl implements TrisController {
      * Updates the view.
      */
     private void updateView() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            for (int j = 0; j < GRID_SIZE; j++) {
                 final Position pos = new Position(i, j);
                 if (this.model.isPc(pos)) {
                     this.view.updateButton(pos, "O");

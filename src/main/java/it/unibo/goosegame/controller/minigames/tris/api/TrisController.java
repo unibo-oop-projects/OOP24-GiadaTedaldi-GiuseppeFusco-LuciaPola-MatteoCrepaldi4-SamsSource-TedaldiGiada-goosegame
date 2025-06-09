@@ -14,9 +14,9 @@ public interface TrisController {
     void startGame();
 
     /**
-     * Handles a moves made by the human player at the specified position.
+     * Handles a move made by the human player at the specified position.
      * 
-     * @param position the position on the board where the human player wants to move
+     * @param position the position on the board where the human player wants to make the move
      */
     void makeMove(Position position);
 

@@ -22,6 +22,7 @@ import it.unibo.goosegame.view.minigames.puzzle.api.PuzzleView;
  */
 public class PuzzleControllerImpl implements PuzzleController {
     private static final int INIT_TIME = 150;
+    private static final int TIMER_DELAY = 1000;
     private final PuzzleModel model;
     private final PuzzleView view;
     private Timer gameTimer;
@@ -84,7 +85,7 @@ public class PuzzleControllerImpl implements PuzzleController {
         if (this.gameTimer != null && this.gameTimer.isRunning()) {
             this.gameTimer.stop();
         }
-        this.gameTimer = new Timer(1000, new ActionListener() {
+        this.gameTimer = new Timer(TIMER_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 timeLeft--;
@@ -118,7 +119,6 @@ public class PuzzleControllerImpl implements PuzzleController {
 
     /**
      * Checks whether the game has reached a conclusion (either win or loss),
-     * it shows the apporpiate final.
      */
     private void checkGameOver() {
         final GameState state = this.model.getGameState();

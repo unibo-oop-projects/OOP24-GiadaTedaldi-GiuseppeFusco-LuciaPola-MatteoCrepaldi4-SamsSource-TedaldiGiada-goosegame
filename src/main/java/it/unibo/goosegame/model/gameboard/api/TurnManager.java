@@ -13,7 +13,6 @@ public interface TurnManager {
 
     /**
      * Advances to the next player's turn.
-     * If a player has any turns to skip, their skip count is decreased.
      * 
      * @return the next player who will take their turn 
      */

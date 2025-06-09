@@ -36,7 +36,7 @@ public interface TrisView {
     void disableButtons();
 
     /**
-     * Shows the final result message and closes the.
+     * Shows the final result message and closes the view.
      * 
      * @param result the final result message to display
      */

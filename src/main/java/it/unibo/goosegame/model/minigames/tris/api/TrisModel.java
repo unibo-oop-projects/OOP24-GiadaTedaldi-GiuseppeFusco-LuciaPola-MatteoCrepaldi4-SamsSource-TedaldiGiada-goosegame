@@ -29,7 +29,7 @@ public interface TrisModel extends MinigamesModel {
     /**
      * Makes a move for the human player at the specified position.
      * 
-     * @param position the position on the board where the human wants to move 
+     * @param position the position on the board where the human wants to make the move 
      * @return true if the move was valid and successfully made, false otherwise
      */
     boolean makeHumanMove(Position position);

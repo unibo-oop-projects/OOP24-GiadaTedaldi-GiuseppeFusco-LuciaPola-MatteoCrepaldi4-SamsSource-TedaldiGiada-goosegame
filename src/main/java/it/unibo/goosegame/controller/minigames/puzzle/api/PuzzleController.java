@@ -28,7 +28,7 @@ public interface PuzzleController {
     void shufflePuzzle();
 
     /** 
-     * @return ad unmodifiable map representing the puzzle grid 
+     * @return an unmodifiable map representing the puzzle grid 
      */
     Map<Position, Integer> getGridData();
 
